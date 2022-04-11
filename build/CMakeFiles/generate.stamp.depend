@@ -1,0 +1,20 @@
+# CMake generation dependency list for this directory.
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeCXXInformation.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeGenericSystem.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeRCInformation.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Compiler/MSVC-CXX.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Platform/Windows-MSVC-CXX.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Platform/Windows-MSVC.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Platform/Windows.cmake
+F:/Microsoft Visual Studio 2022/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.22/Modules/Platform/WindowsPaths.cmake
+F:/Progetti/Visual Studio Code/Flutter/Bookify/bookify/windows/CMakeLists.txt
+F:/Progetti/Visual Studio Code/Flutter/Bookify/bookify/windows/flutter/generated_plugins.cmake
+F:/Progetti/Visual Studio Code/Flutter/Bookify/build/CMakeFiles/3.22.22022201-MSVC_2/CMakeCXXCompiler.cmake
+F:/Progetti/Visual Studio Code/Flutter/Bookify/build/CMakeFiles/3.22.22022201-MSVC_2/CMakeRCCompiler.cmake
+F:/Progetti/Visual Studio Code/Flutter/Bookify/build/CMakeFiles/3.22.22022201-MSVC_2/CMakeSystem.cmake

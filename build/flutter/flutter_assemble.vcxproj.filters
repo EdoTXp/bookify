@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="F:\Progetti\Visual Studio Code\Flutter\Bookify\build\CMakeFiles\189081de93051c74613bd691e827fb05\flutter_windows.dll.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="F:\Progetti\Visual Studio Code\Flutter\Bookify\build\CMakeFiles\4db53f32aeec4bb983c8971eeddde7b9\flutter_assemble.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="F:\Progetti\Visual Studio Code\Flutter\Bookify\bookify\windows\flutter\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="F:\Progetti\Visual Studio Code\Flutter\Bookify\build\flutter\CMakeFiles\flutter_assemble" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B5946695-EC61-32AC-9421-DD7259A2D9E4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
