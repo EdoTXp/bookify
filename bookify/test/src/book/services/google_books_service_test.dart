@@ -1,3 +1,4 @@
+import 'package:bookify/src/book/errors/book_error.dart';
 import 'package:bookify/src/book/services/google_books_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -106,4 +107,15 @@ void main() {
       }
     });
   });
+
+  test('Expected a empty book exception if a list of books is empty', (() async {
+    when(() => dio.get(any())).thenAnswer((_) async {
+        return Response(
+                data: '', //  empty books
+                requestOptions: RequestOptions(path: ""))
+            .data;
+      });
+
+    expect(await service.getAllBooks(), throwsA(isA<BookEmptyListException>()));
+  }));
 }

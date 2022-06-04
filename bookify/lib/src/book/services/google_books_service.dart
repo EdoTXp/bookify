@@ -1,3 +1,5 @@
+import 'package:bookify/src/book/errors/book_error.dart';
+
 import '../models/book_model.dart';
 
 import 'interfaces/books_service_interface.dart';
@@ -29,21 +31,23 @@ class GoogleBookService implements IBooksService {
   }
 
   @override
-  Future<List<BookModel>> findBooksByPublisher({required String publisher}) async {
+  Future<List<BookModel>> findBooksByPublisher(
+      {required String publisher}) async {
     final url = '${_baseUrl}inpublisher:$publisher$_urlParams';
     final books = await _responseBook(url);
     return books;
   }
 
   @override
-  Future<List<BookModel>> findBooksByCategory({required String category}) async {
+  Future<List<BookModel>> findBooksByCategory(
+      {required String category}) async {
     final url = '${_baseUrl}subject:$category$_urlParams';
     final books = await _responseBook(url);
     return books;
   }
 
   @override
-  Future<List<BookModel>> findBooksByTitle({required String title}) async{
+  Future<List<BookModel>> findBooksByTitle({required String title}) async {
     final url = '${_baseUrl}intitle:$title$_urlParams';
     final books = await _responseBook(url);
     return books;
@@ -62,10 +66,19 @@ class GoogleBookService implements IBooksService {
   }
 
   Future<List<BookModel>> _responseBook(String url) async {
-    final response = await _service.get(url);
-    final books = (response['items'] as List)
-        .map((bookMap) => BookModel.fromJson(bookMap))
-        .toList();
-    return books;
+    try {
+      final response = await _service.get(url);
+      final books = (response['items'] as List)
+          .map((bookMap) => BookModel.fromJson(bookMap))
+          .toList();
+
+      if (books.isEmpty) {
+        throw BookEmptyListException('Book list is empty');
+      }
+
+      return books;
+    } catch (e) {
+      throw BookException(e.toString());
+    }
   }
 }
