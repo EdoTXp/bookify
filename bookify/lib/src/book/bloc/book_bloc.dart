@@ -11,7 +11,7 @@ part 'book_state.dart';
 class BookBloc extends Bloc<BookEvent, BookState> {
   final IBooksService _service;
 
-  BookBloc(this._service) : super(BookInitialState()) {
+  BookBloc(this._service) : super(BookLoadingState()) {
     on<GetAllBooksEvent>(_getAllBooks);
     on<FindBookByIsbnEvent>(_findBookByIsbn);
     on<FindBooksByAuthorEvent>(_findBooksByAuthor);
@@ -21,11 +21,13 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   void _getAllBooks(GetAllBooksEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
+
     try {
       final books = await _service.getAllBooks();
       if (books.isEmpty) {
         emit(BookEmptyState());
+        return;
       }
 
       emit(BookLoadedState(books: books));
@@ -35,9 +37,10 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   void _findBookByIsbn(FindBookByIsbnEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
     try {
       final book = await _service.findBookByISBN(isbn: event.isbn);
+
       emit(SingleBookLoadedState(book: book));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
@@ -45,7 +48,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   void _findBooksByAuthor(FindBooksByAuthorEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
+
     try {
       final books = await _service.findBooksByAuthor(author: event.author);
 
@@ -56,12 +60,13 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BookLoadedState(books: books));
     } catch (e) {
-      emit(BookErrorSatemessage: e.toString());
+      emit(BookErrorSate(message: e.toString()));
     }
   }
 
   void _findBooksByCategory(FindBooksByCategoryEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
+
     try {
       final books =
           await _service.findBooksByCategory(category: event.category);
@@ -73,12 +78,13 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BookLoadedState(books: books));
     } catch (e) {
-      emit(message: e.toString());
+      emit(BookErrorSate(message: e.toString()));
     }
   }
 
   void _findBooksByPublisher(FindBooksByPublisherEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
+
     try {
       final books =
           await _service.findBooksByPublisher(publisher: event.publisher);
@@ -90,12 +96,13 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BookLoadedState(books: books));
     } catch (e) {
-      emit(message: e.toString());
+      emit(BookErrorSate(message: e.toString()));
     }
   }
 
   void _findBooksByTitle(FindBooksByTitleEvent event, emit) async {
-    emit(BookInitialState());
+    emit(BookLoadingState());
+
     try {
       final books = await _service.findBooksByTitle(title: event.title);
 
@@ -106,7 +113,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BookLoadedState(books: books));
     } catch (e) {
-      emit(message: e.toString());
+      emit(BookErrorSate(message: e.toString()));
     }
   }
 }

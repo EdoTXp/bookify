@@ -8,6 +8,3 @@ class BookNotFoundException extends BookException{
   BookNotFoundException(super.message);
 }
 
-class BookEmptyListException extends BookException {
-  BookEmptyListException(super.message);
-}

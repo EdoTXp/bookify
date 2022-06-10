@@ -1,11 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'book_bloc.dart';
 
 @immutable
 abstract class BookState {}
 
-class BookInitialState extends BookState {
-}
+class BookLoadingState extends BookState {}
 
 class BookEmptyState extends BookState {}
 
@@ -27,10 +25,8 @@ class SingleBookLoadedState extends BookState {
 
 class BookErrorSate extends BookState {
   final String message;
-  
+
   BookErrorSate({
     required this.message,
   });
-
-  
 }

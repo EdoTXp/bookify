@@ -72,10 +72,6 @@ class GoogleBookService implements IBooksService {
           .map((bookMap) => BookModel.fromJson(bookMap))
           .toList();
 
-      if (books.isEmpty) {
-        throw BookEmptyListException('Book list is empty');
-      }
-
       return books;
     } catch (e) {
       throw BookException(e.toString());
