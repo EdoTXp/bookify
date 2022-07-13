@@ -11,7 +11,7 @@ final booksModelMock = [
     pageCount: 0,
     imageUrl: 'imageUrl',
     buyLink: 'buyLink',
-    averangeRating: 0,
+    averageRating: 0,
     ratingsCount: 0,
   ),
   BookModel(
@@ -24,7 +24,7 @@ final booksModelMock = [
     pageCount: 0,
     imageUrl: 'imageUrl',
     buyLink: 'buyLink',
-    averangeRating: 0,
+    averageRating: 0,
     ratingsCount: 0,
   ),
 ];

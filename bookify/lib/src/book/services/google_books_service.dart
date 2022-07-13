@@ -1,3 +1,4 @@
+import 'package:bookify/src/book/adapters/google_books_adapter.dart';
 import 'package:bookify/src/book/errors/book_error.dart';
 
 import '../models/book_model.dart';
@@ -7,9 +8,9 @@ import 'interfaces/http_service_interface.dart';
 
 const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
 const _urlParams =
-    '&download=epub&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
+    '&download=epub&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=19';
 const _isbnUrlParams =
-    '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
+    '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=19';
 
 class GoogleBookService implements IBooksService {
   final IHttpService _service;
@@ -69,7 +70,7 @@ class GoogleBookService implements IBooksService {
     try {
       final response = await _service.get(url);
       final books = (response['items'] as List)
-          .map((bookMap) => BookModel.fromJson(bookMap))
+          .map((bookMap) => GoogleBooksAdapter.fromJson(bookMap))
           .toList();
 
       return books;

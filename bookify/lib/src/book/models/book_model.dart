@@ -8,7 +8,7 @@ class BookModel {
   final int pageCount;
   final String imageUrl;
   final String buyLink;
-  final double averangeRating;
+  final double averageRating;
   final int ratingsCount;
 
   BookModel({
@@ -21,7 +21,7 @@ class BookModel {
     required this.pageCount,
     required this.imageUrl,
     required this.buyLink,
-    required this.averangeRating,
+    required this.averageRating,
     required this.ratingsCount,
   });
 
@@ -35,7 +35,7 @@ class BookModel {
     int? pageCount,
     String? imageUrl,
     String? buyLink,
-    double? averangeRating,
+    double? averageRating,
     int? ratingsCount,
   }) {
     return BookModel(
@@ -48,31 +48,8 @@ class BookModel {
       pageCount: pageCount ?? this.pageCount,
       imageUrl: imageUrl ?? this.imageUrl,
       buyLink: buyLink ?? this.buyLink,
-      averangeRating: averangeRating ?? this.averangeRating,
+      averageRating: averageRating ?? this.averageRating,
       ratingsCount: ratingsCount ?? this.ratingsCount,
-    );
-  }
-
-  factory BookModel.fromJson(Map map) {
-    // Check if it is null because the Google Books API does not always return a complete book.
-    return BookModel(
-      id: map['id'],
-      title: map['volumeInfo']['title'],
-      authors: List<String>.generate(
-          (map['volumeInfo']['authors'] ?? List.empty()).length,
-          (index) => map['volumeInfo']['authors'][index] ?? 'Nenhum Autor'),
-      publisher: map['volumeInfo']['publisher'] ?? 'Nenhuma Editora',
-      description: map['volumeInfo']['description'] ?? 'Não contém descrição',
-      categories: List<String>.generate(
-          ((map['volumeInfo']['categories'] ?? List.empty()).length),
-          (index) => map['volumeInfo']['categories'][index]),
-      pageCount: map['volumeInfo']['pageCount'] ?? 0,
-      imageUrl: (map['volumeInfo']['imageLinks']?['thumbnail'] ??
-          'https://books.google.com.br/googlebooks/images/no_cover_thumb.gif'),
-      buyLink: map['volumeInfo']['infoLink'] ??
-          'https://play.google.com/store/books?',
-      averangeRating: (map['volumeInfo']['averageRating'] ?? 0.0).toDouble(),
-      ratingsCount: map['volumeInfo']['ratingsCount'] ?? 0,
     );
   }
 
@@ -87,7 +64,7 @@ class BookModel {
         pageCount.hashCode ^
         imageUrl.hashCode ^
         buyLink.hashCode ^
-        averangeRating.hashCode;
+        averageRating.hashCode;
   }
 
   @override
@@ -104,6 +81,6 @@ class BookModel {
         other.pageCount == pageCount &&
         other.imageUrl == imageUrl &&
         other.buyLink == buyLink &&
-        other.averangeRating == averangeRating;
+        other.averageRating == averageRating;
   }
 }

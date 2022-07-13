@@ -22,9 +22,7 @@ void main() {
     blocTest(
       '1- Test if initial state is empty',
       build: () => bookBloc,
-      verify: (_) {
-        verifyZeroInteractions(service);
-      },
+      verify: (_) => bookBloc.close(),
       expect: () => [],
     );
 
@@ -38,8 +36,8 @@ void main() {
         verify(() => service.getAllBooks()).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
-        isA<BookLoadedState>(),
+        isA<BooksLoadingState>(),
+        isA<BooksLoadedState>(),
       ],
     );
 
@@ -53,7 +51,7 @@ void main() {
         verify(() => service.getAllBooks()).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookEmptyState>(),
       ],
     );
@@ -68,7 +66,7 @@ void main() {
         verify(() => service.getAllBooks()).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );
@@ -83,7 +81,7 @@ void main() {
         verify(() => service.findBookByISBN(isbn: 11111)).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<SingleBookLoadedState>(),
       ],
     );
@@ -98,7 +96,7 @@ void main() {
         verify(() => service.findBookByISBN(isbn: 11111)).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );
@@ -113,8 +111,8 @@ void main() {
         verify(() => service.findBooksByAuthor(author: 'author')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
-        isA<BookLoadedState>(),
+        isA<BooksLoadingState>(),
+        isA<BooksLoadedState>(),
       ],
     );
 
@@ -128,7 +126,7 @@ void main() {
         verify(() => service.findBooksByAuthor(author: 'author')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookEmptyState>(),
       ],
     );
@@ -143,7 +141,7 @@ void main() {
         verify(() => service.findBooksByAuthor(author: 'author')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );
@@ -160,8 +158,8 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
-        isA<BookLoadedState>(),
+        isA<BooksLoadingState>(),
+        isA<BooksLoadedState>(),
       ],
     );
 
@@ -177,7 +175,7 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookEmptyState>(),
       ],
     );
@@ -194,7 +192,7 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );
@@ -212,8 +210,8 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
-        isA<BookLoadedState>(),
+        isA<BooksLoadingState>(),
+        isA<BooksLoadedState>(),
       ],
     );
 
@@ -230,7 +228,7 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookEmptyState>(),
       ],
     );
@@ -248,7 +246,7 @@ void main() {
             .called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );
@@ -263,8 +261,8 @@ void main() {
         verify(() => service.findBooksByTitle(title: 'title')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
-        isA<BookLoadedState>(),
+        isA<BooksLoadingState>(),
+        isA<BooksLoadedState>(),
       ],
     );
 
@@ -278,7 +276,7 @@ void main() {
         verify(() => service.findBooksByTitle(title: 'title')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookEmptyState>(),
       ],
     );
@@ -293,7 +291,7 @@ void main() {
         verify(() => service.findBooksByTitle(title: 'title')).called(1);
       },
       expect: () => [
-        isA<BookLoadingState>(),
+        isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
       ],
     );

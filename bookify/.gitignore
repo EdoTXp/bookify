@@ -25,6 +25,7 @@
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
+
 .flutter-plugins-dependencies
 .packages
 .pub-cache/
@@ -44,3 +45,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# folder ignored
+secrets

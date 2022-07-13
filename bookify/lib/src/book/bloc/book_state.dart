@@ -3,14 +3,14 @@ part of 'book_bloc.dart';
 @immutable
 abstract class BookState {}
 
-class BookLoadingState extends BookState {}
+class BooksLoadingState extends BookState {}
 
 class BookEmptyState extends BookState {}
 
-class BookLoadedState extends BookState {
+class BooksLoadedState extends BookState {
   final List<BookModel> books;
 
-  BookLoadedState({
+  BooksLoadedState({
     required this.books,
   });
 }
