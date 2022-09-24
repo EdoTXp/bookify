@@ -1,10 +1,10 @@
-import 'package:bookify/src/book/services/google_books_service.dart';
+import 'package:bookify/src/features/book/services/google_books_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../mocks/books_json_mock.dart';
-import '../../mocks/dio_http_service_mock.dart';
+import '../../../mocks/books_json_mock.dart';
+import '../../../mocks/dio_http_service_mock.dart';
 
 void main() {
   final dio = DioHttpServiceMock();

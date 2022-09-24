@@ -1,11 +1,12 @@
-import 'package:bookify/src/book/errors/book_error.dart';
-import 'package:bookify/src/book/bloc/book_bloc.dart';
+
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/features/book/bloc/book_bloc.dart';
+import 'package:bookify/src/features/book/errors/book_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../mocks/books_model_mock.dart';
-import '../../mocks/google_book_service_mock.dart';
+import '../../../mocks/books_model_mock.dart';
+import '../../../mocks/google_book_service_mock.dart';
 
 void main() {
   group('Test every event of Book Bloc: ', () {

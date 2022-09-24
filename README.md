@@ -1,6 +1,10 @@
 # bookify
 
-A new Flutter project.
+A Flutter project that helps you search for books, add them to your library and track your reading time.
+
+## design
+
+The design was created with Figma: <https://www.figma.com/file/EGg9eFK0Hi8LaVQcPVnjrX/Bookify-Edoardo?node-id=0%3A1>
 
 ## Getting Started
 

@@ -1,6 +1,5 @@
-import 'package:bookify/src/book/adapters/google_books_adapter.dart';
-import 'package:bookify/src/book/errors/book_error.dart';
-
+import '../adapters/google_books_adapter.dart';
+import '../errors/book_error.dart';
 import '../models/book_model.dart';
 
 import 'interfaces/books_service_interface.dart';

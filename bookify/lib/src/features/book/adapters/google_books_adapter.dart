@@ -1,4 +1,4 @@
-import 'package:bookify/src/book/models/book_model.dart';
+import '../models/book_model.dart';
 
 class GoogleBooksAdapter {
   static BookModel fromJson(Map map) {

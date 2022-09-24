@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 import '../../book/models/book_model.dart';
@@ -20,7 +21,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     on<FindBooksByTitleEvent>(_findBooksByTitle);
   }
 
-  void _getAllBooks(GetAllBooksEvent event, emit) async {
+  Future<void> _getAllBooks(GetAllBooksEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -36,7 +37,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  void _findBookByIsbn(FindBookByIsbnEvent event, emit) async {
+  Future<void> _findBookByIsbn(FindBookByIsbnEvent event, emit) async {
     emit(BooksLoadingState());
     try {
       final book = await _service.findBookByISBN(isbn: event.isbn);
@@ -47,7 +48,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  void _findBooksByAuthor(FindBooksByAuthorEvent event, emit) async {
+  Future<void> _findBooksByAuthor(FindBooksByAuthorEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -64,7 +65,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  void _findBooksByCategory(FindBooksByCategoryEvent event, emit) async {
+  Future<void> _findBooksByCategory(FindBooksByCategoryEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -82,7 +83,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  void _findBooksByPublisher(FindBooksByPublisherEvent event, emit) async {
+  Future<void> _findBooksByPublisher(FindBooksByPublisherEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -100,7 +101,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  void _findBooksByTitle(FindBooksByTitleEvent event, emit) async {
+  Future<void> _findBooksByTitle(FindBooksByTitleEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {

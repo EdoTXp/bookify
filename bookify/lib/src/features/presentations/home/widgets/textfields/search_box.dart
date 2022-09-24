@@ -8,7 +8,7 @@ class SearchBox extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         focusColor: Colors.pink,
-        hintText: "Título, autor(a), ISBN...",
+        hintText: 'Título, autor(a), ISBN...',
         prefixIcon: const Icon(Icons.search),
         prefixIconColor: Colors.pink,
         border: OutlineInputBorder(
