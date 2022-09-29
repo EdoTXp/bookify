@@ -20,7 +20,8 @@
             "name": "bookify (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "lib/src/main.dart"
         }
     ]
 }

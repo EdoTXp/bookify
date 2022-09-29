@@ -22,48 +22,24 @@ class _RoundedBoxChoiceChipState extends State<RoundedBoxChoiceChip> {
   Widget build(BuildContext context) {
     return ChoiceChip(
       label: Text(widget.label,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: GoogleFonts.roboto(
-            fontSize: 23,
             color: Colors.white,
           )),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-      padding: const EdgeInsets.all(30),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       pressElevation: 0,
       tooltip: "A lista de livros será filtrada por ${widget.label}",
       backgroundColor: const Color(0xFF62B2DE),
       selectedColor: const Color(0xFFFF8CA2),
       selected: isSelected,
       onSelected: ((value) {
+        widget.onSelected(value);
         setState(() {
           isSelected = value;
-          widget.onSelected(value);
         });
       }),
     );
   }
 }
-
-
-    //TODO Aggiungere il ChoseClip al posto del container
-
-
-
-
-   /* return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-        color: (widget.isClicked)
-            ? const Color(0xFFFF8CA2)
-            : const Color(0xFF62B2DE),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Text(
-          widget.text,
-          style: GoogleFonts.roboto(
-            fontSize: 23,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );*/

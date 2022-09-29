@@ -7,9 +7,9 @@ import 'interfaces/http_service_interface.dart';
 
 const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
 const _urlParams =
-    '&download=epub&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=19';
+    '&download=epub&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 const _isbnUrlParams =
-    '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=19';
+    '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
 class GoogleBookService implements IBooksService {
   final IHttpService _service;

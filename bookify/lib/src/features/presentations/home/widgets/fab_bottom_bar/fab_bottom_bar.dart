@@ -11,8 +11,11 @@ class FABBottomAppBarItem {
   final IconData selectedIcon;
   final String text;
 
-  FABBottomAppBarItem(
-      {required this.selectedIcon, required this.iconData, required this.text});
+  FABBottomAppBarItem({
+    required this.selectedIcon,
+    required this.iconData,
+    required this.text,
+  });
 }
 
 const rectangeRoundedNotchedShape = AutomaticNotchedShape(
@@ -69,7 +72,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     items.insert(
         items.length >> 1,
         const SizedBox(
-          width: 50,
+          width: 55,
         ));
 
     return BottomAppBar(

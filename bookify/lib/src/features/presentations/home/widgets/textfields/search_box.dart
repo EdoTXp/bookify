@@ -12,7 +12,7 @@ class SearchBox extends StatelessWidget {
         prefixIcon: const Icon(Icons.search),
         prefixIconColor: Colors.pink,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(15),
         ),
       ),
     );

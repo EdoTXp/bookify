@@ -1,10 +1,7 @@
-import 'package:bookify/src/features/presentations/home/view/pages/bookshelf/bookshelf_page.dart';
-import 'package:bookify/src/features/presentations/home/view/pages/profile/profile_page.dart';
-import 'package:bookify/src/features/presentations/home/view/pages/readings/readings_page.dart';
-import 'package:bookify/src/features/presentations/home/widgets/fab_bottom_bar/fab_bottom_bar.dart';
-import 'package:bookify/src/features/presentations/home/widgets/floating_action_button/rectangle_floating_action_button.dart';
 import 'package:flutter/material.dart';
-import 'pages/book_showcase/book_showcase_page.dart';
+import 'pages/pages.dart';
+import '../widgets/fab_bottom_bar/fab_bottom_bar.dart';
+import '../widgets/floating_action_button/rectangle_floating_action_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,6 +15,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // when the keyboard appears, FAB hides
+    final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
       body: PageView(
         controller: _pageController,
@@ -34,21 +34,24 @@ class _HomePageState extends State<HomePage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 40),
-          RectangleFloatingActionButton(
-            onPressed: (() {}),
-            width: 60,
-            height: 60,
-            child: const Icon(
-              Icons.add,
-              size: 40,
+          Visibility(
+            visible: !keyboardIsOpen,
+            child: RectangleFloatingActionButton(
+              onPressed: (() {}),
+              width: 60,
+              height: 60,
+              child: const Icon(
+                Icons.add,
+                size: 40,
+              ),
             ),
           ),
         ],
       ),
       bottomNavigationBar: FABBottomAppBar(
         notchedShape: rectangeRoundedNotchedShape,
-        color: Colors.blue,
-        selectedColor: Colors.pink,
+        color: const Color(0xFF62B2DE),
+        selectedColor: const Color(0xFFFF8CA2),
         onTabSelected: (value) {
           _pageController.animateToPage(
             value,

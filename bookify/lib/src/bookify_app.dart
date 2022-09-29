@@ -2,7 +2,7 @@ import 'package:bookify/src/shared/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'features/presentations/home/providers/book_showcase_providers.dart';
-import 'features/presentations/home/view/home_page.dart';
+import 'features/presentations/home/views/home_page.dart';
 
 class BookifyApp extends StatelessWidget {
   const BookifyApp({Key? key}) : super(key: key);
