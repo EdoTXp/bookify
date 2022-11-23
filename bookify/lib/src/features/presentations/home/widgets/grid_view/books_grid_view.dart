@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../buttons/book_button.dart';
 
-class BooksGridView extends StatefulWidget {
+class BooksGridView extends StatelessWidget {
   final List<BookModel> books;
-  final void Function() onTap;
+  final void Function(BookModel book) onTap;
   final bool shrinkWrap;
   final ScrollPhysics? physics;
 
@@ -18,29 +18,22 @@ class BooksGridView extends StatefulWidget {
   });
 
   @override
-  State<BooksGridView> createState() => _BooksGridViewState();
-}
-
-class _BooksGridViewState extends State<BooksGridView> {
-  @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      physics: widget.physics,
-      shrinkWrap: widget.shrinkWrap,
-      itemCount: widget.books.length,
+      physics: physics,
+      shrinkWrap: shrinkWrap,
+      itemCount: books.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: .7, crossAxisCount: 3),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(4.0),
           child: Tooltip(
-            message: widget.books[index].title,
+            message: books[index].title,
             child: BookButton(
-              bookUrl: widget.books[index].imageUrl,
+              bookUrl: books[index].imageUrl,
               onTap: () {
-                setState(() {
-                  widget.onTap;
-                });
+                  onTap(books[index]) ;
               },
             ),
           ),

@@ -7,13 +7,13 @@ Links:
 import 'package:flutter/material.dart';
 
 class FABBottomAppBarItem {
-  final IconData iconData;
+  final IconData unselectedIcon;
   final IconData selectedIcon;
   final String text;
 
   FABBottomAppBarItem({
     required this.selectedIcon,
-    required this.iconData,
+    required this.unselectedIcon,
     required this.text,
   });
 }
@@ -27,19 +27,19 @@ const rectangeRoundedNotchedShape = AutomaticNotchedShape(
 class FABBottomAppBar extends StatefulWidget {
   final List<FABBottomAppBarItem> items;
   final NotchedShape notchedShape;
-  final ValueChanged<int> onTabSelected;
+  final ValueChanged<int> onSelectedItem;
   final double? width;
   final Color? backgroundColor;
-  final Color color;
-  final Color selectedColor;
+  final Color? color;
+  final Color? selectedColor;
 
   const FABBottomAppBar({
     super.key,
     required this.items,
     required this.notchedShape,
-    required this.onTabSelected,
-    required this.color,
-    required this.selectedColor,
+    required this.onSelectedItem,
+    this.color,
+    this.selectedColor,
     this.backgroundColor,
     this.width,
   });
@@ -49,12 +49,12 @@ class FABBottomAppBar extends StatefulWidget {
 }
 
 class _FABBottomAppBarState extends State<FABBottomAppBar> {
-  int _selectedIndex = 0;
+  int _selectedItemIndex = 0;
 
   void _updateIndex(int index) {
-    widget.onTabSelected(index);
+    widget.onSelectedItem(index);
     setState(() {
-      _selectedIndex = index;
+      _selectedItemIndex = index;
     });
   }
 
@@ -91,9 +91,13 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     required int index,
     required ValueChanged<int> onPressed,
   }) {
-    final isSelected = _selectedIndex == index;
-    final color = isSelected ? widget.selectedColor : widget.color;
-    final icon = isSelected ? item.selectedIcon : item.iconData;
+    final isSelected = _selectedItemIndex == index;
+
+    final color = isSelected
+        ? widget.selectedColor ?? Theme.of(context).primaryColor
+        : widget.color ?? Theme.of(context).unselectedWidgetColor;
+
+    final icon = isSelected ? item.selectedIcon : item.unselectedIcon;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -108,6 +112,8 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
+            splashColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(90),
             onTap: () => onPressed(index),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -117,7 +123,10 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
                 Text(
                   item.text,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 12, color: color),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: color,
+                  ),
                 )
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../errors/book_error.dart';
 import 'interfaces/http_service_interface.dart';
 
 class DioHttpService implements IHttpService {
@@ -8,7 +9,13 @@ class DioHttpService implements IHttpService {
   @override
   Future<dynamic> get(String url) async {
     final response = await _dio.get(url);
-    return response.data;
+    if (response.statusCode == 200) {
+      return response.data;
+    } else if (response.statusCode == 204) {
+      throw BookNotFoundException(response.statusMessage!);
+    } else {
+      throw BookException(response.statusMessage!);
+    }
   }
 
   @override

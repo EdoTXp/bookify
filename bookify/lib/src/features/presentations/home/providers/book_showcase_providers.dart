@@ -8,7 +8,7 @@ import '../../../book/services/interfaces/books_service_interface.dart';
 import '../../../book/services/interfaces/http_service_interface.dart';
 
 final bookShowcaseProviders = [
-  Provider<IHttpService>(create: ((context) => DioHttpService())),
+  Provider<IHttpService>(create: ((_) => DioHttpService())),
   Provider<IBooksService>(
       create: ((context) => GoogleBookService(context.read()))),
   BlocProvider<BookBloc>(create: ((context) => BookBloc(context.read())))

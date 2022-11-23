@@ -24,6 +24,7 @@ class RectangleFloatingActionButton extends StatelessWidget {
       width: width ?? 80,
       height: height ?? 80,
       child: FloatingActionButton(
+        splashColor: Colors.transparent,
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         shape: RoundedRectangleBorder(

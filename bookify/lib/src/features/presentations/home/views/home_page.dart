@@ -48,32 +48,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      extendBody: true,
       bottomNavigationBar: FABBottomAppBar(
         notchedShape: rectangeRoundedNotchedShape,
-        color: const Color(0xFF62B2DE),
-        selectedColor: const Color(0xFFFF8CA2),
-        onTabSelected: (value) {
-          _pageController.animateToPage(
-            value,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeInOut,
-          );
-        },
+        // color: const Color(0xFF62B2DE),
+        // selectedColor: const Color(0xFFFF8CA2),
+        onSelectedItem: _pageController.jumpToPage,
         items: [
           FABBottomAppBarItem(
-              iconData: Icons.home_outlined,
+              unselectedIcon: Icons.home_outlined,
               selectedIcon: Icons.home,
               text: 'Início'),
           FABBottomAppBarItem(
-              iconData: Icons.book_outlined,
+              unselectedIcon: Icons.book_outlined,
               selectedIcon: Icons.book,
               text: 'Estantes'),
           FABBottomAppBarItem(
-              iconData: Icons.auto_stories_outlined,
+              unselectedIcon: Icons.auto_stories_outlined,
               selectedIcon: Icons.auto_stories,
               text: 'Leituras'),
           FABBottomAppBarItem(
-              iconData: Icons.person_outline,
+              unselectedIcon: Icons.person_outline,
               selectedIcon: Icons.person,
               text: 'Perfil')
         ],

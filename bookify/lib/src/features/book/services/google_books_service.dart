@@ -19,14 +19,14 @@ class GoogleBookService implements IBooksService {
   @override
   Future<List<BookModel>> findBooksByAuthor({required String author}) async {
     final url = '${_baseUrl}inauthor:$author$_urlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books;
   }
 
   @override
   Future<BookModel> findBookByISBN({required int isbn}) async {
     final url = '${_baseUrl}isbn:$isbn$_isbnUrlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books.last;
   }
 
@@ -34,7 +34,7 @@ class GoogleBookService implements IBooksService {
   Future<List<BookModel>> findBooksByPublisher(
       {required String publisher}) async {
     final url = '${_baseUrl}inpublisher:$publisher$_urlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books;
   }
 
@@ -42,21 +42,21 @@ class GoogleBookService implements IBooksService {
   Future<List<BookModel>> findBooksByCategory(
       {required String category}) async {
     final url = '${_baseUrl}subject:$category$_urlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books;
   }
 
   @override
   Future<List<BookModel>> findBooksByTitle({required String title}) async {
     final url = '${_baseUrl}intitle:$title$_urlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books;
   }
 
   @override
   Future<List<BookModel>> getAllBooks() async {
     const url = '$_baseUrl*$_isbnUrlParams';
-    final books = await _responseBook(url);
+    final books = await _fetch(url);
     return books;
   }
 
@@ -65,7 +65,7 @@ class GoogleBookService implements IBooksService {
     _service.dispose();
   }
 
-  Future<List<BookModel>> _responseBook(String url) async {
+  Future<List<BookModel>> _fetch(String url) async {
     try {
       final response = await _service.get(url);
       final books = (response['items'] as List)
@@ -73,8 +73,12 @@ class GoogleBookService implements IBooksService {
           .toList();
 
       return books;
+    } on BookNotFoundException catch (bookNotFoundException) {
+      throw BookNotFoundException(bookNotFoundException.toString());
+    } on BookException catch (bookExcetpion) {
+      throw BookException(bookExcetpion.toString());
     } catch (e) {
-      throw BookException(e.toString());
+      throw Exception(e.toString());
     }
   }
 }
