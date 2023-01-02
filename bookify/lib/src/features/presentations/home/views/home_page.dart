@@ -51,8 +51,6 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       bottomNavigationBar: FABBottomAppBar(
         notchedShape: rectangeRoundedNotchedShape,
-        // color: const Color(0xFF62B2DE),
-        // selectedColor: const Color(0xFFFF8CA2),
         onSelectedItem: _pageController.jumpToPage,
         items: [
           FABBottomAppBarItem(

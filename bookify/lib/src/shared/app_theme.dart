@@ -7,12 +7,11 @@ final appLightTheme = ThemeData(
   primaryColor: lightSelectedColor,
   unselectedWidgetColor: lightPrimaryColor,
   backgroundColor: Colors.black,
-  iconTheme: const IconThemeData(color:  lightPrimaryColor),
+  iconTheme: const IconThemeData(color: lightPrimaryColor),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     foregroundColor: lightPrimaryColor,
     backgroundColor: Colors.white,
   ),
 );
 
-final appDarkTheme = ThemeData.dark(
-);
+final appDarkTheme = ThemeData.dark();

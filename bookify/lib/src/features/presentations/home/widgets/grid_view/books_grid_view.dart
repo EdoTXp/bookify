@@ -31,9 +31,9 @@ class BooksGridView extends StatelessWidget {
           child: Tooltip(
             message: books[index].title,
             child: BookButton(
-              bookUrl: books[index].imageUrl,
+              bookImageUrl: books[index].imageUrl,
               onTap: () {
-                  onTap(books[index]) ;
+                onTap(books[index]);
               },
             ),
           ),

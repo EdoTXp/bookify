@@ -1,12 +1,13 @@
+import 'package:bookify/src/features/presentations/home/widgets/book_widget/book_widget.dart';
 import 'package:flutter/material.dart';
 
 class BookButton extends StatelessWidget {
-  final String bookUrl;
+  final String bookImageUrl;
   final void Function() onTap;
 
   const BookButton({
     Key? key,
-    required this.bookUrl,
+    required this.bookImageUrl,
     required this.onTap,
   }) : super(key: key);
 
@@ -14,17 +15,8 @@ class BookButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO corregere il problema del click quando il widget non è visibile
     return InkWell(
-      splashColor: Colors.transparent,
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          image:
-              DecorationImage(image: NetworkImage(bookUrl), fit: BoxFit.fill),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-      ),
-    );
+        splashColor: Colors.transparent,
+        onTap: onTap,
+        child: BookWidget(bookImageUrl: bookImageUrl));
   }
 }

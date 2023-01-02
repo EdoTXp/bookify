@@ -1,6 +1,9 @@
 import 'package:bookify/src/features/book/models/book_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:bookify/src/features/presentations/home/widgets/widgets.dart';
+import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
+
+import 'book_detail_controller.dart';
 
 /// Page where it shows the details of a book.
 class BookDetailPage extends StatefulWidget {
@@ -17,7 +20,8 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  var isElipsed = true;
+  bool isEllipsisText = true;
+  final bookDetailController = BookDetailController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,38 +31,35 @@ class _BookDetailPageState extends State<BookDetailPage> {
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark_border))
+          IconButton(
+            icon: const Icon(Icons.bookmark_border),
+            onPressed: () {},
+          )
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.only(
+            left: 24.0, right: 24.0, top: 8.0, bottom: 16.0),
         child: SingleChildScrollView(
-          
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: Text(
-                  '${widget.book.title} - ${widget.book.authors.join(', ')}',
+                  '${widget.book.title} ― ${widget.book.authors.join(', ')}',
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
               const SizedBox(height: 12),
               Center(
-                child: Container(
-                  height: 500,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(widget.book.imageUrl),
-                        fit: BoxFit.fill),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
+                child: BookWidget(
+                  height: 300,
+                  width: 200,
+                  bookImageUrl: widget.book.imageUrl,
                 ),
               ),
               const SizedBox(height: 12),
@@ -69,15 +70,38 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     '${widget.book.pageCount} PÁGINAS',
                     style: TextStyle(
                         color: Theme.of(context).unselectedWidgetColor,
-                        fontSize: 16),
+                        fontSize: 14),
                   ),
                   const SizedBox(width: 24),
                   Text(
-                    '9H HORAS PARA LER',
+                    '9H PARA LER',
                     style: TextStyle(
                         color: Theme.of(context).unselectedWidgetColor,
-                        fontSize: 16),
+                        fontSize: 14),
                   ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: BookifyOutlinedButton(
+                      text: 'Ir para loja',
+                      suffixIcon: Icons.store,
+                      onPressed: () async =>
+                          bookDetailController.launchUrl(widget.book.buyLink),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: BookifyElevatedButton(
+                      text: 'Adicionar',
+                      suffixIcon: Icons.arrow_forward,
+                      onPressed: () {},
+                    ),
+                  )
                 ],
               ),
               const SizedBox(height: 24),
@@ -85,57 +109,65 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 'Sinopse',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                  fontSize: 20,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 12),
               InkWell(
                 splashColor: Colors.transparent,
-                onTap: () => setState(() => isElipsed = !isElipsed),
+                onTap: () => setState(() => isEllipsisText = !isEllipsisText),
                 child: Text(
                   widget.book.description,
-                  maxLines: (isElipsed) ? 4 : null,
-                  overflow: (isElipsed)
+                  maxLines: (isEllipsisText) ? 4 : null,
+                  textAlign: TextAlign.justify,
+                  overflow: (isEllipsisText)
                       ? TextOverflow.ellipsis
                       : TextOverflow.visible,
-                  strutStyle: const StrutStyle(height: 2),
                   style: const TextStyle(
-                    fontSize: 20,
+                    height: 1.5,
                   ),
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Avaliações',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Column(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${widget.book.averageRating}',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                  Column(
+                    children: [
+                      const Text(
+                        'Avaliações',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      BookRating(
+                        averageRating: widget.book.averageRating,
+                        ratingsCount: widget.book.ratingsCount,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 24),
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Informações do Livro',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        BookDescriptionWidget(title: 'Editora: ', content: widget.book.publisher),
+                        BookDescriptionWidget(title: 'Gêneros: ', content: widget.book.categories.join(', '))
+                      ],
                     ),
                   ),
-                  RatingBarIndicator(
-                    rating: widget.book.averageRating,
-                    itemBuilder: (context, index) => Icon(
-                      Icons.star,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    itemSize: 20,
-                  ),
-                  Text(
-                    'TOTAL: ${widget.book.ratingsCount}',
-                    style: TextStyle(
-                        color: Theme.of(context).unselectedWidgetColor),
-                  )
                 ],
               ),
             ],

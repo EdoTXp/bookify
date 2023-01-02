@@ -26,7 +26,8 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+   // compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33 // This variable was changed to make the "url_launcher" plugin work.
     ndkVersion "23.1.7779620"
 
     compileOptions {

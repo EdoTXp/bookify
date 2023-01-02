@@ -8,7 +8,7 @@ class GoogleBooksAdapter {
       authors:
           List<String>.from(map['volumeInfo']['authors'] ?? ['Nenhum Autor']),
       publisher: map['volumeInfo']['publisher'] ?? 'Nenhuma Editora',
-      description: map['volumeInfo']['description'] ?? 'Não contém descrição',
+      description: map['volumeInfo']['description'] ?? 'Não contém descrição.',
       categories: List<String>.from(
           map['volumeInfo']['categories'] ?? ['Nenhum Gênero']),
       pageCount: map['volumeInfo']['pageCount'] ?? 0,

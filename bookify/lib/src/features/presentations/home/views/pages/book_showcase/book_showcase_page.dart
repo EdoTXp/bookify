@@ -39,7 +39,9 @@ class _BookShowcasePageState extends State<BookShowcasePage>
     return BlocBuilder<BookBloc, BookState>(
       builder: (BuildContext context, state) {
         if (state is BooksLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor));
         } else if (state is BookEmptyState) {
           return const Center(
             child: Text('Empty State'),
@@ -70,88 +72,93 @@ class _BookShowcasePageState extends State<BookShowcasePage>
                   const SearchBox(),
                   const SizedBox(height: 10),
                   Expanded(
-                    child: ListView(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        //Publisher filter
-                        FilterRowWidget(
-                          text: Text(
-                            'Editoras',
-                            style: GoogleFonts.roboto(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                    child: RefreshIndicator(
+                      color: Theme.of(context).primaryColor,
+                      onRefresh: () async => bloc.add(GetAllBooksEvent()),
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        children: [
+                          //Publisher filter
+                          FilterRowWidget(
+                            text: Text(
+                              'Editoras',
+                              style: GoogleFonts.roboto(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            suffixIcon: Icons.filter_list,
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 90,
+                            child: PublisherListView(
+                              publishers:
+                                  books.map((book) => book.publisher).toList(),
                             ),
                           ),
-                          suffixIcon: Icons.filter_list,
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 90,
-                          child: PublisherListView(
-                            publishers:
-                                books.map((book) => book.publisher).toList(),
+                          const SizedBox(height: 20),
+                          //Categories filter
+                          FilterRowWidget(
+                            text: Text(
+                              'Gêneros',
+                              style: GoogleFonts.roboto(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            suffixIcon: Icons.filter_list,
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        //Categories filter
-                        FilterRowWidget(
-                          text: Text(
-                            'Gêneros',
-                            style: GoogleFonts.roboto(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: 90,
+                            child: GridView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: .3,
+                                crossAxisCount: 2,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: books.length,
+                              itemBuilder: ((context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: RoundedBoxChoiceChip(
+                                    label: (books[index].categories.first),
+                                    onSelected: (value) {
+                                      //TODO filtrare la lista e aggiornare i libri
+                                    },
+                                  ),
+                                );
+                              }),
                             ),
                           ),
-                          suffixIcon: Icons.filter_list,
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 90,
-                          child: GridView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: .3,
-                              crossAxisCount: 2,
-                            ),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: books.length,
-                            itemBuilder: ((context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: RoundedBoxChoiceChip(
-                                  label: (books[index].categories.first),
-                                  onSelected: (value) {
-                                    //TODO filtrare la lista e aggiornare i libri
-                                  },
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        FilterRowWidget(
-                          text: Text(
-                            'Livros',
-                            style: GoogleFonts.roboto(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                          const SizedBox(height: 20),
+                          FilterRowWidget(
+                            text: Text(
+                              'Livros',
+                              style: GoogleFonts.roboto(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        BooksGridView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          books: books,
-                          onTap: (book) => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => BookDetailPage(book: book),
+                          const SizedBox(height: 20),
+                          BooksGridView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            books: books,
+                            onTap: (book) => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    BookDetailPage(book: book),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
