@@ -1,8 +1,8 @@
-import 'package:bookify/src/shared/app_theme.dart';
+import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/presentations/home/providers/book_showcase_providers.dart';
-import 'features/presentations/home/views/home_page.dart';
+import 'shared/providers/home_page_providers.dart';
+import 'features/root/views/root_page.dart';
 
 class BookifyApp extends StatelessWidget {
   const BookifyApp({Key? key}) : super(key: key);
@@ -11,14 +11,14 @@ class BookifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ...bookShowcaseProviders,
+        ...homePageProviders,
       ],
       child: MaterialApp(
         title: 'Bookify',
         theme: appLightTheme,
         darkTheme: appDarkTheme,
         themeMode: ThemeMode.system,
-        home: const HomePage(),
+        home: const RootPage(),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:bookify/src/features/book/models/book_model.dart';
+import 'package:bookify/src/shared/models/book_model.dart';
 
 final booksModelMock = [
   BookModel(

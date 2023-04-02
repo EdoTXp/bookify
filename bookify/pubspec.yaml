@@ -29,12 +29,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^4.0.6
-  provider: ^6.0.4
-  flutter_bloc: ^8.1.1
+  dio: ^5.1.1
+  provider: ^6.0.5
+  flutter_bloc: ^8.1.2
   flutter_rating_bar: ^4.0.1 # Used for show the book rating averange 
-  google_fonts: ^3.0.1
-  url_launcher: ^6.1.7
+  google_fonts: ^4.0.3
+  url_launcher: ^6.1.10
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,7 +45,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
-  bloc_test: ^9.1.0
+  bloc_test: ^9.1.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
