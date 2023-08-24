@@ -16,15 +16,15 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   final IBooksRepository _booksRepository;
 
   BookBloc(this._booksRepository) : super(BooksLoadingState()) {
-    on<GetAllBooksEvent>(_getAllBooks);
-    on<FindBookByIsbnEvent>(_findBookByIsbn);
-    on<FindBooksByAuthorEvent>(_findBooksByAuthor);
-    on<FindBooksByCategoryEvent>(_findBooksByCategory);
-    on<FindBooksByPublisherEvent>(_findBooksByPublisher);
-    on<FindBooksByTitleEvent>(_findBooksByTitle);
+    on<GotAllBooksEvent>(_getAllBooks);
+    on<FindedBookByIsbnEvent>(_findBookByIsbn);
+    on<FindedBooksByAuthorEvent>(_findBooksByAuthor);
+    on<FindedBooksByCategoryEvent>(_findBooksByCategory);
+    on<FindedBooksByPublisherEvent>(_findBooksByPublisher);
+    on<FindedBooksByTitleEvent>(_findBooksByTitle);
   }
 
-  Future<void> _getAllBooks(GetAllBooksEvent event, emit) async {
+  Future<void> _getAllBooks(GotAllBooksEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -42,7 +42,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  Future<void> _findBookByIsbn(FindBookByIsbnEvent event, emit) async {
+  Future<void> _findBookByIsbn(FindedBookByIsbnEvent event, emit) async {
     emit(BooksLoadingState());
     try {
       final book = await _booksRepository.findBookByISBN(isbn: event.isbn);
@@ -53,7 +53,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  Future<void> _findBooksByAuthor(FindBooksByAuthorEvent event, emit) async {
+  Future<void> _findBooksByAuthor(FindedBooksByAuthorEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -71,7 +71,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByCategory(
-      FindBooksByCategoryEvent event, emit) async {
+      FindedBooksByCategoryEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -90,7 +90,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByPublisher(
-      FindBooksByPublisherEvent event, emit) async {
+      FindedBooksByPublisherEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {
@@ -108,7 +108,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  Future<void> _findBooksByTitle(FindBooksByTitleEvent event, emit) async {
+  Future<void> _findBooksByTitle(FindedBooksByTitleEvent event, emit) async {
     emit(BooksLoadingState());
 
     try {

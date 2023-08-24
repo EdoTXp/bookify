@@ -3,44 +3,44 @@ part of '../../../shared/blocs/book_bloc/book_bloc.dart';
 @immutable
 abstract class BookEvent {}
 
-class GetAllBooksEvent extends BookEvent {}
+class GotAllBooksEvent extends BookEvent {}
 
-class FindBookByIsbnEvent extends BookEvent {
+class FindedBookByIsbnEvent extends BookEvent {
   final int isbn;
 
-  FindBookByIsbnEvent({
+  FindedBookByIsbnEvent({
     required this.isbn,
   });
 }
 
-class FindBooksByAuthorEvent extends BookEvent {
+class FindedBooksByAuthorEvent extends BookEvent {
   final String author;
 
-  FindBooksByAuthorEvent({
+  FindedBooksByAuthorEvent({
     required this.author,
   });
 }
 
-class FindBooksByCategoryEvent extends BookEvent {
+class FindedBooksByCategoryEvent extends BookEvent {
   final String category;
 
-  FindBooksByCategoryEvent({
+  FindedBooksByCategoryEvent({
     required this.category,
   });
 }
 
-class FindBooksByPublisherEvent extends BookEvent {
+class FindedBooksByPublisherEvent extends BookEvent {
   final String publisher;
 
-  FindBooksByPublisherEvent({
+  FindedBooksByPublisherEvent({
     required this.publisher,
   });
 }
 
-class FindBooksByTitleEvent extends BookEvent {
+class FindedBooksByTitleEvent extends BookEvent {
   final String title;
 
-  FindBooksByTitleEvent({
+  FindedBooksByTitleEvent({
     required this.title,
   });
 }

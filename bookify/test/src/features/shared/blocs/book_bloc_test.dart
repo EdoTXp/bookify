@@ -32,7 +32,7 @@ void main() {
       build: () => bookBloc,
       setUp: () => when((() => repository.getAllBooks()))
           .thenAnswer((_) async => booksMock),
-      act: (bloc) => bloc.add(GetAllBooksEvent()),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
       verify: (_) {
         verify(() => repository.getAllBooks()).called(1);
       },
@@ -47,7 +47,7 @@ void main() {
       setUp: () =>
           when((() => repository.getAllBooks())).thenAnswer((_) async => []),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(GetAllBooksEvent()),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
       verify: (_) {
         verify(() => repository.getAllBooks()).called(1);
       },
@@ -62,7 +62,7 @@ void main() {
       setUp: () => when((() => repository.getAllBooks()))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(GetAllBooksEvent()),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
       verify: (_) {
         verify(() => repository.getAllBooks()).called(1);
       },
@@ -77,7 +77,7 @@ void main() {
       setUp: () => when((() => repository.findBookByISBN(isbn: 11111)))
           .thenAnswer((_) async => booksMock.first),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBookByIsbnEvent(isbn: 11111)),
+      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: 11111)),
       verify: (_) {
         verify(() => repository.findBookByISBN(isbn: 11111)).called(1);
       },
@@ -92,7 +92,7 @@ void main() {
       setUp: () => when((() => repository.findBookByISBN(isbn: 11111)))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBookByIsbnEvent(isbn: 11111)),
+      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: 11111)),
       verify: (_) {
         verify(() => repository.findBookByISBN(isbn: 11111)).called(1);
       },
@@ -107,7 +107,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByAuthorEvent(author: 'author')),
+      act: (bloc) => bloc.add(FindedBooksByAuthorEvent(author: 'author')),
       verify: (_) {
         verify(() => repository.findBooksByAuthor(author: 'author')).called(1);
       },
@@ -122,7 +122,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenAnswer((_) async => []),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByAuthorEvent(author: 'author')),
+      act: (bloc) => bloc.add(FindedBooksByAuthorEvent(author: 'author')),
       verify: (_) {
         verify(() => repository.findBooksByAuthor(author: 'author')).called(1);
       },
@@ -137,7 +137,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByAuthorEvent(author: 'author')),
+      act: (bloc) => bloc.add(FindedBooksByAuthorEvent(author: 'author')),
       verify: (_) {
         verify(() => repository.findBooksByAuthor(author: 'author')).called(1);
       },
@@ -153,7 +153,7 @@ void main() {
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByCategoryEvent(category: 'category')),
+      act: (bloc) => bloc.add(FindedBooksByCategoryEvent(category: 'category')),
       verify: (_) {
         verify(() => repository.findBooksByCategory(category: 'category'))
             .called(1);
@@ -170,7 +170,7 @@ void main() {
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenAnswer((_) async => []),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByCategoryEvent(category: 'category')),
+      act: (bloc) => bloc.add(FindedBooksByCategoryEvent(category: 'category')),
       verify: (_) {
         verify(() => repository.findBooksByCategory(category: 'category'))
             .called(1);
@@ -187,7 +187,7 @@ void main() {
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByCategoryEvent(category: 'category')),
+      act: (bloc) => bloc.add(FindedBooksByCategoryEvent(category: 'category')),
       verify: (_) {
         verify(() => repository.findBooksByCategory(category: 'category'))
             .called(1);
@@ -205,7 +205,7 @@ void main() {
               .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
       act: (bloc) =>
-          bloc.add(FindBooksByPublisherEvent(publisher: 'publisher')),
+          bloc.add(FindedBooksByPublisherEvent(publisher: 'publisher')),
       verify: (_) {
         verify(() => repository.findBooksByPublisher(publisher: 'publisher'))
             .called(1);
@@ -223,7 +223,7 @@ void main() {
               .thenAnswer((_) async => []),
       build: () => bookBloc,
       act: (bloc) =>
-          bloc.add(FindBooksByPublisherEvent(publisher: 'publisher')),
+          bloc.add(FindedBooksByPublisherEvent(publisher: 'publisher')),
       verify: (_) {
         verify(() => repository.findBooksByPublisher(publisher: 'publisher'))
             .called(1);
@@ -241,7 +241,7 @@ void main() {
               .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) =>
-          bloc.add(FindBooksByPublisherEvent(publisher: 'publisher')),
+          bloc.add(FindedBooksByPublisherEvent(publisher: 'publisher')),
       verify: (_) {
         verify(() => repository.findBooksByPublisher(publisher: 'publisher'))
             .called(1);
@@ -257,7 +257,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByTitleEvent(title: 'title')),
+      act: (bloc) => bloc.add(FindedBooksByTitleEvent(title: 'title')),
       verify: (_) {
         verify(() => repository.findBooksByTitle(title: 'title')).called(1);
       },
@@ -272,7 +272,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenAnswer((_) async => []),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByTitleEvent(title: 'title')),
+      act: (bloc) => bloc.add(FindedBooksByTitleEvent(title: 'title')),
       verify: (_) {
         verify(() => repository.findBooksByTitle(title: 'title')).called(1);
       },
@@ -287,7 +287,7 @@ void main() {
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindBooksByTitleEvent(title: 'title')),
+      act: (bloc) => bloc.add(FindedBooksByTitleEvent(title: 'title')),
       verify: (_) {
         verify(() => repository.findBooksByTitle(title: 'title')).called(1);
       },

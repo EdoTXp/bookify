@@ -19,7 +19,7 @@ class DioHttpClient implements IHttpClient {
       } else {
         throw BookException(response.statusMessage!);
       }
-    } on DioError {
+    } on DioException {
       throw const SocketException("Impossível se conectar com o servidor.\nVerifique se está conectado a rede WI-FI ou aos Dados Móveis.");
     } catch (e) {
       throw Exception(e.toString());
