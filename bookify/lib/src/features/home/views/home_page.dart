@@ -33,39 +33,40 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget getBookStateWidget(BuildContext context, BookState state) {
-    if (state is BooksLoadingState) {
-      searchBoxVisible = true;
+    switch (state) {
+      case BooksLoadingState():
+        searchBoxVisible = true;
 
-      return Center(
-        child: CircularProgressIndicator(color: Theme.of(context).primaryColor),
-      );
-    } else if (state is BookEmptyState) {
-      searchBoxVisible = true;
+        return Center(
+          child:
+              CircularProgressIndicator(color: Theme.of(context).primaryColor),
+        );
 
-      return const Center(
-        child: Text(
-          'Não foi encontrado nenhum livros com esses termos.',
-        ),
-      );
-    } else if (state is SingleBookLoadedState) {
-      searchBoxVisible = false;
+      case BookEmptyState():
+        searchBoxVisible = true;
 
-      final book = state.book;
-      return SingleBookLoadedStateWidget(book: book);
-    } else if (state is BooksLoadedState) {
-      searchBoxVisible = false;
+        return const Center(
+          child: Text('Não foi encontrado nenhum livros com esses termos.'),
+        );
 
-      final books = state.books;
-      return BooksLoadedStateWidget(books: books);
-    } else {
-      searchBoxVisible = true;
+      case SingleBookLoadedState(:final book):
+        searchBoxVisible = false;
+        return SingleBookLoadedStateWidget(book: book);
 
-      return BookErrorSateWidget(
-        stateMessage: (state as BookErrorSate).message,
-        onPressed: () => bloc.add(
-          GotAllBooksEvent(),
-        ),
-      );
+      case BooksLoadedState(:final books):
+        searchBoxVisible = false;
+
+        return BooksLoadedStateWidget(books: books);
+
+      case BookErrorSate(:final message):
+        searchBoxVisible = true;
+
+        return BookErrorSateWidget(
+          stateMessage: message,
+          onPressed: () => bloc.add(
+            GotAllBooksEvent(),
+          ),
+        );
     }
   }
 

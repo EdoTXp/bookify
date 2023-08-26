@@ -1,7 +1,6 @@
 part of '../../../shared/blocs/book_bloc/book_bloc.dart';
 
-@immutable
-abstract class BookState {}
+sealed class BookState {}
 
 class BooksLoadingState extends BookState {}
 

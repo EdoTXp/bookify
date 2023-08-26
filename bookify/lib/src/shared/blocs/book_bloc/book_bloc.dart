@@ -1,10 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:meta/meta.dart';
 
 import '../../models/book_model.dart';
 import '../../interfaces/books_repository_interface.dart';
