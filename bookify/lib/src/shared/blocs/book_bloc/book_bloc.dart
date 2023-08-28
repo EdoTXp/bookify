@@ -1,16 +1,17 @@
 import 'dart:io';
 
+import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 import '../../models/book_model.dart';
-import '../../interfaces/books_repository_interface.dart';
+
 
 part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  final IBooksRepository _booksRepository;
+  final BooksRepository _booksRepository;
 
   BookBloc(this._booksRepository) : super(BooksLoadingState()) {
     on<GotAllBooksEvent>(_getAllBooks);

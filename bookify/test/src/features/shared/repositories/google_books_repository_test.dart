@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/repositories/google_books_repository.dart';
+import 'package:bookify/src/shared/repositories/book_repository/google_books_repository_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -8,7 +8,7 @@ import '../../../mocks/dio_http_client_mock.dart';
 
 void main() {
   final dio = DioHttpClientMock();
-  final bookRepository = GoogleBookRepository(dio);
+  final bookRepository = GoogleBookRepositoryImpl(dio);
 
   group('Test all methods of GoogleBookRepository:', () {
     test('Get a List of books by author', () async {

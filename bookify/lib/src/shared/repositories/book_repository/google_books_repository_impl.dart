@@ -1,11 +1,15 @@
 import 'dart:io';
 
-import '../adapters/google_books_adapter.dart';
-import '../errors/book_error/book_error.dart';
-import '../models/book_model.dart';
 
-import '../interfaces/books_repository_interface.dart';
-import '../interfaces/http_client_interface.dart';
+
+import 'package:bookify/src/shared/adapters/google_books_adapter.dart';
+import 'package:bookify/src/shared/errors/book_error/book_error.dart';
+import 'package:bookify/src/shared/http_client/dio_http_client.dart';
+
+import 'package:bookify/src/shared/models/book_model.dart';
+
+import 'books_repository.dart';
+
 
 const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
 
@@ -17,10 +21,10 @@ const _urlParams =
 const _isbnUrlParams =
     '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
-class GoogleBookRepository implements IBooksRepository {
-  final IHttpClient _httpSource;
+class GoogleBookRepositoryImpl implements BooksRepository {
+  final DioHttpClient _httpSource;
 
-  GoogleBookRepository(this._httpSource);
+  GoogleBookRepositoryImpl(this._httpSource);
 
   @override
   Future<List<BookModel>> findBooksByAuthor({required String author}) async {

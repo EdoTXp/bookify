@@ -1,6 +1,6 @@
-import '../models/book_model.dart';
+import 'package:bookify/src/shared/models/book_model.dart';
 
-abstract class IBooksRepository {
+abstract interface class BooksRepository {
   Future<List<BookModel>> getAllBooks();
 
   Future<List<BookModel>> findBooksByAuthor({required String author});

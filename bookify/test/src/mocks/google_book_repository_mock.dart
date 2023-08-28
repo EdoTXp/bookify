@@ -1,5 +1,5 @@
 
-import 'package:bookify/src/shared/repositories/google_books_repository.dart';
+import 'package:bookify/src/shared/repositories/book_repository/google_books_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 
-class GoogleBookRepositoryMock extends Mock implements GoogleBookRepository {}
+class GoogleBookRepositoryMock extends Mock implements GoogleBookRepositoryImpl {}

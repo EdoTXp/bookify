@@ -13,14 +13,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
-  late BookBloc bloc;
+  late BookBloc bookBloc;
   bool searchBoxVisible = false;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.read<BookBloc>();
-    bloc.add(GotAllBooksEvent());
+    bookBloc = context.read<BookBloc>();
+    bookBloc.add(GotAllBooksEvent());
   }
 
   @override
@@ -28,46 +28,25 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
-    bloc.close();
+    bookBloc.close();
     super.dispose();
   }
 
   Widget getBookStateWidget(BuildContext context, BookState state) {
-    switch (state) {
-      case BooksLoadingState():
-        searchBoxVisible = true;
-
-        return Center(
+    return switch (state) {
+      BooksLoadingState() => Center(
           child:
-              CircularProgressIndicator(color: Theme.of(context).primaryColor),
-        );
-
-      case BookEmptyState():
-        searchBoxVisible = true;
-
-        return const Center(
-          child: Text('Não foi encontrado nenhum livros com esses termos.'),
-        );
-
-      case SingleBookLoadedState(:final book):
-        searchBoxVisible = false;
-        return SingleBookLoadedStateWidget(book: book);
-
-      case BooksLoadedState(:final books):
-        searchBoxVisible = false;
-
-        return BooksLoadedStateWidget(books: books);
-
-      case BookErrorSate(:final message):
-        searchBoxVisible = true;
-
-        return BookErrorSateWidget(
+              CircularProgressIndicator(color: Theme.of(context).primaryColor)),
+      BookEmptyState() => const Center(
+          child: Text('Não foi encontrado nenhum livros com esses termos.')),
+      SingleBookLoadedState(:final book) =>
+        SingleBookLoadedStateWidget(book: book),
+      BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
+      BookErrorSate(:final message) => BookErrorSateWidget(
           stateMessage: message,
-          onPressed: () => bloc.add(
-            GotAllBooksEvent(),
-          ),
-        );
-    }
+          onPressed: () => bookBloc.add(GotAllBooksEvent()),
+        ),
+    };
   }
 
   @override
@@ -75,9 +54,17 @@ class _HomePageState extends State<HomePage>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () async => bloc.add(GotAllBooksEvent()),
+      onRefresh: () async => bookBloc.add(GotAllBooksEvent()),
       color: Theme.of(context).primaryColor,
-      child: BlocBuilder<BookBloc, BookState>(
+      child: BlocConsumer<BookBloc, BookState>(
+        bloc: bookBloc,
+        listener: (_, state) {
+          if (state is SingleBookLoadedState || state is BooksLoadedState) {
+            searchBoxVisible = true;
+          } else {
+            searchBoxVisible = false;
+          }
+        },
         builder: (BuildContext context, state) {
           return Column(
             children: [
