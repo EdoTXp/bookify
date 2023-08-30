@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 final appLightTheme = ThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: lightPrimaryColor,
+      selectionColor: lightPrimaryColor,
+    ),
     searchBarTheme: const SearchBarThemeData(
         side: MaterialStatePropertyAll(
           BorderSide(color: lightSelectedColor),
         ),
+        elevation: MaterialStatePropertyAll(0),
         padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
         hintStyle:
             MaterialStatePropertyAll(TextStyle(color: lightSelectedColor))),
@@ -21,10 +26,15 @@ final appLightTheme = ThemeData(
     colorScheme: const ColorScheme.light(background: Colors.black));
 
 final appDarkTheme = ThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: lightPrimaryColor,
+      selectionColor: lightPrimaryColor,
+    ),
     searchBarTheme: const SearchBarThemeData(
         side: MaterialStatePropertyAll(
           BorderSide(color: lightSelectedColor),
         ),
+        elevation: MaterialStatePropertyAll(0),
         padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
         hintStyle:
             MaterialStatePropertyAll(TextStyle(color: lightSelectedColor))),

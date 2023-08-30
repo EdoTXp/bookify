@@ -52,8 +52,8 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
   int _selectedItemIndex = 0;
 
   void _updateIndex(int index) {
-    widget.onSelectedItem(index);
     setState(() {
+      widget.onSelectedItem(index);
       _selectedItemIndex = index;
     });
   }

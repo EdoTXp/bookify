@@ -1,4 +1,6 @@
+import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bookshelf/views/bookshelf_page.dart';
 import '../../home/views/home_page.dart';
 import '../../profile/views/profile_page.dart';
@@ -39,7 +41,12 @@ class _RootPageState extends State<RootPage> {
           Visibility(
             visible: !keyboardIsOpen,
             child: RectangleFloatingActionButton(
-              onPressed: (() {}),
+              onPressed: (() {
+                context
+                    .read<BookBloc>()
+                    .add(FindedBookByIsbnEvent(isbn: 9788573076103));
+                _pageController.jumpToPage(0);
+              }),
               width: 60,
               height: 60,
               child: const Icon(
@@ -70,7 +77,7 @@ class _RootPageState extends State<RootPage> {
           FABBottomAppBarItem(
               unselectedIcon: Icons.person_outline,
               selectedIcon: Icons.person,
-              text: 'Perfil')
+              text: 'Perfil'),
         ],
       ),
     );

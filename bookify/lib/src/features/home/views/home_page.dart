@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   late BookBloc bookBloc;
   bool searchBoxVisible = false;
+  bool textVisible = false;
 
   final searchEC = TextEditingController();
 
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage>
       BookEmptyState() => const Center(
           child: Text('Não foi encontrado nenhum livros com esses termos.')),
       SingleBookLoadedState(:final book) =>
-        SingleBookLoadedStateWidget(book: book),
+        BooksLoadedStateWidget(books: [book]),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
       BookErrorSate(:final message) => BookErrorSateWidget(
           stateMessage: message,
@@ -56,7 +57,10 @@ class _HomePageState extends State<HomePage>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () async => bookBloc.add(GotAllBooksEvent()),
+      onRefresh: () async {
+        searchEC.clear();
+        bookBloc.add(GotAllBooksEvent());
+      },
       color: Theme.of(context).primaryColor,
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
@@ -80,10 +84,16 @@ class _HomePageState extends State<HomePage>
                   visible: searchBoxVisible,
                   child: SearchBar(
                     controller: searchEC,
+                    onChanged: (value) {
+                      setState(
+                        () => value.isNotEmpty
+                            ? textVisible = true
+                            : textVisible = false,
+                      );
+                    },
                     onSubmitted: (value) {
-                      if (searchEC.text.isNotEmpty) {
-                        bookBloc
-                            .add(FindedBooksByTitleEvent(title: searchEC.text));
+                      if (value.isNotEmpty) {
+                        bookBloc.add(FindedBooksByTitleEvent(title: value));
                       }
                     },
                     hintText: 'Título, autor(a), ISBN...',
@@ -91,6 +101,30 @@ class _HomePageState extends State<HomePage>
                       Icons.search,
                       color: Theme.of(context).primaryColor,
                     ),
+                    trailing: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.menu_book_outlined,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      Visibility(
+                        visible: textVisible,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              searchEC.clear();
+                              textVisible = false;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
