@@ -1,4 +1,3 @@
-import '../../../shared/widgets/textfields/search_box.dart';
 import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/blocs/book_bloc/book_bloc.dart';
@@ -16,6 +15,8 @@ class _HomePageState extends State<HomePage>
   late BookBloc bookBloc;
   bool searchBoxVisible = false;
 
+  final searchEC = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     bookBloc.close();
+    searchEC.dispose();
     super.dispose();
   }
 
@@ -76,7 +78,20 @@ class _HomePageState extends State<HomePage>
                     const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
                 child: Visibility(
                   visible: searchBoxVisible,
-                  child: const SearchBox(),
+                  child: SearchBar(
+                    controller: searchEC,
+                    onSubmitted: (value) {
+                      if (searchEC.text.isNotEmpty) {
+                        bookBloc
+                            .add(FindedBooksByTitleEvent(title: searchEC.text));
+                      }
+                    },
+                    hintText: 'Título, autor(a), ISBN...',
+                    leading: Icon(
+                      Icons.search,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
               ),
               Expanded(
