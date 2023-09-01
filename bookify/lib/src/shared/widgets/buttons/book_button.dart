@@ -13,7 +13,7 @@ class BookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO corregere il problema del click quando il widget non è visibile
+    // TODO Correct the click problem when the widget is not visible
     return InkWell(
         splashColor: Colors.transparent,
         onTap: onTap,
