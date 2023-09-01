@@ -3,10 +3,18 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../errors/book_error/book_error.dart';
-import 'dio_http_client.dart';
+import 'rest_client.dart';
 
-class DioHttpClientImpl implements DioHttpClient {
-  final _dio = Dio();
+const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
+
+class DioRestClientImpl implements RestClient {
+  final _dio = Dio(
+    BaseOptions(
+      baseUrl: _baseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(minutes: 1),
+    ),
+  );
 
   @override
   Future<dynamic> get(String url) async {
@@ -20,7 +28,8 @@ class DioHttpClientImpl implements DioHttpClient {
         throw BookException(response.statusMessage!);
       }
     } on DioException {
-      throw const SocketException("Impossível se conectar com o servidor.\nVerifique se está conectado a rede WI-FI ou aos Dados Móveis.");
+      throw const SocketException(
+          "Impossível se conectar com o servidor.\nVerifique se está conectado a rede WI-FI ou aos Dados Móveis.");
     } catch (e) {
       throw Exception(e.toString());
     }

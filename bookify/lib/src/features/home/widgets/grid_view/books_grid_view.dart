@@ -7,12 +7,14 @@ class BooksGridView extends StatelessWidget {
   final List<BookModel> books;
   final void Function(BookModel book) onTap;
   final bool shrinkWrap;
+  final ScrollController? controller;
   final ScrollPhysics? physics;
 
   const BooksGridView({
     super.key,
     required this.books,
     required this.onTap,
+    this.controller,
     this.shrinkWrap = false,
     this.physics,
   });
@@ -23,6 +25,7 @@ class BooksGridView extends StatelessWidget {
       physics: physics,
       shrinkWrap: shrinkWrap,
       itemCount: books.length,
+      controller: controller,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: .7, crossAxisCount: 3),
       itemBuilder: (context, index) {

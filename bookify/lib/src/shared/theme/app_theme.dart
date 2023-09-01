@@ -8,13 +8,23 @@ final appLightTheme = ThemeData(
       selectionColor: lightPrimaryColor,
     ),
     searchBarTheme: const SearchBarThemeData(
-        side: MaterialStatePropertyAll(
-          BorderSide(color: lightSelectedColor),
-        ),
-        elevation: MaterialStatePropertyAll(0),
-        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
-        hintStyle:
-            MaterialStatePropertyAll(TextStyle(color: lightSelectedColor))),
+      side: MaterialStatePropertyAll(
+        BorderSide(color: lightSelectedColor),
+      ),
+      elevation: MaterialStatePropertyAll(0),
+      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
+      hintStyle: MaterialStatePropertyAll(TextStyle(color: lightSelectedColor)),
+    ),
+    segmentedButtonTheme: const SegmentedButtonThemeData(
+      style: ButtonStyle(
+        surfaceTintColor: MaterialStatePropertyAll(lightSelectedColor),
+        visualDensity: VisualDensity.comfortable,
+        textStyle: MaterialStatePropertyAll(
+            TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+        side: MaterialStatePropertyAll(BorderSide(color: lightSelectedColor)),
+        iconColor: MaterialStatePropertyAll(lightSelectedColor),
+      ),
+    ),
     splashColor: Colors.red,
     primaryColor: lightSelectedColor,
     unselectedWidgetColor: lightPrimaryColor,
@@ -31,13 +41,23 @@ final appDarkTheme = ThemeData(
       selectionColor: lightPrimaryColor,
     ),
     searchBarTheme: const SearchBarThemeData(
-        side: MaterialStatePropertyAll(
-          BorderSide(color: lightSelectedColor),
-        ),
-        elevation: MaterialStatePropertyAll(0),
-        padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
-        hintStyle:
-            MaterialStatePropertyAll(TextStyle(color: lightSelectedColor))),
+      side: MaterialStatePropertyAll(
+        BorderSide(color: lightSelectedColor),
+      ),
+      elevation: MaterialStatePropertyAll(0),
+      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
+      hintStyle: MaterialStatePropertyAll(TextStyle(color: lightSelectedColor)),
+    ),
+    segmentedButtonTheme: const SegmentedButtonThemeData(
+      style: ButtonStyle(
+        surfaceTintColor: MaterialStatePropertyAll(lightSelectedColor),
+        visualDensity: VisualDensity.comfortable,
+        textStyle: MaterialStatePropertyAll(
+            TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis)),
+        side: MaterialStatePropertyAll(BorderSide(color: lightSelectedColor)),
+        iconColor: MaterialStatePropertyAll(lightSelectedColor),
+      ),
+    ),
     splashColor: Colors.red,
     primaryColor: lightSelectedColor,
     unselectedWidgetColor: lightPrimaryColor,

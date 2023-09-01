@@ -1,3 +1,5 @@
+import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
+
 import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/blocs/book_bloc/book_bloc.dart';
@@ -13,9 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   late BookBloc bookBloc;
-  bool searchBoxVisible = false;
-  bool textVisible = false;
-
+  bool searchBarVisible = true;
   final searchEC = TextEditingController();
 
   @override
@@ -47,7 +47,10 @@ class _HomePageState extends State<HomePage>
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
       BookErrorSate(:final message) => BookErrorSateWidget(
           stateMessage: message,
-          onPressed: () => bookBloc.add(GotAllBooksEvent()),
+          onPressed: () {
+            bookBloc.add(GotAllBooksEvent());
+            searchEC.clear();
+          },
         ),
     };
   }
@@ -58,18 +61,17 @@ class _HomePageState extends State<HomePage>
 
     return RefreshIndicator(
       onRefresh: () async {
-        searchEC.clear();
         bookBloc.add(GotAllBooksEvent());
+        searchEC;
       },
       color: Theme.of(context).primaryColor,
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
         listener: (_, state) {
-          if (state is SingleBookLoadedState || state is BooksLoadedState) {
-            searchBoxVisible = true;
-          } else {
-            searchBoxVisible = false;
-          }
+          searchBarVisible =
+              state is SingleBookLoadedState || state is BooksLoadedState
+                  ? false
+                  : true;
         },
         builder: (BuildContext context, state) {
           return Column(
@@ -80,51 +82,35 @@ class _HomePageState extends State<HomePage>
               Padding(
                 padding:
                     const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
-                child: Visibility(
-                  visible: searchBoxVisible,
-                  child: SearchBar(
+                child: Offstage(
+                  offstage: searchBarVisible,
+                  child: AnimatedSearchBar(
                     controller: searchEC,
-                    onChanged: (value) {
-                      setState(
-                        () => value.isNotEmpty
-                            ? textVisible = true
-                            : textVisible = false,
-                      );
-                    },
-                    onSubmitted: (value) {
+                    onSubmitted: (value, searchType) {
                       if (value.isNotEmpty) {
-                        bookBloc.add(FindedBooksByTitleEvent(title: value));
+                        switch (searchType) {
+                          case SearchType.title:
+                            bookBloc.add(FindedBooksByTitleEvent(title: value));
+                            break;
+                          case SearchType.author:
+                            bookBloc
+                                .add(FindedBooksByAuthorEvent(author: value));
+                            break;
+                          case SearchType.category:
+                            bookBloc.add(
+                                FindedBooksByCategoryEvent(category: value));
+                            break;
+                          case SearchType.publisher:
+                            bookBloc.add(
+                                FindedBooksByPublisherEvent(publisher: value));
+                            break;
+                          case SearchType.isbn:
+                            bookBloc.add(
+                                FindedBookByIsbnEvent(isbn: int.parse(value)));
+                            break;
+                        }
                       }
                     },
-                    hintText: 'Título, autor(a), ISBN...',
-                    leading: Icon(
-                      Icons.search,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    trailing: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.menu_book_outlined,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Visibility(
-                        visible: textVisible,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              searchEC.clear();
-                              textVisible = false;
-                            });
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),

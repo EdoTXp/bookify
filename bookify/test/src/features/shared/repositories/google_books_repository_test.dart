@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks/books_json_mock.dart';
-import '../../../mocks/dio_http_client_mock.dart';
+import '../../../mocks/dio_rest_client_mock.dart';
 
 void main() {
-  final dio = DioHttpClientMock();
+  final dio = DioRestClientMock();
   final bookRepository = GoogleBookRepositoryImpl(dio);
 
   group('Test all methods of GoogleBookRepository:', () {
