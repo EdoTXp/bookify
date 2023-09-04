@@ -10,11 +10,11 @@ enum SearchType {
 
 class AnimatedSearchBar extends StatefulWidget {
   final void Function(String value, SearchType searchType) onSubmitted;
-  final TextEditingController controller;
+  final TextEditingController searchEC;
 
   const AnimatedSearchBar({
     super.key,
-    required this.controller,
+    required this.searchEC,
     required this.onSubmitted,
   });
 
@@ -22,28 +22,19 @@ class AnimatedSearchBar extends StatefulWidget {
   State<AnimatedSearchBar> createState() => _AnimatedSearchBarState();
 }
 
-// TODO Add TransitionAnimation 
-
 class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
-  SearchType searchType = SearchType.title;
-
-  final searchEC = TextEditingController();
-  bool textVisible = false;
-  bool segmentedButtonVisible = false;
+  SearchType _searchType = SearchType.title;
+  bool _textVisible = false;
+  bool _segmentedButtonVisible = false;
 
   void _clearSearchBox() {
-    searchEC.clear();
-    textVisible = false;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    widget.searchEC.clear();
+    _textVisible = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    IconData searchIcon = switch (searchType) {
+    IconData searchIcon = switch (_searchType) {
       SearchType.title => Icons.menu_book_rounded,
       SearchType.author => Icons.person,
       SearchType.category => Icons.category,
@@ -55,15 +46,16 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SearchBar(
-          controller: searchEC,
+          controller: widget.searchEC,
           onChanged: (value) {
             setState(
-              () => value.isNotEmpty ? textVisible = true : textVisible = false,
+              () =>
+                  value.isNotEmpty ? _textVisible = true : _textVisible = false,
             );
           },
           onSubmitted: (value) {
-            segmentedButtonVisible = false;
-            widget.onSubmitted(value, searchType);
+            _segmentedButtonVisible = false;
+            widget.onSubmitted(value, _searchType);
           },
           hintText: 'Título, autor(a), ISBN...',
           leading: Icon(
@@ -73,8 +65,9 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           trailing: [
             IconButton(
               onPressed: () {
-                setState(
-                    () => segmentedButtonVisible = !segmentedButtonVisible);
+                setState(() {
+                  _segmentedButtonVisible = !_segmentedButtonVisible;
+                });
               },
               icon: Icon(
                 searchIcon,
@@ -82,7 +75,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               ),
             ),
             Visibility(
-              visible: textVisible,
+              visible: _textVisible,
               child: IconButton(
                 onPressed: () {
                   setState(() => _clearSearchBox());
@@ -96,9 +89,9 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           ],
         ),
         Visibility(
-          visible: segmentedButtonVisible,
+          visible: _segmentedButtonVisible,
           child: Padding(
-            padding: const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
+            padding: const EdgeInsets.only(top: 12.0),
             child: SegmentedButton<SearchType>(
               segments: const [
                 ButtonSegment<SearchType>(
@@ -122,11 +115,11 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     label: Text('ISBN'),
                     icon: Icon(Icons.qr_code)),
               ],
-              selected: <SearchType>{searchType},
+              selected: <SearchType>{_searchType},
               onSelectionChanged: (Set<SearchType> newSelection) {
                 setState(() {
                   _clearSearchBox();
-                  searchType = newSelection.first;
+                  _searchType = newSelection.first;
                 });
               },
             ),

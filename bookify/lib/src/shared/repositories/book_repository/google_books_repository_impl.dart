@@ -77,6 +77,8 @@ class GoogleBookRepositoryImpl implements BooksRepository {
           .toList();
 
       return books;
+    } on TypeError {
+      return <BookModel>[];
     } on BookNotFoundException {
       rethrow;
     } on BookException {

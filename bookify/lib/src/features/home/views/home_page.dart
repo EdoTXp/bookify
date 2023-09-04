@@ -35,23 +35,23 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
+  void _refreshPage() {
+    bookBloc.add(GotAllBooksEvent());
+    searchEC.clear();
+  }
+
   Widget getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
       BooksLoadingState() => Center(
           child:
               CircularProgressIndicator(color: Theme.of(context).primaryColor)),
-      BookEmptyState() => const Center(
-          child: Text('Não foi encontrado nenhum livros com esses termos.')),
+      BookEmptyState() =>
+        BookErrorSateWidget.bookEmptyState(onPressed: _refreshPage),
       SingleBookLoadedState(:final book) =>
         BooksLoadedStateWidget(books: [book]),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
-      BookErrorSate(:final message) => BookErrorSateWidget(
-          stateMessage: message,
-          onPressed: () {
-            bookBloc.add(GotAllBooksEvent());
-            searchEC.clear();
-          },
-        ),
+      BookErrorSate(:final message) =>
+        BookErrorSateWidget(stateMessage: message, onPressed: _refreshPage),
     };
   }
 
@@ -60,10 +60,7 @@ class _HomePageState extends State<HomePage>
     super.build(context);
 
     return RefreshIndicator(
-      onRefresh: () async {
-        bookBloc.add(GotAllBooksEvent());
-        searchEC;
-      },
+      onRefresh: () async => _refreshPage(),
       color: Theme.of(context).primaryColor,
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
@@ -85,7 +82,7 @@ class _HomePageState extends State<HomePage>
                 child: Offstage(
                   offstage: searchBarVisible,
                   child: AnimatedSearchBar(
-                    controller: searchEC,
+                    searchEC: searchEC,
                     onSubmitted: (value, searchType) {
                       if (value.isNotEmpty) {
                         switch (searchType) {
