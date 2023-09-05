@@ -29,6 +29,16 @@ final appLightTheme = ThemeData(
     primaryColor: lightSelectedColor,
     unselectedWidgetColor: lightPrimaryColor,
     iconTheme: const IconThemeData(color: lightPrimaryColor),
+    textButtonTheme: const TextButtonThemeData(
+      style: ButtonStyle(
+          foregroundColor: MaterialStatePropertyAll(lightPrimaryColor),
+          iconColor: MaterialStatePropertyAll(lightPrimaryColor),
+          textStyle:
+              MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: lightPrimaryColor),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: lightPrimaryColor,
       backgroundColor: Colors.white,
@@ -62,6 +72,16 @@ final appDarkTheme = ThemeData(
     primaryColor: lightSelectedColor,
     unselectedWidgetColor: lightPrimaryColor,
     iconTheme: const IconThemeData(color: lightPrimaryColor),
+    textButtonTheme: const TextButtonThemeData(
+      style: ButtonStyle(
+          foregroundColor: MaterialStatePropertyAll(lightPrimaryColor),
+          iconColor: MaterialStatePropertyAll(lightPrimaryColor),
+          textStyle:
+              MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))),
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: lightPrimaryColor),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         foregroundColor: lightPrimaryColor, backgroundColor: Color(0xff2D2D32)),
     colorScheme: const ColorScheme.dark());

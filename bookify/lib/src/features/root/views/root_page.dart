@@ -1,10 +1,8 @@
+import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bookshelf/views/bookshelf_page.dart';
-import '../../home/views/home_page.dart';
-import '../../profile/views/profile_page.dart';
-import '../../readings/views/readings_page.dart';
+import 'package:bookify/src/features/root/views/pages/pages.dart';
 import '../widgets/widgets.dart';
 
 class RootPage extends StatefulWidget {
@@ -16,6 +14,13 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   final PageController _pageController = PageController();
+  late final bookBloc;
+
+  @override
+  void initState() {
+    bookBloc = context.read<BookBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +46,12 @@ class _RootPageState extends State<RootPage> {
           Visibility(
             visible: !keyboardIsOpen,
             child: RectangleFloatingActionButton(
-              onPressed: (() {
-                context
-                    .read<BookBloc>()
-                    .add(FindedBookByIsbnEvent(isbn: 9788573076103));
+              onPressed: (() async {
+                int isbn = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const QrCodeScannerPage()));
+                bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
                 _pageController.jumpToPage(0);
               }),
               width: 60,
