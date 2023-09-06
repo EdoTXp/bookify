@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/helpers/form_helper.dart';
+import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -16,14 +17,20 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   late final MobileScannerController scannerController;
   late final MaskTextInputFormatter isbnMaskFormatter;
   final isbnManualyEC = TextEditingController();
-  final formKey = GlobalKey<FormState>();
 
   bool isTextInputVisible = false;
 
   @override
   void initState() {
     super.initState();
-    scannerController = MobileScannerController();
+    scannerController = MobileScannerController(
+      formats: [
+        BarcodeFormat.codebar,
+        BarcodeFormat.ean13,
+        BarcodeFormat.ean8,
+      ],
+      detectionTimeoutMs: 2000,
+    );
 
     isbnMaskFormatter = MaskTextInputFormatter(
       mask: '###-##-####-###-#',
@@ -53,25 +60,48 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     super.dispose();
   }
 
+  void _searchIsbn(BuildContext context, String value) {
+    value = value.replaceAll('-', '');
+    if (value.isNotEmpty && value.length == 13) {
+      int isbn = int.parse(value);
+      Navigator.pop(context, isbn);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final widthOverlay = MediaQuery.sizeOf(context).width * .9;
     final heigthOverlay = MediaQuery.sizeOf(context).height * .3;
 
+    String titleText;
+    String changeModeText;
+    IconData changeIconMode;
+
+    // start mobileScanner
+    if (!isTextInputVisible) {
+      scannerController.start();
+      titleText = 'Aponte a câmera para o código de barras do livro';
+      changeModeText = 'Digitar o código manualmente';
+      changeIconMode = Icons.keyboard;
+    }
+    // start manualyText
+    else {
+      scannerController.stop();
+      titleText = 'Digite os números do código de barra';
+      changeModeText = 'Scanear código';
+      changeIconMode = Icons.qr_code;
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           SizedBox(
             width: MediaQuery.sizeOf(context).width / 2,
-            child: const Text(
-              'Aponte a câmera para o código de barras do livro',
+            child: Text(
+              titleText,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -80,30 +110,37 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
           const SizedBox(
             height: 40,
           ),
-          Expanded(
-            child: MobileScanner(
-              controller: scannerController,
-              errorBuilder: (context, exception, __) {
-                return Text(exception.errorDetails!.message!);
-              },
-              scanWindow: Rect.fromCenter(
-                center: Offset.zero,
-                width: widthOverlay,
-                height: heigthOverlay,
-              ),
-              onDetect: (capture) {
-                final List<Barcode> barcodes = capture.barcodes;
+          Visibility(
+            visible: !isTextInputVisible,
+            child: Expanded(
+              child: MobileScanner(
+                controller: scannerController,
+                errorBuilder: (context, exception, __) {
+                  return Text(exception.errorDetails!.message!);
+                },
+                /* scanWindow: Rect.fromCenter(
+                  center: Offset.zero,
+                  width: widthOverlay,
+                  height: heigthOverlay,
+                ),*/
+                onDetect: (capture) {
+                  final List<Barcode> barcodes = capture.barcodes;
 
-                for (final barcode in barcodes) {
-                  debugPrint('Barcode found! ${barcode.rawValue}');
-                }
-              },
-              overlay: Container(
-                width: widthOverlay,
-                height: heigthOverlay,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
+                  for (final barcode in barcodes) {
+                    debugPrint('Tipo: ${barcode.format.name}');
+
+                    if (barcode.rawValue != null) {
+                      _searchIsbn(context, barcode.rawValue!);
+                    }
+                  }
+                },
+                overlay: Container(
+                  width: widthOverlay,
+                  height: heigthOverlay,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -115,53 +152,58 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextButton.icon(
-                label: const Text('Digitar o código manualmente'),
-                icon: const Icon(Icons.keyboard),
-                onPressed: () {
-                  setState(() {
-                    isTextInputVisible = !isTextInputVisible;
-                    isTextInputVisible
-                        ? scannerController.stop()
-                        : scannerController.start();
-                  });
-                },
+                label: Text(changeModeText),
+                icon: Icon(changeIconMode),
+                onPressed: () =>
+                    setState(() => isTextInputVisible = !isTextInputVisible),
               ),
             ),
           ),
           Visibility(
             visible: isTextInputVisible,
-            child: SizedBox(
-              height: 80,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Form(
-                  key: formKey,
-                  autovalidateMode: AutovalidateMode.always,
-                  child: TextFormField(
-                    controller: isbnManualyEC,
-                    inputFormatters: [isbnMaskFormatter],
-                    validator: Validatorless.multiple([
-                      Validatorless.required(
-                          'Esse campo precisa ser preenchido'),
-                      Validatorless.min(
-                          17, 'Esse campo precisa ter pelo menos 13 números')
-                    ]),
-                    onFieldSubmitted: (value) {
-                      value = value.replaceAll('-', '');
-                      if (value.isNotEmpty && value.length == 13) {
-                        int isbn = int.parse(value);
-                        Navigator.pop(context, isbn);
-                      }
-                    },
-                    onTapOutside: (_) => context.unfocus(),
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      label: Text(
-                        'Digite os números do código de barra',
+            child: Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Container(
+                      color: Theme.of(context).primaryColorLight,
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Form(
+                          autovalidateMode: AutovalidateMode.always,
+                          child: TextFormField(
+                            controller: isbnManualyEC,
+                            inputFormatters: [isbnMaskFormatter],
+                            validator: Validatorless.multiple([
+                              Validatorless.required(
+                                  'Esse campo precisa ser preenchido'),
+                              Validatorless.min(17,
+                                  'Esse campo precisa ter pelo menos 13 números')
+                            ]),
+                            onTapOutside: (_) => context.unfocus(),
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              label: Text(
+                                textAlign: TextAlign.center,
+                                'Código',
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: BookifyOutlinedButton(
+                      onPressed: () => _searchIsbn(context, isbnManualyEC.text),
+                      text: 'Ir para o livro',
+                      suffixIcon: Icons.arrow_forward,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

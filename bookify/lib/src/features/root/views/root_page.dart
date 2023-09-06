@@ -14,7 +14,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   final PageController _pageController = PageController();
-  late final bookBloc;
+  late final BookBloc bookBloc;
 
   @override
   void initState() {

@@ -27,9 +27,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         actions: [
           IconButton(
             icon: const Icon(Icons.bookmark_border),
@@ -163,8 +160,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        BookDescriptionWidget(title: 'Editora: ', content: widget.book.publisher),
-                        BookDescriptionWidget(title: 'Gêneros: ', content: widget.book.categories.join(', '))
+                        BookDescriptionWidget(
+                            title: 'Editora: ', content: widget.book.publisher),
+                        BookDescriptionWidget(
+                            title: 'Gêneros: ',
+                            content: widget.book.categories.join(', '))
                       ],
                     ),
                   ),

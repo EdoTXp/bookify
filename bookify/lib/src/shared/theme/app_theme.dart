@@ -2,7 +2,13 @@ import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
+/// Theme for light mode
 final appLightTheme = ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      iconTheme: IconThemeData(color: lightSelectedColor),
+    ),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: lightPrimaryColor,
       selectionColor: lightPrimaryColor,
@@ -31,6 +37,7 @@ final appLightTheme = ThemeData(
     iconTheme: const IconThemeData(color: lightPrimaryColor),
     textButtonTheme: const TextButtonThemeData(
       style: ButtonStyle(
+        overlayColor: MaterialStatePropertyAll(Colors.transparent),
           foregroundColor: MaterialStatePropertyAll(lightPrimaryColor),
           iconColor: MaterialStatePropertyAll(lightPrimaryColor),
           textStyle:
@@ -45,7 +52,14 @@ final appLightTheme = ThemeData(
     ),
     colorScheme: const ColorScheme.light(background: Colors.black));
 
+
+/// Theme for dark mode
 final appDarkTheme = ThemeData(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      iconTheme: IconThemeData(color: lightPrimaryColor),
+    ),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: lightPrimaryColor,
       selectionColor: lightPrimaryColor,
