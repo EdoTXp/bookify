@@ -58,7 +58,7 @@ final appDarkTheme = ThemeData(
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
-      iconTheme: IconThemeData(color: lightPrimaryColor),
+      iconTheme: IconThemeData(color: lightSelectedColor),
     ),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: lightPrimaryColor,
