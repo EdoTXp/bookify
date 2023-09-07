@@ -11,11 +11,12 @@ class QrCodeScannerPage extends StatefulWidget {
 }
 
 class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
-  bool insertManuallyIsbnIsVisible = false;
+  bool qrCodeScannerIsVisible = true;
 
   @override
   void initState() {
     super.initState();
+    
     // Lock the screen only portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -51,7 +52,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     IconData changeIconMode;
 
     // start QrCodeScannerWidget
-    if (!insertManuallyIsbnIsVisible) {
+    if (qrCodeScannerIsVisible) {
       titleText = 'Aponte a câmera para o código de barras do livro';
       changeModeText = 'Digitar o código manualmente';
       changeIconMode = Icons.keyboard;
@@ -82,13 +83,13 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
             height: 40,
           ),
           Expanded(
-            child: (!insertManuallyIsbnIsVisible)
+            child: (qrCodeScannerIsVisible)
                 ? QrCodeScannerWidget(
                     onDetect: (qrCodeValue) =>
                         _searchIsbn(context, qrCodeValue),
                   )
                 : IsbnManuallyTextFormFieldWidget(
-                    onTap: (qrCodeValue) => _searchIsbn(context, qrCodeValue),
+                    onTap: (textFormFieldValue) => _searchIsbn(context, textFormFieldValue),
                   ),
           ),
           SizedBox(
@@ -101,7 +102,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
                 icon: Icon(changeIconMode),
                 onPressed: () {
                   setState(() {
-                    insertManuallyIsbnIsVisible = !insertManuallyIsbnIsVisible;
+                    qrCodeScannerIsVisible = !qrCodeScannerIsVisible;
                   });
                 },
               ),
