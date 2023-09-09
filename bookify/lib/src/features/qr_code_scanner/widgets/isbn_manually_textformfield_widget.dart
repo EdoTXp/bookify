@@ -13,10 +13,12 @@ class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<IsbnManuallyTextFormFieldWidget> createState() => _IsbnManuallyTextFormFieldWidgetState();
+  State<IsbnManuallyTextFormFieldWidget> createState() =>
+      _IsbnManuallyTextFormFieldWidgetState();
 }
 
-class _IsbnManuallyTextFormFieldWidgetState extends State<IsbnManuallyTextFormFieldWidget> {
+class _IsbnManuallyTextFormFieldWidgetState
+    extends State<IsbnManuallyTextFormFieldWidget> {
   late final MaskTextInputFormatter isbnMaskFormatter;
   final isbnManualyEC = TextEditingController();
 
@@ -39,37 +41,42 @@ class _IsbnManuallyTextFormFieldWidgetState extends State<IsbnManuallyTextFormFi
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Container(
-            color: Theme.of(context).primaryColorLight,
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Form(
-                autovalidateMode: AutovalidateMode.always,
-                child: TextFormField(
-                  controller: isbnManualyEC,
-                  inputFormatters: [isbnMaskFormatter],
-                  validator: Validatorless.multiple([
-                    Validatorless.required('Esse campo precisa ser preenchido'),
-                    Validatorless.min(
-                        17, 'Esse campo precisa ter pelo menos 13 números')
-                  ]),
-                  onTapOutside: (_) => context.unfocus(),
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    label: Text(
-                      textAlign: TextAlign.center,
-                      'Código',
-                    ),
+        const SizedBox(
+          height: 80,
+        ),
+        Container(
+          color: Theme.of(context).primaryColorLight,
+          height: 120,
+          child: Form(
+            autovalidateMode: AutovalidateMode.always,
+            child: Center(
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                controller: isbnManualyEC,
+                inputFormatters: [isbnMaskFormatter],
+                validator: Validatorless.multiple([
+                  Validatorless.required('Esse campo precisa ser preenchido'),
+                  Validatorless.min(
+                    17,
+                    'Esse campo precisa ter pelo menos 13 números',
                   ),
+                ]),
+                style: const TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
                 ),
+                onTapOutside: (_) => context.unfocus(),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 70.0),
+                    hintText: '000-00-0000-000-0',
+                    border: InputBorder.none),
               ),
             ),
           ),
         ),
+        const Spacer(),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: BookifyOutlinedButton(

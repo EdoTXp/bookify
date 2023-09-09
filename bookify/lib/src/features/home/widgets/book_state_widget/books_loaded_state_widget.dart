@@ -5,11 +5,9 @@ import '../widgets.dart';
 
 class BooksLoadedStateWidget extends StatelessWidget {
   final List<BookModel> books;
-  final ScrollController? controller;
 
   const BooksLoadedStateWidget({
     required this.books,
-    this.controller,
     super.key,
   });
 
@@ -20,7 +18,6 @@ class BooksLoadedStateWidget extends StatelessWidget {
           top: 8.0, right: 16.0, left: 16.0, bottom: 16.0),
       child: BooksGridView(
         shrinkWrap: true,
-        controller: controller,
         books: books,
         onTap: (book) => Navigator.of(context).push(
           MaterialPageRoute(

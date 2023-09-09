@@ -1,8 +1,8 @@
 import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
 
-import '../widgets/widgets.dart';
+import 'package:bookify/src/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import '../../../shared/blocs/book_bloc/book_bloc.dart';
+import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,8 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   late BookBloc bookBloc;
-  bool searchBarVisible = true;
+  
   final searchEC = TextEditingController();
+  bool searchBarVisible = true;
 
   @override
   void initState() {

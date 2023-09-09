@@ -37,7 +37,7 @@ final appLightTheme = ThemeData(
     iconTheme: const IconThemeData(color: lightPrimaryColor),
     textButtonTheme: const TextButtonThemeData(
       style: ButtonStyle(
-        overlayColor: MaterialStatePropertyAll(Colors.transparent),
+          overlayColor: MaterialStatePropertyAll(Colors.transparent),
           foregroundColor: MaterialStatePropertyAll(lightPrimaryColor),
           iconColor: MaterialStatePropertyAll(lightPrimaryColor),
           textStyle:
@@ -51,7 +51,6 @@ final appLightTheme = ThemeData(
       backgroundColor: Colors.white,
     ),
     colorScheme: const ColorScheme.light(background: Colors.black));
-
 
 /// Theme for dark mode
 final appDarkTheme = ThemeData(

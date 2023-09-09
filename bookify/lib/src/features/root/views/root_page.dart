@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
+import 'package:bookify/src/features/root/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,13 +14,22 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  final PageController _pageController = PageController();
+  final _pageController = PageController();
+  final _bottomBarController = FabBottomBarController();
   late final BookBloc bookBloc;
 
   @override
   void initState() {
     bookBloc = context.read<BookBloc>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    bookBloc.close();
+    _pageController.dispose();
+    _bottomBarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,12 +57,15 @@ class _RootPageState extends State<RootPage> {
             visible: !keyboardIsOpen,
             child: RectangleFloatingActionButton(
               onPressed: (() async {
+                int homePage = _pageController.initialPage;
+
                 int isbn = await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const QrCodeScannerPage()));
                 bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
-                _pageController.jumpToPage(0);
+                _pageController.jumpToPage(homePage);
+                _bottomBarController.changeSelectedBottomBarItem(homePage);
               }),
               width: 60,
               height: 60,
@@ -68,6 +81,7 @@ class _RootPageState extends State<RootPage> {
       bottomNavigationBar: FABBottomAppBar(
         notchedShape: rectangeRoundedNotchedShape,
         onSelectedItem: _pageController.jumpToPage,
+        controller: _bottomBarController,
         items: [
           FABBottomAppBarItem(
               unselectedIcon: Icons.home_outlined,

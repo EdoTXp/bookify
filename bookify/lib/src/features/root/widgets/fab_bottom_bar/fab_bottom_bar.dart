@@ -4,6 +4,7 @@ Links:
   - https://codewithandrea.com/articles/bottom-bar-navigation-with-fab/
   - https://github.com/bizz84/bottom_bar_fab_flutter/blob/master/lib/fab_bottom_app_bar.dart
 */
+import 'package:bookify/src/features/root/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
 import 'package:flutter/material.dart';
 
 class FABBottomAppBarItem {
@@ -28,6 +29,7 @@ class FABBottomAppBar extends StatefulWidget {
   final List<FABBottomAppBarItem> items;
   final NotchedShape notchedShape;
   final ValueChanged<int> onSelectedItem;
+  final FabBottomBarController? controller;
   final double? width;
   final Color? backgroundColor;
   final Color? color;
@@ -38,6 +40,7 @@ class FABBottomAppBar extends StatefulWidget {
     required this.items,
     required this.notchedShape,
     required this.onSelectedItem,
+    this.controller,
     this.color,
     this.selectedColor,
     this.backgroundColor,
@@ -56,6 +59,22 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
       widget.onSelectedItem(index);
       _selectedItemIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) {
+      widget.controller!.addListener(() {
+        _updateIndex(widget.controller!.value);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller?.dispose();
+    super.dispose();
   }
 
   @override

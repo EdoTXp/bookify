@@ -11,7 +11,7 @@ class QrCodeScannerPage extends StatefulWidget {
 }
 
 class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
-  bool qrCodeScannerIsVisible = true;
+  bool _qrCodeScannerIsVisible = true;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     IconData changeIconMode;
 
     // start QrCodeScannerWidget
-    if (qrCodeScannerIsVisible) {
+    if (_qrCodeScannerIsVisible) {
       titleText = 'Aponte a câmera para o código de barras do livro';
       changeModeText = 'Digitar o código manualmente';
       changeIconMode = Icons.keyboard;
@@ -83,7 +83,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
             height: 40,
           ),
           Expanded(
-            child: (qrCodeScannerIsVisible)
+            child: (_qrCodeScannerIsVisible)
                 ? QrCodeScannerWidget(
                     onDetect: (qrCodeValue) =>
                         _searchIsbn(context, qrCodeValue),
@@ -102,7 +102,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
                 icon: Icon(changeIconMode),
                 onPressed: () {
                   setState(() {
-                    qrCodeScannerIsVisible = !qrCodeScannerIsVisible;
+                    _qrCodeScannerIsVisible = !_qrCodeScannerIsVisible;
                   });
                 },
               ),
