@@ -1,9 +1,9 @@
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
-import '../../../shared/widgets/buttons/book_widget.dart';
-import '../widgets/widgets.dart';
-import '../controllers/book_detail_controller.dart';
+import 'package:bookify/src/shared/widgets/book_widget.dart';
+import 'package:bookify/src/features/book_detail/widgets/widgets.dart';
+import 'package:bookify/src/features/book_detail/controllers/book_detail_controller.dart';
 
 /// Page where it shows the details of a book.
 class BookDetailPage extends StatefulWidget {

@@ -1,7 +1,6 @@
 import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/shared/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../shared/widgets/buttons/book_button.dart';
 
 class BooksGridView extends StatelessWidget {
   final List<BookModel> books;
@@ -27,17 +26,20 @@ class BooksGridView extends StatelessWidget {
       itemCount: books.length,
       controller: controller,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: .7, crossAxisCount: 3),
+        childAspectRatio: .7,
+        crossAxisCount: 3,
+      ),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(4.0),
           child: Tooltip(
             message: books[index].title,
-            child: BookButton(
-              bookImageUrl: books[index].imageUrl,
-              onTap: () {
-                onTap(books[index]);
-              },
+            child: InkWell(
+              splashColor: Colors.transparent,
+              onTap: () => onTap(books[index]),
+              child: BookWidget(
+                bookImageUrl: books[index].imageUrl,
+              ),
             ),
           ),
         );

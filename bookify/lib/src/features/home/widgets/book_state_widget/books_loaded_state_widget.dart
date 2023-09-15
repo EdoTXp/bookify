@@ -17,7 +17,6 @@ class BooksLoadedStateWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
           top: 8.0, right: 16.0, left: 16.0, bottom: 16.0),
       child: BooksGridView(
-        shrinkWrap: true,
         books: books,
         onTap: (book) => Navigator.of(context).push(
           MaterialPageRoute(
