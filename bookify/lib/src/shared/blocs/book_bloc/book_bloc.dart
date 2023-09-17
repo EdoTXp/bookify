@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-import '../../models/book_model.dart';
-
+import 'package:bookify/src/shared/models/book_model.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
   final BooksRepository _booksRepository;
+
+  /// Variable that avoids making many requests to the API for the same books.
+  List<BookModel>? cachedBooksList;
 
   BookBloc(this._booksRepository) : super(BooksLoadingState()) {
     on<GotAllBooksEvent>(_getAllBooks);
@@ -23,15 +24,23 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _getAllBooks(GotAllBooksEvent event, emit) async {
-    emit(BooksLoadingState());
-
     try {
+      emit(BooksLoadingState());
+
+      if (cachedBooksList != null) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        emit(BooksLoadedState(books: cachedBooksList!));
+        return;
+      }
+
       final books = await _booksRepository.getAllBooks();
+
       if (books.isEmpty) {
         emit(BookEmptyState());
         return;
       }
 
+      cachedBooksList = books;
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(message: socketException.message));
@@ -41,8 +50,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBookByIsbn(FindedBookByIsbnEvent event, emit) async {
-    emit(BooksLoadingState());
     try {
+      emit(BooksLoadingState());
       final book = await _booksRepository.findBookByISBN(isbn: event.isbn);
 
       emit(SingleBookLoadedState(book: book));
@@ -52,10 +61,11 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByAuthor(FindedBooksByAuthorEvent event, emit) async {
-    emit(BooksLoadingState());
-
     try {
-      final books = await _booksRepository.findBooksByAuthor(author: event.author);
+      emit(BooksLoadingState());
+
+      final books =
+          await _booksRepository.findBooksByAuthor(author: event.author);
 
       if (books.isEmpty) {
         emit(BookEmptyState());
@@ -70,9 +80,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
   Future<void> _findBooksByCategory(
       FindedBooksByCategoryEvent event, emit) async {
-    emit(BooksLoadingState());
-
     try {
+      emit(BooksLoadingState());
+
       final books =
           await _booksRepository.findBooksByCategory(category: event.category);
 
@@ -89,11 +99,11 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
   Future<void> _findBooksByPublisher(
       FindedBooksByPublisherEvent event, emit) async {
-    emit(BooksLoadingState());
-
     try {
-      final books =
-          await _booksRepository.findBooksByPublisher(publisher: event.publisher);
+      emit(BooksLoadingState());
+
+      final books = await _booksRepository.findBooksByPublisher(
+          publisher: event.publisher);
 
       if (books.isEmpty) {
         emit(BookEmptyState());
@@ -107,9 +117,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByTitle(FindedBooksByTitleEvent event, emit) async {
-    emit(BooksLoadingState());
-
     try {
+      emit(BooksLoadingState());
+
       final books = await _booksRepository.findBooksByTitle(title: event.title);
 
       if (books.isEmpty) {

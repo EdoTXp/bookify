@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks/books_json_mock.dart';
-import '../../../mocks/dio_rest_client_mock.dart';
+import '../../../mocks/rest_client/dio_rest_client_mock.dart';
 
 void main() {
   final dio = DioRestClientMock();
@@ -19,7 +19,8 @@ void main() {
             .data;
       });
 
-      final books = await bookRepository.findBooksByAuthor(author: 'J.R.R. Tolkien');
+      final books =
+          await bookRepository.findBooksByAuthor(author: 'J.R.R. Tolkien');
 
       expect(books[0].authors.first, 'J. R. R. Tolkien');
       expect(books[1].authors.first, 'J. R. R. Tolkien');
@@ -31,9 +32,9 @@ void main() {
     test('Get a book by ISBN', () async {
       when(() => dio.get(any())).thenAnswer((_) async {
         return Response(
-                data: isbnJsonBookMock, //  book of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ""))
-            .data;
+          data: isbnJsonBookMock, //  book of file books_json_mock.dart
+          requestOptions: RequestOptions(path: ""),
+        ).data;
       });
 
       final book = await bookRepository.findBookByISBN(isbn: 9788550808161);
@@ -43,14 +44,13 @@ void main() {
     test('Get a List of books by publisher', () async {
       when(() => dio.get(any())).thenAnswer((_) async {
         return Response(
-                data:
-                    publisherJsonBooksMock, // books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ""))
-            .data;
+          data: publisherJsonBooksMock, // books of file books_json_mock.dart
+          requestOptions: RequestOptions(path: ""),
+        ).data;
       });
 
-      final books =
-          await bookRepository.findBooksByPublisher(publisher: 'Alta Books Editora');
+      final books = await bookRepository.findBooksByPublisher(
+          publisher: 'Alta Books Editora');
 
       for (var book in books) {
         expect(book.publisher, 'Alta Books Editora');
@@ -60,10 +60,10 @@ void main() {
     test('Get a list of books', () async {
       when(() => dio.get(any())).thenAnswer((_) async {
         return Response(
-                data: allBooksMock, // books of file books_json_mock.dart
+          data: allBooksMock, // books of file books_json_mock.dart
 
-                requestOptions: RequestOptions(path: ""))
-            .data;
+          requestOptions: RequestOptions(path: ""),
+        ).data;
       });
 
       final books = await bookRepository.getAllBooks();
@@ -79,9 +79,9 @@ void main() {
     test('Get a list of books by title', () async {
       when(() => dio.get(any())).thenAnswer((_) async {
         return Response(
-                data: titleBooksMock, // books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ""))
-            .data;
+          data: titleBooksMock, // books of file books_json_mock.dart
+          requestOptions: RequestOptions(path: ""),
+        ).data;
       });
 
       final books = await bookRepository.findBooksByTitle(title: 'Arquitetura');
@@ -99,7 +99,8 @@ void main() {
             .data;
       });
 
-      final books = await bookRepository.findBooksByCategory(category: 'Fiction');
+      final books =
+          await bookRepository.findBooksByCategory(category: 'Fiction');
 
       for (var book in books) {
         expect(book.categories.first, 'Fiction');

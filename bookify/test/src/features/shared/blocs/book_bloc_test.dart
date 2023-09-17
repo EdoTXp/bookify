@@ -5,8 +5,8 @@ import 'package:bookify/src/shared/errors/book_error/book_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../mocks/books_model_mock.dart';
-import '../../../mocks/google_book_repository_mock.dart';
+import '../../../mocks/models/books_model_mock.dart';
+import '../../../mocks/repositories/google_book_repository_mock.dart';
 
 void main() {
   group('Test every event of Book Bloc: ', () {
