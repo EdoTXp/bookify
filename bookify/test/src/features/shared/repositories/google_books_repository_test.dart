@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../mocks/books_json_mock.dart';
+import '../../../mocks/json/books_json_mock.dart';
 import '../../../mocks/rest_client/dio_rest_client_mock.dart';
 
 void main() {
