@@ -4,7 +4,7 @@ Links:
   - https://codewithandrea.com/articles/bottom-bar-navigation-with-fab/
   - https://github.com/bizz84/bottom_bar_fab_flutter/blob/master/lib/fab_bottom_app_bar.dart
 */
-import 'package:bookify/src/features/root/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
+import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
 import 'package:flutter/material.dart';
 
 class FABBottomAppBarItem {
@@ -54,19 +54,21 @@ class FABBottomAppBar extends StatefulWidget {
 class _FABBottomAppBarState extends State<FABBottomAppBar> {
   int _selectedItemIndex = 0;
 
-  void _updateIndex(int index) {
-    setState(() {
-      widget.onSelectedItem(index);
-      _selectedItemIndex = index;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
+
     if (widget.controller != null) {
       widget.controller!.addListener(() {
-        _updateIndex(widget.controller!.value);
+        int value = widget.controller!.value;
+        int length = widget.items.length;
+
+        if ((value >= 0) && (value < length)) {
+          _updateIndex(value);
+        } else {
+          throw ArgumentError(
+              'Selected item: $value. The selected item must be between 0 and ${length - 1}.');
+        }
       });
     }
   }
@@ -77,32 +79,11 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> items = List.generate(widget.items.length, ((index) {
-      return _buildTabItem(
-        item: widget.items[index],
-        index: index,
-        onPressed: _updateIndex,
-      );
-    }));
-
-    // add SizedBox when icons are close to FAB
-    items.insert(
-        items.length >> 1,
-        const SizedBox(
-          width: 55,
-        ));
-
-    return BottomAppBar(
-      color: widget.backgroundColor,
-      shape: widget.notchedShape,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
-      ),
-    );
+  void _updateIndex(int index) {
+    setState(() {
+      widget.onSelectedItem(index);
+      _selectedItemIndex = index;
+    });
   }
 
   Widget _buildTabItem({
@@ -151,6 +132,34 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> items = List.generate(widget.items.length, ((index) {
+      return _buildTabItem(
+        item: widget.items[index],
+        index: index,
+        onPressed: _updateIndex,
+      );
+    }));
+
+    // add SizedBox when icons are close to FAB
+    items.insert(
+        items.length >> 1,
+        const SizedBox(
+          width: 55,
+        ));
+
+    return BottomAppBar(
+      color: widget.backgroundColor,
+      shape: widget.notchedShape,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: items,
       ),
     );
   }

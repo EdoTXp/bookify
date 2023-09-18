@@ -1,10 +1,11 @@
-import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
-import 'package:bookify/src/features/root/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
-import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
+import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
+import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
+import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
+import 'package:bookify/src/shared/widgets/floating_action_button/rectangle_floating_action_button.dart';
 import 'package:bookify/src/features/root/views/pages/pages.dart';
-import '../widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
