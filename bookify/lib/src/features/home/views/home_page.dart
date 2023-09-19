@@ -1,9 +1,9 @@
-import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
-
-import 'package:bookify/src/features/home/widgets/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bookify/src/shared/helpers/isbn_helper.dart';
+import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
+import 'package:bookify/src/features/home/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   late BookBloc bookBloc;
-  
+
   final searchEC = TextEditingController();
   bool searchBarVisible = true;
 
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
     searchEC.clear();
   }
 
-  Widget getBookStateWidget(BuildContext context, BookState state) {
+  Widget _getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
       BooksLoadingState() => Center(
           child:
@@ -54,6 +54,27 @@ class _HomePageState extends State<HomePage>
       BookErrorSate(:final message) =>
         BookErrorSateWidget(stateMessage: message, onPressed: _refreshPage),
     };
+  }
+
+  Widget _showISBNDialog(BuildContext context) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 2,
+              color: Theme.of(context).primaryColor,
+            ),
+            borderRadius: BorderRadius.circular(20)),
+        padding: const EdgeInsets.all(32),
+        child: const Text(
+          'O ISBN tem que ter apenas 13 números',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -103,8 +124,17 @@ class _HomePageState extends State<HomePage>
                                 FindedBooksByPublisherEvent(publisher: value));
                             break;
                           case SearchType.isbn:
-                            bookBloc.add(
-                                FindedBookByIsbnEvent(isbn: int.parse(value)));
+                            int? isbn = value.isbnTryParse(value);
+
+                            if (isbn != null) {
+                              bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: _showISBNDialog,
+                              );
+                              searchEC.clear();
+                            }
                             break;
                         }
                       }
@@ -113,7 +143,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               Expanded(
-                child: getBookStateWidget(context, state),
+                child: _getBookStateWidget(context, state),
               ),
             ],
           );

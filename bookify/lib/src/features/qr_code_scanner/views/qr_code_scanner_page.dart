@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/helpers/isbn_helper.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_textformfield_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Lock the screen only portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -38,9 +39,8 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   }
 
   void _searchIsbn(BuildContext context, String value) {
-    value = value.replaceAll('-', '');
-    if (value.isNotEmpty && value.length == 13) {
-      int isbn = int.parse(value);
+    int? isbn = value.isbnTryParse(value);
+    if (isbn != null) {
       Navigator.pop(context, isbn);
     }
   }
@@ -61,7 +61,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     else {
       titleText = 'Digite os números do código de barra';
       changeModeText = 'Scanear código';
-      changeIconMode = Icons.qr_code;
+      changeIconMode = Icons.qr_code_scanner;
     }
 
     return Scaffold(
@@ -89,7 +89,8 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
                         _searchIsbn(context, qrCodeValue),
                   )
                 : IsbnManuallyTextFormFieldWidget(
-                    onTap: (textFormFieldValue) => _searchIsbn(context, textFormFieldValue),
+                    onTap: (textFormFieldValue) =>
+                        _searchIsbn(context, textFormFieldValue),
                   ),
           ),
           SizedBox(
