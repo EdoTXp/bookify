@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/helpers/form_helper.dart';
+import 'package:bookify/src/shared/helpers/isbn_helper.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -19,15 +20,16 @@ class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
 
 class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
-  late final MaskTextInputFormatter isbnMaskFormatter;
   final isbnManualyEC = TextEditingController();
+  final maskIsbn10 = '#-#####-###-##';
+  final maskIsbn13 = '###-#####-####-#';
+  late final MaskTextInputFormatter isbnMaskFormatter;
 
   @override
   void initState() {
     super.initState();
 
     isbnMaskFormatter = MaskTextInputFormatter(
-      mask: '###-##-####-###-#',
       filter: {"#": RegExp(r'[0-9]')},
     );
   }
@@ -36,6 +38,16 @@ class _IsbnManuallyTextFormFieldWidgetState
   void dispose() {
     isbnManualyEC.dispose();
     super.dispose();
+  }
+
+  void _updateMask(String value) {
+    setState(() {
+      final valueClear = value.replaceAll('-', '');
+
+      isbnManualyEC.value = valueClear.length < 11
+          ? isbnMaskFormatter.updateMask(mask: maskIsbn10)
+          : isbnMaskFormatter.updateMask(mask: maskIsbn13);
+    });
   }
 
   @override
@@ -54,13 +66,12 @@ class _IsbnManuallyTextFormFieldWidgetState
               child: TextFormField(
                 textAlign: TextAlign.center,
                 controller: isbnManualyEC,
+                onChanged: _updateMask,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo precisa ser preenchido'),
-                  Validatorless.min(
-                    17,
-                    'Esse campo precisa ter pelo menos 13 números',
-                  ),
+                  Validatorless.regex(
+                      isbnRegExp, 'Esse campo precisa ser um ISBN Válido'),
                 ]),
                 style: const TextStyle(
                   fontSize: 25,
@@ -70,7 +81,7 @@ class _IsbnManuallyTextFormFieldWidgetState
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 70.0),
-                    hintText: '000-00-0000-000-0',
+                    hintText: '000-00000-0000-0',
                     border: InputBorder.none),
               ),
             ),

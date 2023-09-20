@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage>
   late BookBloc bookBloc;
 
   final searchEC = TextEditingController();
-  bool searchBarVisible = true;
+  bool searchBarIsVisible = true;
 
   @override
   void initState() {
@@ -56,19 +56,21 @@ class _HomePageState extends State<HomePage>
     };
   }
 
-  Widget _showISBNDialog(BuildContext context) {
+  Widget _showIsbnDialog(BuildContext context) {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.background,
             border: Border.all(
               width: 2,
               color: Theme.of(context).primaryColor,
             ),
             borderRadius: BorderRadius.circular(20)),
         padding: const EdgeInsets.all(32),
+        margin: const EdgeInsets.all(32),
         child: const Text(
-          'O ISBN tem que ter apenas 13 números',
+          'O ISBN tem que ter apenas 10 ou 13 números, podendo conter o ( - ).',
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage>
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
         listener: (_, state) {
-          searchBarVisible =
+          searchBarIsVisible =
               state is SingleBookLoadedState || state is BooksLoadedState
                   ? false
                   : true;
@@ -102,7 +104,7 @@ class _HomePageState extends State<HomePage>
                 padding:
                     const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
                 child: Offstage(
-                  offstage: searchBarVisible,
+                  offstage: searchBarIsVisible,
                   child: AnimatedSearchBar(
                     searchEC: searchEC,
                     onSubmitted: (value, searchType) {
@@ -131,7 +133,7 @@ class _HomePageState extends State<HomePage>
                             } else {
                               showDialog(
                                 context: context,
-                                builder: _showISBNDialog,
+                                builder: _showIsbnDialog,
                               );
                               searchEC.clear();
                             }

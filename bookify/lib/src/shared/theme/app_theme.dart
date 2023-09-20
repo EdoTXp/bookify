@@ -47,10 +47,15 @@ final appLightTheme = ThemeData(
       floatingLabelStyle: TextStyle(color: lightPrimaryColor),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      splashColor: Colors.transparent,
       foregroundColor: lightPrimaryColor,
       backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: lightPrimaryColor),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
     ),
-    colorScheme: const ColorScheme.light(background: Colors.black));
+    colorScheme: const ColorScheme.light());
 
 /// Theme for dark mode
 final appDarkTheme = ThemeData(
@@ -96,5 +101,12 @@ final appDarkTheme = ThemeData(
       floatingLabelStyle: TextStyle(color: lightPrimaryColor),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: lightPrimaryColor, backgroundColor: Color(0xff2D2D32)),
-    colorScheme: const ColorScheme.dark());
+      splashColor: Colors.transparent,
+      foregroundColor: lightPrimaryColor,
+      backgroundColor: Color(0xff404040),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: lightPrimaryColor),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+    ),
+    colorScheme: const ColorScheme.dark(background: Color(0xff404040)));

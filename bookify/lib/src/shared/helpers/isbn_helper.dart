@@ -1,7 +1,11 @@
+// regexp finded on https://www.geeksforgeeks.org/regular-expressions-to-validate-isbn-code/
+final isbnRegExp =
+    RegExp(r'^(?=(?:[^0-9]*[0-9]){10}(?:(?:[^0-9]*[0-9]){3})?$)[\d-]+$');
+
 extension IsbnExtension on String {
   int? isbnTryParse(String value) {
-    value = value.replaceAll('-', '');
-    if (value.isNotEmpty && value.length == 13) {
+    if (value.isNotEmpty && isbnRegExp.hasMatch(value)) {
+      value = value.replaceAll('-', '');
       int? isbn = int.tryParse(value);
       return isbn;
     }

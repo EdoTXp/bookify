@@ -24,8 +24,8 @@ class AnimatedSearchBar extends StatefulWidget {
 
 class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   SearchType _searchType = SearchType.title;
-  bool _textVisible = false;
-  bool _segmentedButtonVisible = false;
+  bool _textIsEmpty = true;
+  bool _iconButtonIsClicked = false;  // this active the SegmentedButton
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
     widget.searchEC.addListener(() {
       final searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
 
-      setState(() => _textVisible = searchTextIsEmpty ? false : true);
+      setState(() => _textIsEmpty = searchTextIsEmpty ? true : false);
     });
   }
 
@@ -48,7 +48,6 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
     if (widget.searchEC.text.isNotEmpty) {
       setState(widget.searchEC.clear);
     }
-
   }
 
   (String hintText, IconData searchIcon) _updateSearchBar() {
@@ -73,7 +72,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
         SearchBar(
           controller: widget.searchEC,
           onSubmitted: (value) {
-            _segmentedButtonVisible = false;
+            _iconButtonIsClicked = false;
             widget.onSubmitted(value, _searchType);
           },
           hintText: hintText,
@@ -84,8 +83,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           trailing: [
             IconButton(
               onPressed: () {
-                setState(
-                    () => _segmentedButtonVisible = !_segmentedButtonVisible);
+                setState(() =>
+                    _iconButtonIsClicked = !_iconButtonIsClicked);
               },
               icon: Icon(
                 searchIcon,
@@ -93,7 +92,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               ),
             ),
             Visibility(
-              visible: _textVisible,
+              visible: !_textIsEmpty,
               child: IconButton(
                 icon: Icon(
                   Icons.close,
@@ -105,7 +104,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           ],
         ),
         Visibility(
-          visible: _segmentedButtonVisible,
+          visible: _iconButtonIsClicked,
           child: Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: SegmentedButton<SearchType>(

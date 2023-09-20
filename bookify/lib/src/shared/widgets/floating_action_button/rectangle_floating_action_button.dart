@@ -24,15 +24,6 @@ class RectangleFloatingActionButton extends StatelessWidget {
       width: width ?? 80,
       height: height ?? 80,
       child: FloatingActionButton(
-        splashColor: Colors.transparent,
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: foregroundColor ?? Colors.blue
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-        ),
         onPressed: onPressed,
         child: child,
       ),
