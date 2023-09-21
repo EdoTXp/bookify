@@ -52,9 +52,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   Future<void> _findBookByIsbn(FindedBookByIsbnEvent event, emit) async {
     try {
       emit(BooksLoadingState());
-      final book = await _booksRepository.findBookByISBN(isbn: event.isbn);
+      final books = await _booksRepository.findBookByISBN(isbn: event.isbn);
 
-      emit(SingleBookLoadedState(book: book));
+      emit(BooksLoadedState(books: books));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }

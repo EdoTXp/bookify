@@ -1,12 +1,11 @@
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/shared/errors/book_error/book_error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../mocks/models/books_model_mock.dart';
-import '../../../mocks/repositories/google_book_repository_mock.dart';
+import '../../mocks/models/books_model_mock.dart';
+import '../../mocks/repositories/google_book_repository_mock.dart';
 
 void main() {
   group('Test every event of Book Bloc: ', () {
@@ -74,27 +73,28 @@ void main() {
 
     blocTest<BookBloc, BookState>(
       '5- Test if the FindBookByIsbnEvent is not empty state',
-      setUp: () => when((() => repository.findBookByISBN(isbn: 11111)))
-          .thenAnswer((_) async => booksMock.first),
+      setUp: () => when((() => repository.findBookByISBN(isbn: '11111')))
+          .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: 11111)),
+      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: '11111')),
       verify: (_) {
-        verify(() => repository.findBookByISBN(isbn: 11111)).called(1);
+        verify(() => repository.findBookByISBN(isbn: '11111')).called(1);
       },
       expect: () => [
         isA<BooksLoadingState>(),
-        isA<SingleBookLoadedState>(),
+        isA<BooksLoadedState>(),
+        //isA<SingleBookLoadedState>(),
       ],
     );
 
     blocTest<BookBloc, BookState>(
       '6- Test if the FindBookByIsbnEvent is a error state',
-      setUp: () => when((() => repository.findBookByISBN(isbn: 11111)))
+      setUp: () => when((() => repository.findBookByISBN(isbn: '11111')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: 11111)),
+      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: '11111')),
       verify: (_) {
-        verify(() => repository.findBookByISBN(isbn: 11111)).called(1);
+        verify(() => repository.findBookByISBN(isbn: '11111')).called(1);
       },
       expect: () => [
         isA<BooksLoadingState>(),

@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
+import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
+import 'package:bookify/src/shared/widgets/dialogs/isbn_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bookify/src/shared/helpers/isbn_helper.dart';
 import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -48,35 +49,10 @@ class _HomePageState extends State<HomePage>
               CircularProgressIndicator(color: Theme.of(context).primaryColor)),
       BookEmptyState() =>
         BookErrorSateWidget.bookEmptyState(onPressed: _refreshPage),
-      SingleBookLoadedState(:final book) =>
-        BooksLoadedStateWidget(books: [book]),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
       BookErrorSate(:final message) =>
         BookErrorSateWidget(stateMessage: message, onPressed: _refreshPage),
     };
-  }
-
-  Widget _showIsbnDialog(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            border: Border.all(
-              width: 2,
-              color: Theme.of(context).primaryColor,
-            ),
-            borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.all(32),
-        margin: const EdgeInsets.all(32),
-        child: const Text(
-          'O ISBN tem que ter apenas 10 ou 13 números, podendo conter o ( - ).',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -89,10 +65,7 @@ class _HomePageState extends State<HomePage>
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
         listener: (_, state) {
-          searchBarIsVisible =
-              state is SingleBookLoadedState || state is BooksLoadedState
-                  ? false
-                  : true;
+          searchBarIsVisible = state is BooksLoadedState ? false : true;
         },
         builder: (BuildContext context, state) {
           return Column(
@@ -126,14 +99,15 @@ class _HomePageState extends State<HomePage>
                                 FindedBooksByPublisherEvent(publisher: value));
                             break;
                           case SearchType.isbn:
-                            int? isbn = value.isbnTryParse(value);
+                            final verifier = IsbnVerifier();
+                            String? isbn = verifier.isbnTryParse(value);
 
                             if (isbn != null) {
                               bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
                             } else {
                               showDialog(
                                 context: context,
-                                builder: _showIsbnDialog,
+                                builder: (_) => const IsbnDialog(),
                               );
                               searchEC.clear();
                             }

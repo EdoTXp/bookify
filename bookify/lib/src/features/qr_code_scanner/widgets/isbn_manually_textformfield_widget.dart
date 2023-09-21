@@ -1,5 +1,5 @@
 import 'package:bookify/src/shared/helpers/form_helper.dart';
-import 'package:bookify/src/shared/helpers/isbn_helper.dart';
+import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -21,8 +21,9 @@ class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
 class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
   final isbnManualyEC = TextEditingController();
-  final maskIsbn10 = '#-#####-###-##';
+  final maskIsbn10 = '#-#####-###-S#';
   final maskIsbn13 = '###-#####-####-#';
+  final isbnRegExpVerifier = IsbnVerifier().isbnRegExp;
   late final MaskTextInputFormatter isbnMaskFormatter;
 
   @override
@@ -30,7 +31,7 @@ class _IsbnManuallyTextFormFieldWidgetState
     super.initState();
 
     isbnMaskFormatter = MaskTextInputFormatter(
-      filter: {"#": RegExp(r'[0-9]')},
+      filter: {'#': RegExp(r'[0-9]'), 'S': RegExp(r'[xX0-9]')},
     );
   }
 
@@ -70,15 +71,14 @@ class _IsbnManuallyTextFormFieldWidgetState
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo precisa ser preenchido'),
-                  Validatorless.regex(
-                      isbnRegExp, 'Esse campo precisa ser um ISBN Válido'),
+                  Validatorless.regex(isbnRegExpVerifier,
+                      'Esse campo precisa ser um formato ISBN Válido'),
                 ]),
                 style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
                 onTapOutside: (_) => context.unfocus(),
-                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 70.0),
                     hintText: '000-00000-0000-0',

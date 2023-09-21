@@ -28,10 +28,10 @@ class GoogleBookRepositoryImpl implements BooksRepository {
   }
 
   @override
-  Future<BookModel> findBookByISBN({required int isbn}) async {
+  Future<List<BookModel>> findBookByISBN({required String isbn}) async {
     final url = 'isbn:$isbn$_isbnUrlParams';
     final books = await _fetch(url);
-    return books.last;
+    return books;
   }
 
   @override
@@ -79,7 +79,8 @@ class GoogleBookRepositoryImpl implements BooksRepository {
       return books;
     } on TypeError {
       return <BookModel>[];
-    } on BookNotFoundException {
+    } 
+    on BookNotFoundException {
       rethrow;
     } on BookException {
       rethrow;

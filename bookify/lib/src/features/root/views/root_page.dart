@@ -60,7 +60,7 @@ class _RootPageState extends State<RootPage> {
               onPressed: (() async {
                 int homePage = _pageController.initialPage;
 
-                int isbn = await Navigator.push(
+                String isbn = await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const QrCodeScannerPage()));

@@ -14,14 +14,6 @@ class BooksLoadedState extends BookState {
   });
 }
 
-class SingleBookLoadedState extends BookState {
-  final BookModel book;
-
-  SingleBookLoadedState({
-    required this.book,
-  });
-}
-
 class BookErrorSate extends BookState {
   final String message;
 

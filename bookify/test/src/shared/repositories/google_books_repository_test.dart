@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../mocks/json/books_json_mock.dart';
-import '../../../mocks/rest_client/dio_rest_client_mock.dart';
+import '../../mocks/json/books_json_mock.dart';
+import '../../mocks/rest_client/dio_rest_client_mock.dart';
 
 void main() {
   final dio = DioRestClientMock();
@@ -37,8 +37,8 @@ void main() {
         ).data;
       });
 
-      final book = await bookRepository.findBookByISBN(isbn: 9788550808161);
-      expect(book.title, 'Arquitetura Limpa');
+      final book = await bookRepository.findBookByISBN(isbn: '9788550808161');
+      expect(book[0].title, 'Arquitetura Limpa');
     });
 
     test('Get a List of books by publisher', () async {

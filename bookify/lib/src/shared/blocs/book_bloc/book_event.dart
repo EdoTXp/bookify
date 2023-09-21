@@ -5,7 +5,7 @@ sealed class BookEvent {}
 class GotAllBooksEvent extends BookEvent {}
 
 class FindedBookByIsbnEvent extends BookEvent {
-  final int isbn;
+  final String isbn;
 
   FindedBookByIsbnEvent({
     required this.isbn,
