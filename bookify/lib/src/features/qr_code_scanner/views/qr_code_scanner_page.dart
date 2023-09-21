@@ -1,7 +1,6 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_textformfield_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
 import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
-import 'package:bookify/src/shared/widgets/dialogs/isbn_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
