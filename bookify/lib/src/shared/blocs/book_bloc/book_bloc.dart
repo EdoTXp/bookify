@@ -54,6 +54,11 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadingState());
       final books = await _booksRepository.findBookByISBN(isbn: event.isbn);
 
+      if (books.isEmpty) {
+        emit(BookEmptyState());
+        return;
+      }
+
       emit(BooksLoadedState(books: books));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));

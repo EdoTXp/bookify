@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/widgets.dart';
 
 class IsbnVerifier {
@@ -6,31 +5,32 @@ class IsbnVerifier {
   final _isbnRegExp = RegExp(
       r'^(?=(?:[^0-9]*[0-9]){9}(?:(?:[^0-9xX]*[0-9xX]){1})(?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$');
 
-  RegExp get isbnRegExp => _isbnRegExp;
+  RegExp get isbnFormatRegExp => _isbnRegExp;
 
-  String? isbnTryParse(String value) {
-    if (value.isNotEmpty && isbnRegExp.hasMatch(value)) {
-      value = value.replaceAll('-', '');
+  String? verifyIsbn(String value) {
+    if (value.isNotEmpty && isbnFormatRegExp.hasMatch(value)) {
+      value = value.replaceAll('-', '').toLowerCase();
 
-      if (_isValidIsbn10(value) || _isValidIsbn13(value)) {
-        return value.toLowerCase();
+      if (_validateIsbn10(value) || _validateIsbn13(value)) {
+        return value;
       }
     }
     return null;
   }
 
-  bool _isValidIsbn10(String value) {
+  bool _validateIsbn10(String value) {
     if (value.length == 10) {
       int result = 0;
       int multipler = 10;
-      for (int index = 0; index <= value.length - 1; index++) {
-        String valueChar = value.characters.characterAt(index).first;
-        int sum = valueChar.toLowerCase() != 'x'
-            ? int.parse(valueChar) * multipler
+
+      for (var actualChar in value.characters) {
+        int sum = actualChar != 'x'
+            ? int.parse(actualChar) * multipler
             : 10 * multipler;
         multipler--;
         result += sum;
       }
+
       if (result % 11 == 0) {
         return true;
       }
@@ -38,16 +38,18 @@ class IsbnVerifier {
     return false;
   }
 
-  bool _isValidIsbn13(String value) {
+  bool _validateIsbn13(String value) {
     if (value.length == 13) {
       int result = 0;
-      bool isweighted1 = true;
-      for (int index = 0; index <= value.length - 1; index++) {
-        int valueInt = int.parse(value.characters.characterAt(index).first);
-        int sum = isweighted1 ? valueInt * 1 : valueInt * 3;
-        isweighted1 = !isweighted1;
+      bool isWeighted1 = true;
+
+      for (var actualChar in value.characters) {
+        int valueInt = int.parse(actualChar);
+        int sum = isWeighted1 ? valueInt * 1 : valueInt * 3;
+        isWeighted1 = !isWeighted1;
         result += sum;
       }
+
       if (result % 10 == 0) {
         return true;
       }

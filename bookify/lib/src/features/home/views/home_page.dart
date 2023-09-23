@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage>
                             break;
                           case SearchType.isbn:
                             final verifier = IsbnVerifier();
-                            String? isbn = verifier.isbnTryParse(value);
+                            String? isbn = verifier.verifyIsbn(value);
 
                             if (isbn != null) {
                               bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));

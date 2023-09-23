@@ -40,7 +40,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
 
   void _searchIsbn(BuildContext context, String value) {
     final verifier = IsbnVerifier();
-    String? isbn = verifier.isbnTryParse(value);
+    String? isbn = verifier.verifyIsbn(value);
     if (isbn != null) {
       Navigator.pop(context, isbn);
     }

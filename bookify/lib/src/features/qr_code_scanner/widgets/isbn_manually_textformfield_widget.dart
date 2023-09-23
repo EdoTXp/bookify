@@ -23,7 +23,7 @@ class _IsbnManuallyTextFormFieldWidgetState
   final isbnManualyEC = TextEditingController();
   final maskIsbn10 = '#-#####-###-S#';
   final maskIsbn13 = '###-#####-####-#';
-  final isbnRegExpVerifier = IsbnVerifier().isbnRegExp;
+  final isbnRegExpVerifier = IsbnVerifier().isbnFormatRegExp;
   late final MaskTextInputFormatter isbnMaskFormatter;
 
   @override
