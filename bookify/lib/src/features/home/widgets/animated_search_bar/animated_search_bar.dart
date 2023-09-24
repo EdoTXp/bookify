@@ -24,17 +24,15 @@ class AnimatedSearchBar extends StatefulWidget {
 
 class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   SearchType _searchType = SearchType.title;
-  bool _textIsEmpty = true;
-  bool _iconButtonIsClicked = false;  // this active the SegmentedButton
+  bool _searchTextIsEmpty = true;
+  bool _searchIconByTypeIsClicked = false;
 
   @override
   void initState() {
     super.initState();
 
     widget.searchEC.addListener(() {
-      final searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
-
-      setState(() => _textIsEmpty = searchTextIsEmpty ? true : false);
+      _changeIconButtonVisibilityOnSearchTextIsEmpty();
     });
   }
 
@@ -44,9 +42,14 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
     super.dispose();
   }
 
-  void _clearSearchBar() {
+  void _changeIconButtonVisibilityOnSearchTextIsEmpty() {
+    final bool searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
+    setState(() => _searchTextIsEmpty = searchTextIsEmpty ? true : false);
+  }
+
+  void _clearSearchBarText() {
     if (widget.searchEC.text.isNotEmpty) {
-      setState(widget.searchEC.clear);
+      setState(() => widget.searchEC.clear());
     }
   }
 
@@ -64,7 +67,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final (hintText, searchIcon) = _updateSearchBar();
+    final (searchHintText, searchIconByType) = _updateSearchBar();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -72,10 +75,16 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
         SearchBar(
           controller: widget.searchEC,
           onSubmitted: (value) {
-            _iconButtonIsClicked = false;
-            widget.onSubmitted(value, _searchType);
+            widget.searchEC.text = value.trim();
+            _searchIconByTypeIsClicked = false;
+
+            if (widget.searchEC.text.isNotEmpty) {
+              widget.onSubmitted(widget.searchEC.text, _searchType);
+            } else {
+              _clearSearchBarText();
+            }
           },
-          hintText: hintText,
+          hintText: searchHintText,
           leading: Icon(
             Icons.search,
             color: Theme.of(context).primaryColor,
@@ -84,57 +93,58 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
             IconButton(
               onPressed: () {
                 setState(() =>
-                    _iconButtonIsClicked = !_iconButtonIsClicked);
+                    _searchIconByTypeIsClicked = !_searchIconByTypeIsClicked);
               },
               icon: Icon(
-                searchIcon,
+                // Show icon selection based on the type of search selected
+                searchIconByType,
                 color: Theme.of(context).primaryColor,
               ),
             ),
             Visibility(
-              visible: !_textIsEmpty,
+              visible: !_searchTextIsEmpty,
               child: IconButton(
                 icon: Icon(
                   Icons.close,
                   color: Theme.of(context).primaryColor,
                 ),
-                onPressed: _clearSearchBar,
+                onPressed: _clearSearchBarText,
               ),
             ),
           ],
         ),
         Visibility(
-          visible: _iconButtonIsClicked,
+          visible: _searchIconByTypeIsClicked,
           child: Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: SegmentedButton<SearchType>(
               segments: const [
                 ButtonSegment<SearchType>(
-                    value: SearchType.title,
-                    //   label: Text('Título'),
-                    icon: Icon(Icons.menu_book_rounded)),
+                  value: SearchType.title,
+                  icon: Icon(Icons.menu_book_rounded),
+                ),
                 ButtonSegment<SearchType>(
-                    value: SearchType.author,
-                    //   label: Text('Autor'),
-                    icon: Icon(Icons.person)),
+                  value: SearchType.author,
+                  icon: Icon(Icons.person),
+                ),
                 ButtonSegment<SearchType>(
-                    value: SearchType.category,
-                    //    label: Text('Gênero'),
-                    icon: Icon(Icons.category)),
+                  value: SearchType.category,
+                  icon: Icon(Icons.category),
+                ),
                 ButtonSegment<SearchType>(
-                    value: SearchType.publisher,
-                    //      label: Text('Editora'),
-                    icon: Icon(Icons.publish)),
+                  value: SearchType.publisher,
+                  icon: Icon(Icons.publish),
+                ),
                 ButtonSegment<SearchType>(
-                    value: SearchType.isbn,
-                    //     label: Text('ISBN'),
-                    icon: Icon(Icons.qr_code)),
+                  value: SearchType.isbn,
+                  icon: Icon(Icons.qr_code),
+                ),
               ],
               selected: <SearchType>{_searchType},
               onSelectionChanged: (Set<SearchType> newSelection) {
                 setState(() {
                   _searchType = newSelection.first;
-                  _clearSearchBar();
+                  _clearSearchBarText();
                 });
               },
             ),

@@ -28,7 +28,7 @@ class GoogleBookRepositoryImpl implements BooksRepository {
   }
 
   @override
-  Future<List<BookModel>> findBookByISBN({required String isbn}) async {
+  Future<List<BookModel>> findBooksByIsbn({required String isbn}) async {
     final url = 'isbn:$isbn$_isbnUrlParams';
     final books = await _fetch(url);
     return books;

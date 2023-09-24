@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:bookify/src/shared/errors/book_error/book_error.dart';
+import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/repositories/book_repository/google_books_repository_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,7 +41,7 @@ void main() {
         ).data;
       });
 
-      final book = await bookRepository.findBookByISBN(isbn: '9788550808161');
+      final book = await bookRepository.findBooksByIsbn(isbn: '9788550808161');
       expect(book[0].title, 'Arquitetura Limpa');
     });
 
@@ -105,6 +109,33 @@ void main() {
       for (var book in books) {
         expect(book.categories.first, 'Fiction');
       }
+    });
+
+    test('test a BookException', () async {
+      when(() => dio.get(any())).thenThrow(BookException(''));
+      expect(bookRepository.getAllBooks(), throwsA(isA<BookException>()));
+    });
+
+    test('test a BookNotFoundException', () async {
+      when(() => dio.get(any()))
+          .thenThrow(BookNotFoundException('BookNotFoundException'));
+      expect(
+          bookRepository.getAllBooks(), throwsA(isA<BookNotFoundException>()));
+    });
+
+    test('test a SocketException', () async {
+      when(() => dio.get(any())).thenThrow(const SocketException('message'));
+      expect(bookRepository.getAllBooks(), throwsA(isA<SocketException>()));
+    });
+
+    test('test a TypeError expecting an empty list of books', () async {
+      when(() => dio.get(any())).thenThrow(TypeError());
+      expect(await bookRepository.getAllBooks(), <BookModel>[]);
+    });
+
+    test('test a generic Exception', () async {
+      when(() => dio.get(any())).thenThrow(Exception());
+      expect(bookRepository.getAllBooks(), throwsA(isA<Exception>()));
     });
   });
 }

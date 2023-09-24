@@ -11,7 +11,7 @@ abstract interface class BooksRepository {
 
   Future<List<BookModel>> findBooksByTitle({required String title});
 
-  Future<List<BookModel>> findBookByISBN({required String isbn});
+  Future<List<BookModel>> findBooksByIsbn({required String isbn});
 
   void dispose();
 }

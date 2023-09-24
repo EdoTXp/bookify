@@ -8,6 +8,8 @@ class IsbnVerifier {
   RegExp get isbnFormatRegExp => _isbnRegExp;
 
   String? verifyIsbn(String value) {
+    value = value.replaceAll(' ', '');
+
     if (value.isNotEmpty && isbnFormatRegExp.hasMatch(value)) {
       value = value.replaceAll('-', '').toLowerCase();
 

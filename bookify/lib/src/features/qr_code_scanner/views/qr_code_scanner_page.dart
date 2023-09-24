@@ -1,6 +1,5 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_textformfield_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
-import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,12 +37,8 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     super.dispose();
   }
 
-  void _searchIsbn(BuildContext context, String value) {
-    final verifier = IsbnVerifier();
-    String? isbn = verifier.verifyIsbn(value);
-    if (isbn != null) {
-      Navigator.pop(context, isbn);
-    }
+  void _searchIsbn(BuildContext context, String isbn) {
+    Navigator.pop(context, isbn);
   }
 
   @override

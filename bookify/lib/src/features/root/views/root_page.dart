@@ -64,7 +64,7 @@ class _RootPageState extends State<RootPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const QrCodeScannerPage()));
-                bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
+                bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
                 _pageController.jumpToPage(homePage);
                 _bottomBarController.changeSelectedBottomBarItem(homePage);
               }),

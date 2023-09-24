@@ -12,6 +12,14 @@ void main() {
       expect(isbn, equals('9788573076103'));
     });
 
+    test('test if valid ISBN and remove empty spaces', () {
+      String input = ' 9798558244588     ';
+
+      String? isbn = verifier.verifyIsbn(input);
+
+      expect(isbn, equals('9798558244588'));
+    });
+
     test('test if a 88-515-2159-X is a valid isbn', () {
       String str2 = "88-515-2159-X";
 

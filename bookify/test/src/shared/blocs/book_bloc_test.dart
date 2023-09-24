@@ -73,29 +73,44 @@ void main() {
 
     blocTest<BookBloc, BookState>(
       '5- Test if the FindBookByIsbnEvent is not empty state',
-      setUp: () => when((() => repository.findBookByISBN(isbn: '11111')))
-          .thenAnswer((_) async => booksMock),
+      setUp: () =>
+          when((() => repository.findBooksByIsbn(isbn: '9788573076103')))
+              .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: '11111')),
+      act: (bloc) => bloc.add(FindedBooksByIsbnEvent(isbn: '978-85-7307-610-3')),
       verify: (_) {
-        verify(() => repository.findBookByISBN(isbn: '11111')).called(1);
+        verify(() => repository.findBooksByIsbn(isbn: '9788573076103'))
+            .called(1);
       },
       expect: () => [
         isA<BooksLoadingState>(),
         isA<BooksLoadedState>(),
-        //isA<SingleBookLoadedState>(),
       ],
     );
 
     blocTest<BookBloc, BookState>(
-      '6- Test if the FindBookByIsbnEvent is a error state',
-      setUp: () => when((() => repository.findBookByISBN(isbn: '11111')))
+      '6- Test if the FindBookByIsbnEvent is  empty state',
+      setUp: () =>
+          when((() => repository.findBooksByIsbn(isbn: '9788573076103')))
+              .thenAnswer((_) async => []),
+      build: () => bookBloc,
+      act: (bloc) => bloc.add(FindedBooksByIsbnEvent(isbn: '978-8573076103')),
+      verify: (_) {
+        verify(() => repository.findBooksByIsbn(isbn: '9788573076103'))
+            .called(1);
+      },
+      expect: () => [
+        isA<BooksLoadingState>(),
+        isA<BookEmptyState>(),
+      ],
+    );
+
+    blocTest<BookBloc, BookState>(
+      '7- Test if the FindBookByIsbnEvent is a error state',
+      setUp: () => when((() => repository.findBooksByIsbn(isbn: '11111')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
-      act: (bloc) => bloc.add(FindedBookByIsbnEvent(isbn: '11111')),
-      verify: (_) {
-        verify(() => repository.findBookByISBN(isbn: '11111')).called(1);
-      },
+      act: (bloc) => bloc.add(FindedBooksByIsbnEvent(isbn: '11111')),
       expect: () => [
         isA<BooksLoadingState>(),
         isA<BookErrorSate>(),
@@ -103,7 +118,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '7- Test if the FindBooksByAuthorEvent is not empty state',
+      '8- Test if the FindBooksByAuthorEvent is not empty state',
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
@@ -118,7 +133,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '8- Test if the FindBooksByAuthorEvent is empty state',
+      '9- Test if the FindBooksByAuthorEvent is empty state',
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenAnswer((_) async => []),
       build: () => bookBloc,
@@ -133,7 +148,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '9- Test if the FindBooksByAuthorEvent is a error state',
+      '10- Test if the FindBooksByAuthorEvent is a error state',
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,
@@ -148,7 +163,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '10- Test if the FindBooksByCategoryEvent is not empty state',
+      '11- Test if the FindBooksByCategoryEvent is not empty state',
       setUp: () =>
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenAnswer((_) async => booksMock),
@@ -165,7 +180,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '11- Test if the FindBooksByCategoryEvent is empty state',
+      '12- Test if the FindBooksByCategoryEvent is empty state',
       setUp: () =>
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenAnswer((_) async => []),
@@ -182,7 +197,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '12- Test if the FindBooksByCategoryEvent is a error state',
+      '13- Test if the FindBooksByCategoryEvent is a error state',
       setUp: () =>
           when((() => repository.findBooksByCategory(category: 'category')))
               .thenThrow(BookException('this is a error')),
@@ -199,7 +214,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '13- Test if the FindBooksByPublisherEvent is not empty state',
+      '14- Test if the FindBooksByPublisherEvent is not empty state',
       setUp: () =>
           when((() => repository.findBooksByPublisher(publisher: 'publisher')))
               .thenAnswer((_) async => booksMock),
@@ -217,7 +232,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '14- Test if the FindBooksByPublisherEvent is empty state',
+      '15- Test if the FindBooksByPublisherEvent is empty state',
       setUp: () =>
           when((() => repository.findBooksByPublisher(publisher: 'publisher')))
               .thenAnswer((_) async => []),
@@ -235,7 +250,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '15- Test if the FindBooksByPublisherEvent is a error state',
+      '16- Test if the FindBooksByPublisherEvent is a error state',
       setUp: () =>
           when((() => repository.findBooksByPublisher(publisher: 'publisher')))
               .thenThrow(BookException('this is a error')),
@@ -253,7 +268,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '16- Test if the FindBooksByTitleEvent is not empty state',
+      '17- Test if the FindBooksByTitleEvent is not empty state',
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
@@ -268,7 +283,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '17- Test if the FindBooksByTitleEvent is empty state',
+      '18- Test if the FindBooksByTitleEvent is empty state',
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenAnswer((_) async => []),
       build: () => bookBloc,
@@ -283,7 +298,7 @@ void main() {
     );
 
     blocTest<BookBloc, BookState>(
-      '18- Test if the FindBooksByTitleEvent is a error state',
+      '19- Test if the FindBooksByTitleEvent is a error state',
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
           .thenThrow(BookException('this is a error')),
       build: () => bookBloc,

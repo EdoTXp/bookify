@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
+import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bookify/src/shared/models/book_model.dart';
@@ -12,24 +13,27 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   final BooksRepository _booksRepository;
 
   /// Variable that avoids making many requests to the API for the same books.
-  List<BookModel>? cachedBooksList;
+  List<BookModel>? _cachedBooksList;
 
   BookBloc(this._booksRepository) : super(BooksLoadingState()) {
     on<GotAllBooksEvent>(_getAllBooks);
-    on<FindedBookByIsbnEvent>(_findBookByIsbn);
+    on<FindedBooksByTitleEvent>(_findBooksByTitle);
     on<FindedBooksByAuthorEvent>(_findBooksByAuthor);
     on<FindedBooksByCategoryEvent>(_findBooksByCategory);
     on<FindedBooksByPublisherEvent>(_findBooksByPublisher);
-    on<FindedBooksByTitleEvent>(_findBooksByTitle);
+    on<FindedBooksByIsbnEvent>(_findBooksByIsbn);
   }
 
-  Future<void> _getAllBooks(GotAllBooksEvent event, emit) async {
+  Future<void> _getAllBooks(
+    GotAllBooksEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
 
-      if (cachedBooksList != null) {
+      if (_cachedBooksList != null) {
         await Future.delayed(const Duration(milliseconds: 500));
-        emit(BooksLoadedState(books: cachedBooksList!));
+        emit(BooksLoadedState(books: _cachedBooksList!));
         return;
       }
 
@@ -40,7 +44,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         return;
       }
 
-      cachedBooksList = books;
+      _cachedBooksList = books;
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(message: socketException.message));
@@ -49,23 +53,29 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  Future<void> _findBookByIsbn(FindedBookByIsbnEvent event, emit) async {
+  Future<void> _findBooksByTitle(
+    FindedBooksByTitleEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
-      final books = await _booksRepository.findBookByISBN(isbn: event.isbn);
+
+      final books = await _booksRepository.findBooksByTitle(title: event.title);
 
       if (books.isEmpty) {
         emit(BookEmptyState());
         return;
       }
-
       emit(BooksLoadedState(books: books));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
   }
 
-  Future<void> _findBooksByAuthor(FindedBooksByAuthorEvent event, emit) async {
+  Future<void> _findBooksByAuthor(
+    FindedBooksByAuthorEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
 
@@ -84,7 +94,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByCategory(
-      FindedBooksByCategoryEvent event, emit) async {
+    FindedBooksByCategoryEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
 
@@ -103,7 +115,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   Future<void> _findBooksByPublisher(
-      FindedBooksByPublisherEvent event, emit) async {
+    FindedBooksByPublisherEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
 
@@ -121,11 +135,21 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     }
   }
 
-  Future<void> _findBooksByTitle(FindedBooksByTitleEvent event, emit) async {
+  Future<void> _findBooksByIsbn(
+    FindedBooksByIsbnEvent event,
+    Emitter<BookState> emit,
+  ) async {
     try {
       emit(BooksLoadingState());
 
-      final books = await _booksRepository.findBooksByTitle(title: event.title);
+      final verifier = IsbnVerifier();
+      String? isbn = verifier.verifyIsbn(event.isbn);
+      if (isbn == null) {
+        emit(BookErrorSate(message: 'Digite um ISBN Válido'));
+        return;
+      }
+
+      final books = await _booksRepository.findBooksByIsbn(isbn: isbn);
 
       if (books.isEmpty) {
         emit(BookEmptyState());

@@ -1,6 +1,4 @@
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
-import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
-import 'package:bookify/src/shared/widgets/dialogs/isbn_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
@@ -64,15 +62,12 @@ class _HomePageState extends State<HomePage>
       color: Theme.of(context).primaryColor,
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
-        listener: (_, state) {
-          searchBarIsVisible = state is BooksLoadedState ? false : true;
-        },
+        listener: (_, state) =>
+            searchBarIsVisible = state is BooksLoadedState ? false : true,
         builder: (BuildContext context, state) {
           return Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Padding(
                 padding:
                     const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
@@ -99,18 +94,7 @@ class _HomePageState extends State<HomePage>
                                 FindedBooksByPublisherEvent(publisher: value));
                             break;
                           case SearchType.isbn:
-                            final verifier = IsbnVerifier();
-                            String? isbn = verifier.verifyIsbn(value);
-
-                            if (isbn != null) {
-                              bookBloc.add(FindedBookByIsbnEvent(isbn: isbn));
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (_) => const IsbnDialog(),
-                              );
-                              searchEC.clear();
-                            }
+                            bookBloc.add(FindedBooksByIsbnEvent(isbn: value));
                             break;
                         }
                       }
