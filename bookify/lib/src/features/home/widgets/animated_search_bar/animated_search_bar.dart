@@ -95,10 +95,21 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 setState(() =>
                     _searchIconByTypeIsClicked = !_searchIconByTypeIsClicked);
               },
-              icon: Icon(
-                // Show icon selection based on the type of search selected
-                searchIconByType,
-                color: Theme.of(context).primaryColor,
+              icon: Column(
+                children: [
+                  Icon(
+                    searchIconByType,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Container(
+                    height: 4,
+                    width: 4,
+                    margin: const EdgeInsets.only(top: 4),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(60)),
+                  ),
+                ],
               ),
             ),
             Visibility(

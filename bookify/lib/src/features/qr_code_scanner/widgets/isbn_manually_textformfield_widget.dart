@@ -21,6 +21,7 @@ class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
 class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
   final isbnManualyEC = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   final maskIsbn10 = '#-#####-###-S#';
   final maskIsbn13 = '###-#####-####-#';
   final isbnRegExpVerifier = IsbnVerifier().isbnFormatRegExp;
@@ -48,6 +49,7 @@ class _IsbnManuallyTextFormFieldWidgetState
       isbnManualyEC.value = valueClear.length < 11
           ? isbnMaskFormatter.updateMask(mask: maskIsbn10)
           : isbnMaskFormatter.updateMask(mask: maskIsbn13);
+        
     });
   }
 
@@ -62,17 +64,21 @@ class _IsbnManuallyTextFormFieldWidgetState
           color: Theme.of(context).primaryColorLight,
           height: 120,
           child: Form(
+            key: formKey,
             autovalidateMode: AutovalidateMode.always,
             child: Center(
               child: TextFormField(
+                key: const Key('isbnManuallyTextFormField'),
                 textAlign: TextAlign.center,
                 controller: isbnManualyEC,
                 onChanged: _updateMask,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
-                  Validatorless.required('Esse campo precisa ser preenchido'),
-                  Validatorless.regex(isbnRegExpVerifier,
-                      'Esse campo precisa ser um formato ISBN Válido'),
+                  Validatorless.required('Esse campo não pode estar vazio'),
+                  Validatorless.regex(
+                    isbnRegExpVerifier,
+                    'Formato do ISBN inválido',
+                  ),
                 ]),
                 style: const TextStyle(
                   fontSize: 25,
@@ -91,7 +97,12 @@ class _IsbnManuallyTextFormFieldWidgetState
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: BookifyOutlinedButton(
-            onPressed: () => widget.onTap(isbnManualyEC.text),
+            key: const Key('isbnManuallyOutlinedButton'),
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                widget.onTap(isbnManualyEC.text);
+              }
+            },
             text: 'Ir para o livro',
             suffixIcon: Icons.arrow_forward,
           ),

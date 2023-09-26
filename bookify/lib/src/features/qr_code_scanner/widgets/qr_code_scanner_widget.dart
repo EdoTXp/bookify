@@ -43,6 +43,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
     final centerOverlay = MediaQuery.sizeOf(context).center(Offset.zero);
 
     return MobileScanner(
+      key: const Key('MobileScanner'),
       controller: scannerController,
       errorBuilder: (context, exception, _) {
         return Text(exception.errorDetails!.message!);

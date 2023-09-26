@@ -81,10 +81,12 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
           Expanded(
             child: (_qrCodeScannerIsVisible)
                 ? QrCodeScannerWidget(
+                  key: const Key('qrCodeScannerWidget'),
                     onDetect: (qrCodeValue) =>
                         _searchIsbn(context, qrCodeValue),
                   )
                 : IsbnManuallyTextFormFieldWidget(
+                  key: const Key('isbnManuallyTextFormFieldWidget'),
                     onTap: (textFormFieldValue) =>
                         _searchIsbn(context, textFormFieldValue),
                   ),
@@ -95,6 +97,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextButton.icon(
+                key: const Key('changeModeTextButton'),
                 label: Text(changeModeText),
                 icon: Icon(changeIconMode),
                 onPressed: () {
