@@ -15,12 +15,6 @@ class BookifyElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,6 +23,7 @@ class BookifyElevatedButton extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 14),
           ),
           if (suffixIcon != null)
             Row(

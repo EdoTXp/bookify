@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../shared/widgets/buttons/buttons.dart';
 
-// Images source: 
+// Images source:
 // Book Icon: https://www.kindpng.com/imgv/JJhxRx_open-book-icon-book-emoji-hd-png-download/
 // Lupe: https://www.kindpng.com/imgv/ToRobT_magnifying-glass-svg-clip-arts-hd-png-download/
 // Cross Error: https://www.kindpng.com/imgv/iRJmhih_cross-hd-png-download/
@@ -23,8 +23,7 @@ class BookErrorSateWidget extends StatelessWidget {
   /// and a [stateMessage] using default message
   const BookErrorSateWidget.bookEmptyState({
     required this.onPressed,
-    this.imageAssetPath =
-        'assets/icons/empty_book.png',
+    this.imageAssetPath = 'assets/icons/empty_book.png',
     this.stateMessage = 'Não foi encontrado nenhum livro com esses termos.',
     super.key,
   });
@@ -45,6 +44,7 @@ class BookErrorSateWidget extends StatelessWidget {
               'OPS!! $stateMessage',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 14,
               ),
               maxLines: 4,
               textAlign: TextAlign.justify,
@@ -53,9 +53,10 @@ class BookErrorSateWidget extends StatelessWidget {
               height: 20,
             ),
             BookifyElevatedButton(
-                onPressed: onPressed,
-                suffixIcon: Icons.replay_outlined,
-                text: 'Tentar novamente')
+              onPressed: onPressed,
+              suffixIcon: Icons.replay_outlined,
+              text: 'Tentar novamente',
+            ),
           ],
         ),
       ),

@@ -35,9 +35,6 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    // when the keyboard appears, FAB hides
-    final keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-
     return Scaffold(
       body: PageView(
         controller: _pageController,
@@ -50,33 +47,22 @@ class _RootPageState extends State<RootPage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 40),
-          Visibility(
-            visible: !keyboardIsOpen,
-            child: RectangleFloatingActionButton(
-              onPressed: (() async {
-                int homePage = _pageController.initialPage;
+      floatingActionButton: RectangleFloatingActionButton(
+        onPressed: (() async {
+          int homePage = _pageController.initialPage;
 
-                String isbn = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const QrCodeScannerPage()));
-                bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
-                _pageController.jumpToPage(homePage);
-                _bottomBarController.changeSelectedBottomBarItem(homePage);
-              }),
-              width: 60,
-              height: 60,
-              child: const Icon(
-                Icons.add,
-                size: 40,
-              ),
-            ),
-          ),
-        ],
+          String isbn = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const QrCodeScannerPage()));
+          bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
+          _pageController.jumpToPage(homePage);
+          _bottomBarController.changeSelectedBottomBarItem(homePage);
+        }),
+        child: const Icon(
+          Icons.add,
+          size: 40,
+        ),
       ),
       extendBody: true,
       bottomNavigationBar: FABBottomAppBar(

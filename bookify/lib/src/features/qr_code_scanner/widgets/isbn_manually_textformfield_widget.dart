@@ -49,7 +49,6 @@ class _IsbnManuallyTextFormFieldWidgetState
       isbnManualyEC.value = valueClear.length < 11
           ? isbnMaskFormatter.updateMask(mask: maskIsbn10)
           : isbnMaskFormatter.updateMask(mask: maskIsbn13);
-        
     });
   }
 
@@ -61,7 +60,7 @@ class _IsbnManuallyTextFormFieldWidgetState
           height: 80,
         ),
         Container(
-          color: Theme.of(context).primaryColorLight,
+          color: Theme.of(context).unselectedWidgetColor.withOpacity(0.6),
           height: 120,
           child: Form(
             key: formKey,
@@ -81,13 +80,18 @@ class _IsbnManuallyTextFormFieldWidgetState
                   ),
                 ]),
                 style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                ),
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
                 onTapOutside: (_) => context.unfocus(),
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 70.0),
+                decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 70.0),
                     hintText: '000-00000-0000-0',
+                    hintStyle: TextStyle(
+                      color:
+                          Colors.blue.withOpacity(.5),
+                    ),
                     border: InputBorder.none),
               ),
             ),

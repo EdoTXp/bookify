@@ -20,10 +20,11 @@ class FABBottomAppBarItem {
 }
 
 const rectangeRoundedNotchedShape = AutomaticNotchedShape(
-    RoundedRectangleBorder(),
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(15)),
-    ));
+  RoundedRectangleBorder(),
+  RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(15)),
+  ),
+);
 
 class FABBottomAppBar extends StatefulWidget {
   final List<FABBottomAppBarItem> items;
@@ -91,46 +92,46 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     required int index,
     required ValueChanged<int> onPressed,
   }) {
-    final isSelected = _selectedItemIndex == index;
+    final isSelectedItem = _selectedItemIndex == index;
 
-    final color = isSelected
+    final colorItem = isSelectedItem
         ? widget.selectedColor ?? Theme.of(context).primaryColor
         : widget.color ?? Theme.of(context).unselectedWidgetColor;
 
-    final icon = isSelected ? item.selectedIcon : item.unselectedIcon;
+    final iconItem = isSelectedItem ? item.selectedIcon : item.unselectedIcon;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: isSelected
-            ? BoxDecoration(
-                border: Border.all(color: color),
-                borderRadius: BorderRadius.circular(90))
-            : null,
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            borderRadius: BorderRadius.circular(90),
-            onTap: () => onPressed(index),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: color),
-                Text(
-                  item.text,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                    color: color,
-                  ),
-                )
-              ],
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: isSelectedItem
+          // Circle created only when item is selected.
+          ? BoxDecoration(
+              border: Border.all(color: colorItem),
+              borderRadius: BorderRadius.circular(90),
+            )
+          : null,
+      child: InkWell(
+        splashColor: Colors.transparent,
+        borderRadius: BorderRadius.circular(90),
+        onTap: () => onPressed(index),
+        // Icon and label of the item in a column.
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              iconItem,
+              color: colorItem,
             ),
-          ),
+            Text(
+              item.text,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: colorItem,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -154,6 +155,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
         ));
 
     return BottomAppBar(
+      padding: const EdgeInsets.all(8.0),
       color: widget.backgroundColor,
       shape: widget.notchedShape,
       child: Row(

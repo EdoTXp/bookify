@@ -15,16 +15,6 @@ class BookifyOutlinedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        side: BorderSide(
-          width: 2,
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,6 +23,7 @@ class BookifyOutlinedButton extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 14),
           ),
           if (suffixIcon != null)
             Row(

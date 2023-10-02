@@ -70,7 +70,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
               titleText,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),

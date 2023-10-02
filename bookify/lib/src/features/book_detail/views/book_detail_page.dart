@@ -47,7 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -93,11 +93,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: BookifyElevatedButton(
+                    child: /* BookifyElevatedButton(
                       text: 'Adicionar',
                       suffixIcon: Icons.arrow_forward,
                       onPressed: () {},
-                    ),
+                    ),*/
+                        BookifyElevatedButton(
+                            onPressed: () {},
+                            suffixIcon: Icons.arrow_forward,
+                            text: 'Adicionar'),
                   )
                 ],
               ),
@@ -121,6 +125,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       ? TextOverflow.ellipsis
                       : TextOverflow.visible,
                   style: const TextStyle(
+                    fontSize: 16,
                     height: 1.5,
                   ),
                 ),

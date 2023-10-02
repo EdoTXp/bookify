@@ -33,7 +33,10 @@ class BookRating extends StatelessWidget {
         ),
         Text(
           'Total: $ratingsCount',
-          style: TextStyle(color: Theme.of(context).unselectedWidgetColor),
+          style: TextStyle(
+            color: Theme.of(context).unselectedWidgetColor,
+            fontSize: 16,
+          ),
         )
       ],
     );
