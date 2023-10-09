@@ -42,9 +42,7 @@ class _HomePageState extends State<HomePage>
 
   Widget _getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
-      BooksLoadingState() => Center(
-          child:
-              CircularProgressIndicator(color: Theme.of(context).primaryColor)),
+      BooksLoadingState() => const Center(child: CircularProgressIndicator()),
       BookEmptyState() =>
         BookErrorSateWidget.bookEmptyState(onPressed: _refreshPage),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage>
 
     return RefreshIndicator(
       onRefresh: () async => _refreshPage(),
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).colorScheme.secondary,
       child: BlocConsumer<BookBloc, BookState>(
         bloc: bookBloc,
         listener: (_, state) =>

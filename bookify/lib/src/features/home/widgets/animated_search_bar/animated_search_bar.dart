@@ -67,8 +67,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedColor = Theme.of(context).colorScheme.secondary;
     final (searchHintText, searchIconByType) = _updateSearchBar();
-    final primaryColor = Theme.of(context).primaryColor;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -88,7 +88,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           hintText: searchHintText,
           leading: Icon(
             Icons.search,
-            color: primaryColor,
+            color: selectedColor,
           ),
           trailing: [
             IconButton(
@@ -100,15 +100,17 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 children: [
                   Icon(
                     searchIconByType,
-                    color: primaryColor,
+                    color: selectedColor,
                   ),
+                  // Dot below the icon to indicate it is a button
                   Container(
                     height: 4,
                     width: 4,
                     margin: const EdgeInsets.only(top: 4),
                     decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(60)),
+                      color: selectedColor,
+                      borderRadius: BorderRadius.circular(60),
+                    ),
                   ),
                 ],
               ),
@@ -118,7 +120,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               child: IconButton(
                 icon: Icon(
                   Icons.close,
-                  color: primaryColor,
+                  color: selectedColor,
                 ),
                 onPressed: _clearSearchBarText,
               ),
@@ -131,15 +133,10 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
             padding: const EdgeInsets.only(top: 12.0),
             child: SegmentedButton<SearchType>(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected)
-                      ? primaryColor
-                      : null,
-                ),
                 iconColor: MaterialStateProperty.resolveWith(
                   (states) => states.contains(MaterialState.selected)
                       ? Colors.white
-                      : primaryColor,
+                      : selectedColor,
                 ),
               ),
               segments: const [

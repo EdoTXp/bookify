@@ -6,13 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 final appLightTheme = ThemeData(
   appBarTheme: _appBarTheme,
   textSelectionTheme: _textSelectionTheme,
+  progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
   searchBarTheme: _searchBarTheme,
   segmentedButtonTheme: _segmentedButtonTheme,
   splashColor: Colors.transparent,
-  primaryColor: lightSelectedColor,
-  hoverColor: Colors.red,
-  unselectedWidgetColor: lightPrimaryColor,
   iconTheme: _iconTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
@@ -20,19 +18,23 @@ final appLightTheme = ThemeData(
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme:
       _floatingActionButtonTheme.copyWith(backgroundColor: Colors.white),
-  colorScheme: const ColorScheme.light(),
+  colorScheme: const ColorScheme.light(
+    primary: bookifyPrimaryColor,
+    secondary: bookifySecundaryColor,
+    tertiary: bookifyTertiaryColor,
+    error: bookifyErrorColor,
+  ),
 );
 
 /// Theme for dark mode
 final appDarkTheme = ThemeData(
   appBarTheme: _appBarTheme,
   textSelectionTheme: _textSelectionTheme,
+  progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
   searchBarTheme: _searchBarTheme,
   segmentedButtonTheme: _segmentedButtonTheme,
   splashColor: Colors.transparent,
-  primaryColor: lightSelectedColor,
-  unselectedWidgetColor: lightPrimaryColor,
   iconTheme: _iconTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
@@ -41,7 +43,12 @@ final appDarkTheme = ThemeData(
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
     backgroundColor: const Color(0xff404040),
   ),
-  colorScheme: const ColorScheme.dark(),
+  colorScheme: const ColorScheme.dark(
+    primary: bookifyPrimaryColor,
+    secondary: bookifySecundaryColor,
+    tertiary: bookifyTertiaryColor,
+    error: bookifyErrorColor,
+  ),
 );
 
 // Theme Components
@@ -50,8 +57,10 @@ final appDarkTheme = ThemeData(
 const _appBarTheme = AppBarTheme(
   backgroundColor: Colors.transparent,
   shadowColor: Colors.transparent,
-  iconTheme: IconThemeData(color: lightSelectedColor),
+  iconTheme: IconThemeData(color: bookifySecundaryColor),
 );
+
+const _progressIndicatorTheme = ProgressIndicatorThemeData(color: bookifySecundaryColor);
 
 final _textTheme = TextTheme(
   displayLarge: GoogleFonts.roboto(fontSize: 64),
@@ -101,13 +110,13 @@ final _textTheme = TextTheme(
 );
 
 const _textSelectionTheme = TextSelectionThemeData(
-  cursorColor: lightPrimaryColor,
-  selectionColor: lightPrimaryColor,
+  cursorColor: bookifyPrimaryColor,
+  selectionColor: bookifyPrimaryColor,
 );
 
 const _searchBarTheme = SearchBarThemeData(
   side: MaterialStatePropertyAll(
-    BorderSide(color: lightSelectedColor),
+    BorderSide(color: bookifySecundaryColor),
   ),
   elevation: MaterialStatePropertyAll(0),
   padding: MaterialStatePropertyAll(
@@ -118,32 +127,31 @@ const _searchBarTheme = SearchBarThemeData(
   )),
   hintStyle: MaterialStatePropertyAll(TextStyle(
     fontSize: 14,
-    color: lightSelectedColor,
+    color: bookifySecundaryColor,
   )),
 );
 
 const _segmentedButtonTheme = SegmentedButtonThemeData(
   style: ButtonStyle(
-    surfaceTintColor: MaterialStatePropertyAll(lightSelectedColor),
+    surfaceTintColor: MaterialStatePropertyAll(bookifySecundaryColor),
     visualDensity: VisualDensity.comfortable,
-    overlayColor: MaterialStatePropertyAll(Colors.white),
     textStyle: MaterialStatePropertyAll(TextStyle(
       fontSize: 12,
       overflow: TextOverflow.ellipsis,
     )),
-    side: MaterialStatePropertyAll(BorderSide(color: lightSelectedColor)),
-    iconColor: MaterialStatePropertyAll(lightSelectedColor),
+    side: MaterialStatePropertyAll(BorderSide(color: bookifySecundaryColor)),
+    iconColor: MaterialStatePropertyAll(bookifySecundaryColor),
   ),
 );
 
-const _iconTheme = IconThemeData(color: lightPrimaryColor);
+const _iconTheme = IconThemeData(color: bookifyPrimaryColor);
 
-const _textButtonTheme = TextButtonThemeData(
+final _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: MaterialStatePropertyAll(lightPrimaryColor),
-    iconColor: MaterialStatePropertyAll(lightPrimaryColor),
-    surfaceTintColor: MaterialStatePropertyAll(Colors.transparent),
-    textStyle: MaterialStatePropertyAll(
+    foregroundColor: const MaterialStatePropertyAll(bookifyPrimaryColor),
+    iconColor: const MaterialStatePropertyAll(bookifyPrimaryColor),
+    overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
+    textStyle: const MaterialStatePropertyAll(
       TextStyle(fontWeight: FontWeight.bold),
     ),
   ),
@@ -151,7 +159,7 @@ const _textButtonTheme = TextButtonThemeData(
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    backgroundColor: const MaterialStatePropertyAll(lightSelectedColor),
+    backgroundColor: const MaterialStatePropertyAll(bookifySecundaryColor),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
@@ -161,7 +169,7 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
 
 final _outlinedButtonTheme = OutlinedButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: const MaterialStatePropertyAll(lightSelectedColor),
+    foregroundColor: const MaterialStatePropertyAll(bookifySecundaryColor),
     overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -169,7 +177,7 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
     side: const MaterialStatePropertyAll(
       BorderSide(
         width: 2,
-        color: lightSelectedColor,
+        color: bookifySecundaryColor,
       ),
     ),
     textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 14)),
@@ -177,14 +185,14 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
 );
 
 const _inputDecorationTheme = InputDecorationTheme(
-  floatingLabelStyle: TextStyle(color: lightPrimaryColor),
+  floatingLabelStyle: TextStyle(color: bookifyPrimaryColor),
 );
 
 const _floatingActionButtonTheme = FloatingActionButtonThemeData(
   splashColor: Colors.transparent,
-  foregroundColor: lightPrimaryColor,
+  foregroundColor: bookifyPrimaryColor,
   shape: RoundedRectangleBorder(
-    side: BorderSide(color: lightPrimaryColor),
+    side: BorderSide(color: bookifyPrimaryColor),
     borderRadius: BorderRadius.all(Radius.circular(15)),
   ),
 );

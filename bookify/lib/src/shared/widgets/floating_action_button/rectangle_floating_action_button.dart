@@ -33,6 +33,8 @@ class RectangleFloatingActionButton extends StatelessWidget {
             width: width ?? 60,
             height: height ?? 60,
             child: FloatingActionButton(
+              backgroundColor: backgroundColor,
+              foregroundColor: foregroundColor,
               onPressed: onPressed,
               child: child,
             ),

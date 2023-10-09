@@ -10,12 +10,12 @@ import 'package:flutter/material.dart';
 class FABBottomAppBarItem {
   final IconData unselectedIcon;
   final IconData selectedIcon;
-  final String text;
+  final String label;
 
   FABBottomAppBarItem({
     required this.selectedIcon,
     required this.unselectedIcon,
-    required this.text,
+    required this.label,
   });
 }
 
@@ -94,44 +94,48 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
   }) {
     final isSelectedItem = _selectedItemIndex == index;
 
+    final theme = Theme.of(context);
     final colorItem = isSelectedItem
-        ? widget.selectedColor ?? Theme.of(context).primaryColor
-        : widget.color ?? Theme.of(context).unselectedWidgetColor;
+        ? widget.selectedColor ?? theme.colorScheme.secondary
+        : widget.color ?? theme.colorScheme.primary;
 
     final iconItem = isSelectedItem ? item.selectedIcon : item.unselectedIcon;
 
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: isSelectedItem
-          // Circle created only when item is selected.
-          ? BoxDecoration(
-              border: Border.all(color: colorItem),
-              borderRadius: BorderRadius.circular(90),
-            )
-          : null,
+    return Material(
+      borderRadius: BorderRadius.circular(90),
+      color: Colors.transparent,
       child: InkWell(
-        splashColor: Colors.transparent,
         borderRadius: BorderRadius.circular(90),
+        splashColor: Colors.transparent,
         onTap: () => onPressed(index),
-        // Icon and label of the item in a column.
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              iconItem,
-              color: colorItem,
-            ),
-            Text(
-              item.text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
+        child: Container(
+          width: 60,
+          height: 60,
+          decoration: isSelectedItem
+              // Circle created only when item is selected.
+              ? BoxDecoration(
+                  border: Border.all(color: colorItem),
+                  borderRadius: BorderRadius.circular(90),
+                )
+              : null,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                iconItem,
                 color: colorItem,
               ),
-            )
-          ],
+              Text(
+                item.label,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: colorItem,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -149,17 +153,18 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
 
     // add SizedBox when icons are close to FAB
     items.insert(
-        items.length >> 1,
-        const SizedBox(
-          width: 55,
-        ));
+      items.length >> 1,
+      const SizedBox(
+        width: 55,
+      ),
+    );
 
     return BottomAppBar(
       padding: const EdgeInsets.all(8.0),
       color: widget.backgroundColor,
       shape: widget.notchedShape,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: items,
       ),

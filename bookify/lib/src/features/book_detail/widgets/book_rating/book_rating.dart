@@ -13,6 +13,8 @@ class BookRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Text(
@@ -20,21 +22,21 @@ class BookRating extends StatelessWidget {
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).primaryColor,
+            color: colorScheme.secondary,
           ),
         ),
         RatingBarIndicator(
           rating: averageRating,
           itemBuilder: (context, index) => Icon(
             Icons.star,
-            color: Theme.of(context).primaryColor,
+            color: colorScheme.secondary,
           ),
           itemSize: 20,
         ),
         Text(
           'Total: $ratingsCount',
           style: TextStyle(
-            color: Theme.of(context).unselectedWidgetColor,
+            color: colorScheme.primary,
             fontSize: 16,
           ),
         )

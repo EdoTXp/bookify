@@ -71,21 +71,25 @@ class _RootPageState extends State<RootPage> {
         controller: _bottomBarController,
         items: [
           FABBottomAppBarItem(
-              unselectedIcon: Icons.home_outlined,
-              selectedIcon: Icons.home,
-              text: 'Início'),
+            unselectedIcon: Icons.home_outlined,
+            selectedIcon: Icons.home,
+            label: 'Início',
+          ),
           FABBottomAppBarItem(
-              unselectedIcon: Icons.book_outlined,
-              selectedIcon: Icons.book,
-              text: 'Estantes'),
+            unselectedIcon: Icons.book_outlined,
+            selectedIcon: Icons.book,
+            label: 'Estantes',
+          ),
           FABBottomAppBarItem(
-              unselectedIcon: Icons.auto_stories_outlined,
-              selectedIcon: Icons.auto_stories,
-              text: 'Leituras'),
+            unselectedIcon: Icons.auto_stories_outlined,
+            selectedIcon: Icons.auto_stories,
+            label: 'Leituras',
+          ),
           FABBottomAppBarItem(
-              unselectedIcon: Icons.person_outline,
-              selectedIcon: Icons.person,
-              text: 'Perfil'),
+            unselectedIcon: Icons.person_outline,
+            selectedIcon: Icons.person,
+            label: 'Perfil',
+          ),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
+import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

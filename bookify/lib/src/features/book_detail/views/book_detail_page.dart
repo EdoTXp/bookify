@@ -25,6 +25,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -66,15 +68,17 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Text(
                     '${widget.book.pageCount} PÁGINAS',
                     style: TextStyle(
-                        color: Theme.of(context).unselectedWidgetColor,
-                        fontSize: 14),
+                      color: colorScheme.primary,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(width: 24),
                   Text(
                     '9H PARA LER',
                     style: TextStyle(
-                        color: Theme.of(context).unselectedWidgetColor,
-                        fontSize: 14),
+                      color: colorScheme.primary,
+                      fontSize: 14,
+                    ),
                   ),
                 ],
               ),
@@ -93,15 +97,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: /* BookifyElevatedButton(
-                      text: 'Adicionar',
-                      suffixIcon: Icons.arrow_forward,
-                      onPressed: () {},
-                    ),*/
-                        BookifyElevatedButton(
-                            onPressed: () {},
-                            suffixIcon: Icons.arrow_forward,
-                            text: 'Adicionar'),
+                    child: BookifyElevatedButton(
+                        onPressed: () {},
+                        suffixIcon: Icons.arrow_forward,
+                        text: 'Adicionar'),
                   )
                 ],
               ),

@@ -1,8 +1,8 @@
 import 'package:bookify/src/shared/helpers/form_helper.dart';
-import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
+import 'package:bookify/src/shared/utils/input_formatter/isbn_input_formatter.dart';
+import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:validatorless/validatorless.dart';
 
 class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
@@ -22,19 +22,8 @@ class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
   final isbnManualyEC = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final maskIsbn10 = '#-#####-###-S#';
-  final maskIsbn13 = '###-#####-####-#';
   final isbnRegExpVerifier = IsbnVerifier().isbnFormatRegExp;
-  late final MaskTextInputFormatter isbnMaskFormatter;
-
-  @override
-  void initState() {
-    super.initState();
-
-    isbnMaskFormatter = MaskTextInputFormatter(
-      filter: {'#': RegExp(r'[0-9]'), 'S': RegExp(r'[xX0-9]')},
-    );
-  }
+  final isbnMaskFormatter = IsbnMaskTextInputFormatter();
 
   @override
   void dispose() {
@@ -42,25 +31,22 @@ class _IsbnManuallyTextFormFieldWidgetState
     super.dispose();
   }
 
-  void _updateMask(String value) {
-    setState(() {
-      final valueClear = value.replaceAll('-', '');
-
-      isbnManualyEC.value = valueClear.length < 11
-          ? isbnMaskFormatter.updateMask(mask: maskIsbn10)
-          : isbnMaskFormatter.updateMask(mask: maskIsbn13);
-    });
+  void _moveCursorToEnd(String value) {
+    if (isbnMaskFormatter.maskIsChanged) {
+      isbnManualyEC.selection =
+          TextSelection.fromPosition(TextPosition(offset: value.length));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
-        const SizedBox(
-          height: 80,
-        ),
+        const Spacer(),
         Container(
-          color: Theme.of(context).unselectedWidgetColor.withOpacity(0.6),
+          color: colorScheme.primary.withOpacity(.5),
           height: 120,
           child: Form(
             key: formKey,
@@ -70,7 +56,7 @@ class _IsbnManuallyTextFormFieldWidgetState
                 key: const Key('isbnManuallyTextFormField'),
                 textAlign: TextAlign.center,
                 controller: isbnManualyEC,
-                onChanged: _updateMask,
+                onChanged: _moveCursorToEnd,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo não pode estar vazio'),
@@ -85,14 +71,14 @@ class _IsbnManuallyTextFormFieldWidgetState
                     color: Colors.white),
                 onTapOutside: (_) => context.unfocus(),
                 decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 70.0),
-                    hintText: '000-00000-0000-0',
-                    hintStyle: TextStyle(
-                      color:
-                          Colors.blue.withOpacity(.5),
-                    ),
-                    border: InputBorder.none),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  hintText: '000-00000-0000-0',
+                  hintStyle: TextStyle(
+                    color: colorScheme.tertiary,
+                  ),
+                  errorStyle: const TextStyle(fontSize: 12),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ),

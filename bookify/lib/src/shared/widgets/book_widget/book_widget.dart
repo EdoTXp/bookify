@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class BookWidget extends StatelessWidget {
   final String bookImageUrl;
@@ -33,12 +33,11 @@ class BookWidget extends StatelessWidget {
           ),
         );
       },
-      placeholder: (context, _) => Center(
-          child:
-              CircularProgressIndicator(color: Theme.of(context).primaryColor)),
-      errorWidget: (_, __, ___) => const Icon(
+      placeholder: (context, _) =>
+          const Center(child: CircularProgressIndicator()),
+      errorWidget: (_, __, ___) => Icon(
         Icons.error,
-        color: Colors.red,
+        color: Theme.of(context).colorScheme.error,
       ),
     );
   }

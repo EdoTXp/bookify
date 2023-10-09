@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
-import 'package:bookify/src/shared/verifier/isbn_verifier.dart';
+import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bookify/src/shared/models/book_model.dart';
