@@ -31,13 +31,6 @@ class _IsbnManuallyTextFormFieldWidgetState
     super.dispose();
   }
 
-  void _moveCursorToEnd(String value) {
-    if (isbnMaskFormatter.maskIsChanged) {
-      isbnManualyEC.selection =
-          TextSelection.fromPosition(TextPosition(offset: value.length));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -56,7 +49,6 @@ class _IsbnManuallyTextFormFieldWidgetState
                 key: const Key('isbnManuallyTextFormField'),
                 textAlign: TextAlign.center,
                 controller: isbnManualyEC,
-                onChanged: _moveCursorToEnd,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo não pode estar vazio'),

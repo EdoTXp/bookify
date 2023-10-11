@@ -47,6 +47,9 @@ Future<void> _testIsbn(
   WidgetTester tester, {
   required String isbnVersion,
 }) async {
+  const notEmptyField = 'Esse campo não pode estar vazio';
+  const isbnInvalid = 'Formato do ISBN inválido';
+
   // Expect that qrcodeScannerWidget is constructed
   expect(find.byKey(qrcodeScannerWidgetKey), findsOneWidget);
 
@@ -62,14 +65,14 @@ Future<void> _testIsbn(
   // Test that the text appears: 'Esse campo não pode estar vazio'
   await tester.tap(find.byKey(isbnManuallyOutlinedButtonKey));
   await tester.pump();
-  expect(find.text('Esse campo não pode estar vazio'), findsOneWidget);
+  expect(find.text(notEmptyField), findsOneWidget);
 
   // Insert 9 initial isbn text on IsbnManuallyTextFormField, click to Bookify Button and expect invalid text
   await tester.enterText(find.byKey(isbnManuallyTextFormFieldKey), '555555555');
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(isbnManuallyOutlinedButtonKey));
   await tester.pump();
-  expect(find.text('Formato do ISBN inválido'), findsOneWidget);
+  expect(find.text(isbnInvalid), findsOneWidget);
 
   // Update mask
   await tester.enterText(find.byKey(isbnManuallyTextFormFieldKey), isbnVersion);
@@ -80,8 +83,8 @@ Future<void> _testIsbn(
   await tester.pumpAndSettle();
 
   // Checks that texts do not appear
-  expect(find.text('Esse campo não pode estar vazio'), findsNothing);
-  expect(find.text('Formato do ISBN inválido'), findsNothing);
+  expect(find.text(notEmptyField), findsNothing);
+  expect(find.text(isbnInvalid), findsNothing);
 
   // Click to send isbnVersion to validate
   await tester.tap(find.byKey(isbnManuallyOutlinedButtonKey));

@@ -159,14 +159,18 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
       ),
     );
 
-    return BottomAppBar(
-      padding: const EdgeInsets.all(8.0),
-      color: widget.backgroundColor,
-      shape: widget.notchedShape,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
+    return Container(
+      // Avoid onTaps below the bottomBar.
+      color: Colors.transparent,
+      child: BottomAppBar(
+        padding: const EdgeInsets.all(8.0),
+        color: widget.backgroundColor,
+        shape: widget.notchedShape,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: items,
+        ),
       ),
     );
   }
