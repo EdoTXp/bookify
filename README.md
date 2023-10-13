@@ -22,6 +22,7 @@ Tapping on a book will open another page where it specifies the book detailing i
 <img src="https://raw.githubusercontent.com/EdoTXp/Bookify/master/bookify/design/documentation/images/Screenshot_2.png" alt="Screenshot_2" width=350/>
 </br></br>
 Tapping on the "Plus" icon will open the page to scan the ISBN. Yes you will have to give permission to be able to use the device camera. If for any reason the camera cannot find the code, you can click in the "write manually" button and you can write the code manually.
+</br>
 <img src="https://raw.githubusercontent.com/EdoTXp/Bookify/master/bookify/design/documentation/images/Screenshot_3.png" alt="Screenshot_3" width=350/>
 <img src="https://raw.githubusercontent.com/EdoTXp/Bookify/master/bookify/design/documentation/images/Screenshot_4.png" alt="Screenshot_4" width=350/>
 
