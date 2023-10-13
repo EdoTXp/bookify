@@ -161,7 +161,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
 
     return Container(
       // Avoid onTaps below the bottomBar.
-      color: Colors.transparent,
+      decoration: const BoxDecoration(),
       child: BottomAppBar(
         padding: const EdgeInsets.all(8.0),
         color: widget.backgroundColor,
