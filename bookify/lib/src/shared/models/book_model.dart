@@ -1,10 +1,13 @@
+import 'package:bookify/src/shared/models/author_model.dart';
+import 'package:bookify/src/shared/models/category_model.dart';
+
 class BookModel {
   final String id;
   final String title;
-  final List<String> authors;
+  final List<AuthorModel> authors;
   final String publisher;
   final String description;
-  final List<String> categories;
+  final List<CategoryModel> categories;
   final int pageCount;
   final String imageUrl;
   final String buyLink;
@@ -28,10 +31,10 @@ class BookModel {
   BookModel copyWith({
     String? id,
     String? title,
-    List<String>? authors,
+    List<AuthorModel>? authors,
     String? publisher,
     String? description,
-    List<String>? categories,
+    List<CategoryModel>? categories,
     int? pageCount,
     String? imageUrl,
     String? buyLink,

@@ -8,7 +8,7 @@ import 'package:bookify/src/features/root/views/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
-  const RootPage({Key? key}) : super(key: key);
+  const RootPage({super.key});
 
   @override
   State<RootPage> createState() => _RootPageState();

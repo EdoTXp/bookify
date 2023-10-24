@@ -11,9 +11,9 @@ class BookDetailPage extends StatefulWidget {
 
   /// Required parameters BookModel book
   const BookDetailPage({
-    Key? key,
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
@@ -25,6 +25,12 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final book = widget.book;
+    final authors =
+        book.authors.map((author) => author.name).toList().join(', ');
+    final categories =
+        book.categories.map((category) => category.name).toList().join(', ');
+
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -45,7 +51,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             children: [
               Center(
                 child: Text(
-                  '${widget.book.title} ― ${widget.book.authors.join(', ')}',
+                  '${book.title} ― $authors',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 22,
@@ -58,7 +64,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 child: BookWidget(
                   height: 300,
                   width: 200,
-                  bookImageUrl: widget.book.imageUrl,
+                  bookImageUrl: book.imageUrl,
                 ),
               ),
               const SizedBox(height: 12),
@@ -66,7 +72,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${widget.book.pageCount} PÁGINAS',
+                    '${book.pageCount} PÁGINAS',
                     style: TextStyle(
                       color: colorScheme.primary,
                       fontSize: 14,
@@ -92,7 +98,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       text: 'Ir para loja',
                       suffixIcon: Icons.store,
                       onPressed: () async =>
-                          bookDetailController.launchUrl(widget.book.buyLink),
+                          bookDetailController.launchUrl(book.buyLink),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -145,8 +151,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       ),
                       const SizedBox(height: 12),
                       BookRating(
-                        averageRating: widget.book.averageRating,
-                        ratingsCount: widget.book.ratingsCount,
+                        averageRating: book.averageRating,
+                        ratingsCount: book.ratingsCount,
                       ),
                     ],
                   ),
@@ -165,10 +171,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                         const SizedBox(height: 30),
                         BookDescriptionWidget(
-                            title: 'Editora: ', content: widget.book.publisher),
+                            title: 'Editora: ', content: book.publisher),
                         BookDescriptionWidget(
-                            title: 'Gêneros: ',
-                            content: widget.book.categories.join(', '))
+                            title: 'Gêneros: ', content: categories),
                       ],
                     ),
                   ),

@@ -26,11 +26,11 @@ void main() {
       final books =
           await bookRepository.findBooksByAuthor(author: 'J.R.R. Tolkien');
 
-      expect(books[0].authors.first, 'J. R. R. Tolkien');
-      expect(books[1].authors.first, 'J. R. R. Tolkien');
-      expect(books[2].authors.first, 'J.R.R. Tolkien');
-      expect(books[3].authors.first, 'J. R. R. Tolkien');
-      expect(books[4].authors.first, 'J.R.R. Tolkien');
+      expect(books[0].authors.first.name, 'J. R. R. Tolkien');
+      expect(books[1].authors.first.name, 'J. R. R. Tolkien');
+      expect(books[2].authors.first.name, 'J.R.R. Tolkien');
+      expect(books[3].authors.first.name, 'J. R. R. Tolkien');
+      expect(books[4].authors.first.name, 'J.R.R. Tolkien');
     });
 
     test('Get a book by ISBN', () async {
@@ -107,7 +107,7 @@ void main() {
           await bookRepository.findBooksByCategory(category: 'Fiction');
 
       for (var book in books) {
-        expect(book.categories.first, 'Fiction');
+        expect(book.categories.first.name, 'Fiction');
       }
     });
 
