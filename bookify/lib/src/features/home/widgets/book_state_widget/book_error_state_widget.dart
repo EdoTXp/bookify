@@ -1,11 +1,7 @@
+import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../shared/widgets/buttons/buttons.dart';
-
-// Images source:
-// Book Icon: https://www.kindpng.com/imgv/JJhxRx_open-book-icon-book-emoji-hd-png-download/
-// Lupe: https://www.kindpng.com/imgv/ToRobT_magnifying-glass-svg-clip-arts-hd-png-download/
-// Cross Error: https://www.kindpng.com/imgv/iRJmhih_cross-hd-png-download/
 
 class BookErrorSateWidget extends StatelessWidget {
   final String imageAssetPath;
@@ -15,15 +11,14 @@ class BookErrorSateWidget extends StatelessWidget {
   const BookErrorSateWidget({
     required this.stateMessage,
     required this.onPressed,
-    this.imageAssetPath = 'assets/icons/error_book.png',
+    this.imageAssetPath = BookifyImages.bookErrorImage,
     super.key,
   });
 
-  /// Generate a BookErrorSateWidget with [imageAssetPath] using this ['assets/icons/empty_book.png']
-  /// and a [stateMessage] using default message
+  /// Generate a BookErrorSateWidget for a empty state with a [stateMessage] using default message
   const BookErrorSateWidget.bookEmptyState({
     required this.onPressed,
-    this.imageAssetPath = 'assets/icons/empty_book.png',
+    this.imageAssetPath = BookifyImages.bookEmptyImage,
     this.stateMessage = 'Não foi encontrado nenhum livro com esses termos.',
     super.key,
   });

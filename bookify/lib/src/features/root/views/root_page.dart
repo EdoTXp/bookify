@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
@@ -41,7 +42,7 @@ class _RootPageState extends State<RootPage> {
         physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
-          BookshelfPage(),
+          BookcasePage(),
           ReadingsPage(),
           ProfilePage(),
         ],
@@ -49,15 +50,20 @@ class _RootPageState extends State<RootPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: RectangleFloatingActionButton(
         onPressed: (() async {
-          int homePage = _pageController.initialPage;
+          String? isbn = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const QrCodeScannerPage(),
+            ),
+          );
+          
+          if (isbn != null) {
+            int homePage = _pageController.initialPage;
 
-          String isbn = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const QrCodeScannerPage()));
-          bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
-          _pageController.jumpToPage(homePage);
-          _bottomBarController.changeSelectedBottomBarItem(homePage);
+            bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
+            _pageController.jumpToPage(homePage);
+            _bottomBarController.changeSelectedBottomBarItem(homePage);
+          }
         }),
         child: const Icon(
           Icons.add,
@@ -76,8 +82,8 @@ class _RootPageState extends State<RootPage> {
             label: 'Início',
           ),
           FABBottomAppBarItem(
-            unselectedIcon: Icons.book_outlined,
-            selectedIcon: Icons.book,
+            unselectedIcon: BookifyIcons.bookcase_outlined,
+            selectedIcon: BookifyIcons.bookcase,
             label: 'Estantes',
           ),
           FABBottomAppBarItem(

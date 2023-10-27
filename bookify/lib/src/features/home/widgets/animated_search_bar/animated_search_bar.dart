@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:flutter/material.dart';
 
 enum SearchType {
@@ -59,7 +60,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       SearchType.author => {'Digite o Autor': Icons.person},
       SearchType.category => {'Digite o Gênero': Icons.category},
       SearchType.publisher => {'Digite a Editora': Icons.publish},
-      SearchType.isbn => {'Digite o ISBN': Icons.qr_code},
+      SearchType.isbn => {'Digite o ISBN': BookifyIcons.isbn},
     };
 
     return (searchMap.keys.first, searchMap.values.first);
@@ -158,7 +159,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 ),
                 ButtonSegment<SearchType>(
                   value: SearchType.isbn,
-                  icon: Icon(Icons.qr_code),
+                  icon: Icon(BookifyIcons.isbn),
                 ),
               ],
               selected: <SearchType>{_searchType},

@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_textformfield_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
+import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -57,7 +58,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     else {
       titleText = 'Digite os números do código de barra';
       changeModeText = 'Scanear código';
-      changeIconMode = Icons.qr_code_scanner;
+      changeIconMode = BookifyIcons.qr_code;
     }
 
     return Scaffold(
