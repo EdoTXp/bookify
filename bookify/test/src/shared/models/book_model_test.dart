@@ -31,6 +31,21 @@ void main() {
       averageRating: 3.5,
       ratingsCount: 200,
     );
+
+    final book3 = BookModel(
+      id: '1',
+      title: 'title',
+      authors: [AuthorModel(name: 'Author')],
+      publisher: 'publisher',
+      description: 'description',
+      categories: [CategoryModel(name: 'Category')],
+      pageCount: 320,
+      imageUrl: 'imageUrl',
+      buyLink: 'buyLink',
+      averageRating: 2.5,
+      ratingsCount: 2,
+      status: BookStatus.library,
+    );
     test(
         'should return false when comparing instances with different properties',
         () {
@@ -41,6 +56,55 @@ void main() {
         'should return a different hashCode for instances with different properties',
         () {
       expect(book1.hashCode != book2.hashCode, true);
+    });
+
+    test(
+        'must transform the BookModel into a map and convert it back to an object',
+        () {
+      final bookMap = book3.toMap();
+
+      expect(
+        bookMap,
+        {
+          'id': '1',
+          'title': 'title',
+          'authors': [
+            {
+              'id': null,
+              'name': 'Author',
+            },
+          ],
+          'publisher': 'publisher',
+          'description': 'description',
+          'categories': [
+            {
+              'id': null,
+              'name': 'Category',
+            },
+          ],
+          'pageCount': 320,
+          'imageUrl': 'imageUrl',
+          'buyLink': 'buyLink',
+          'averageRating': 2.5,
+          'ratingsCount': 2,
+          'status': 1,
+        },
+      );
+
+      final bookFromMap = BookModel.fromMap(bookMap);
+
+      expect(bookFromMap.id, '1');
+      expect(bookFromMap.title, 'title');
+      expect(bookFromMap.authors, isA<List<AuthorModel>>());
+      expect(bookFromMap.publisher, 'publisher');
+      expect(bookFromMap.description, 'description');
+      expect(bookFromMap.categories, isA<List<CategoryModel>>());
+      expect(bookFromMap.pageCount, 320);
+      expect(bookFromMap.imageUrl, 'imageUrl');
+      expect(bookFromMap.buyLink, 'buyLink');
+      expect(bookFromMap.averageRating, 2.5);
+      expect(bookFromMap.ratingsCount, 2);
+      expect(bookFromMap.status, isA<BookStatus>());
     });
   });
 }

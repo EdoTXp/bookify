@@ -1,6 +1,33 @@
 import 'package:bookify/src/shared/models/author_model.dart';
 import 'package:bookify/src/shared/models/category_model.dart';
 
+enum BookStatus {
+  library,
+  reading,
+  loaned;
+
+  int get statusNumber {
+    return switch (this) {
+      BookStatus.library => 1,
+      BookStatus.reading => 2,
+      BookStatus.loaned => 3
+    };
+  }
+
+  static BookStatus? fromMap(int value) {
+    switch (value) {
+      case 1:
+        return BookStatus.library;
+      case 2:
+        return BookStatus.reading;
+      case 3:
+        return BookStatus.loaned;
+      default:
+        return null;
+    }
+  }
+}
+
 class BookModel {
   final String id;
   final String title;
@@ -13,6 +40,7 @@ class BookModel {
   final String buyLink;
   final double averageRating;
   final int ratingsCount;
+  BookStatus? status;
 
   BookModel({
     required this.id,
@@ -26,6 +54,7 @@ class BookModel {
     required this.buyLink,
     required this.averageRating,
     required this.ratingsCount,
+    this.status,
   });
 
   BookModel copyWith({
@@ -40,6 +69,7 @@ class BookModel {
     String? buyLink,
     double? averageRating,
     int? ratingsCount,
+    BookStatus? status,
   }) {
     return BookModel(
       id: id ?? this.id,
@@ -53,6 +83,7 @@ class BookModel {
       buyLink: buyLink ?? this.buyLink,
       averageRating: averageRating ?? this.averageRating,
       ratingsCount: ratingsCount ?? this.ratingsCount,
+      status: status,
     );
   }
 
@@ -67,7 +98,8 @@ class BookModel {
         pageCount.hashCode ^
         imageUrl.hashCode ^
         buyLink.hashCode ^
-        averageRating.hashCode;
+        averageRating.hashCode ^
+        status.hashCode;
   }
 
   @override
@@ -84,6 +116,47 @@ class BookModel {
         other.pageCount == pageCount &&
         other.imageUrl == imageUrl &&
         other.buyLink == buyLink &&
-        other.averageRating == averageRating;
+        other.averageRating == averageRating &&
+        other.status == status;
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'title': title,
+      'authors': authors.map((author) => author.toMap()).toList(),
+      'publisher': publisher,
+      'description': description,
+      'categories': categories.map((category) => category.toMap()).toList(),
+      'pageCount': pageCount,
+      'imageUrl': imageUrl,
+      'buyLink': buyLink,
+      'averageRating': averageRating,
+      'ratingsCount': ratingsCount,
+      'status': status?.statusNumber,
+    };
+  }
+
+  factory BookModel.fromMap(Map<String, dynamic> map) {
+    return BookModel(
+      id: map['id'] as String,
+      title: map['title'] as String,
+      authors: List<AuthorModel>.from((map['authors'] as dynamic)
+          .map<AuthorModel>(
+              (author) => AuthorModel.fromMap(author as Map<String, dynamic>))),
+      publisher: map['publisher'] as String,
+      description: map['description'] as String,
+      categories: List<CategoryModel>.from((map['categories'] as dynamic)
+          .map<CategoryModel>((category) =>
+              CategoryModel.fromMap(category as Map<String, dynamic>))),
+      pageCount: map['pageCount'] as int,
+      imageUrl: map['imageUrl'] as String,
+      buyLink: map['buyLink'] as String,
+      averageRating: map['averageRating'] as double,
+      ratingsCount: map['ratingsCount'] as int,
+      status: map['status'] != null
+          ? BookStatus.fromMap(map['status'] as int)
+          : null,
+    );
   }
 }

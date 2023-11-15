@@ -2,10 +2,12 @@ import 'package:flutter/widgets.dart';
 
 class IsbnVerifier {
 // regexp finded on https://www.geeksforgeeks.org/regular-expressions-to-validate-isbn-code/
-  final _isbnRegExp = RegExp(
+  static final _isbnRegExp = RegExp(
       r'^(?=(?:[^0-9]*[0-9]){9}(?:(?:[^0-9xX]*[0-9xX]){1})(?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$');
 
-  RegExp get isbnFormatRegExp => _isbnRegExp;
+  /// [RegExp] used to identify whether the source is a valid ISBN-10, with or without the 'X', or a valid ISBN-13.
+  /// Using this format: r'^(?=(?:[^0-9]*[0-9]){9}(?:(?:[^0-9xX]*[0-9xX]){1})(?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$'
+  static RegExp get isbnFormatRegExp => _isbnRegExp;
 
   String? verifyIsbn(String value) {
     value = value.replaceAll(' ', '');

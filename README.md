@@ -30,5 +30,5 @@ Tapping on the **Plus** icon will open the page to scan the ISBN. Yes you will h
 
 ## 👥 Team
 
-1. [Fredson - Designer](https://www.instagram.com/fredsoncostadesign/)
-2. [Edoardo - Developer](https://github.com/EdoTXp)
+1. [Fredson - Designer](https://www.linkedin.com/in/fredsoncosta/)
+2. [Edoardo - Developer](https://www.linkedin.com/in/edoardofabrizio/)

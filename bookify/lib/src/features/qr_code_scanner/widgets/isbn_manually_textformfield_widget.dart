@@ -22,7 +22,7 @@ class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
   final isbnManualyEC = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  final isbnRegExpVerifier = IsbnVerifier().isbnFormatRegExp;
+  final isbnRegExpVerifier = IsbnVerifier.isbnFormatRegExp;
   final isbnMaskFormatter = IsbnMaskTextInputFormatter();
 
   @override

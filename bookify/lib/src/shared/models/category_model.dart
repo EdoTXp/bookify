@@ -25,4 +25,18 @@ class CategoryModel {
       name: name ?? this.name,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+    };
+  }
+
+  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    return CategoryModel(
+      id: map['id'] != null ? map['id'] as int : null,
+      name: map['name'] as String,
+    );
+  }
 }

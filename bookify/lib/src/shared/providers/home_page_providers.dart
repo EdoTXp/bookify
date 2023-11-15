@@ -9,8 +9,13 @@ import '../rest_client/rest_client.dart';
 
 /// Providers for home Page which includes [DioRestClientImpl], [GoogleBookRepositoryImpl] and [BookBloc]
 final homePageProviders = [
-  Provider<RestClient>(create: ((_) => DioRestClientImpl())),
+  Provider<RestClient>(
+    create: (_) => DioRestClientImpl(),
+  ),
   RepositoryProvider<BooksRepository>(
-      create: ((context) => GoogleBookRepositoryImpl(context.read()))),
-  BlocProvider<BookBloc>(create: ((context) => BookBloc(context.read())))
+    create: (context) => GoogleBookRepositoryImpl(context.read()),
+  ),
+  BlocProvider<BookBloc>(
+    create: (context) => BookBloc(context.read()),
+  ),
 ];

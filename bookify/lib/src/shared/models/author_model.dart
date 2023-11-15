@@ -25,4 +25,18 @@ class AuthorModel {
       name: name ?? this.name,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+    };
+  }
+
+  factory AuthorModel.fromMap(Map<String, dynamic> map) {
+    return AuthorModel(
+      id: map['id'] != null ? map['id'] as int : null,
+      name: map['name'] as String,
+    );
+  }
 }
