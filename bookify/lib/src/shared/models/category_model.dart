@@ -7,6 +7,11 @@ class CategoryModel {
     required this.name,
   });
 
+  CategoryModel.withEmptyName({
+    this.id,
+    this.name = '',
+  });
+
   @override
   bool operator ==(covariant CategoryModel other) {
     if (identical(this, other)) return true;

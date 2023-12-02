@@ -7,6 +7,11 @@ class AuthorModel {
     required this.name,
   });
 
+  AuthorModel.withEmptyName({
+    this.id,
+    this.name = '',
+  });
+
   @override
   bool operator ==(covariant AuthorModel other) {
     if (identical(this, other)) return true;

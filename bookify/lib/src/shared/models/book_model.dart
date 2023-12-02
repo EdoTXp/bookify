@@ -40,7 +40,7 @@ class BookModel {
   final String buyLink;
   final double averageRating;
   final int ratingsCount;
-  BookStatus? status;
+  final BookStatus? status;
 
   BookModel({
     required this.id,
@@ -83,7 +83,7 @@ class BookModel {
       buyLink: buyLink ?? this.buyLink,
       averageRating: averageRating ?? this.averageRating,
       ratingsCount: ratingsCount ?? this.ratingsCount,
-      status: status,
+      status: status ?? this.status,
     );
   }
 
@@ -124,16 +124,14 @@ class BookModel {
     return <String, dynamic>{
       'id': id,
       'title': title,
-      'authors': authors.map((author) => author.toMap()).toList(),
       'publisher': publisher,
       'description': description,
-      'categories': categories.map((category) => category.toMap()).toList(),
       'pageCount': pageCount,
       'imageUrl': imageUrl,
       'buyLink': buyLink,
       'averageRating': averageRating,
       'ratingsCount': ratingsCount,
-      'status': status?.statusNumber,
+      'status': status?.statusNumber ?? 1,
     };
   }
 
@@ -141,22 +139,24 @@ class BookModel {
     return BookModel(
       id: map['id'] as String,
       title: map['title'] as String,
-      authors: List<AuthorModel>.from((map['authors'] as dynamic)
-          .map<AuthorModel>(
-              (author) => AuthorModel.fromMap(author as Map<String, dynamic>))),
+      authors: List<AuthorModel>.from(
+        (map['authors'] as dynamic ?? <AuthorModel>[]).map<AuthorModel>(
+          (author) => AuthorModel.fromMap(author as Map<String, dynamic>),
+        ),
+      ),
       publisher: map['publisher'] as String,
       description: map['description'] as String,
-      categories: List<CategoryModel>.from((map['categories'] as dynamic)
-          .map<CategoryModel>((category) =>
-              CategoryModel.fromMap(category as Map<String, dynamic>))),
+      categories: List<CategoryModel>.from(
+        (map['categories'] as dynamic ?? <CategoryModel>[]).map<CategoryModel>(
+          (category) => CategoryModel.fromMap(category as Map<String, dynamic>),
+        ),
+      ),
       pageCount: map['pageCount'] as int,
       imageUrl: map['imageUrl'] as String,
       buyLink: map['buyLink'] as String,
       averageRating: map['averageRating'] as double,
       ratingsCount: map['ratingsCount'] as int,
-      status: map['status'] != null
-          ? BookStatus.fromMap(map['status'] as int)
-          : null,
+      status: BookStatus.fromMap(map['status'] as int),
     );
   }
 }

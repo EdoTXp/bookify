@@ -101,7 +101,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetailController.launchUrl(book.buyLink),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: BookifyElevatedButton(
                         onPressed: () {},

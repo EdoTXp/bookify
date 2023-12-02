@@ -23,13 +23,19 @@ class BookifyElevatedButton extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
           ),
           if (suffixIcon != null)
             Row(
               children: [
                 const SizedBox(width: 10),
-                Icon(suffixIcon),
+                Icon(
+                  suffixIcon,
+                  color: Colors.white,
+                ),
               ],
             ),
         ],

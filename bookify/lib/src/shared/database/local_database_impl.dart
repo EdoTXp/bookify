@@ -109,61 +109,65 @@ class LocalDatabaseImpl implements LocalDatabase {
 /// Create a table for [BookModel]
 const String _bookScript = '''
      CREATE TABLE book (
-      id TEXT UNIQUE PRIMARY KEY,
-      title TEXT,
-      publisher TEXT,
-      description TEXT,
-      page_count INTEGER,
-      image_url TEXT,
-      buy_link TEXT,
-      average_rating REAL,
-      ratings_count INTEGER,
-      status INTEGER
+      id TEXT UNIQUE NOT NULL PRIMARY KEY,
+      title TEXT NOT NULL,
+      publisher TEXT NOT NULL,
+      description TEXT NOT NULL,
+      pageCount INTEGER NOT NULL,
+      imageUrl TEXT NOT NULL,
+      buyLink TEXT NOT NULL,
+      averageRating REAL NOT NULL,
+      ratingsCount INTEGER NOT NULL,
+      status INTEGER NOT NULL
       )
 ''';
 
 /// Create a table for [AuthorModel]
 const String _authorScript = '''
-     CREATE TABLE author (
+    CREATE TABLE author (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE)
+      name TEXT UNIQUE NOT NULL
+    )
     ''';
 
 /// Create a table for [CategoryModel]
 const String _categoryScript = '''
-     CREATE TABLE category (
+    CREATE TABLE category (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE)
+      name TEXT UNIQUE  NOT NULL
+    )
     ''';
 
 /// Create a table for relationship [BookModel] and [AuthorModel]
 const String _bookAuthorsScript = '''
-     CREATE TABLE book_authors (
-      book_id TEXT,
-      author_id INTEGER,
-      FOREIGN KEY (book_id) REFERENCES book (id),
-      FOREIGN KEY (author_id) REFERENCES author (id)
+     CREATE TABLE bookAuthors (
+      bookId TEXT,
+      authorId INTEGER,
+      FOREIGN KEY (bookId) REFERENCES book (id),
+      FOREIGN KEY (authorId) REFERENCES author (id)
+      ON DELETE CASCADE
       )
     ''';
 
 /// Create a table for relationship [BookModel] and [CategoryModel]
 const String _bookCategoriesScript = '''
-     CREATE TABLE book_categories (
-      book_id TEXT,
-      category_id INTEGER,
-      FOREIGN KEY (book_id) REFERENCES book (id),
-      FOREIGN KEY (category_id) REFERENCES category (id)
+     CREATE TABLE bookCategories (
+      bookId TEXT,
+      categoryId INTEGER,
+      FOREIGN KEY (bookId) REFERENCES book (id),
+      FOREIGN KEY (categoryId) REFERENCES category (id)
+      ON DELETE CASCADE
       )
     ''';
 
 /// Create a table for relationship [BookModel] and [ReadingModel] last_reading_date is a millisSinceEpoch
 const String _bookReadingScript = '''
-     CREATE TABLE book_reading(
+     CREATE TABLE bookReading(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pages_readed INTEGER,
-      last_reading_date INTEGER,
-      book_id TEXT,
-      FOREIGN KEY (book_id) REFERENCES book (id)
+      pagesReaded INTEGER,
+      lastReading_date INTEGER,
+      bookId TEXT,
+      FOREIGN KEY (bookId) REFERENCES book (id)
       )
     ''';
 
@@ -172,36 +176,36 @@ const String _loanScript = '''
      CREATE TABLE loan (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       observation TEXT,
-      loan_date INTEGER,  
-      devolution_date INTEGER
+      loanDate INTEGER,  
+      devolutionDate INTEGER
       )
 ''';
 
 /// Create a table for [PeopleModel].
 const String _peopleScript = '''
      CREATE TABLE people (
-      id INTEGER PRIMARY KEY UNIQUE,
-      mobile_number TEXT UNIQUE,
+      mobileNumber TEXT PRIMARY KEY UNIQUE,
       name TEXT
       )
 ''';
 
 /// Create a table for [PeopleModel].
 const String _loanToPeopleScript = '''
-     CREATE TABLE loan_to_person (
-      id INTEGER PRIMARY KEY UNIQUE,
-      mobile_number TEXT UNIQUE,
-      name TEXT
+     CREATE TABLE loanToPerson (
+      loanId INTEGER,
+      peopleId TEXT,
+      FOREIGN KEY (loanId) REFERENCES loan (id),
+      FOREIGN KEY (peopleId) REFERENCES people (mobileNumber)
       )
 ''';
 
 /// Create a table for relationship [BookModel] and [LoanModel]
 const String _bookLoanScript = '''
-     CREATE TABLE book_loan (
-      book_id TEXT,
-      loan_id INTEGER,
-      FOREIGN KEY (book_id) REFERENCES book (id),
-      FOREIGN KEY (loan_id) REFERENCES loan (id)
+     CREATE TABLE bookLoan (
+      bookId TEXT,
+      loanId INTEGER,
+      FOREIGN KEY (bookId) REFERENCES book (id),
+      FOREIGN KEY (loanId) REFERENCES loan (id)
       )
     ''';
 
@@ -216,10 +220,11 @@ const String _bookCaseScript = '''
 
 /// Create a table for relationship [BookModel] and [BookCaseModel]
 const String _bookOnCaseScript = '''
-     CREATE TABLE book_on_case (
-      book_id TEXT,
-      bookcase_id INTEGER,
-      FOREIGN KEY (book_id) REFERENCES book (id),
-      FOREIGN KEY (bookcase_id) REFERENCES bookcase (id)
+     CREATE TABLE bookOnCase (
+      bookId TEXT,
+      bookcaseId INTEGER,
+      FOREIGN KEY (bookId) REFERENCES book (id),
+      FOREIGN KEY (bookcaseId) REFERENCES bookcase (id)
       )
     ''';
+
