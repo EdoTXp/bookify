@@ -1,17 +1,44 @@
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
+    as database_scripts;
 import 'package:bookify/src/shared/models/author_model.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/category_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-import '../../mocks/models/books_model_mock.dart';
 
 /// These tests are used to prove whether the table logic and SQL scripts work correctly.
 void main() {
   late Database database;
 
-  /// From booksModelMocks : ../../mocks/models/books_model_mock.dart
-  final bookModel = booksModelMock.first;
+  final booksModel = <BookModel>[
+    BookModel(
+      id: '1',
+      title: 'title',
+      authors: [AuthorModel(name: 'author')],
+      publisher: 'publisher',
+      description: 'description',
+      categories: [CategoryModel(name: 'category')],
+      pageCount: 320,
+      imageUrl: 'imageUrl',
+      buyLink: 'buyLink',
+      averageRating: 3.4,
+      ratingsCount: 120,
+    ),
+    BookModel(
+      id: '2',
+      title: 'title',
+      authors: [AuthorModel(name: 'author')],
+      publisher: 'publisher',
+      description: 'description',
+      categories: [CategoryModel(name: 'category')],
+      pageCount: 80,
+      imageUrl: 'imageUrl',
+      buyLink: 'buyLink',
+      averageRating: 3.4,
+      ratingsCount: 120,
+    ),
+  ];
 
   setUp(() async {
     // Initialize FFI and open database
@@ -19,24 +46,24 @@ void main() {
     final databaseFactory = databaseFactoryFfi;
     database = await databaseFactory.openDatabase(inMemoryDatabasePath);
 
+    // Enable foreign_keys
+    await database.execute('PRAGMA foreign_keys = ON');
+
     final batch = database.batch();
 
-    // Enable foreign_keys
-    batch.execute('PRAGMA foreign_keys = ON');
-
     // Execute all tables scripts
-    batch.execute(_bookScript);
-    batch.execute(_categoryScript);
-    batch.execute(_authorScript);
-    batch.execute(_bookAuthorsScript);
-    batch.execute(_bookCategoriesScript);
-    batch.execute(_bookReadingScript);
-    batch.execute(_loanScript);
-    batch.execute(_peopleScript);
-    batch.execute(_loanToPeopleScript);
-    batch.execute(_bookLoanScript);
-    batch.execute(_bookCaseScript);
-    batch.execute(_bookOnCaseScript);
+    batch.execute(database_scripts.bookScript);
+    batch.execute(database_scripts.categoryScript);
+    batch.execute(database_scripts.authorScript);
+    batch.execute(database_scripts.bookAuthorsScript);
+    batch.execute(database_scripts.bookCategoriesScript);
+    batch.execute(database_scripts.bookReadingScript);
+    batch.execute(database_scripts.loanScript);
+    batch.execute(database_scripts.peopleScript);
+    batch.execute(database_scripts.loanToPeopleScript);
+    batch.execute(database_scripts.bookLoanScript);
+    batch.execute(database_scripts.bookcaseScript);
+    batch.execute(database_scripts.bookOnCaseScript);
 
     await batch.commit();
   });
@@ -45,286 +72,479 @@ void main() {
     await database.close();
   });
 
-  group('test insertion of all tables.', () {
-    test('tests whether the entered book can be searched.', () async {
-      // inserts a book into the 'book' table and expects there to be a row added.
-      final row = await database.insert('book', bookModel.toMap());
-      expect(row, equals(1));
+  group('test all SQL methods in all tables ||', () {
+    test('book, author & category tables', () async {
+      final bookTableName = database_scripts.bookTableName;
+      final authorTableName = database_scripts.authorTableName;
+      final categoryTableName = database_scripts.categorytableName;
+      final bookAuthorsTableName = database_scripts.bookAuthorsTableName;
+      final bookCategoriesTableName = database_scripts.bookCategoriesTableName;
 
-      // runs a query to retrieve the book and turns it into a BookModel
-      final bookJson = await database
-          .query('book', where: 'id = ?', whereArgs: [bookModel.id]);
-      var bookFromTable = BookModel.fromMap(bookJson.first);
+      final authors = <AuthorModel>[
+        ...booksModel[0].authors,
+        AuthorModel(name: 'author2'),
+        AuthorModel(name: 'author3'),
+        AuthorModel(name: 'author4'),
+      ];
 
-      // add the authors and categories to be able to compare with the BookModel passed before.
-      bookFromTable = bookFromTable.copyWith(
-          authors: bookModel.authors, categories: bookModel.categories);
+      final categories = <CategoryModel>[
+        ...booksModel[0].categories,
+        CategoryModel(name: 'category2')
+      ];
 
-      expect(bookFromTable.id, bookModel.id);
-      expect(bookFromTable.title, bookModel.title);
-      expect(bookFromTable.authors, bookModel.authors);
-      expect(bookFromTable.publisher, bookModel.publisher);
-      expect(bookFromTable.description, bookModel.description);
-      expect(bookFromTable.categories, bookModel.categories);
-      expect(bookFromTable.pageCount, bookModel.pageCount);
-      expect(bookFromTable.imageUrl, bookModel.imageUrl);
-      expect(bookFromTable.buyLink, bookModel.buyLink);
-      expect(bookFromTable.averageRating, bookModel.averageRating);
-      expect(bookFromTable.ratingsCount, bookModel.ratingsCount);
-      expect(bookFromTable.status, BookStatus.library);
+      // TEST insertion of book
+      int bookRowsInserted = 0;
+      for (var book in booksModel) {
+        bookRowsInserted =
+            await _insertOnDatabase(database, bookTableName, book.toMap());
+      }
+      expect(bookRowsInserted, equals(2));
+
+      // TEST insertion of authors and retrive id
+      for (var author in authors) {
+        author.id =
+            await _insertOnDatabase(database, authorTableName, author.toMap());
+      }
+      expect(authors[0].id, equals(1));
+      expect(authors[1].id, equals(2));
+      expect(authors[2].id, equals(3));
+      expect(authors[3].id, equals(4));
+
+      //TEST insertion of categories and retrive id
+      for (var category in categories) {
+        category.id = await _insertOnDatabase(
+            database, categoryTableName, category.toMap());
+      }
+      expect(categories[0].id, equals(1));
+      expect(categories[1].id, equals(2));
+
+      // Insertion of relationship between books and authors
+      await _insertOnDatabase(database, bookAuthorsTableName,
+          {'bookId': booksModel[0].id, 'authorId': authors[0].id});
+      await _insertOnDatabase(database, bookAuthorsTableName,
+          {'bookId': booksModel[0].id, 'authorId': authors[1].id});
+      await _insertOnDatabase(database, bookAuthorsTableName,
+          {'bookId': booksModel[1].id, 'authorId': authors[0].id});
+      await _insertOnDatabase(database, bookAuthorsTableName,
+          {'bookId': booksModel[1].id, 'authorId': authors[2].id});
+      await _insertOnDatabase(database, bookAuthorsTableName,
+          {'bookId': booksModel[1].id, 'authorId': authors[3].id});
+
+      final bookAuthorsList = await _queryOnDatabaseWhenId(
+        database,
+        bookAuthorsTableName,
+        'bookId',
+        [booksModel[1].id],
+      );
+
+      expect(bookAuthorsList[0]['bookId'], equals('2'));
+      expect(bookAuthorsList[1]['bookId'], equals('2'));
+      expect(bookAuthorsList[2]['bookId'], equals('2'));
+
+      // Insertion of relationship between books and categories
+      await _insertOnDatabase(database, bookCategoriesTableName,
+          {'bookId': booksModel[0].id, 'categoryId': categories[0].id});
+      await _insertOnDatabase(database, bookCategoriesTableName,
+          {'bookId': booksModel[0].id, 'categoryId': categories[1].id});
+      await _insertOnDatabase(database, bookCategoriesTableName,
+          {'bookId': booksModel[1].id, 'categoryId': categories[1].id});
+
+      final bookCategoriesList = await _queryOnDatabaseWhenId(
+          database, bookCategoriesTableName, 'bookId', [booksModel[0].id]);
+      expect(bookCategoriesList[0]['bookId'], equals('1'));
+      expect(bookCategoriesList[1]['bookId'], equals('1'));
+
+      // TEST update category with id 2
+      await _updateRowWhenId(
+        database,
+        categoryTableName,
+        'id',
+        [categories[1].id],
+        {'name': 'Horror'},
+      );
+      final newCategoryMap = await _queryOnDatabaseWhenId(
+        database,
+        categoryTableName,
+        'id',
+        [categories[1].id],
+      );
+      final newCategory = CategoryModel.fromMap(newCategoryMap.first);
+      expect(newCategory.name, equals('Horror'));
+
+      // TEST update author with id 2
+      await _updateRowWhenId(
+        database,
+        authorTableName,
+        'id',
+        [authors[1].id],
+        {'name': 'Carlos'},
+      );
+      final newAuthorMap = await _queryOnDatabaseWhenId(
+        database,
+        authorTableName,
+        'id',
+        [authors[1].id],
+      );
+      final newAuthor = AuthorModel.fromMap(newAuthorMap.first);
+      expect(newAuthor.name, equals('Carlos'));
+
+      //TEST Delete the book with id '2' and expect its relations to be deleted.
+      final deleteBookRowAfected = await _deleteRowWhenId(
+        database,
+        bookTableName,
+        'id',
+        [booksModel[1].id],
+      );
+      expect(deleteBookRowAfected, equals(1));
+
+      final bookAuthorsMap = await _queryOnDatabaseWhenId(
+        database,
+        bookAuthorsTableName,
+        'bookId',
+        [booksModel[1].id],
+      );
+      expect(bookAuthorsMap, equals(isEmpty));
+
+      final bookCategoriesMap = await _queryOnDatabaseWhenId(
+        database,
+        bookCategoriesTableName,
+        'bookId',
+        [booksModel[1].id],
+      );
+      expect(bookCategoriesMap, equals(isEmpty));
+
+      //TEST if it has not deleted the author and category that they referenced before.
+      final authorMap = await _queryOnDatabaseWhenId(
+        database,
+        authorTableName,
+        'id',
+        [authors[0].id],
+      );
+      expect(authorMap, isNotEmpty);
+
+      final categoryMap = await _queryOnDatabaseWhenId(
+        database,
+        categoryTableName,
+        'id',
+        [categories[1].id],
+      );
+      expect(categoryMap, isNotEmpty);
     });
 
-    test('test complete insert book with author and category.', () async {
-      //test by inserting two other authors to prove the relationship with the book.
-      bookModel.authors
-          .addAll([AuthorModel(name: 'author2'), AuthorModel(name: 'author3')]);
+    test('book & reading tables', () async {
+      final bookTableName = database_scripts.bookTableName;
+      final readingTableName = database_scripts.bookReadingTableName;
 
-      // inserts a book into the 'book' table and expects there to be a row added.
-      final rowBook = await database.insert('book', bookModel.toMap());
-      expect(rowBook, equals(1));
-
-      // inserts authors into the 'author' table and expects their respective ids to be provided.
-      final authorsIds = bookModel.authors
-          .map((e) async => await database.insert('author', e.toMap()))
-          .toList();
-
-      expect(await authorsIds[0], equals(1));
-      expect(await authorsIds[1], equals(2));
-      expect(await authorsIds[2], equals(3));
-
-      //insert the relationship between the book and the authors in the table and retrieve the respective id.
-      final bookAuthorsIds = authorsIds
-          .map((id) async => await database.insert('bookAuthors', {
-                'bookId': bookModel.id,
-                'authorId': await id,
-              }))
-          .toList();
-
-      expect(await bookAuthorsIds[0], equals(1));
-      expect(await bookAuthorsIds[1], equals(2));
-      expect(await bookAuthorsIds[2], equals(3));
-
-      //insert the category into the "category" table and expects the respective ID to be provided.
-      final categoryId =
-          await database.insert('category', bookModel.categories.first.toMap());
-      expect(categoryId, equals(1));
-
-      //insert the relationship between the book and the category into the table and retrieve the respective id.
-      final bookCategoryId = await database.insert('bookCategories', {
-        'bookId': bookModel.id,
-        'categoryId': categoryId,
-      });
-      expect(bookCategoryId, equals(1));
-
-      //query the ids of authors who have a relationship with the book.
-      //Then retrieve the authors from the table and fill them into a list of AuthorModel.
-      final booksAuthorRelationshipId = await database.query(
-        'bookAuthors',
-        where: 'bookId = ?',
-        whereArgs: [bookModel.id],
-      );
-
-      expect(booksAuthorRelationshipId[0].values.last, 1);
-      expect(booksAuthorRelationshipId[1].values.last, 2);
-      expect(booksAuthorRelationshipId[2].values.last, 3);
-
-      final authorIdsOnRelationship = booksAuthorRelationshipId
-          .map((relationship) => relationship.values.last)
-          .toList();
-
-      expect(authorIdsOnRelationship[0], 1);
-      expect(authorIdsOnRelationship[1], 2);
-      expect(authorIdsOnRelationship[2], 3);
-
-      List<AuthorModel> tableAuthors = [];
-
-      for (var id in authorIdsOnRelationship) {
-        final authorMap = await database.query(
-          'author',
-          where: 'id = ?',
-          whereArgs: [id],
-        );
-
-        tableAuthors.add(AuthorModel.fromMap(authorMap.first));
+      // TEST insertion of book
+      int bookRowsInserted = 0;
+      for (var book in booksModel) {
+        bookRowsInserted =
+            await _insertOnDatabase(database, bookTableName, book.toMap());
       }
+      expect(bookRowsInserted, equals(2));
 
-      expect(tableAuthors[0].name, equals('author'));
-      expect(tableAuthors[1].name, equals('author2'));
-      expect(tableAuthors[2].name, equals('author3'));
+      //TEST insertion of reading
+      await _insertOnDatabase(database, readingTableName, {
+        'pagesReaded': 10,
+        'lastReadingDate': DateTime(2023, 02, 17).millisecondsSinceEpoch,
+        'bookId': booksModel[0].id,
+      });
+      await _insertOnDatabase(database, readingTableName, {
+        'pagesReaded': 75,
+        'lastReadingDate': DateTime(2023, 05, 10).millisecondsSinceEpoch,
+        'bookId': booksModel[1].id,
+      });
 
-      //query the id of the category that has a relation to the book.
-      //Then retrieve the category from the table and fill it into a CategoryModel.
-      final booksCategoryRelationshipId = await database.query(
-        'bookCategories',
-        where: 'bookId = ?',
-        whereArgs: [bookModel.id],
+      final readingsListMap = await database.query(readingTableName,
+          orderBy: 'lastReadingDate DESC');
+      expect(readingsListMap[0]['id'], equals(2));
+      expect(readingsListMap[1]['id'], equals(1));
+
+      //TEST UPDATE reading with id 2
+      final readingRowChanges = await _updateRowWhenId(
+          database, readingTableName, 'id', [1], {'pagesReaded': 55});
+      expect(readingRowChanges, equals(1));
+
+      final newReadingMap = await _queryOnDatabaseWhenId(
+        database,
+        readingTableName,
+        'id',
+        [1],
       );
-      expect(booksCategoryRelationshipId[0].values.last, 1);
+      expect(newReadingMap.last['pagesReaded'], equals(55));
 
-      final categoryIdOnRelationship = booksCategoryRelationshipId
-          .map((relationship) => relationship.values.last)
-          .last as int;
-
-      expect(categoryIdOnRelationship, 1);
-
-      final categoryMap = await database.query(
-        'category',
-        where: 'id = ?',
-        whereArgs: [categoryIdOnRelationship],
+      //TEST DELETE book with id 2
+      final bookRowChanges = await _deleteRowWhenId(
+        database,
+        bookTableName,
+        'id',
+        [booksModel[1].id],
       );
+      expect(bookRowChanges, equals(1));
 
-      final tableCategory = CategoryModel.fromMap(categoryMap.first);
-      expect(tableCategory.name, equals('categories'));
+      final readingRelationshipChanges = await _queryOnDatabaseWhenId(
+        database,
+        readingTableName,
+        'bookId',
+        [booksModel[1].id],
+      );
+      expect(readingRelationshipChanges, isEmpty);
+    });
 
-      //finally, query the book from the already known id.
-      // Fill it into a BookModel and add the authors and category with a copyWith.
-      final bookMap = await database
-          .query('book', where: 'id = ?', whereArgs: [bookModel.id]);
-      var bookFromTable = BookModel.fromMap(bookMap.last);
+    test('book, loan & people tables', () async {
+      final bookTableName = database_scripts.bookTableName;
+      final loanTableName = database_scripts.loanTableName;
+      final bookLoanTableName = database_scripts.bookLoanTableName;
+      final peopleTableName = database_scripts.peopleTableName;
+      final loanToPersonTableName = database_scripts.loanToPersonTableName;
 
-      bookFromTable = bookFromTable
-          .copyWith(authors: tableAuthors, categories: [tableCategory]);
+      // TEST insertion of book
+      final bookRowsInserted = await _insertOnDatabase(
+          database, bookTableName, booksModel[0].toMap());
 
-      expect(bookFromTable.id, bookModel.id);
-      expect(bookFromTable.title, bookModel.title);
+      expect(bookRowsInserted, equals(1));
+
+      // TEST insertion of loan
+      final loanMap = {
+        'observation': 'Amigo da Jú',
+        'loanDate': DateTime(2023, 05, 23).millisecondsSinceEpoch,
+        'devolutionDate': DateTime(2023, 06, 10).millisecondsSinceEpoch,
+      };
+
+      final loanId = await _insertOnDatabase(database, loanTableName, loanMap);
+      expect(loanId, equals(1));
+
+      //TEST insertion of loan and Book relationship
+      final bookLoanRowInserted =
+          await _insertOnDatabase(database, bookLoanTableName, {
+        'bookId': booksModel[0].id,
+        'loanId': 1,
+      });
+      expect(bookLoanRowInserted, equals(1));
+
+      //TEST insertion of people
+      final peopleMap = {
+        'mobileNumber': '9999999999',
+        'name': 'Felipe',
+      };
+      final peopleRowInsert =
+          await _insertOnDatabase(database, peopleTableName, peopleMap);
+      expect(peopleRowInsert, equals(1));
+
+      //TEST insertion of loan and people relationship
+      final loanPeopleRowInserted =
+          await _insertOnDatabase(database, loanToPersonTableName, {
+        'loanId': 1,
+        'peopleId': '9999999999',
+      });
+      expect(loanPeopleRowInserted, equals(1));
+
+      //TEST UPDATE of loan
+      final loanRowChanges = await _updateRowWhenId(
+        database,
+        loanTableName,
+        'id',
+        [1],
+        {'devolutionDate': DateTime(2023, 06, 23).millisecondsSinceEpoch},
+      );
+      expect(loanRowChanges, equals(1));
+
+      final newLoanMap = await _queryOnDatabaseWhenId(
+        database,
+        loanTableName,
+        'id',
+        [1],
+      );
       expect(
-        bookFromTable.authors.first.name,
-        bookModel.authors.first.name,
+        DateTime.fromMillisecondsSinceEpoch(
+            newLoanMap.last['devolutionDate'] as int),
+        equals(DateTime(2023, 06, 23)),
       );
-      expect(bookFromTable.publisher, bookModel.publisher);
-      expect(bookFromTable.description, bookModel.description);
+
+      //TEST UPDATE of people
+      final peopleRowChanges = await _updateRowWhenId(
+        database,
+        peopleTableName,
+        'mobileNumber',
+        ['9999999999'],
+        {'name': 'Fábio'},
+      );
+      expect(peopleRowChanges, equals(1));
+
+      final newPeopleMap = await _queryOnDatabaseWhenId(
+        database,
+        peopleTableName,
+        'mobileNumber',
+        ['9999999999'],
+      );
       expect(
-        bookFromTable.categories.first.name,
-        bookModel.categories.first.name,
+        newPeopleMap.last['name'],
+        equals('Fábio'),
       );
-      expect(bookFromTable.pageCount, bookModel.pageCount);
-      expect(bookFromTable.imageUrl, bookModel.imageUrl);
-      expect(bookFromTable.buyLink, bookModel.buyLink);
-      expect(bookFromTable.averageRating, bookModel.averageRating);
-      expect(bookFromTable.ratingsCount, bookModel.ratingsCount);
-      expect(bookFromTable.status, BookStatus.library);
+
+      //TEST DELETE loan table and expect its relations to be deleted.
+      final loanRowDeleted =
+          await _deleteRowWhenId(database, loanTableName, 'id', [1]);
+      expect(loanRowDeleted, equals(1));
+
+      final loanToPeopleRows = await _queryOnDatabaseWhenId(
+        database,
+        loanToPersonTableName,
+        'loanId',
+        [1],
+      );
+      expect(loanToPeopleRows, isEmpty);
+
+      final bookLoanIsEmpty = await _queryOnDatabaseWhenId(
+        database,
+        bookLoanTableName,
+        'loanId',
+        [1],
+      );
+      expect(bookLoanIsEmpty, isEmpty);
+
+      //TEST if it has not deleted the book and people that they referenced before.
+      final bookIsNotEmpty = await _queryOnDatabaseWhenId(
+        database,
+        bookTableName,
+        'id',
+        [booksModel[0].id],
+      );
+      expect(bookIsNotEmpty, isNotEmpty);
+
+      final peopleIsNotEmpty = await _queryOnDatabaseWhenId(
+        database,
+        peopleTableName,
+        'mobileNumber',
+        ['9999999999'],
+      );
+      expect(peopleIsNotEmpty, isNotEmpty);
+    });
+
+    test('book & bookcase tables', () async {
+      final bookTableName = database_scripts.bookTableName;
+      final bookcaseTableName = database_scripts.bookcaseTableName;
+      final bookOnCaseTableName = database_scripts.bookOnCaseTableName;
+
+      // TEST insertion of book
+      int bookRowsInserted = 0;
+      for (var book in booksModel) {
+        bookRowsInserted =
+            await _insertOnDatabase(database, bookTableName, book.toMap());
+      }
+      expect(bookRowsInserted, equals(2));
+
+      // TEST insertion of bookcase
+      final bookcaseMap = {
+        'name': 'Fantasia',
+        'color': Colors.pink.value,
+      };
+      final bookcaseId = await _insertOnDatabase(
+        database,
+        bookcaseTableName,
+        bookcaseMap,
+      );
+      expect(bookcaseId, equals(1));
+
+      // TEST insertion of bookcase and book relationship
+      await _insertOnDatabase(database, bookOnCaseTableName, {
+        'bookId': booksModel[0].id,
+        'bookcaseId': 1,
+      });
+      await _insertOnDatabase(database, bookOnCaseTableName, {
+        'bookId': booksModel[1].id,
+        'bookcaseId': 1,
+      });
+
+      final bookOnCaseList = await _queryOnDatabaseWhenId(
+        database,
+        bookOnCaseTableName,
+        'bookcaseId',
+        [1],
+      );
+      expect(bookOnCaseList[0]['bookId'], equals('1'));
+      expect(bookOnCaseList[1]['bookId'], equals('2'));
+
+      //TEST UPDATE bookcase
+      final bookcaseRowChanges = await _updateRowWhenId(
+        database,
+        bookcaseTableName,
+        'id',
+        [1],
+        {'name': 'Meus primeiros livros'},
+      );
+      expect(bookcaseRowChanges, equals(1));
+
+      final newBookcase = await _queryOnDatabaseWhenId(
+        database,
+        bookcaseTableName,
+        'id',
+        [1],
+      );
+      expect(newBookcase.last['name'], equals('Meus primeiros livros'));
+
+      //TEST DELETE bookcase and expect its relations to be deleted.
+      final bookcaseRowDeleted = await _deleteRowWhenId(
+        database,
+        bookcaseTableName,
+        'id',
+        [1],
+      );
+      expect(bookcaseRowDeleted, equals(1));
+
+      final bookOnCaseIsEmpty = await _queryOnDatabaseWhenId(
+        database,
+        bookcaseTableName,
+        'id',
+        [1],
+      );
+      expect(bookOnCaseIsEmpty, isEmpty);
+
+      //TEST if it has not deleted the book that they referenced before.
+      final bookisNotEmpty = await _queryOnDatabaseWhenId(
+        database,
+        bookTableName,
+        'id',
+        [booksModel[0].id],
+      );
+      expect(bookisNotEmpty, isNotEmpty);
     });
   });
 }
 
-/// Create a table for [BookModel]
-const String _bookScript = '''
-     CREATE TABLE book (
-      id TEXT UNIQUE NOT NULL PRIMARY KEY,
-      title TEXT NOT NULL,
-      publisher TEXT NOT NULL,
-      description TEXT NOT NULL,
-      pageCount INTEGER NOT NULL,
-      imageUrl TEXT NOT NULL,
-      buyLink TEXT NOT NULL,
-      averageRating REAL NOT NULL,
-      ratingsCount INTEGER NOT NULL,
-      status INTEGER NOT NULL
-      )
-''';
+Future<int> _insertOnDatabase(
+    Database db, String table, Map<String, Object?> values) async {
+  return await db.insert(table, values);
+}
 
-/// Create a table for [AuthorModel]
-const String _authorScript = '''
-    CREATE TABLE author (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE NOT NULL
-    )
-    ''';
+Future<List<Map<String, Object?>>> _queryOnDatabaseWhenId(
+  Database db,
+  String table,
+  String idName,
+  List<Object?> id,
+) async {
+  return await db.query(
+    table,
+    where: '$idName = ?',
+    whereArgs: id,
+  );
+}
 
-/// Create a table for [CategoryModel]
-const String _categoryScript = '''
-    CREATE TABLE category (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE  NOT NULL
-    )
-    ''';
+Future<int> _updateRowWhenId(
+  Database db,
+  String table,
+  String idName,
+  List<Object?> id,
+  Map<String, Object?> values,
+) async {
+  return await db.update(table, values, where: '$idName = ?', whereArgs: id);
+}
 
-/// Create a table for relationship [BookModel] and [AuthorModel]
-const String _bookAuthorsScript = '''
-     CREATE TABLE bookAuthors (
-      bookId TEXT,
-      authorId INTEGER,
-      FOREIGN KEY (bookId) REFERENCES book (id),
-      FOREIGN KEY (authorId) REFERENCES author (id)
-      ON DELETE CASCADE
-      )
-    ''';
-
-/// Create a table for relationship [BookModel] and [CategoryModel]
-const String _bookCategoriesScript = '''
-     CREATE TABLE bookCategories (
-      bookId TEXT,
-      categoryId INTEGER,
-      FOREIGN KEY (bookId) REFERENCES book (id),
-      FOREIGN KEY (categoryId) REFERENCES category (id)
-      ON DELETE CASCADE
-      )
-    ''';
-
-/// Create a table for relationship [BookModel] and [ReadingModel] last_reading_date is a millisSinceEpoch
-const String _bookReadingScript = '''
-     CREATE TABLE bookReading(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pagesReaded INTEGER,
-      lastReading_date INTEGER,
-      bookId TEXT,
-      FOREIGN KEY (bookId) REFERENCES book (id)
-      )
-    ''';
-
-/// Create a table for [LoanModel]. loan_date and devolution_date is a millisSinceEpoch
-const String _loanScript = '''
-     CREATE TABLE loan (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      observation TEXT,
-      loanDate INTEGER,  
-      devolutionDate INTEGER
-      )
-''';
-
-/// Create a table for [PeopleModel].
-const String _peopleScript = '''
-     CREATE TABLE people (
-      mobileNumber TEXT PRIMARY KEY UNIQUE,
-      name TEXT
-      )
-''';
-
-/// Create a table for [PeopleModel].
-const String _loanToPeopleScript = '''
-     CREATE TABLE loanToPerson (
-      loanId INTEGER,
-      peopleId TEXT,
-      FOREIGN KEY (loanId) REFERENCES loan (id),
-      FOREIGN KEY (peopleId) REFERENCES people (mobileNumber)
-      )
-''';
-
-/// Create a table for relationship [BookModel] and [LoanModel]
-const String _bookLoanScript = '''
-     CREATE TABLE bookLoan (
-      bookId TEXT,
-      loanId INTEGER,
-      FOREIGN KEY (bookId) REFERENCES book (id),
-      FOREIGN KEY (loanId) REFERENCES loan (id)
-      )
-    ''';
-
-/// Create a table for [BookCaseModel]
-const String _bookCaseScript = '''
-     CREATE TABLE bookcase (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE,
-      color INTEGER
-      )
-    ''';
-
-/// Create a table for relationship [BookModel] and [BookCaseModel]
-const String _bookOnCaseScript = '''
-     CREATE TABLE bookOnCase (
-      bookId TEXT,
-      bookcaseId INTEGER,
-      FOREIGN KEY (bookId) REFERENCES book (id),
-      FOREIGN KEY (bookcaseId) REFERENCES bookcase (id)
-      )
-    ''';
+Future<int> _deleteRowWhenId(
+  Database db,
+  String table,
+  String idName,
+  List<Object?> id,
+) async {
+  return await db.delete(table, where: '$idName = ?', whereArgs: id);
+}
