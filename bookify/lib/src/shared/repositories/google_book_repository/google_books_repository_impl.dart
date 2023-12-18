@@ -5,7 +5,7 @@ import 'package:bookify/src/shared/rest_client/rest_client.dart';
 
 import 'package:bookify/src/shared/models/book_model.dart';
 
-import 'books_repository.dart';
+import 'google_books_repository.dart';
 
 /// Parameters used to return an optimised and filtered JSON with the data needed to instantiate the [BookModel] class.
 const _urlParams =
@@ -15,7 +15,7 @@ const _urlParams =
 const _isbnUrlParams =
     '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
-class GoogleBookRepositoryImpl implements BooksRepository {
+class GoogleBookRepositoryImpl implements GoogleBooksRepository {
   final RestClient _httpSource;
 
   GoogleBookRepositoryImpl(this._httpSource);

@@ -44,4 +44,12 @@ class CategoryModel {
       name: map['name'] as String,
     );
   }
+
+  @override
+  String toString() {
+    return '''
+    id: $id,
+    name: $name
+''';
+  }
 }

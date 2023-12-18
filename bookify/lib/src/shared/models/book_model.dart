@@ -159,4 +159,22 @@ class BookModel {
       status: BookStatus.fromMap(map['status'] as int),
     );
   }
+
+  @override
+  String toString() {
+    return '''
+    id: $id,
+    title: $title,
+    authors: ${authors.map((author) => author.toString())}
+    publisher: $publisher,
+    categories: ${categories.map((category) => category.toString())}
+    description: $description,
+    pageCount: $pageCount,
+    imageUrl: $imageUrl,
+    buyLink: $buyLink,
+    averageRating: $averageRating,
+    ratingsCount: $ratingsCount,
+    status: $status,
+''';
+  }
 }

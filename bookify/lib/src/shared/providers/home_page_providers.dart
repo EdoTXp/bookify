@@ -1,5 +1,5 @@
-import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
-import 'package:bookify/src/shared/repositories/book_repository/google_books_repository_impl.dart';
+import 'package:bookify/src/shared/repositories/google_book_repository/google_books_repository.dart';
+import 'package:bookify/src/shared/repositories/google_book_repository/google_books_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,7 @@ final homePageProviders = [
   Provider<RestClient>(
     create: (_) => DioRestClientImpl(),
   ),
-  RepositoryProvider<BooksRepository>(
+  RepositoryProvider<GoogleBooksRepository>(
     create: (context) => GoogleBookRepositoryImpl(context.read()),
   ),
   BlocProvider<BookBloc>(

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bookify/src/shared/repositories/book_repository/books_repository.dart';
+import 'package:bookify/src/shared/repositories/google_book_repository/google_books_repository.dart';
 import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +10,7 @@ part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  final BooksRepository _booksRepository;
+  final GoogleBooksRepository _booksRepository;
 
   /// Variable that avoids making many requests to the API for the same books.
   List<BookModel>? _cachedBooksList;

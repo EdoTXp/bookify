@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:bookify/src/shared/errors/book_error/book_error.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/repositories/book_repository/google_books_repository_impl.dart';
+import 'package:bookify/src/shared/repositories/google_book_repository/google_books_repository_impl.dart';
+import 'package:bookify/src/shared/rest_client/dio_rest_client_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../mocks/json/books_json_mock.dart';
-import '../../mocks/rest_client/dio_rest_client_mock.dart';
+import '../../../mocks/json/books_json_mock.dart';
+
+class DioRestClientMock extends Mock implements DioRestClientImpl {}
 
 void main() {
   final dio = DioRestClientMock();

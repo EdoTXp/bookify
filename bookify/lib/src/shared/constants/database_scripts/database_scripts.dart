@@ -103,7 +103,6 @@ const String _bookAuthorsScript = '''
       PRIMARY KEY (bookId, authorId),
       FOREIGN KEY (bookId) REFERENCES book (id) ON DELETE CASCADE,
       FOREIGN KEY (authorId) REFERENCES author (id)
-      
       )
     ''';
 

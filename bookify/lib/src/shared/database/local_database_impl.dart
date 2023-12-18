@@ -52,82 +52,138 @@ class LocalDatabaseImpl implements LocalDatabase {
 
   @override
   Future<List<Map<String, Object?>>> getAll({required String table}) async {
-    final db = await database;
-    final queryItems = await db!.query(table);
-    return queryItems;
+    try {
+      final db = await database;
+      final queryItems = await db!.query(table);
+      return queryItems;
+    } on DatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<Map<String, Object?>> getById({
     required String table,
-    String? idName,
+    required String idColumn,
     required dynamic id,
   }) async {
-    final db = await database;
-    final conditionId = idName ?? 'id';
+    try {
+      final db = await database;
 
-    final queryItem = await db!.query(
-      table,
-      where: '$conditionId = ?',
-      whereArgs: [id],
-    );
-    return queryItem.first;
+      final queryItem = await db!.query(
+        table,
+        where: '$idColumn = ?',
+        whereArgs: [id],
+      );
+      return queryItem.first;
+    } on DatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> insert(
       {required String table, required Map<String, dynamic> values}) async {
-    final db = await database;
-    int newId = 0;
+    try {
+      final db = await database;
+      int newId = 0;
 
-    db!.transaction((txn) async {
-      newId = await txn.insert(table, values);
-    });
+      db!.transaction((txn) async {
+        newId = await txn.insert(table, values);
+      });
 
-    return newId;
+      return newId;
+    } on DatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getByColumn({
+    required String table,
+    required String column,
+    required columnValues,
+  }) async {
+    try {
+      final db = await database;
+
+      final queryItems = await db!.query(
+        table,
+        where: '$column = ?',
+        whereArgs: [columnValues],
+      );
+      return queryItems;
+    } on DatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> update({
     required String table,
     required Map<String, dynamic> values,
-    String? idName,
+    required String idColumn,
     required dynamic id,
   }) async {
-    final db = await database;
-    final conditionId = idName ?? 'id';
-    int changeMade = 0;
+    try {
+      final db = await database;
+      int changeMade = 0;
 
-    db!.transaction((txn) async {
-      changeMade = await txn.update(
-        table,
-        values,
-        where: '$conditionId = ?',
-        whereArgs: [id],
-      );
-    });
+      db!.transaction((txn) async {
+        changeMade = await txn.update(
+          table,
+          values,
+          where: '$idColumn = ?',
+          whereArgs: [id],
+        );
+      });
 
-    return changeMade;
+      return changeMade;
+    } on DatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> verifyItemIsAlreadyInserted({
+    required String table,
+    required String column,
+    required dynamic columnValue,
+  }) async {
+    try {
+      final db = await database;
+      final queryMap = await db!.rawQuery(
+          'SELECT COUNT(*) FROM $table WHERE $column = $columnValue');
+
+      final itemFound = (queryMap.last.values.last as int);
+      final itemIsInserted = (itemFound > 0);
+      return itemIsInserted;
+    } on DatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> delete({
     required String table,
-    String? idName,
+    required String idColumn,
     required dynamic id,
   }) async {
-    final db = await database;
-    final conditionId = idName ?? 'id';
-    int rowCount = 0;
+    try {
+      final db = await database;
+      int rowCount = 0;
 
-    db!.transaction((txn) async {
-      rowCount = await txn.delete(
-        table,
-        where: '$conditionId = ?',
-        whereArgs: [id],
-      );
-    });
+      db!.transaction((txn) async {
+        rowCount = await txn.delete(
+          table,
+          where: '$idColumn = ?',
+          whereArgs: [id],
+        );
+      });
 
-    return rowCount;
+      return rowCount;
+    } on DatabaseException {
+      rethrow;
+    }
   }
 }
