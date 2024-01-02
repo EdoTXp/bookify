@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:bookify/src/shared/adapters/google_books_adapter.dart';
-import 'package:bookify/src/shared/errors/book_error/book_error.dart';
+import 'package:bookify/src/shared/errors/book_exception/book_exception.dart';
 import 'package:bookify/src/shared/rest_client/rest_client.dart';
 
 import 'package:bookify/src/shared/models/book_model.dart';

@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
     as database_script;
 import 'package:bookify/src/shared/database/local_database.dart';
+import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -26,8 +27,8 @@ class LocalDatabaseImpl implements LocalDatabase {
         onConfigure: (db) async => await db.execute('PRAGMA foreign_keys = ON'),
         version: 1,
       );
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
@@ -56,13 +57,13 @@ class LocalDatabaseImpl implements LocalDatabase {
       final db = await database;
       final queryItems = await db!.query(table);
       return queryItems;
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
   @override
-  Future<Map<String, Object?>> getById({
+  Future<Map<String, Object?>> getItemById({
     required String table,
     required String idColumn,
     required dynamic id,
@@ -76,8 +77,50 @@ class LocalDatabaseImpl implements LocalDatabase {
         whereArgs: [id],
       );
       return queryItem.first;
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getItemByColumn({
+    required String table,
+    required String column,
+    required columnValues,
+  }) async {
+    try {
+      final db = await database;
+
+      final queryItems = await db!.query(
+        table,
+        where: '$column = ?',
+        whereArgs: [columnValues],
+      );
+      return queryItems;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getColumnsById({
+    required String table,
+    List<String>? columns,
+    required String idColumn,
+    required id,
+  }) async {
+    try {
+      final db = await database;
+
+      final queryItem = await db!.query(
+        table,
+        columns: columns,
+        where: '$idColumn = ?',
+        whereArgs: [id],
+      );
+      return queryItem.first;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
@@ -93,28 +136,8 @@ class LocalDatabaseImpl implements LocalDatabase {
       });
 
       return newId;
-    } on DatabaseException {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getByColumn({
-    required String table,
-    required String column,
-    required columnValues,
-  }) async {
-    try {
-      final db = await database;
-
-      final queryItems = await db!.query(
-        table,
-        where: '$column = ?',
-        whereArgs: [columnValues],
-      );
-      return queryItems;
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
@@ -127,10 +150,10 @@ class LocalDatabaseImpl implements LocalDatabase {
   }) async {
     try {
       final db = await database;
-      int changeMade = 0;
+      int rowUpdated = 0;
 
       db!.transaction((txn) async {
-        changeMade = await txn.update(
+        rowUpdated = await txn.update(
           table,
           values,
           where: '$idColumn = ?',
@@ -138,9 +161,9 @@ class LocalDatabaseImpl implements LocalDatabase {
         );
       });
 
-      return changeMade;
-    } on DatabaseException {
-      rethrow;
+      return rowUpdated;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
@@ -152,14 +175,14 @@ class LocalDatabaseImpl implements LocalDatabase {
   }) async {
     try {
       final db = await database;
-      final queryMap = await db!.rawQuery(
-          'SELECT COUNT(*) FROM $table WHERE $column = $columnValue');
+      final queryMap = await db!
+          .rawQuery('SELECT COUNT(*) FROM $table WHERE $column = $columnValue');
 
       final itemFound = (queryMap.last.values.last as int);
       final itemIsInserted = (itemFound > 0);
       return itemIsInserted;
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 
@@ -182,8 +205,8 @@ class LocalDatabaseImpl implements LocalDatabase {
       });
 
       return rowCount;
-    } on DatabaseException {
-      rethrow;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
     }
   }
 }

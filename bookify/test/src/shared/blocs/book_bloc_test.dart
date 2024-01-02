@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
-import 'package:bookify/src/shared/errors/book_error/book_error.dart';
+import 'package:bookify/src/shared/errors/book_exception/book_exception.dart';
 import 'package:bookify/src/shared/repositories/google_book_repository/google_books_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
     as book_categories;
 import 'package:bookify/src/shared/database/local_database.dart';
+import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/repositories/book_categories_repository/book_categories_repository.dart';
 
 class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
@@ -13,34 +14,50 @@ class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
   Future<List<Map<String, dynamic>>> getRelationshipsById({
     required String bookId,
   }) async {
-    final bookCategoriesRelationships = await _database.getByColumn(
-      table: _bookCategoriesTableName,
-      column: 'bookId',
-      columnValues: bookId,
-    );
+    try {
+      final bookCategoriesRelationships = await _database.getItemByColumn(
+        table: _bookCategoriesTableName,
+        column: 'bookId',
+        columnValues: bookId,
+      );
 
-    return bookCategoriesRelationships;
+      if (bookCategoriesRelationships.last.isEmpty) {
+        throw LocalDatabaseException('Impossível buscar os dados');
+      }
+
+      return bookCategoriesRelationships;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> insert({required String bookId, required int categoryId}) async {
-    final rowInserted =
-        await _database.insert(table: _bookCategoriesTableName, values: {
-      'bookId': bookId,
-      'authorId': categoryId,
-    });
+    try {
+      final rowInserted =
+          await _database.insert(table: _bookCategoriesTableName, values: {
+        'bookId': bookId,
+        'authorId': categoryId,
+      });
 
-    return rowInserted;
+      return rowInserted;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> delete({required String bookId}) async {
-    final rowDeleted = await _database.delete(
-      table: _bookCategoriesTableName,
-      idColumn: 'bookId',
-      id: bookId,
-    );
+    try {
+      final rowDeleted = await _database.delete(
+        table: _bookCategoriesTableName,
+        idColumn: 'bookId',
+        id: bookId,
+      );
 
-    return rowDeleted;
+      return rowDeleted;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 }

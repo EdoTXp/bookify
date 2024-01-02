@@ -249,11 +249,32 @@ void main() {
         'lastReadingDate': DateTime(2023, 02, 17).millisecondsSinceEpoch,
         'bookId': booksModel[0].id,
       });
+
+      // UPDATE book with status "reading" = 2
+      await _updateRowWhenId(database, bookTableName, 'id', [
+        booksModel[0].id
+      ], {
+        'status': BookStatus.reading.statusNumber,
+      });
+
       await _insertOnDatabase(database, readingTableName, {
         'pagesReaded': 75,
         'lastReadingDate': DateTime(2023, 05, 10).millisecondsSinceEpoch,
         'bookId': booksModel[1].id,
       });
+
+      // UPDATE book with status "reading" = 2
+      await _updateRowWhenId(database, bookTableName, 'id', [
+        booksModel[1].id
+      ], {
+        'status': BookStatus.reading.statusNumber,
+      });
+
+      // VERiFY that there are two books with the status "reading" = 2
+      final booksUpdated = await database
+          .query(bookTableName, where: 'status = ?', whereArgs: ['2']);
+
+      expect(booksUpdated.length, equals(2));
 
       final readingsListMap = await database.query(readingTableName,
           orderBy: 'lastReadingDate DESC');

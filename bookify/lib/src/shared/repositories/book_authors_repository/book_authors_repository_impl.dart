@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
     as book_authors;
 import 'package:bookify/src/shared/database/local_database.dart';
+import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/repositories/book_authors_repository/book_authors_repository.dart';
 
 class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
@@ -13,34 +14,50 @@ class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
   Future<List<Map<String, dynamic>>> getRelationshipsById({
     required String bookId,
   }) async {
-    final bookAuthorsRelationships = await _database.getByColumn(
-      table: _bookAuthorsTableName,
-      column: 'bookId',
-      columnValues: bookId,
-    );
+    try {
+      final bookAuthorsRelationships = await _database.getItemByColumn(
+        table: _bookAuthorsTableName,
+        column: 'bookId',
+        columnValues: bookId,
+      );
 
-    return bookAuthorsRelationships;
+      if (bookAuthorsRelationships.last.isEmpty) {
+        throw LocalDatabaseException('Impossível buscar os dados');
+      }
+
+      return bookAuthorsRelationships;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> insert({required String bookId, required int authorId}) async {
-    final rowInserted =
-        await _database.insert(table: _bookAuthorsTableName, values: {
-      'bookId': bookId,
-      'authorId': authorId,
-    });
+    try {
+      final rowInserted =
+          await _database.insert(table: _bookAuthorsTableName, values: {
+        'bookId': bookId,
+        'authorId': authorId,
+      });
 
-    return rowInserted;
+      return rowInserted;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 
   @override
   Future<int> delete({required String bookId}) async {
-    final rowDeleted = await _database.delete(
-      table: _bookAuthorsTableName,
-      idColumn: 'bookId',
-      id: bookId,
-    );
+    try {
+      final rowDeleted = await _database.delete(
+        table: _bookAuthorsTableName,
+        idColumn: 'bookId',
+        id: bookId,
+      );
 
-    return rowDeleted;
+      return rowDeleted;
+    } on LocalDatabaseException {
+      rethrow;
+    }
   }
 }
