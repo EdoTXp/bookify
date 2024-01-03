@@ -39,7 +39,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     final widthOverlay = MediaQuery.sizeOf(context).width * .9;
-    final heigthOverlay = MediaQuery.sizeOf(context).height * .3;
+    final heightOverlay = MediaQuery.sizeOf(context).height * .3;
     final centerOverlay = MediaQuery.sizeOf(context).center(Offset.zero);
 
     return MobileScanner(
@@ -51,7 +51,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
       scanWindow: Rect.fromCenter(
         center: centerOverlay,
         width: widthOverlay,
-        height: heigthOverlay,
+        height: heightOverlay,
       ),
       onDetect: (capture) {
         final List<Barcode> barcodes = capture.barcodes;
@@ -64,7 +64,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
       },
       overlay: Container(
         width: widthOverlay,
-        height: heigthOverlay,
+        height: heightOverlay,
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.white,

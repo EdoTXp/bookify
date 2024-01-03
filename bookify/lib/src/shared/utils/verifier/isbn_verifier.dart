@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
 class IsbnVerifier {
-// regexp finded on https://www.geeksforgeeks.org/regular-expressions-to-validate-isbn-code/
+// regexp found on https://www.geeksforgeeks.org/regular-expressions-to-validate-isbn-code/
   static final _isbnRegExp = RegExp(
-      r'^(?=(?:[^0-9]*[0-9]){9}(?:(?:[^0-9xX]*[0-9xX]){1})(?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$');
+      r'^(?=(?:[^0-9]*[0-9]){9}[^0-9xX]*[0-9xX](?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$');
 
   /// [RegExp] used to identify whether the source is a valid ISBN-10, with or without the 'X', or a valid ISBN-13.
-  /// Using this format: r'^(?=(?:[^0-9]*[0-9]){9}(?:(?:[^0-9xX]*[0-9xX]){1})(?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$'
+  /// Using this format: r'^(?=(?:[^0-9]*[0-9]){9}[^0-9xX]*[0-9xX](?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$'
   static RegExp get isbnFormatRegExp => _isbnRegExp;
 
   String? verifyIsbn(String value) {
@@ -25,13 +25,13 @@ class IsbnVerifier {
   bool _validateIsbn10(String value) {
     if (value.length == 10) {
       int result = 0;
-      int multipler = 10;
+      int multiple = 10;
 
       for (var actualChar in value.characters) {
         int sum = actualChar != 'x'
-            ? int.parse(actualChar) * multipler
-            : 10 * multipler;
-        multipler--;
+            ? int.parse(actualChar) * multiple
+            : 10 * multiple;
+        multiple--;
         result += sum;
       }
 

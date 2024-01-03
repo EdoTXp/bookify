@@ -60,7 +60,7 @@ class _RootPageState extends State<RootPage> {
           if (isbn != null) {
             int homePage = _pageController.initialPage;
 
-            bookBloc.add(FindedBooksByIsbnEvent(isbn: isbn));
+            bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
             _pageController.jumpToPage(homePage);
             _bottomBarController.changeSelectedBottomBarItem(homePage);
           }
@@ -72,7 +72,7 @@ class _RootPageState extends State<RootPage> {
       ),
       extendBody: true,
       bottomNavigationBar: FABBottomAppBar(
-        notchedShape: rectangeRoundedNotchedShape,
+        notchedShape: rectangleRoundedNotchedShape,
         onSelectedItem: _pageController.jumpToPage,
         controller: _bottomBarController,
         items: [

@@ -76,7 +76,7 @@ void main() {
     test('book, author & category tables', () async {
       final bookTableName = database_scripts.bookTableName;
       final authorTableName = database_scripts.authorTableName;
-      final categoryTableName = database_scripts.categorytableName;
+      final categoryTableName = database_scripts.categoryTableName;
       final bookAuthorsTableName = database_scripts.bookAuthorsTableName;
       final bookCategoriesTableName = database_scripts.bookCategoriesTableName;
 

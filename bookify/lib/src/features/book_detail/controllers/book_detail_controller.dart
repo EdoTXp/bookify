@@ -2,7 +2,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class BookDetailController {
   Future<void> launchUrl(String bookUrl) async {
-    Future<bool> launchBookString = launchUrlString(
+    final launchBookString = launchUrlString(
       bookUrl,
       mode: LaunchMode.externalApplication,
     );

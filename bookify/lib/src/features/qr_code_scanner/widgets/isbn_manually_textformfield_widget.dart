@@ -20,14 +20,14 @@ class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
 
 class _IsbnManuallyTextFormFieldWidgetState
     extends State<IsbnManuallyTextFormFieldWidget> {
-  final isbnManualyEC = TextEditingController();
+  final isbnManuallyEC = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final isbnRegExpVerifier = IsbnVerifier.isbnFormatRegExp;
   final isbnMaskFormatter = IsbnMaskTextInputFormatter();
 
   @override
   void dispose() {
-    isbnManualyEC.dispose();
+    isbnManuallyEC.dispose();
     super.dispose();
   }
 
@@ -36,6 +36,7 @@ class _IsbnManuallyTextFormFieldWidgetState
     final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Spacer(),
         Container(
@@ -48,7 +49,7 @@ class _IsbnManuallyTextFormFieldWidgetState
               child: TextFormField(
                 key: const Key('isbnManuallyTextFormField'),
                 textAlign: TextAlign.center,
-                controller: isbnManualyEC,
+                controller: isbnManuallyEC,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo não pode estar vazio'),
@@ -82,11 +83,11 @@ class _IsbnManuallyTextFormFieldWidgetState
             key: const Key('isbnManuallyOutlinedButton'),
             onPressed: () {
               if (formKey.currentState!.validate()) {
-                widget.onTap(isbnManualyEC.text);
+                widget.onTap(isbnManuallyEC.text);
               }
             },
             text: 'Ir para o livro',
-            suffixIcon: Icons.arrow_forward,
+            suffixIcon: Icons.arrow_back,
           ),
         ),
       ],

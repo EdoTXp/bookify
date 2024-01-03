@@ -209,4 +209,14 @@ class LocalDatabaseImpl implements LocalDatabase {
       throw LocalDatabaseException(e.toString());
     }
   }
+
+  @override
+  Future<void> closeDatabase() async {
+    try {
+      final db = await database;
+      await db!.close();
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
 }

@@ -4,7 +4,7 @@ String get databaseName => _databaseName;
 //Table Names Getters
 String get bookTableName => _bookTableName;
 String get authorTableName => _authorTableName;
-String get categorytableName => _categoryTableName;
+String get categoryTableName => _categoryTableName;
 String get bookAuthorsTableName => _bookAuthorsTableName;
 String get bookCategoriesTableName => _bookCategoriesTableName;
 String get bookReadingTableName => _bookReadingTableName;

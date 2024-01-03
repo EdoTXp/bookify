@@ -4,42 +4,42 @@ sealed class BookEvent {}
 
 class GotAllBooksEvent extends BookEvent {}
 
-class FindedBooksByIsbnEvent extends BookEvent {
+class FoundBooksByIsbnEvent extends BookEvent {
   final String isbn;
 
-  FindedBooksByIsbnEvent({
+  FoundBooksByIsbnEvent({
     required this.isbn,
   });
 }
 
-class FindedBooksByAuthorEvent extends BookEvent {
+class FoundBooksByAuthorEvent extends BookEvent {
   final String author;
 
-  FindedBooksByAuthorEvent({
+  FoundBooksByAuthorEvent({
     required this.author,
   });
 }
 
-class FindedBooksByCategoryEvent extends BookEvent {
+class FoundBooksByCategoryEvent extends BookEvent {
   final String category;
 
-  FindedBooksByCategoryEvent({
+  FoundBooksByCategoryEvent({
     required this.category,
   });
 }
 
-class FindedBooksByPublisherEvent extends BookEvent {
+class FoundBooksByPublisherEvent extends BookEvent {
   final String publisher;
 
-  FindedBooksByPublisherEvent({
+  FoundBooksByPublisherEvent({
     required this.publisher,
   });
 }
 
-class FindedBooksByTitleEvent extends BookEvent {
+class FoundBooksByTitleEvent extends BookEvent {
   final String title;
 
-  FindedBooksByTitleEvent({
+  FoundBooksByTitleEvent({
     required this.title,
   });
 }

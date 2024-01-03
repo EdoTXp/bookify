@@ -7,7 +7,7 @@ import 'package:bookify/src/shared/repositories/category_repository/categories_r
 
 class CategoriesRepositoryImpl implements CategoriesRepository {
   final LocalDatabase _database;
-  final _categoryTableName = category_table.categorytableName;
+  final _categoryTableName = category_table.categoryTableName;
 
   CategoriesRepositoryImpl(this._database);
 

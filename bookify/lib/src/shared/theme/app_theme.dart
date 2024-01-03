@@ -1,10 +1,19 @@
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Theme for light mode
 final appLightTheme = ThemeData(
-  appBarTheme: _appBarTheme,
+  appBarTheme: _appBarTheme.copyWith(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+      statusBarBrightness: Brightness.light, // For iOS (dark icons)
+    ),
+  ),
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
@@ -20,7 +29,7 @@ final appLightTheme = ThemeData(
       _floatingActionButtonTheme.copyWith(backgroundColor: Colors.white),
   colorScheme: const ColorScheme.light(
     primary: bookifyPrimaryColor,
-    secondary: bookifySecundaryColor,
+    secondary: bookifySecondaryColor,
     tertiary: bookifyTertiaryColor,
     error: bookifyErrorColor,
   ),
@@ -28,7 +37,15 @@ final appLightTheme = ThemeData(
 
 /// Theme for dark mode
 final appDarkTheme = ThemeData(
-  appBarTheme: _appBarTheme,
+  appBarTheme: _appBarTheme.copyWith(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarColor: bookifyDarkBackground,
+      systemNavigationBarColor: bookifyDarkBackground,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light, // For Android (light icons)
+      statusBarBrightness: Brightness.dark, // For iOS (light icons)
+    ),
+  ),
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
@@ -41,11 +58,11 @@ final appDarkTheme = ThemeData(
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
-    backgroundColor: const Color(0xff404040),
+    backgroundColor: bookifyDarkBackground,
   ),
   colorScheme: const ColorScheme.dark(
     primary: bookifyPrimaryColor,
-    secondary: bookifySecundaryColor,
+    secondary: bookifySecondaryColor,
     tertiary: bookifyTertiaryColor,
     error: bookifyErrorColor,
   ),
@@ -57,10 +74,11 @@ final appDarkTheme = ThemeData(
 const _appBarTheme = AppBarTheme(
   backgroundColor: Colors.transparent,
   shadowColor: Colors.transparent,
-  iconTheme: IconThemeData(color: bookifySecundaryColor),
+  iconTheme: IconThemeData(color: bookifySecondaryColor),
 );
 
-const _progressIndicatorTheme = ProgressIndicatorThemeData(color: bookifySecundaryColor);
+const _progressIndicatorTheme =
+    ProgressIndicatorThemeData(color: bookifySecondaryColor);
 
 final _textTheme = TextTheme(
   displayLarge: GoogleFonts.roboto(fontSize: 64),
@@ -116,7 +134,7 @@ const _textSelectionTheme = TextSelectionThemeData(
 
 const _searchBarTheme = SearchBarThemeData(
   side: MaterialStatePropertyAll(
-    BorderSide(color: bookifySecundaryColor),
+    BorderSide(color: bookifySecondaryColor),
   ),
   elevation: MaterialStatePropertyAll(0),
   padding: MaterialStatePropertyAll(
@@ -127,20 +145,20 @@ const _searchBarTheme = SearchBarThemeData(
   )),
   hintStyle: MaterialStatePropertyAll(TextStyle(
     fontSize: 14,
-    color: bookifySecundaryColor,
+    color: bookifySecondaryColor,
   )),
 );
 
 const _segmentedButtonTheme = SegmentedButtonThemeData(
   style: ButtonStyle(
-    surfaceTintColor: MaterialStatePropertyAll(bookifySecundaryColor),
+    surfaceTintColor: MaterialStatePropertyAll(bookifySecondaryColor),
     visualDensity: VisualDensity.comfortable,
     textStyle: MaterialStatePropertyAll(TextStyle(
       fontSize: 12,
       overflow: TextOverflow.ellipsis,
     )),
-    side: MaterialStatePropertyAll(BorderSide(color: bookifySecundaryColor)),
-    iconColor: MaterialStatePropertyAll(bookifySecundaryColor),
+    side: MaterialStatePropertyAll(BorderSide(color: bookifySecondaryColor)),
+    iconColor: MaterialStatePropertyAll(bookifySecondaryColor),
   ),
 );
 
@@ -159,17 +177,21 @@ final _textButtonTheme = TextButtonThemeData(
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    backgroundColor: const MaterialStatePropertyAll(bookifySecundaryColor),
+    backgroundColor: const MaterialStatePropertyAll(bookifySecondaryColor),
+    foregroundColor: const MaterialStatePropertyAll(Colors.white),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
-    textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 14)),
+    iconColor: const MaterialStatePropertyAll(Colors.white),
+    textStyle: const MaterialStatePropertyAll(
+      TextStyle(fontSize: 14),
+    ),
   ),
 );
 
 final _outlinedButtonTheme = OutlinedButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: const MaterialStatePropertyAll(bookifySecundaryColor),
+    foregroundColor: const MaterialStatePropertyAll(bookifySecondaryColor),
     overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -177,10 +199,16 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
     side: const MaterialStatePropertyAll(
       BorderSide(
         width: 2,
-        color: bookifySecundaryColor,
+        color: bookifySecondaryColor,
       ),
     ),
-    textStyle: const MaterialStatePropertyAll(TextStyle(fontSize: 14)),
+    iconColor: const MaterialStatePropertyAll(bookifySecondaryColor),
+    textStyle: const MaterialStatePropertyAll(
+      TextStyle(
+        fontSize: 14,
+        color: bookifySecondaryColor,
+      ),
+    ),
   ),
 );
 

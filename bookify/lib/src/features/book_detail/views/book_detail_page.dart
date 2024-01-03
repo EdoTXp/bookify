@@ -44,7 +44,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(
-            left: 24.0, right: 24.0, top: 8.0, bottom: 16.0),
+          left: 24.0,
+          right: 24.0,
+          top: 8.0,
+          bottom: 16.0,
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,11 +105,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookDetailController.launchUrl(book.buyLink),
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: BookifyElevatedButton(
                         onPressed: () {},
-                        suffixIcon: Icons.arrow_forward,
+                        suffixIcon: Icons.arrow_back,
                         text: 'Adicionar'),
                   )
                 ],

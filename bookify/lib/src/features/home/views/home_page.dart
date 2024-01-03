@@ -77,22 +77,22 @@ class _HomePageState extends State<HomePage>
                       if (value.isNotEmpty) {
                         switch (searchType) {
                           case SearchType.title:
-                            bookBloc.add(FindedBooksByTitleEvent(title: value));
+                            bookBloc.add(FoundBooksByTitleEvent(title: value));
                             break;
                           case SearchType.author:
                             bookBloc
-                                .add(FindedBooksByAuthorEvent(author: value));
+                                .add(FoundBooksByAuthorEvent(author: value));
                             break;
                           case SearchType.category:
                             bookBloc.add(
-                                FindedBooksByCategoryEvent(category: value));
+                                FoundBooksByCategoryEvent(category: value));
                             break;
                           case SearchType.publisher:
                             bookBloc.add(
-                                FindedBooksByPublisherEvent(publisher: value));
+                                FoundBooksByPublisherEvent(publisher: value));
                             break;
                           case SearchType.isbn:
-                            bookBloc.add(FindedBooksByIsbnEvent(isbn: value));
+                            bookBloc.add(FoundBooksByIsbnEvent(isbn: value));
                             break;
                         }
                       }

@@ -46,19 +46,19 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   Widget build(BuildContext context) {
     String titleText;
     String changeModeText;
-    IconData changeIconMode;
+    IconData changeModeIcon;
 
     // start QrCodeScannerWidget
     if (_qrCodeScannerIsVisible) {
       titleText = 'Aponte a câmera para o código de barras do livro';
       changeModeText = 'Digitar o código manualmente';
-      changeIconMode = Icons.keyboard;
+      changeModeIcon = Icons.keyboard;
     }
     // start IsbnManuallyTextFormFieldWidget
     else {
       titleText = 'Digite os números do código de barra';
       changeModeText = 'Scanear código';
-      changeIconMode = BookifyIcons.qr_code;
+      changeModeIcon = BookifyIcons.qr_code;
     }
 
     return Scaffold(
@@ -100,7 +100,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
               child: TextButton.icon(
                 key: const Key('changeModeTextButton'),
                 label: Text(changeModeText),
-                icon: Icon(changeIconMode),
+                icon: Icon(changeModeIcon),
                 onPressed: () {
                   setState(() {
                     _qrCodeScannerIsVisible = !_qrCodeScannerIsVisible;

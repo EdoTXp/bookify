@@ -19,7 +19,7 @@ class FABBottomAppBarItem {
   });
 }
 
-const rectangeRoundedNotchedShape = AutomaticNotchedShape(
+const rectangleRoundedNotchedShape = AutomaticNotchedShape(
   RoundedRectangleBorder(),
   RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(15)),

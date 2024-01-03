@@ -104,4 +104,7 @@ abstract interface class LocalDatabase {
     required String idColumn,
     required dynamic id,
   });
+
+  /// Close the database to free up resources
+  Future<void> closeDatabase();
 }

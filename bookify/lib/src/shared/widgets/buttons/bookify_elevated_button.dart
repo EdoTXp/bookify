@@ -14,31 +14,12 @@ class BookifyElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(width: 30),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          if (suffixIcon != null)
-            Row(
-              children: [
-                const SizedBox(width: 10),
-                Icon(
-                  suffixIcon,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-        ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(suffixIcon),
+        label: Text(text),
       ),
     );
   }

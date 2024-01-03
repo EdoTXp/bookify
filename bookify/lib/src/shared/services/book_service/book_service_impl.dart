@@ -62,7 +62,8 @@ class BookServiceImpl implements BookService {
 
   @override
   Future<bool> verifyBookIsAlreadyInserted({required String id}) async {
-    final isInserted = _booksRepository.verifyBookIsAlreadyInserted(id: id);
+    final isInserted =
+        await _booksRepository.verifyBookIsAlreadyInserted(id: id);
     return isInserted;
   }
 

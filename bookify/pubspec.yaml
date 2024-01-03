@@ -32,8 +32,8 @@ dependencies:
   dio: ^5.4.0 # Used to receive books through the Google Books API. 
   provider: ^6.1.1 # Used for DI.
   flutter_bloc: ^8.1.3 # Used for state management.
-  cached_network_image: ^3.3.0 # Used to show the cover of the cached book.
-  flutter_rating_bar: ^4.0.1 # Used for show the book rating averange. 
+  cached_network_image: ^3.3.1 # Used to show the cover of the cached book.
+  flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
   google_fonts: ^6.1.0 # Used for App Font.
   url_launcher: ^6.2.2 # Used to launch at the book store.
   mobile_scanner: ^3.5.5 # Used to access the camera and scan the ISBN code.
