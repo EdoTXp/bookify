@@ -49,22 +49,7 @@ class _RootPageState extends State<RootPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: RectangleFloatingActionButton(
-        onPressed: (() async {
-          String? isbn = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const QrCodeScannerPage(),
-            ),
-          );
-          
-          if (isbn != null) {
-            int homePage = _pageController.initialPage;
-
-            bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
-            _pageController.jumpToPage(homePage);
-            _bottomBarController.changeSelectedBottomBarItem(homePage);
-          }
-        }),
+        onPressed: (() async => await _scanAndGetIsbnCode(context)),
         child: const Icon(
           Icons.add,
           size: 40,
@@ -99,5 +84,20 @@ class _RootPageState extends State<RootPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _scanAndGetIsbnCode(BuildContext context) async {
+    String? isbn = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const QrCodeScannerPage()),
+    );
+
+    if (isbn != null) {
+      int homePage = _pageController.initialPage;
+
+      bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
+      _pageController.jumpToPage(homePage);
+      _bottomBarController.changeSelectedBottomBarItem(homePage);
+    }
   }
 }

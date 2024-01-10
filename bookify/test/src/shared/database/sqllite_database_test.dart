@@ -59,9 +59,6 @@ void main() {
     batch.execute(database_scripts.bookCategoriesScript);
     batch.execute(database_scripts.bookReadingScript);
     batch.execute(database_scripts.loanScript);
-    batch.execute(database_scripts.peopleScript);
-    batch.execute(database_scripts.loanToPeopleScript);
-    batch.execute(database_scripts.bookLoanScript);
     batch.execute(database_scripts.bookcaseScript);
     batch.execute(database_scripts.bookOnCaseScript);
 
@@ -315,131 +312,58 @@ void main() {
     test('book, loan & people tables', () async {
       final bookTableName = database_scripts.bookTableName;
       final loanTableName = database_scripts.loanTableName;
-      final bookLoanTableName = database_scripts.bookLoanTableName;
-      final peopleTableName = database_scripts.peopleTableName;
-      final loanToPersonTableName = database_scripts.loanToPersonTableName;
 
       // TEST insertion of book
-      final bookRowsInserted = await _insertOnDatabase(
+      final bookRowInserted = await _insertOnDatabase(
           database, bookTableName, booksModel[0].toMap());
 
-      expect(bookRowsInserted, equals(1));
+      expect(bookRowInserted, equals(1));
 
       // TEST insertion of loan
       final loanMap = {
         'observation': 'Amigo da Jú',
         'loanDate': DateTime(2023, 05, 23).millisecondsSinceEpoch,
         'devolutionDate': DateTime(2023, 06, 10).millisecondsSinceEpoch,
+        'idContact': '1dsadsa',
+        'bookId': booksModel[0].id,
       };
 
       final loanId = await _insertOnDatabase(database, loanTableName, loanMap);
       expect(loanId, equals(1));
 
-      //TEST insertion of loan and Book relationship
-      final bookLoanRowInserted =
-          await _insertOnDatabase(database, bookLoanTableName, {
-        'bookId': booksModel[0].id,
-        'loanId': 1,
+      //TEST UPDATE loan
+      final updateLoanRow =
+          await _updateRowWhenId(database, loanTableName, 'id', [
+        loanId
+      ], {
+        'devolutionDate': DateTime(2023, 06, 20).millisecondsSinceEpoch,
       });
-      expect(bookLoanRowInserted, equals(1));
+      expect(updateLoanRow, equals(1));
 
-      //TEST insertion of people
-      final peopleMap = {
-        'mobileNumber': '9999999999',
-        'name': 'Felipe',
-      };
-      final peopleRowInsert =
-          await _insertOnDatabase(database, peopleTableName, peopleMap);
-      expect(peopleRowInsert, equals(1));
-
-      //TEST insertion of loan and people relationship
-      final loanPeopleRowInserted =
-          await _insertOnDatabase(database, loanToPersonTableName, {
-        'loanId': 1,
-        'peopleId': '9999999999',
-      });
-      expect(loanPeopleRowInserted, equals(1));
-
-      //TEST UPDATE of loan
-      final loanRowChanges = await _updateRowWhenId(
-        database,
-        loanTableName,
-        'id',
-        [1],
-        {'devolutionDate': DateTime(2023, 06, 23).millisecondsSinceEpoch},
-      );
-      expect(loanRowChanges, equals(1));
-
-      final newLoanMap = await _queryOnDatabaseWhenId(
-        database,
-        loanTableName,
-        'id',
-        [1],
+      final newLoanMap =
+          await _queryOnDatabaseWhenId(database, loanTableName, 'id', [loanId]);
+      expect(newLoanMap.first['id'], equals(1));
+      expect(
+        DateTime.fromMillisecondsSinceEpoch(
+            newLoanMap.first['loanDate'] as int),
+        equals(DateTime(2023, 05, 23)),
       );
       expect(
         DateTime.fromMillisecondsSinceEpoch(
-            newLoanMap.last['devolutionDate'] as int),
-        equals(DateTime(2023, 06, 23)),
+            newLoanMap.first['devolutionDate'] as int),
+        equals(DateTime(2023, 06, 20)),
       );
+      expect(newLoanMap.first['idContact'], equals('1dsadsa'));
+      expect(newLoanMap.first['bookId'], equals(booksModel[0].id));
 
-      //TEST UPDATE of people
-      final peopleRowChanges = await _updateRowWhenId(
-        database,
-        peopleTableName,
-        'mobileNumber',
-        ['9999999999'],
-        {'name': 'Fábio'},
-      );
-      expect(peopleRowChanges, equals(1));
+      //TEST DELETE book and expect its relations to be deleted.
+      final bookDeletedRow = await _deleteRowWhenId(
+          database, bookTableName, 'id', [booksModel[0].id]);
+      expect(bookDeletedRow, equals(1));
 
-      final newPeopleMap = await _queryOnDatabaseWhenId(
-        database,
-        peopleTableName,
-        'mobileNumber',
-        ['9999999999'],
-      );
-      expect(
-        newPeopleMap.last['name'],
-        equals('Fábio'),
-      );
-
-      //TEST DELETE loan table and expect its relations to be deleted.
-      final loanRowDeleted =
-          await _deleteRowWhenId(database, loanTableName, 'id', [1]);
-      expect(loanRowDeleted, equals(1));
-
-      final loanToPeopleRows = await _queryOnDatabaseWhenId(
-        database,
-        loanToPersonTableName,
-        'loanId',
-        [1],
-      );
-      expect(loanToPeopleRows, isEmpty);
-
-      final bookLoanIsEmpty = await _queryOnDatabaseWhenId(
-        database,
-        bookLoanTableName,
-        'loanId',
-        [1],
-      );
-      expect(bookLoanIsEmpty, isEmpty);
-
-      //TEST if it has not deleted the book and people that they referenced before.
-      final bookIsNotEmpty = await _queryOnDatabaseWhenId(
-        database,
-        bookTableName,
-        'id',
-        [booksModel[0].id],
-      );
-      expect(bookIsNotEmpty, isNotEmpty);
-
-      final peopleIsNotEmpty = await _queryOnDatabaseWhenId(
-        database,
-        peopleTableName,
-        'mobileNumber',
-        ['9999999999'],
-      );
-      expect(peopleIsNotEmpty, isNotEmpty);
+      final deletedLoanRelationship =
+          await _queryOnDatabaseWhenId(database, loanTableName, 'id', [loanId]);
+      expect(deletedLoanRelationship, isEmpty);
     });
 
     test('book & bookcase tables', () async {

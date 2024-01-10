@@ -39,8 +39,6 @@ final appLightTheme = ThemeData(
 final appDarkTheme = ThemeData(
   appBarTheme: _appBarTheme.copyWith(
     systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarColor: bookifyDarkBackground,
-      systemNavigationBarColor: bookifyDarkBackground,
       systemNavigationBarIconBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light, // For Android (light icons)
       statusBarBrightness: Brightness.dark, // For iOS (light icons)

@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/helpers/form_helper.dart';
+import 'package:bookify/src/shared/helpers/form/form_helper.dart';
 import 'package:bookify/src/shared/utils/input_formatter/isbn_input_formatter.dart';
 import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
@@ -36,7 +36,6 @@ class _IsbnManuallyTextFormFieldWidgetState
     final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Spacer(),
         Container(

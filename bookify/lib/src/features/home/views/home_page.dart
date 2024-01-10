@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
@@ -55,6 +56,11 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
 
+    // Set the status bar with the app theme configuration
+    // without having to instantiate the Appbar widget.
+    SystemChrome.setSystemUIOverlayStyle(
+        Theme.of(context).appBarTheme.systemOverlayStyle!);
+
     return RefreshIndicator(
       onRefresh: () async => _refreshPage(),
       color: Theme.of(context).colorScheme.secondary,
@@ -65,38 +71,41 @@ class _HomePageState extends State<HomePage>
         builder: (BuildContext context, state) {
           return Column(
             children: [
-              const SizedBox(height: 20),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
-                child: Offstage(
-                  offstage: searchBarIsVisible,
-                  child: AnimatedSearchBar(
-                    searchEC: searchEC,
-                    onSubmitted: (value, searchType) {
-                      if (value.isNotEmpty) {
-                        switch (searchType) {
-                          case SearchType.title:
-                            bookBloc.add(FoundBooksByTitleEvent(title: value));
-                            break;
-                          case SearchType.author:
-                            bookBloc
-                                .add(FoundBooksByAuthorEvent(author: value));
-                            break;
-                          case SearchType.category:
-                            bookBloc.add(
-                                FoundBooksByCategoryEvent(category: value));
-                            break;
-                          case SearchType.publisher:
-                            bookBloc.add(
-                                FoundBooksByPublisherEvent(publisher: value));
-                            break;
-                          case SearchType.isbn:
-                            bookBloc.add(FoundBooksByIsbnEvent(isbn: value));
-                            break;
+              SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
+                  child: Offstage(
+                    offstage: searchBarIsVisible,
+                    child: AnimatedSearchBar(
+                      searchEC: searchEC,
+                      onSubmitted: (value, searchType) {
+                        if (value.isNotEmpty) {
+                          switch (searchType) {
+                            case SearchType.title:
+                              bookBloc
+                                  .add(FoundBooksByTitleEvent(title: value));
+                              break;
+                            case SearchType.author:
+                              bookBloc
+                                  .add(FoundBooksByAuthorEvent(author: value));
+                              break;
+                            case SearchType.category:
+                              bookBloc.add(
+                                  FoundBooksByCategoryEvent(category: value));
+                              break;
+                            case SearchType.publisher:
+                              bookBloc.add(
+                                  FoundBooksByPublisherEvent(publisher: value));
+                              break;
+                            case SearchType.isbn:
+                              bookBloc.add(FoundBooksByIsbnEvent(isbn: value));
+                              break;
+                          }
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
                 ),
               ),

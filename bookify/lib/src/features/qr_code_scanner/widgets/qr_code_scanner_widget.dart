@@ -38,12 +38,13 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final widthOverlay = MediaQuery.sizeOf(context).width * .9;
-    final heightOverlay = MediaQuery.sizeOf(context).height * .3;
-    final centerOverlay = MediaQuery.sizeOf(context).center(Offset.zero);
+    final widthOverlay = MediaQuery.sizeOf(context).width * 0.9;
+    final heightOverlay = MediaQuery.sizeOf(context).height * 0.3;
+    final centerOverlay = Offset(widthOverlay * .78, heightOverlay * .78);
 
     return MobileScanner(
       key: const Key('MobileScanner'),
+      fit: BoxFit.contain,
       controller: scannerController,
       errorBuilder: (context, exception, _) {
         return Text(exception.errorDetails!.message!);

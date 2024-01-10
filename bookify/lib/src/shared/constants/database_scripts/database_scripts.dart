@@ -9,9 +9,6 @@ String get bookAuthorsTableName => _bookAuthorsTableName;
 String get bookCategoriesTableName => _bookCategoriesTableName;
 String get bookReadingTableName => _bookReadingTableName;
 String get loanTableName => _loanTableName;
-String get bookLoanTableName => _bookLoanTableName;
-String get peopleTableName => _peopleTableName;
-String get loanToPersonTableName => _loanToPersonTableName;
 String get bookcaseTableName => _bookcaseTableName;
 String get bookOnCaseTableName => _bookOnCaseTableName;
 
@@ -31,20 +28,16 @@ String get bookAuthorsScript => _bookAuthorsScript;
 /// Create a table for relationship [BookModel] and [CategoryModel]
 String get bookCategoriesScript => _bookCategoriesScript;
 
-/// Create a table for relationship [BookModel] and [ReadingModel] last_reading_date is a millisSinceEpoch
+/// Create a table for relationship [BookModel] and [ReadingModel]
+/// [lastReadingDate] is a millisSinceEpoch
 String get bookReadingScript => _bookReadingScript;
 
-/// Create a table for [LoanModel]. loan_date and devolution_date is a millisSinceEpoch
+/// Create a table for [LoanModel].
+/// [loanDate] and [devolutionDate] is a millisSinceEpoch
+/// [idContact] used to get the native contact on device.
+/// A separate table has not been created for the contact.
+/// This way you can take advantage of the contact changes without having to update them in this table.
 String get loanScript => _loanScript;
-
-/// Create a table for [PeopleModel].
-String get peopleScript => _peopleScript;
-
-/// Create a table for relationship [PeopleModel] and [loanModel].
-String get loanToPeopleScript => _loanToPeopleScript;
-
-/// Create a table for relationship [BookModel] and [LoanModel]
-String get bookLoanScript => _bookLoanScript;
 
 /// Create a table for [BookCaseModel]
 String get bookcaseScript => _bookCaseScript;
@@ -61,9 +54,6 @@ const String _bookAuthorsTableName = 'bookAuthors';
 const String _bookCategoriesTableName = 'bookCategories';
 const String _bookReadingTableName = 'bookReading';
 const String _loanTableName = 'loan';
-const String _bookLoanTableName = 'bookLoan';
-const String _peopleTableName = 'people';
-const String _loanToPersonTableName = 'loanToPerson';
 const String _bookcaseTableName = 'bookcase';
 const String _bookOnCaseTableName = 'bookOnCase';
 
@@ -131,36 +121,12 @@ const String _loanScript = '''
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       observation TEXT NOT NULL,
       loanDate INTEGER NOT NULL,  
-      devolutionDate INTEGER NOT NULL
+      devolutionDate INTEGER NOT NULL,
+      idContact TEXT NOT NULL,
+      bookId TEXT UNIQUE NOT NULL,
+      FOREIGN KEY (bookId) REFERENCES book (id) ON DELETE CASCADE
       )
 ''';
-
-const String _peopleScript = '''
-     CREATE TABLE $_peopleTableName (
-      mobileNumber TEXT PRIMARY KEY UNIQUE,
-      name TEXT NOT NULL
-      )
-''';
-
-const String _loanToPeopleScript = '''
-     CREATE TABLE $_loanToPersonTableName (
-      loanId INTEGER NOT NULL,
-      peopleId TEXT NOT NULL,
-      PRIMARY KEY (loanId, peopleId),
-      FOREIGN KEY (loanId) REFERENCES loan (id) ON DELETE CASCADE,
-      FOREIGN KEY (peopleId) REFERENCES people (mobileNumber) ON DELETE CASCADE
-      )
-''';
-
-const String _bookLoanScript = '''
-     CREATE TABLE $_bookLoanTableName (
-      bookId TEXT NOT NULL,
-      loanId INTEGER NOT NULL,
-      PRIMARY KEY (bookId, loanId),
-      FOREIGN KEY (bookId) REFERENCES book (id) ON DELETE CASCADE,
-      FOREIGN KEY (loanId) REFERENCES loan (id) ON DELETE CASCADE
-      )
-    ''';
 
 const String _bookCaseScript = '''
      CREATE TABLE $_bookcaseTableName (

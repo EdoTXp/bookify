@@ -7,8 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class LocalDatabaseImpl implements LocalDatabase {
   Database? _database;
-
-  String get databaseName => database_script.databaseName;
+  String databaseName = database_script.databaseName;
 
   Future<Database?> get database async {
     if (_database != null) return _database;
@@ -32,7 +31,7 @@ class LocalDatabaseImpl implements LocalDatabase {
     }
   }
 
-  void _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
     final Batch batch = db.batch();
 
     batch.execute(database_script.bookScript);
@@ -42,9 +41,6 @@ class LocalDatabaseImpl implements LocalDatabase {
     batch.execute(database_script.bookCategoriesScript);
     batch.execute(database_script.bookReadingScript);
     batch.execute(database_script.loanScript);
-    batch.execute(database_script.peopleScript);
-    batch.execute(database_script.loanToPeopleScript);
-    batch.execute(database_script.bookLoanScript);
     batch.execute(database_script.bookcaseScript);
     batch.execute(database_script.bookOnCaseScript);
 

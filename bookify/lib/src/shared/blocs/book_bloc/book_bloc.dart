@@ -67,6 +67,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         return;
       }
       emit(BooksLoadedState(books: books));
+    } on SocketException catch (socketException) {
+      emit(BookErrorSate(message: socketException.message));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
@@ -88,6 +90,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
+    } on SocketException catch (socketException) {
+      emit(BookErrorSate(message: socketException.message));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
@@ -109,6 +113,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
+    } on SocketException catch (socketException) {
+      emit(BookErrorSate(message: socketException.message));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
@@ -130,6 +136,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
+    } on SocketException catch (socketException) {
+      emit(BookErrorSate(message: socketException.message));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
@@ -157,6 +165,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
+    } on SocketException catch (socketException) {
+      emit(BookErrorSate(message: socketException.message));
     } catch (e) {
       emit(BookErrorSate(message: e.toString()));
     }
