@@ -127,7 +127,7 @@ class LocalDatabaseImpl implements LocalDatabase {
       final db = await database;
       int newId = 0;
 
-      db!.transaction((txn) async {
+      await db!.transaction((txn) async {
         newId = await txn.insert(table, values);
       });
 
@@ -148,7 +148,7 @@ class LocalDatabaseImpl implements LocalDatabase {
       final db = await database;
       int rowUpdated = 0;
 
-      db!.transaction((txn) async {
+      await db!.transaction((txn) async {
         rowUpdated = await txn.update(
           table,
           values,
@@ -171,6 +171,12 @@ class LocalDatabaseImpl implements LocalDatabase {
   }) async {
     try {
       final db = await database;
+
+      //Transform the [columnValue] if is a String for the script
+      if (columnValue is String) {
+        columnValue = '"$columnValue"';
+      }
+
       final queryMap = await db!
           .rawQuery('SELECT COUNT(*) FROM $table WHERE $column = $columnValue');
 
@@ -192,7 +198,7 @@ class LocalDatabaseImpl implements LocalDatabase {
       final db = await database;
       int rowCount = 0;
 
-      db!.transaction((txn) async {
+      await db!.transaction((txn) async {
         rowCount = await txn.delete(
           table,
           where: '$idColumn = ?',

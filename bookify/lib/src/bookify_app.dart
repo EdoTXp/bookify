@@ -1,8 +1,8 @@
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'shared/providers/home_page_providers.dart';
 import 'features/root/views/root_page.dart';
+import 'shared/providers/providers.dart';
 
 class BookifyApp extends StatelessWidget {
   const BookifyApp({super.key});
@@ -11,7 +11,10 @@ class BookifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ...repositoriesProviders,
+        ...servicesProviders,
         ...homePageProviders,
+        ...bookDetailPageProviders,
       ],
       child: MaterialApp(
         title: 'Bookify',

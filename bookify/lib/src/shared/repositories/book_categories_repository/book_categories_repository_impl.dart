@@ -37,7 +37,7 @@ class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
       final rowInserted =
           await _database.insert(table: _bookCategoriesTableName, values: {
         'bookId': bookId,
-        'authorId': categoryId,
+        'categoryId': categoryId,
       });
 
       return rowInserted;

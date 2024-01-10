@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>
       BookEmptyState() =>
         BookErrorSateWidget.bookEmptyState(onPressed: _refreshPage),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(books: books),
-      BookErrorSate(:final message) =>
+      BookErrorSate(errorMessage:final message) =>
         BookErrorSateWidget(stateMessage: message, onPressed: _refreshPage),
     };
   }

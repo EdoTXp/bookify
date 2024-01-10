@@ -2,9 +2,9 @@ part of '../../../shared/blocs/book_bloc/book_bloc.dart';
 
 sealed class BookEvent {}
 
-class GotAllBooksEvent extends BookEvent {}
+final class GotAllBooksEvent extends BookEvent {}
 
-class FoundBooksByIsbnEvent extends BookEvent {
+final class FoundBooksByIsbnEvent extends BookEvent {
   final String isbn;
 
   FoundBooksByIsbnEvent({
@@ -12,7 +12,7 @@ class FoundBooksByIsbnEvent extends BookEvent {
   });
 }
 
-class FoundBooksByAuthorEvent extends BookEvent {
+final class FoundBooksByAuthorEvent extends BookEvent {
   final String author;
 
   FoundBooksByAuthorEvent({
@@ -20,7 +20,7 @@ class FoundBooksByAuthorEvent extends BookEvent {
   });
 }
 
-class FoundBooksByCategoryEvent extends BookEvent {
+final class FoundBooksByCategoryEvent extends BookEvent {
   final String category;
 
   FoundBooksByCategoryEvent({
@@ -28,7 +28,7 @@ class FoundBooksByCategoryEvent extends BookEvent {
   });
 }
 
-class FoundBooksByPublisherEvent extends BookEvent {
+final class FoundBooksByPublisherEvent extends BookEvent {
   final String publisher;
 
   FoundBooksByPublisherEvent({
@@ -36,7 +36,7 @@ class FoundBooksByPublisherEvent extends BookEvent {
   });
 }
 
-class FoundBooksByTitleEvent extends BookEvent {
+final class FoundBooksByTitleEvent extends BookEvent {
   final String title;
 
   FoundBooksByTitleEvent({

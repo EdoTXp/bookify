@@ -1,9 +1,11 @@
+import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/features/book_detail/widgets/widgets.dart';
 import 'package:bookify/src/features/book_detail/controllers/book_detail_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Page where it shows the details of a book.
 class BookDetailPage extends StatefulWidget {
@@ -21,7 +23,16 @@ class BookDetailPage extends StatefulWidget {
 
 class _BookDetailPageState extends State<BookDetailPage> {
   bool isEllipsisText = true;
+  late BookDetailBloc bloc;
   final bookDetailController = BookDetailController();
+  bool bookIsInserted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = context.read<BookDetailBloc>();
+    bloc.add(VerifiedBookIsInsertedEvent(bookId: widget.book.id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,160 +44,215 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bookmark_border),
-            onPressed: () {},
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          top: 8.0,
-          bottom: 16.0,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  '${book.title} ― $authors',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return BlocConsumer<BookDetailBloc, BookDetailState>(
+      listener: (context, state) async {
+        if (state is BookDetailLoadedState) {
+          bookIsInserted = state.bookIsInserted;
+        }
+        /*  switch (state) {
+          case BookDetailLoadingState():
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return const Text(
+                  'Carregando a Página...',
+                );
+              },
+            );
+            break;
+          case BookDetailLoadedState():
+            bookIsInserted = state.bookIsInserted;
+
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return Text(
+                  (bookIsInserted)
+                      ? 'Livro Inserido com sucesso'
+                      : 'Livro removido com sucesso',
+                );
+              },
+            );
+            break;
+          case BookDetailErrorState(errorMessage: final message):
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return Text(message);
+              },
+            );
+            break;
+        }*/
+      },
+      bloc: bloc,
+      builder: (context, _) {
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  (bookIsInserted) ? Icons.bookmark : Icons.bookmark_border,
                 ),
-              ),
-              const SizedBox(height: 12),
-              Center(
-                child: BookWidget(
-                  height: 300,
-                  width: 200,
-                  bookImageUrl: book.imageUrl,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${book.pageCount} PÁGINAS',
-                    style: TextStyle(
-                      color: colorScheme.primary,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  Text(
-                    '9H PARA LER',
-                    style: TextStyle(
-                      color: colorScheme.primary,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              )
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+              top: 8.0,
+              bottom: 16.0,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: BookifyOutlinedButton(
-                      text: 'Ir para loja',
-                      suffixIcon: Icons.store,
-                      onPressed: () async =>
-                          bookDetailController.launchUrl(book.buyLink),
+                  Center(
+                    child: Text(
+                      '${book.title} ― $authors',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: BookifyElevatedButton(
-                        onPressed: () {},
-                        suffixIcon: Icons.arrow_back,
-                        text: 'Adicionar'),
-                  )
-                ],
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Sinopse',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                splashColor: Colors.transparent,
-                onTap: () => setState(() => isEllipsisText = !isEllipsisText),
-                child: Text(
-                  widget.book.description,
-                  maxLines: (isEllipsisText) ? 4 : null,
-                  textAlign: TextAlign.justify,
-                  overflow: (isEllipsisText)
-                      ? TextOverflow.ellipsis
-                      : TextOverflow.visible,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    height: 1.5,
+                  const SizedBox(height: 12),
+                  Center(
+                    child: BookWidget(
+                      height: 300,
+                      width: 200,
+                      bookImageUrl: book.imageUrl,
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Avaliações',
+                      Text(
+                        '${book.pageCount} PÁGINAS',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          color: colorScheme.primary,
+                          fontSize: 14,
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      BookRating(
-                        averageRating: book.averageRating,
-                        ratingsCount: book.ratingsCount,
+                      const SizedBox(width: 24),
+                      Text(
+                        '9H PARA LER',
+                        style: TextStyle(
+                          color: colorScheme.primary,
+                          fontSize: 14,
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(width: 24),
-                  Flexible(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Informações do Livro',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: BookifyOutlinedButton(
+                          text: 'Ir para loja',
+                          suffixIcon: Icons.store,
+                          onPressed: () async =>
+                              bookDetailController.launchUrl(book.buyLink),
                         ),
-                        const SizedBox(height: 30),
-                        BookDescriptionWidget(
-                            title: 'Editora: ', content: book.publisher),
-                        BookDescriptionWidget(
-                            title: 'Gêneros: ', content: categories),
-                      ],
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: BookifyElevatedButton(
+                          suffixIcon:
+                              (bookIsInserted) ? Icons.remove : Icons.add,
+                          text: (bookIsInserted) ? 'Remover' : 'Adicionar',
+                          onPressed: () {
+                            if (bookIsInserted) {
+                              bloc.add(BookRemovedEvent(bookId: book.id));
+                            } else {
+                              bloc.add(BookInsertedEvent(bookModel: book));
+                            }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Sinopse',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
+                  ),
+                  const SizedBox(height: 12),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: () =>
+                        setState(() => isEllipsisText = !isEllipsisText),
+                    child: Text(
+                      widget.book.description,
+                      maxLines: (isEllipsisText) ? 4 : null,
+                      textAlign: TextAlign.justify,
+                      overflow: (isEllipsisText)
+                          ? TextOverflow.ellipsis
+                          : TextOverflow.visible,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          const Text(
+                            'Avaliações',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          BookRating(
+                            averageRating: book.averageRating,
+                            ratingsCount: book.ratingsCount,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 24),
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Informações do Livro',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            BookDescriptionWidget(
+                                title: 'Editora: ', content: book.publisher),
+                            BookDescriptionWidget(
+                                title: 'Gêneros: ', content: categories),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

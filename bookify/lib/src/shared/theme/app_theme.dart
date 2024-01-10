@@ -39,7 +39,9 @@ final appLightTheme = ThemeData(
 final appDarkTheme = ThemeData(
   appBarTheme: _appBarTheme.copyWith(
     systemOverlayStyle: const SystemUiOverlayStyle(
+      systemNavigationBarColor: bookifyDarkBackgroundColor,
       systemNavigationBarIconBrightness: Brightness.light,
+      statusBarColor: bookifyDarkBackgroundColor,
       statusBarIconBrightness: Brightness.light, // For Android (light icons)
       statusBarBrightness: Brightness.dark, // For iOS (light icons)
     ),
@@ -56,7 +58,7 @@ final appDarkTheme = ThemeData(
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
-    backgroundColor: bookifyDarkBackground,
+    backgroundColor: bookifyDarkBackgroundColor,
   ),
   colorScheme: const ColorScheme.dark(
     primary: bookifyPrimaryColor,

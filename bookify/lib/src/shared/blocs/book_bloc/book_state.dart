@@ -2,11 +2,11 @@ part of '../../../shared/blocs/book_bloc/book_bloc.dart';
 
 sealed class BookState {}
 
-class BooksLoadingState extends BookState {}
+final class BooksLoadingState extends BookState {}
 
-class BookEmptyState extends BookState {}
+final class BookEmptyState extends BookState {}
 
-class BooksLoadedState extends BookState {
+final class BooksLoadedState extends BookState {
   final List<BookModel> books;
 
   BooksLoadedState({
@@ -14,10 +14,10 @@ class BooksLoadedState extends BookState {
   });
 }
 
-class BookErrorSate extends BookState {
-  final String message;
+final class BookErrorSate extends BookState {
+  final String errorMessage;
 
   BookErrorSate({
-    required this.message,
+    required this.errorMessage,
   });
 }

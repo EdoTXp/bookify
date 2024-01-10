@@ -47,9 +47,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       _cachedBooksList = books;
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
@@ -68,9 +68,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
@@ -91,9 +91,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
@@ -114,9 +114,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
@@ -137,9 +137,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
@@ -153,7 +153,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       final verifier = IsbnVerifier();
       String? isbn = verifier.verifyIsbn(event.isbn);
       if (isbn == null) {
-        emit(BookErrorSate(message: 'Digite um ISBN Válido'));
+        emit(BookErrorSate(errorMessage: 'Digite um ISBN Válido'));
         return;
       }
 
@@ -166,9 +166,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
-      emit(BookErrorSate(message: socketException.message));
+      emit(BookErrorSate(errorMessage: socketException.message));
     } catch (e) {
-      emit(BookErrorSate(message: e.toString()));
+      emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
 
