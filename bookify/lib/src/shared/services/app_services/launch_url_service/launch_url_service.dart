@@ -1,14 +1,14 @@
 import 'package:url_launcher/url_launcher_string.dart';
 
-class BookDetailController {
-  Future<void> launchUrl(String bookUrl) async {
+class LaunchUrlService {
+  static Future<void> launchUrl(String url) async {
     final launchBookString = launchUrlString(
-      bookUrl,
+      url,
       mode: LaunchMode.externalApplication,
     );
 
     if (!await launchBookString) {
-      throw 'Could not launch $bookUrl';
+      throw Exception('Erro ao abrir o link: $url');
     }
   }
 }

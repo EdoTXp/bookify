@@ -171,18 +171,11 @@ class LocalDatabaseImpl implements LocalDatabase {
   }) async {
     try {
       final db = await database;
-
-      //Transform the [columnValue] if is a String for the script
-      if (columnValue is String) {
-        columnValue = '"$columnValue"';
-      }
-
       final queryMap = await db!
-          .rawQuery('SELECT COUNT(*) FROM $table WHERE $column = $columnValue');
+          .query(table, where: '$column = ?', whereArgs: [columnValue]);
 
-      final itemFound = (queryMap.last.values.last as int);
-      final itemIsInserted = (itemFound > 0);
-      return itemIsInserted;
+      final itemFound = queryMap.isNotEmpty;
+      return itemFound;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());
     }

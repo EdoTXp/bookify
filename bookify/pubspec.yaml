@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^5.4.0 # Used to receive books through the Google Books API. 
+  dio: ^5.4.0 # Used to receive books through the Google Books API.
   provider: ^6.1.1 # Used for DI.
   flutter_bloc: ^8.1.3 # Used for state management.
   cached_network_image: ^3.3.1 # Used to show the cover of the cached book.
@@ -39,9 +39,10 @@ dependencies:
   mobile_scanner: ^3.5.6 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.7.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
+  awesome_snackbar_content: ^0.1.3 # Used to show snackbar.
   sqflite: ^2.3.0 # Used for local database.
   path: ^1.8.3 # Used to find the default path of the database.
-  
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -65,7 +66,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -90,6 +90,6 @@ flutter:
   fonts:
     - family: BookifyIcons
       fonts:
-       - asset: fonts/BookifyIcons.ttf
+        - asset: fonts/BookifyIcons.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
