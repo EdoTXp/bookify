@@ -1,5 +1,5 @@
+import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookRating extends StatelessWidget {
   final double averageRating;
@@ -18,20 +18,15 @@ class BookRating extends StatelessWidget {
     return Column(
       children: [
         Text(
-          '$averageRating',
+          averageRating.toString().replaceAll('.', ','),
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             color: colorScheme.secondary,
           ),
         ),
-        RatingBarIndicator(
-          rating: averageRating,
-          itemBuilder: (context, index) => Icon(
-            Icons.star,
-            color: colorScheme.secondary,
-          ),
-          itemSize: 20,
+        BookifyRatingWidget(
+          averageRating: averageRating,
         ),
         Text(
           'Total: $ratingsCount',
@@ -39,7 +34,7 @@ class BookRating extends StatelessWidget {
             color: colorScheme.primary,
             fontSize: 16,
           ),
-        )
+        ),
       ],
     );
   }

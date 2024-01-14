@@ -27,6 +27,7 @@ final appLightTheme = ThemeData(
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme:
       _floatingActionButtonTheme.copyWith(backgroundColor: Colors.white),
+  disabledColor: bookifyDisabledColor,
   colorScheme: const ColorScheme.light(
     primary: bookifyPrimaryColor,
     secondary: bookifySecondaryColor,
@@ -60,11 +61,13 @@ final appDarkTheme = ThemeData(
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
     backgroundColor: bookifyDarkBackgroundColor,
   ),
+  disabledColor: bookifyDisabledColor,
   colorScheme: const ColorScheme.dark(
     primary: bookifyPrimaryColor,
     secondary: bookifySecondaryColor,
     tertiary: bookifyTertiaryColor,
     error: bookifyErrorColor,
+    background: bookifyDarkBackgroundColor,
   ),
 );
 

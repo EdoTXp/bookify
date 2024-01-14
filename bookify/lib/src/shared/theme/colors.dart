@@ -12,5 +12,8 @@ const bookifyTertiaryColor = Color(0xFF3DA9FC);
 ///Bookify Error Color = [Color(0xFFCA3838)]
 const bookifyErrorColor = Color(0xFFCA3838);
 
-///Bookify Dark Background Color = [Color(0xff404040)]
-const bookifyDarkBackgroundColor = Color(0xff404040);
+///Bookify Dark Background Color = [Color(0xff121212)]
+const bookifyDarkBackgroundColor = Color(0xff121212);
+
+///Bookify disabled Color = [Color(0XFFE1E1E1)]
+const bookifyDisabledColor = Color(0XFFE1E1E1);
