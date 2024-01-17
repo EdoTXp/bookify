@@ -34,6 +34,21 @@ class _RootPageState extends State<RootPage> {
     super.dispose();
   }
 
+  Future<void> _scanAndGetIsbnCode(BuildContext context) async {
+    String? isbn = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const QrCodeScannerPage()),
+    );
+
+    if (isbn != null) {
+      int homePage = _pageController.initialPage;
+
+      bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
+      _pageController.jumpToPage(homePage);
+      _bottomBarController.changeSelectedBottomBarItem(homePage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,20 +99,5 @@ class _RootPageState extends State<RootPage> {
         ],
       ),
     );
-  }
-
-  Future<void> _scanAndGetIsbnCode(BuildContext context) async {
-    String? isbn = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const QrCodeScannerPage()),
-    );
-
-    if (isbn != null) {
-      int homePage = _pageController.initialPage;
-
-      bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
-      _pageController.jumpToPage(homePage);
-      _bottomBarController.changeSelectedBottomBarItem(homePage);
-    }
   }
 }

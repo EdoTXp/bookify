@@ -34,7 +34,7 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
   @override
   Future<int> getAuthorIdByColumnName({required String authorName}) async {
     try {
-      final authorMap = await _database.getItemByColumn(
+      final authorMap = await _database.getItemsByColumn(
         table: _authorTableName,
         column: 'name',
         columnValues: authorName,

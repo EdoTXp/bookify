@@ -26,7 +26,7 @@ void main() {
     });
 
     test('get actual author id by name', () async {
-      when(() => localDatabase.getItemByColumn(
+      when(() => localDatabase.getItemsByColumn(
             table: any(named: 'table'),
             column: any(named: 'column'),
             columnValues: any(named: 'columnValues'),
@@ -42,7 +42,7 @@ void main() {
     });
 
     test('get -1 when is a empty list', () async {
-      when(() => localDatabase.getItemByColumn(
+      when(() => localDatabase.getItemsByColumn(
             table: any(named: 'table'),
             column: any(named: 'column'),
             columnValues: any(named: 'columnValues'),
@@ -97,7 +97,7 @@ void main() {
     });
 
     test('get actual author id by name', () async {
-      when(() => localDatabase.getItemByColumn(
+      when(() => localDatabase.getItemsByColumn(
             table: any(named: 'table'),
             column: any(named: 'column'),
             columnValues: any(named: 'columnValues'),

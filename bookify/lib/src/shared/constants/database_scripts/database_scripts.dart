@@ -132,6 +132,7 @@ const String _bookCaseScript = '''
      CREATE TABLE $_bookcaseTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE NOT NULL,
+      description TEXT NOT NULL,
       color INTEGER NOT NULL
       )
     ''';

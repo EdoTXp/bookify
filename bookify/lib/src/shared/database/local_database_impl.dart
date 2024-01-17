@@ -79,10 +79,12 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getItemByColumn({
+  Future<List<Map<String, dynamic>>> getItemsByColumn({
     required String table,
     required String column,
-    required columnValues,
+    required dynamic columnValues,
+    OrderByType? orderBy,
+    int? limit,
   }) async {
     try {
       final db = await database;
@@ -91,6 +93,8 @@ class LocalDatabaseImpl implements LocalDatabase {
         table,
         where: '$column = ?',
         whereArgs: [columnValues],
+        orderBy: orderBy?.orderToString(),
+        limit: limit,
       );
       return queryItems;
     } on DatabaseException catch (e) {

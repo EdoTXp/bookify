@@ -27,7 +27,7 @@ void main() {
 
     test('get book/authors relationship', () async {
       when(() =>
-              localDatabase.getItemByColumn(
+              localDatabase.getItemsByColumn(
                   table: any(named: 'table'),
                   column: any(named: 'column'),
                   columnValues: any(named: 'columnValues')))
@@ -73,7 +73,7 @@ void main() {
     });
 
     test('get book/authors relationship', () async {
-      when(() => localDatabase.getItemByColumn(
+      when(() => localDatabase.getItemsByColumn(
               table: any(named: 'table'),
               column: any(named: 'column'),
               columnValues: any(named: 'columnValues')))

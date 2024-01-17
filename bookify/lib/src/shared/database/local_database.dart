@@ -1,3 +1,17 @@
+enum OrderByType {
+  ascendant,
+  descendant;
+
+  String orderToString() {
+    switch (this) {
+      case OrderByType.ascendant:
+        return 'ASC';
+      case OrderByType.descendant:
+        return 'DESC';
+    }
+  }
+}
+
 /// An abstract interface class representing a local database.
 ///
 /// This class defines the methods that any local database implementation
@@ -30,10 +44,16 @@ abstract interface class LocalDatabase {
   /// [column] The name of the column to filter the items by.
   ///
   /// [columnValues] The values to match against the specified column.
-  Future<List<Map<String, dynamic>>> getItemByColumn({
+  ///
+  /// [orderBy] Choose the order the query should return: [OrderByType.descendant] or [OrderByType.ascendant].
+  ///
+  /// [limit] Quantity of rows that the query will return.
+  Future<List<Map<String, dynamic>>> getItemsByColumn({
     required String table,
     required String column,
     required dynamic columnValues,
+    OrderByType? orderBy,
+    int? limit,
   });
 
   /// Retrieves specific columns from an item in the specified table based on the provided ID.

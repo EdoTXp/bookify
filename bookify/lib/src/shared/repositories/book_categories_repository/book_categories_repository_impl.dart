@@ -15,7 +15,7 @@ class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
     required String bookId,
   }) async {
     try {
-      final bookCategoriesRelationships = await _database.getItemByColumn(
+      final bookCategoriesRelationships = await _database.getItemsByColumn(
         table: _bookCategoriesTableName,
         column: 'bookId',
         columnValues: bookId,

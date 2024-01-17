@@ -34,7 +34,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
   @override
   Future<int> getCategoryIdByColumnName({required String categoryName}) async {
     try {
-      final categoryMap = await _database.getItemByColumn(
+      final categoryMap = await _database.getItemsByColumn(
         table: _categoryTableName,
         column: 'name',
         columnValues: categoryName,

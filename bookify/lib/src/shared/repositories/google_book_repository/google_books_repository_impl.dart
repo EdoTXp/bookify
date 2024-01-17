@@ -9,11 +9,7 @@ import 'google_books_repository.dart';
 
 /// Parameters used to return an optimised and filtered JSON with the data needed to instantiate the [BookModel] class.
 const _urlParams =
-    '&download=epub&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
-
-/// Parameters used to return an optimised and filtered JSON with the data needed to instantiate the [BookModel] class.
-const _isbnUrlParams =
-    '&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
+    '&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
 class GoogleBookRepositoryImpl implements GoogleBooksRepository {
   final RestClient _httpSource;
@@ -29,7 +25,7 @@ class GoogleBookRepositoryImpl implements GoogleBooksRepository {
 
   @override
   Future<List<BookModel>> findBooksByIsbn({required String isbn}) async {
-    final url = 'isbn:$isbn$_isbnUrlParams';
+    final url = 'isbn:$isbn$_urlParams';
     final books = await _fetch(url);
     return books;
   }
@@ -59,7 +55,7 @@ class GoogleBookRepositoryImpl implements GoogleBooksRepository {
 
   @override
   Future<List<BookModel>> getAllBooks() async {
-    const url = '*$_isbnUrlParams';
+    const url = '*$_urlParams';
     final books = await _fetch(url);
     return books;
   }
@@ -79,8 +75,7 @@ class GoogleBookRepositoryImpl implements GoogleBooksRepository {
       return books;
     } on TypeError {
       return <BookModel>[];
-    } 
-    on BookNotFoundException {
+    } on BookNotFoundException {
       rethrow;
     } on BookException {
       rethrow;

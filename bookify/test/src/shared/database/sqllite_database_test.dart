@@ -382,6 +382,7 @@ void main() {
       // TEST insertion of bookcase
       final bookcaseMap = {
         'name': 'Fantasia',
+        'description': 'Meus livros de fantasia',
         'color': Colors.pink.value,
       };
       final bookcaseId = await _insertOnDatabase(
@@ -416,7 +417,10 @@ void main() {
         bookcaseTableName,
         'id',
         [1],
-        {'name': 'Meus primeiros livros'},
+        {
+          'name': 'Tecnologia',
+          'description': 'Meus livros de tecnologia',
+        },
       );
       expect(bookcaseRowChanges, equals(1));
 
@@ -426,7 +430,8 @@ void main() {
         'id',
         [1],
       );
-      expect(newBookcase.last['name'], equals('Meus primeiros livros'));
+      expect(newBookcase.last['name'], equals('Tecnologia'));
+      expect(newBookcase.last['description'], equals('Meus livros de tecnologia'));
 
       //TEST DELETE bookcase and expect its relations to be deleted.
       final bookcaseRowDeleted = await _deleteRowWhenId(

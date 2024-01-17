@@ -8,11 +8,9 @@ import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/features/book_detail/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Page where it shows the details of a book.
 class BookDetailPage extends StatefulWidget {
   final BookModel book;
 
-  /// Required parameters BookModel book
   const BookDetailPage({
     super.key,
     required this.book,
@@ -36,8 +34,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
   /// Used to avoid multiple clicks on the [ElevatedButton].
   bool _canClickToAddOrRemove = false;
 
-  /// Disable the snackbar when initState
-  late bool _isInitState;
+  /// Disable the snackbar when the [VerifiedBookIsInsertedEvent] event is called.
+  late bool _isCallVerifyBookEvent;
 
   /// [Bloc] of [BookDetailPage]
   late BookDetailBloc bloc;
@@ -55,8 +53,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
     bloc = context.read<BookDetailBloc>();
     bloc.add(VerifiedBookIsInsertedEvent(bookId: widget.book.id));
 
-    // Enabled for disable the snackbar
-    _isInitState = true;
+    // disable the snackbar.
+    _isCallVerifyBookEvent = true;
   }
 
   @override
@@ -65,6 +63,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     super.dispose();
   }
 
+  /// Show the title of the book on [AppBar] when the scroll under the [Text] Widget of the book.
   void _setAppBarTitleIsVisible() {
     double maxScroll = _scrollController.position.maxScrollExtent;
     double currentScroll = _scrollController.position.pixels;
@@ -81,20 +80,18 @@ class _BookDetailPageState extends State<BookDetailPage> {
   void _handleBookDetailsState(context, state) {
     switch (state) {
       case BookDetailLoadingState():
+        // Avoid the click on ElevatedButton.
         _canClickToAddOrRemove = false;
-
-        SnackbarService.showSnackBar(
-          context,
-          'Carregando o livro...',
-          SnackBarType.info,
-        );
         break;
 
       case BookDetailLoadedState():
+        // Update bookmark icon and text of the ElevatedButton state.
         _bookIsInserted = state.bookIsInserted;
+
+        // enable the click on ElevatedButton.
         _canClickToAddOrRemove = true;
 
-        if (!_isInitState) {
+        if (!_isCallVerifyBookEvent) {
           final message = (_bookIsInserted)
               ? 'Livro inserido com sucesso'
               : 'Livro removido com sucesso';
@@ -106,8 +103,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
           );
         }
 
-        // disabled for show the snackbar
-        _isInitState = false;
+        // now can show the snackbar.
+        _isCallVerifyBookEvent = false;
         break;
 
       case BookDetailErrorState(errorMessage: final message):
@@ -118,6 +115,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
         );
         break;
     }
+  }
+
+  void _addOrRemoveBook(BookModel book) {
+    bloc.add(
+      (_bookIsInserted)
+          ? BookRemovedEvent(bookId: book.id)
+          : BookInsertedEvent(bookModel: book),
+    );
   }
 
   @override
@@ -149,6 +154,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
+                  // Update bookMark icon
                   (_bookIsInserted) ? Icons.bookmark : Icons.bookmark_border,
                 ),
               )
@@ -215,26 +221,23 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           text: 'Ir para loja',
                           suffixIcon: Icons.store,
                           onPressed: () async =>
-                              LaunchUrlService.launchUrl(book.buyLink),
+                              await LaunchUrlService.launchUrl(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: BookifyElevatedButton(
+                          // Update the icon
                           suffixIcon:
                               (_bookIsInserted) ? Icons.remove : Icons.add,
+                          // Update the text
                           text: (_bookIsInserted) ? 'Remover' : 'Adicionar',
-                          onPressed: () {
-                            if (_canClickToAddOrRemove) {
-                              bloc.add(
-                                (_bookIsInserted)
-                                    ? BookRemovedEvent(bookId: book.id)
-                                    : BookInsertedEvent(bookModel: book),
-                              );
-                            }
-                          },
+                          // When is [BookDetailLoadingState] disable the click
+                          onPressed: () => (_canClickToAddOrRemove)
+                              ? _addOrRemoveBook(book)
+                              : null,
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
