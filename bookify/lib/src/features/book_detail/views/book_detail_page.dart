@@ -117,12 +117,54 @@ class _BookDetailPageState extends State<BookDetailPage> {
     }
   }
 
-  void _addOrRemoveBook(BookModel book) {
-    bloc.add(
-      (_bookIsInserted)
-          ? BookRemovedEvent(bookId: book.id)
-          : BookInsertedEvent(bookModel: book),
-    );
+  void _addOrRemoveBook(BookModel book) async {
+    if (_bookIsInserted) {
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Remover o livro "${book.title}"',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            content: const Text(
+              'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
+              style: TextStyle(fontSize: 14),
+            ),
+            actions: [
+              TextButton(
+                child: const Text(
+                  'NÃO',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              TextButton(
+                child: const Text(
+                  'CONFIRMAR',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  bloc.add(BookRemovedEvent(bookId: book.id));
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      bloc.add(BookInsertedEvent(bookModel: book));
+    }
   }
 
   @override

@@ -57,7 +57,7 @@ class _RootPageState extends State<RootPage> {
         physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
-          BookcasePage(),
+          BookcaseRootPage(),
           ReadingsPage(),
           ProfilePage(),
         ],

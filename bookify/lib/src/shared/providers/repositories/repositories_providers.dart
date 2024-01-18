@@ -6,6 +6,10 @@ import 'package:bookify/src/shared/repositories/book_authors_repository/book_aut
 import 'package:bookify/src/shared/repositories/book_authors_repository/book_authors_repository_impl.dart';
 import 'package:bookify/src/shared/repositories/book_categories_repository/book_categories_repository.dart';
 import 'package:bookify/src/shared/repositories/book_categories_repository/book_categories_repository_impl.dart';
+import 'package:bookify/src/shared/repositories/book_on_case_repository/book_on_case_repository.dart';
+import 'package:bookify/src/shared/repositories/book_on_case_repository/book_on_case_repository_impl.dart';
+import 'package:bookify/src/shared/repositories/bookcase_repository/bookcase_repository.dart';
+import 'package:bookify/src/shared/repositories/bookcase_repository/bookcase_repository_impl.dart';
 import 'package:bookify/src/shared/repositories/books_repository/books_repository.dart';
 import 'package:bookify/src/shared/repositories/books_repository/books_repository_impl.dart';
 import 'package:bookify/src/shared/repositories/category_repository/categories_repository.dart';
@@ -32,5 +36,11 @@ final repositoriesProviders = [
   ),
   RepositoryProvider<BookCategoriesRepository>(
     create: (context) => BookCategoriesRepositoryImpl(context.read()),
+  ),
+  RepositoryProvider<BookcaseRepository>(
+    create: (context) => BookcaseRepositoryImpl(context.read()),
+  ),
+  RepositoryProvider<BookOnCaseRepository>(
+    create: (context) => BookOnCaseRepositoryImpl(context.read()),
   ),
 ];
