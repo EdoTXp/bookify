@@ -17,7 +17,7 @@ class _BookcasePageState extends State<BookcasePage> {
   void initState() {
     super.initState();
     _bloc = context.read<BookcaseBloc>();
-    _bloc.add(GotAllBookcasesEvent());
+    _refreshPage();
   }
 
   Widget _getWidgetOnState(BuildContext context, BookcaseState state) {
@@ -26,10 +26,17 @@ class _BookcasePageState extends State<BookcasePage> {
         const Center(child: CircularProgressIndicator()),
       BookcaseEmptyState() => BookcaseEmptyStateWidget(onTap: () {}),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
-        BookcaseLoadedStateWidget(bookcasesDto: bookcasesDto),
+        BookcaseLoadedStateWidget(
+          bookcasesDto: bookcasesDto,
+          onRefresh: _refreshPage,
+        ),
       BookcaseErrorState(errorMessage: final message) =>
-        BookcaseErrorStateWidget(message: message),
+        BookcaseErrorStateWidget(message: message, onPressed: _refreshPage),
     };
+  }
+
+  void _refreshPage() {
+    _bloc.add(GotAllBookcasesEvent());
   }
 
   @override

@@ -112,13 +112,16 @@ class LocalDatabaseImpl implements LocalDatabase {
     try {
       final db = await database;
 
-      final queryItem = await db!.query(
+      final queryItems = await db!.query(
         table,
         columns: columns,
         where: '$idColumn = ?',
         whereArgs: [id],
       );
-      return queryItem.first;
+
+      if (queryItems.isEmpty) return {};
+
+      return queryItems.first;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());
     }

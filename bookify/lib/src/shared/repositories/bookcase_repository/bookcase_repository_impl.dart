@@ -7,7 +7,7 @@ import 'package:bookify/src/shared/repositories/bookcase_repository/bookcase_rep
 
 class BookcaseRepositoryImpl implements BookcaseRepository {
   final LocalDatabase _database;
-  final _bookcaseTableName = bookcase_table.bookTableName;
+  final _bookcaseTableName = bookcase_table.bookcaseTableName;
 
   BookcaseRepositoryImpl(this._database);
 
@@ -21,7 +21,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcases;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw LocalDatabaseException('Impossível encontrar as estantes no database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -39,7 +39,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcase;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw LocalDatabaseException('Impossível encontrar a estante no database');
     } on LocalDatabaseException {
       rethrow;
     }
