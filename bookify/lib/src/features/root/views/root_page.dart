@@ -18,12 +18,17 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   final _pageController = PageController();
   final _bottomBarController = FabBottomBarController();
+
+  /// enable extendBody only home page
+  bool _canExtendBody = true;
   late final BookBloc bookBloc;
 
   @override
   void initState() {
-    bookBloc = context.read<BookBloc>();
     super.initState();
+    bookBloc = context.read<BookBloc>();
+
+    _pageController.addListener(_toggleCanExtendBodyBasedOnCurrentPage);
   }
 
   @override
@@ -32,6 +37,16 @@ class _RootPageState extends State<RootPage> {
     _pageController.dispose();
     _bottomBarController.dispose();
     super.dispose();
+  }
+
+  void _toggleCanExtendBodyBasedOnCurrentPage() {
+    setState(
+      () {
+        _canExtendBody = (_pageController.page != _pageController.initialPage)
+            ? false
+            : true;
+      },
+    );
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
@@ -70,7 +85,7 @@ class _RootPageState extends State<RootPage> {
           size: 40,
         ),
       ),
-      extendBody: true,
+      extendBody: _canExtendBody,
       bottomNavigationBar: FABBottomAppBar(
         notchedShape: rectangleRoundedNotchedShape,
         onSelectedItem: _pageController.jumpToPage,

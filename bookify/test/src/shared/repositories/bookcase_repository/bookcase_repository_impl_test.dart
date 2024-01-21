@@ -122,7 +122,7 @@ void main() {
         () async => await bookcaseRepository.getAll(),
         throwsA((Exception e) =>
             e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+            e.message == 'Impossível encontrar as estantes no database'),
       );
     });
 
@@ -149,7 +149,7 @@ void main() {
           () async => await bookcaseRepository.getById(bookcaseId: 1),
           throwsA((Exception e) =>
               e is LocalDatabaseException &&
-              e.message == 'Impossível converter o dado do database'));
+              e.message == 'Impossível encontrar a estante no database'));
     });
 
     test('insert()', () async {

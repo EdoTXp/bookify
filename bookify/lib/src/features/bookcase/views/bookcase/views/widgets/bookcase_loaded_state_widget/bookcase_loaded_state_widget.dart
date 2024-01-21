@@ -17,10 +17,13 @@ class BookcaseLoadedStateWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return RefreshIndicator(
-      onRefresh: () async => onRefresh,
+      onRefresh: () async => onRefresh(),
       color: colorScheme.secondary,
       child: ListView.builder(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 20.0,
+          horizontal: 5.0,
+        ),
         itemCount: bookcasesDto.length,
         itemBuilder: (_, index) {
           return BookcaseWidget(
