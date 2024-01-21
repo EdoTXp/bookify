@@ -47,7 +47,7 @@ class BookErrorSateWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            BookifyElevatedButton(
+            BookifyElevatedButton.expanded(
               onPressed: onPressed,
               suffixIcon: Icons.replay_outlined,
               text: 'Tentar novamente',

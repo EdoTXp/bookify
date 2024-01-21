@@ -28,7 +28,7 @@ class _RootPageState extends State<RootPage> {
     super.initState();
     bookBloc = context.read<BookBloc>();
 
-    _pageController.addListener(_toggleCanExtendBodyBasedOnCurrentPage);
+    _pageController.addListener(_hideExtendBodyWhenBookcaseTabViewIsShown);
   }
 
   @override
@@ -39,12 +39,10 @@ class _RootPageState extends State<RootPage> {
     super.dispose();
   }
 
-  void _toggleCanExtendBodyBasedOnCurrentPage() {
+  void _hideExtendBodyWhenBookcaseTabViewIsShown() {
     setState(
       () {
-        _canExtendBody = (_pageController.page != _pageController.initialPage)
-            ? false
-            : true;
+        _canExtendBody = (_pageController.page == 1) ? false : true;
       },
     );
   }
@@ -72,7 +70,7 @@ class _RootPageState extends State<RootPage> {
         physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
-          BookcaseRootPage(),
+          BookcaseTabViewPage(),
           ReadingsPage(),
           ProfilePage(),
         ],

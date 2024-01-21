@@ -22,7 +22,10 @@ class BookcaseWidget extends StatelessWidget {
     final imagePreview = bookcaseDto.bookImagePreview;
 
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 5.0,
+        vertical: 10.0,
+      ),
       child: Material(
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
@@ -40,11 +43,10 @@ class BookcaseWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      flex: 2,
+                    Flexible(
+                      flex: 1,
                       child: Container(
                         height: 41,
-                        width: 100,
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           color: bookcaseColor,
@@ -57,7 +59,7 @@ class BookcaseWidget extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
@@ -78,7 +80,7 @@ class BookcaseWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(

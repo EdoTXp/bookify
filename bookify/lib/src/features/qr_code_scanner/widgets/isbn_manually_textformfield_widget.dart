@@ -78,7 +78,7 @@ class _IsbnManuallyTextFormFieldWidgetState
         const Spacer(),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: BookifyOutlinedButton(
+          child: BookifyOutlinedButton.expanded(
             key: const Key('isbnManuallyOutlinedButton'),
             onPressed: () {
               if (formKey.currentState!.validate()) {

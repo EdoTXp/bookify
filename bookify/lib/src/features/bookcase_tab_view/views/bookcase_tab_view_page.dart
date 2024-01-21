@@ -1,14 +1,14 @@
-import 'package:bookify/src/features/bookcase/views/views.dart';
+import 'package:bookify/src/features/bookcase_tab_view/views/pages/pages.dart';
 import 'package:flutter/material.dart';
 
-class BookcaseRootPage extends StatefulWidget {
-  const BookcaseRootPage({super.key});
+class BookcaseTabViewPage extends StatefulWidget {
+  const BookcaseTabViewPage({super.key});
 
   @override
-  State<BookcaseRootPage> createState() => _BookcaseRootPageState();
+  State<BookcaseTabViewPage> createState() => _BookcaseTabViewPageState();
 }
 
-class _BookcaseRootPageState extends State<BookcaseRootPage> {
+class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

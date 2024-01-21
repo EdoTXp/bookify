@@ -4,22 +4,35 @@ class BookifyElevatedButton extends StatelessWidget {
   final void Function() onPressed;
   final String text;
   final IconData? suffixIcon;
+  final bool isExpanded;
 
   const BookifyElevatedButton({
     super.key,
     required this.onPressed,
     required this.text,
     this.suffixIcon,
+    this.isExpanded = false,
+  });
+
+  const BookifyElevatedButton.expanded({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    this.suffixIcon,
+    this.isExpanded = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(suffixIcon),
-        label: Text(text),
+      child: SizedBox(
+        width: (isExpanded) ? MediaQuery.sizeOf(context).width : null,
+        child: ElevatedButton.icon(
+          onPressed: onPressed,
+          icon: Icon(suffixIcon),
+          label: Text(text),
+        ),
       ),
     );
   }

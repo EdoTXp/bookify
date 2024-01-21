@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/features/bookcase/views/bookcase/bloc/bookcase_bloc.dart';
+import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/book_service/book_service.dart';
