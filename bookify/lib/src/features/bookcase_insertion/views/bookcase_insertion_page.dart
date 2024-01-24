@@ -1,0 +1,222 @@
+import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
+import 'package:bookify/src/shared/helpers/form/form_helper.dart';
+import 'package:bookify/src/shared/models/bookcase_model.dart';
+import 'package:bookify/src/shared/services/app_services/color_picker_service/color_picker_service.dart';
+import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:validatorless/validatorless.dart';
+
+class BookcaseInsertionPage extends StatefulWidget {
+  final BookcaseModel? bookcaseModel;
+
+  const BookcaseInsertionPage({
+    super.key,
+    this.bookcaseModel,
+  });
+
+  @override
+  State<BookcaseInsertionPage> createState() => _BookcaseInsertionPageState();
+}
+
+class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _bookcaseNameEC = TextEditingController();
+  final _bookcaseDescriptionEC = TextEditingController();
+
+  late Color _selectedColor;
+  late BookcaseInsertionBloc _bloc;
+  late bool _canPopPage;
+
+  @override
+  void initState() {
+    super.initState();
+    // Lock the screen only portrait
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    _canPopPage = true;
+
+    _bloc = context.read<BookcaseInsertionBloc>();
+
+    _bookcaseNameEC.text = widget.bookcaseModel?.name ?? '';
+    _bookcaseDescriptionEC.text = widget.bookcaseModel?.description ?? '';
+    _selectedColor = widget.bookcaseModel?.color ?? Colors.white;
+  }
+
+  @override
+  void dispose() {
+    _bookcaseNameEC.dispose();
+    _bookcaseDescriptionEC.dispose();
+
+    // Unlock the screen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    super.dispose();
+  }
+
+  void _handleBoookcaseInsertionState(
+    BuildContext context,
+    BookcaseInsertionState state,
+  ) async {
+    switch (state) {
+      case BookcaseInsertionLoadingState():
+        SnackbarService.showSnackBar(
+            context, 'Aguarde um instante...', SnackBarType.info);
+        break;
+      case BookcaseInsertionLoadedState(
+          bookcaseInsertionMessage: final succesMessage
+        ):
+        SnackbarService.showSnackBar(
+            context, succesMessage, SnackBarType.success);
+        Future.delayed(const Duration(seconds: 2))
+            .then((_) => Navigator.of(context).pop());
+        break;
+      case BookcaseInsertionErrorState(:final errorMessage):
+        SnackbarService.showSnackBar(context, errorMessage, SnackBarType.error);
+        Future.delayed(const Duration(seconds: 2))
+            .then((_) => Navigator.of(context).pop());
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bookcaseModel = widget.bookcaseModel;
+
+    final String titlePage =
+        (bookcaseModel == null) ? 'Criar estante' : 'Editar estante';
+
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return PopScope(
+      canPop: _canPopPage,
+      child: BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
+        listener: _handleBoookcaseInsertionState,
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                titlePage,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 12),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _bookcaseNameEC,
+                          initialValue: bookcaseModel?.name,
+                          cursorColor: colorScheme.secondary,
+                          validator: Validatorless.required(
+                            'Esse campo não pode estar vazio',
+                          ),
+                          onTapOutside: (_) => context.unfocus(),
+                          style: const TextStyle(fontSize: 16),
+                          decoration: const InputDecoration(
+                            labelText: 'Nome da estante',
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: _bookcaseDescriptionEC,
+                          initialValue: bookcaseModel?.description,
+                          cursorColor: colorScheme.secondary,
+                          validator: Validatorless.required(
+                            'Esse campo não pode estar vazio',
+                          ),
+                          onTapOutside: (_) => context.unfocus(),
+                          style: const TextStyle(fontSize: 16),
+                          decoration: const InputDecoration(
+                            labelText: 'Descrição',
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          readOnly: true,
+                          onTap: () async {
+                            _selectedColor =
+                                await ColorPickerService.showColorPicker(
+                              context,
+                              _selectedColor,
+                            );
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Cor',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Container(
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: _selectedColor,
+                                  border:
+                                      Border.all(color: colorScheme.primary),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                              ),
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down_rounded,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  BookifyOutlinedButton.expanded(
+                    text: titlePage,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (bookcaseModel == null) {
+                          _bloc.add(
+                            InsertedBookcaseEvent(
+                              name: _bookcaseNameEC.value.text,
+                              description: _bookcaseDescriptionEC.value.text,
+                              color: _selectedColor,
+                            ),
+                          );
+                        } else {
+                          _bloc.add(
+                            UpdatedBookcaseEvent(
+                              id: bookcaseModel.id!,
+                              name: _bookcaseNameEC.value.text,
+                              description: _bookcaseDescriptionEC.value.text,
+                              color: _selectedColor,
+                            ),
+                          );
+                        }
+
+                        setState(() {
+                          _canPopPage = false;
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

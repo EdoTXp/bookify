@@ -215,8 +215,69 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
   ),
 );
 
-const _inputDecorationTheme = InputDecorationTheme(
-  floatingLabelStyle: TextStyle(color: bookifyPrimaryColor),
+final _inputDecorationTheme = InputDecorationTheme(
+  focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: bookifySecondaryColor,
+    ),
+  ),
+  enabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: bookifyPrimaryColor,
+    ),
+  ),
+  errorBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: bookifyErrorColor,
+    ),
+  ),
+  focusedErrorBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: bookifyErrorColor,
+    ),
+  ),
+  errorStyle: const TextStyle(
+    fontSize: 12,
+    color: bookifyErrorColor,
+  ),
+  labelStyle: MaterialStateTextStyle.resolveWith(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.focused)) {
+        return const TextStyle(
+          color: bookifySecondaryColor,
+          fontSize: 14,
+        );
+      } else if (states.contains(MaterialState.error)) {
+        return const TextStyle(
+          fontSize: 14,
+        );
+      }
+
+      return const TextStyle(
+        color: bookifyPrimaryColor,
+        fontSize: 14,
+      );
+    },
+  ),
+  floatingLabelStyle: MaterialStateTextStyle.resolveWith(
+    (Set<MaterialState> states) {
+      if (states.contains(MaterialState.focused)) {
+        return const TextStyle(
+          color: bookifySecondaryColor,
+          fontSize: 14,
+        );
+      } else if (states.contains(MaterialState.error)) {
+        return const TextStyle(
+          fontSize: 14,
+        );
+      }
+
+      return const TextStyle(
+        color: bookifyPrimaryColor,
+        fontSize: 14,
+      );
+    },
+  ),
 );
 
 const _floatingActionButtonTheme = FloatingActionButtonThemeData(

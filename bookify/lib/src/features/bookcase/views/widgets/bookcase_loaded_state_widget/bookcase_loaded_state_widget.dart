@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/bookcase/views/widgets/bookcase_widget/bookcase_widget.dart';
+import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,11 @@ class BookcaseLoadedStateWidget extends StatelessWidget {
           SizedBox(
             width: MediaQuery.sizeOf(context).width,
             child: TextButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                await Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const BookcaseInsertionPage()));
+                onRefresh();
+              },
               icon: Icon(
                 Icons.add_circle_outline_rounded,
                 color: colorScheme.secondary,

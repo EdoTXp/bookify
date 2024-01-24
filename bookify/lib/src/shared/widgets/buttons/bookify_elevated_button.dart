@@ -28,11 +28,16 @@ class BookifyElevatedButton extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: SizedBox(
         width: (isExpanded) ? MediaQuery.sizeOf(context).width : null,
-        child: ElevatedButton.icon(
-          onPressed: onPressed,
-          icon: Icon(suffixIcon),
-          label: Text(text),
-        ),
+        child: (suffixIcon != null)
+            ? ElevatedButton.icon(
+                onPressed: onPressed,
+                icon: Icon(suffixIcon),
+                label: Text(text),
+              )
+            : ElevatedButton(
+                onPressed: onPressed,
+                child: Text(text),
+              ),
       ),
     );
   }

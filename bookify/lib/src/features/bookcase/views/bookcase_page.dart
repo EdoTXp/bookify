@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
 import 'package:bookify/src/features/bookcase/views/widgets/bookcase_states_widget.dart';
@@ -24,7 +25,13 @@ class _BookcasePageState extends State<BookcasePage> {
     return switch (state) {
       BookcaseLoadingState() =>
         const Center(child: CircularProgressIndicator()),
-      BookcaseEmptyState() => BookcaseEmptyStateWidget(onTap: () {}),
+      BookcaseEmptyState() => BookcaseEmptyStateWidget(onTap: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => const BookcaseInsertionPage()),
+          );
+          _refreshPage();
+        }),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
         BookcaseLoadedStateWidget(
           bookcasesDto: bookcasesDto,

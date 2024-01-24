@@ -17,6 +17,7 @@ class BookifyApp extends StatelessWidget {
         ...homePageProviders,
         ...bookDetailPageProviders,
         ...bookcasePageProviders,
+        ...bookcaseInsertionPageProviders,
       ],
       child: MaterialApp(
         title: 'Bookify',

@@ -183,13 +183,12 @@ class _BookDetailPageState extends State<BookDetailPage> {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: Visibility(
               visible: !_isScrollWhenTitleVisible,
-              child: Center(
-                child: Text(
-                  book.title,
-                  style: const TextStyle(fontSize: 18),
-                ),
+              child: Text(
+                book.title,
+                style: const TextStyle(fontSize: 18),
               ),
             ),
             actions: [
