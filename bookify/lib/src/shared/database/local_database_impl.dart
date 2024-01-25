@@ -96,6 +96,9 @@ class LocalDatabaseImpl implements LocalDatabase {
         orderBy: orderBy?.orderToString(),
         limit: limit,
       );
+
+      if (queryItems.isEmpty) return [];
+
       return queryItems;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());

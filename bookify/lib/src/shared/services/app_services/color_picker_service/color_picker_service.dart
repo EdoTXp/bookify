@@ -38,7 +38,9 @@ class ColorPickerService {
           actions: [
             BookifyElevatedButton.expanded(
               onPressed: () {
-                pickerColor = newSelectedColor!;
+                if (newSelectedColor != null) {
+                  pickerColor = newSelectedColor!;
+                }
                 Navigator.of(context).pop(pickerColor);
               },
               text: 'Confirmar',

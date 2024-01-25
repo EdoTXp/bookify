@@ -21,7 +21,9 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcases;
     } on TypeError {
-      throw LocalDatabaseException('Impossível encontrar as estantes no database');
+      throw LocalDatabaseException(
+        'Impossível encontrar as estantes no database',
+      );
     } on LocalDatabaseException {
       rethrow;
     }
@@ -39,7 +41,9 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcase;
     } on TypeError {
-      throw LocalDatabaseException('Impossível encontrar a estante no database');
+      throw LocalDatabaseException(
+        'Impossível encontrar a estante no database',
+      );
     } on LocalDatabaseException {
       rethrow;
     }
@@ -63,10 +67,11 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
   Future<int> update({required BookcaseModel bookcaseModel}) async {
     try {
       final rowUpdated = _database.update(
-          table: _bookcaseTableName,
-          values: bookcaseModel.toMap(),
-          idColumn: 'id',
-          id: bookcaseModel.id);
+        table: _bookcaseTableName,
+        values: bookcaseModel.toMap(),
+        idColumn: 'id',
+        id: bookcaseModel.id,
+      );
 
       return rowUpdated;
     } on LocalDatabaseException {

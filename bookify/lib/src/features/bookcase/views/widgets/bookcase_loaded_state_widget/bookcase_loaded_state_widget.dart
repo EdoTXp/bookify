@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/bookcase/views/widgets/bookcase_widget/bookcase_widget.dart';
+import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,10 @@ class BookcaseLoadedStateWidget extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             child: TextButton.icon(
               onPressed: () async {
-                await Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const BookcaseInsertionPage()));
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (_) => const BookcaseInsertionPage()),
+                );
                 onRefresh();
               },
               icon: Icon(
@@ -49,7 +52,16 @@ class BookcaseLoadedStateWidget extends StatelessWidget {
               itemBuilder: (_, index) {
                 return BookcaseWidget(
                   bookcaseDto: bookcasesDto[index],
-                  onTap: () {},
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => BookcaseDetailPage(
+                          bookcaseModel: bookcasesDto[index].bookcase,
+                        ),
+                      ),
+                    );
+                    onRefresh();
+                  },
                 );
               },
             ),

@@ -21,10 +21,6 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
         columnValues: bookcaseId,
       );
 
-      if (bookOnCaseRelationships.last.isEmpty) {
-        throw LocalDatabaseException('Impossível buscar os dados');
-      }
-
       return bookOnCaseRelationships;
     } on LocalDatabaseException {
       rethrow;

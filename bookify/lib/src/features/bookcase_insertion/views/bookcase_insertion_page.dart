@@ -26,9 +26,10 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   final _bookcaseNameEC = TextEditingController();
   final _bookcaseDescriptionEC = TextEditingController();
 
-  late Color _selectedColor;
+  BookcaseModel? bookcaseUpdated;
   late BookcaseInsertionBloc _bloc;
   late bool _canPopPage;
+  late Color _selectedColor;
 
   @override
   void initState() {
@@ -64,6 +65,14 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
     super.dispose();
   }
 
+  void _clearAllTextField() {
+    setState(() {
+      _bookcaseNameEC.text = '';
+      _bookcaseDescriptionEC.text = '';
+      _selectedColor = Colors.white;
+    });
+  }
+
   void _handleBoookcaseInsertionState(
     BuildContext context,
     BookcaseInsertionState state,
@@ -71,19 +80,32 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
     switch (state) {
       case BookcaseInsertionLoadingState():
         SnackbarService.showSnackBar(
-            context, 'Aguarde um instante...', SnackBarType.info);
+          context,
+          'Aguarde um instante...',
+          SnackBarType.info,
+        );
+
         break;
       case BookcaseInsertionLoadedState(
-          bookcaseInsertionMessage: final succesMessage
+          bookcaseInsertionMessage: final succesMessage,
         ):
         SnackbarService.showSnackBar(
-            context, succesMessage, SnackBarType.success);
-        Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+          context,
+          succesMessage,
+          SnackBarType.success,
+        );
+
+        await Future.delayed(const Duration(seconds: 2))
+            .then((_) => Navigator.of(context).pop(bookcaseUpdated));
         break;
       case BookcaseInsertionErrorState(:final errorMessage):
-        SnackbarService.showSnackBar(context, errorMessage, SnackBarType.error);
-        Future.delayed(const Duration(seconds: 2))
+        SnackbarService.showSnackBar(
+          context,
+          errorMessage,
+          SnackBarType.error,
+        );
+
+        await Future.delayed(const Duration(seconds: 2))
             .then((_) => Navigator.of(context).pop());
         break;
     }
@@ -110,6 +132,13 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                 titlePage,
                 style: const TextStyle(fontSize: 18),
               ),
+              actions: [
+                IconButton(
+                  onPressed: _clearAllTextField,
+                  tooltip: 'Limpar todos os campos',
+                  icon: const Icon(Icons.delete_forever_outlined),
+                ),
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -123,7 +152,6 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       children: [
                         TextFormField(
                           controller: _bookcaseNameEC,
-                          initialValue: bookcaseModel?.name,
                           cursorColor: colorScheme.secondary,
                           validator: Validatorless.required(
                             'Esse campo não pode estar vazio',
@@ -131,13 +159,12 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                           onTapOutside: (_) => context.unfocus(),
                           style: const TextStyle(fontSize: 16),
                           decoration: const InputDecoration(
-                            labelText: 'Nome da estante',
+                            labelText: 'Nome',
                           ),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
                           controller: _bookcaseDescriptionEC,
-                          initialValue: bookcaseModel?.description,
                           cursorColor: colorScheme.secondary,
                           validator: Validatorless.required(
                             'Esse campo não pode estar vazio',
@@ -183,7 +210,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                   ),
                   const Spacer(),
                   BookifyOutlinedButton.expanded(
-                    text: titlePage,
+                    text: 'Confirmar',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         if (bookcaseModel == null) {
@@ -203,6 +230,11 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                               color: _selectedColor,
                             ),
                           );
+
+                          bookcaseUpdated = bookcaseModel.copyWith(
+                              name: _bookcaseNameEC.value.text,
+                              description: _bookcaseDescriptionEC.value.text,
+                              color: _selectedColor);
                         }
 
                         setState(() {

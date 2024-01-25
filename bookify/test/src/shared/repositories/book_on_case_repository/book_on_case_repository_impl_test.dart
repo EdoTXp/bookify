@@ -98,22 +98,6 @@ void main() {
       );
     });
 
-    test('get bookcase/book relationships -- LocalDatabaseException', () async {
-      when(() => localDatabase.getItemsByColumn(
-              table: any(named: 'table'),
-              column: any(named: 'column'),
-              columnValues: any(named: 'columnValues')))
-          .thenAnswer((_) async => [{}]);
-
-      expect(
-        () async => await bookOnCaseRepository.getBooksOnCaseRelationship(
-            bookcaseId: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível buscar os dados'),
-      );
-    });
-
     test('getBookIdForImagePreview -- LocalDatabaseException', () async {
       when(() => localDatabase.getColumnsById(
             table: any(named: 'table'),
