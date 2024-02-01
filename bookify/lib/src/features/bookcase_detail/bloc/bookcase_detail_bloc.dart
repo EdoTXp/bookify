@@ -18,6 +18,7 @@ class BookcaseDetailBloc
     this._bookcaseService,
   ) : super(BookcaseDetailLoadingState()) {
     on<GotBookcaseBooksEvent>(_gotBookcaseBooks);
+    on<DeletedBookcaseEvent>(_deletedBookcase);
   }
 
   Future<void> _gotBookcaseBooks(
@@ -29,7 +30,7 @@ class BookcaseDetailBloc
           .getAllBookcaseRelationships(bookcaseId: event.bookcaseId);
 
       if (bookcaseRelationships.isEmpty) {
-        emit(BookcaseDetailEmptyState());
+        emit(BookcaseDetailBooksEmptyState());
         return;
       }
 
@@ -43,7 +44,34 @@ class BookcaseDetailBloc
         books.add(bookModel);
       }
 
-      emit(BookcaseDetailLoadedState(books: books));
+      emit(BookcaseDetailBooksLoadedState(books: books));
+    } on LocalDatabaseException catch (e) {
+      emit(
+        BookcaseDetailErrorState(
+            errorMessage: 'Erro no database: ${e.message}'),
+      );
+    } catch (e) {
+      emit(
+        BookcaseDetailErrorState(
+            errorMessage: 'Ocorreu um erro não esperado: $e'),
+      );
+    }
+  }
+
+  Future<void> _deletedBookcase(
+      DeletedBookcaseEvent event, Emitter<BookcaseDetailState> emit) async {
+    try {
+      emit(BookcaseDetailLoadingState());
+
+      final bookcaseDeletedRow =
+          await _bookcaseService.deleteBookcase(bookcaseId: event.bookcaseId);
+
+      if (bookcaseDeletedRow == -1) {
+        emit(BookcaseDetailErrorState(errorMessage: 'Impossível deletar a estante'));
+        return;
+      }
+
+      emit(BookcaseDetailDeletedState());
     } on LocalDatabaseException catch (e) {
       emit(
         BookcaseDetailErrorState(

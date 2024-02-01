@@ -17,7 +17,7 @@ class BookcaseDescriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final bookTextQuantity = (booksQuantity >= 1) ? 'livros' : 'livro';
+    final bookTextQuantity = (booksQuantity == 1) ? 'livro' : 'livros';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,14 +43,17 @@ class BookcaseDescriptionWidget extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 10),
         Text(
           description,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: colorScheme.primary,
             fontSize: 14,
           ),
         ),
-        Divider(color: colorScheme.primary.withOpacity(.5)),
+        Divider(color: colorScheme.primary.withOpacity(.3)),
       ],
     );
   }

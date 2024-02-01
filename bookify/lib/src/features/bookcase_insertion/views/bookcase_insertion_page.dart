@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
 import 'package:bookify/src/shared/helpers/form/form_helper.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
-import 'package:bookify/src/shared/services/app_services/color_picker_service/color_picker_service.dart';
+import 'package:bookify/src/shared/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -179,14 +179,15 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                         TextFormField(
                           readOnly: true,
                           onTap: () async {
-                            _selectedColor =
-                                await ColorPickerService.showColorPicker(
+                            _selectedColor = await ColorPickerDialogService
+                                .showColorPickerDialog(
                               context,
                               _selectedColor,
                             );
                           },
                           decoration: InputDecoration(
                             labelText: 'Cor',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
                             prefixIcon: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),

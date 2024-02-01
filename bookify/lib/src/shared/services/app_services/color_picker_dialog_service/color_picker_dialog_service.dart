@@ -2,8 +2,8 @@ import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-class ColorPickerService {
-  static Future<Color> showColorPicker(
+class ColorPickerDialogService {
+  static Future<Color> showColorPickerDialog(
     BuildContext context,
     Color? selectedColor,
   ) async {

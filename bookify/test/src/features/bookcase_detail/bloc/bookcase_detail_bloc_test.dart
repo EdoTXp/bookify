@@ -67,7 +67,7 @@ void main() {
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
-        isA<BookcaseDetailLoadedState>(),
+        isA<BookcaseDetailBooksLoadedState>(),
       ],
     );
 
@@ -92,7 +92,7 @@ void main() {
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
-        isA<BookcaseDetailEmptyState>(),
+        isA<BookcaseDetailBooksEmptyState>(),
       ],
     );
 
@@ -150,4 +150,66 @@ void main() {
       ],
     );
   });
+
+  blocTest(
+    'test if DeletedBookcaseEvent work',
+    build: () => bloc,
+    setUp: () => when(() => bookcaseService.deleteBookcase(
+        bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1),
+    act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailDeletedState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBookcaseEvent work with deleted is -1',
+    build: () => bloc,
+    setUp: () => when(() => bookcaseService.deleteBookcase(
+        bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => -1),
+    act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBookcaseEvent work when throw LocalDatabaseException',
+    build: () => bloc,
+    setUp: () => when(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId')))
+        .thenThrow(LocalDatabaseException('Error on database')),
+    act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBookcaseEvent work when throw Generic Exception',
+    build: () => bloc,
+    setUp: () => when(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId')))
+        .thenThrow(Exception('Generic Error')),
+    act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
 }

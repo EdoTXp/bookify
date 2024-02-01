@@ -1,6 +1,7 @@
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/launch_url_service/launch_url_service.dart';
+import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
@@ -77,7 +78,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     setState(() => _isScrollWhenTitleVisible = (isTitleVisible) ? true : false);
   }
 
-  void _handleBookDetailsState(context, state) {
+  void _handleBookDetailsStateListener(context, state) {
     switch (state) {
       case BookDetailLoadingState():
         // Avoid the click on ElevatedButton.
@@ -119,47 +120,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   void _addOrRemoveBook(BookModel book) async {
     if (_bookIsInserted) {
-      await showDialog(
+      await ShowDialogService.show(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'Remover o livro "${book.title}"',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            content: const Text(
-              'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
-              style: TextStyle(fontSize: 14),
-            ),
-            actions: [
-              TextButton(
-                child: const Text(
-                  'NÃO',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              TextButton(
-                child: const Text(
-                  'CONFIRMAR',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  bloc.add(BookRemovedEvent(bookId: book.id));
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
+        title: 'Remover o livro "${book.title}"',
+        content:
+            'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
+        cancelButtonFunction: () => Navigator.of(context).pop(),
+        confirmButtonFunction: () {
+          bloc.add(BookRemovedEvent(bookId: book.id));
+          Navigator.of(context).pop();
         },
       );
     } else {
@@ -178,7 +147,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return BlocConsumer<BookDetailBloc, BookDetailState>(
-      listener: _handleBookDetailsState,
+      listener: _handleBookDetailsStateListener,
       bloc: bloc,
       builder: (context, _) {
         return Scaffold(

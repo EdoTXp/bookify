@@ -41,7 +41,7 @@ class BookcaseErrorStateWidget extends StatelessWidget {
           BookifyElevatedButton.expanded(
             onPressed: onPressed,
             text: 'Tentar novamente',
-            suffixIcon: Icons.repeat_rounded,
+            suffixIcon: Icons.replay_outlined,
           ),
         ],
       ),

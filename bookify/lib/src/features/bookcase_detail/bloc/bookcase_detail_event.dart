@@ -8,3 +8,9 @@ final class GotBookcaseBooksEvent extends BookcaseDetailEvent {
 
   GotBookcaseBooksEvent({required this.bookcaseId});
 }
+
+final class DeletedBookcaseEvent extends BookcaseDetailEvent {
+  final int bookcaseId;
+
+  DeletedBookcaseEvent({required this.bookcaseId});
+}

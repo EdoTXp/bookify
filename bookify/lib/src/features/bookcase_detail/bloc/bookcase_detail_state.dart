@@ -5,13 +5,15 @@ sealed class BookcaseDetailState {}
 
 final class BookcaseDetailLoadingState extends BookcaseDetailState {}
 
-final class BookcaseDetailEmptyState extends BookcaseDetailState {}
+final class BookcaseDetailBooksEmptyState extends BookcaseDetailState {}
 
-final class BookcaseDetailLoadedState extends BookcaseDetailState {
+final class BookcaseDetailBooksLoadedState extends BookcaseDetailState {
   final List<BookModel> books;
 
-  BookcaseDetailLoadedState({required this.books});
+  BookcaseDetailBooksLoadedState({required this.books});
 }
+
+final class BookcaseDetailDeletedState extends BookcaseDetailState {}
 
 final class BookcaseDetailErrorState extends BookcaseDetailState {
   final String errorMessage;

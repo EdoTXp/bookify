@@ -9,18 +9,18 @@ class BookErrorSateWidget extends StatelessWidget {
   final void Function() onPressed;
 
   const BookErrorSateWidget({
+    super.key,
     required this.stateMessage,
     required this.onPressed,
     this.imageAssetPath = BookifyImages.bookErrorImage,
-    super.key,
   });
 
   /// Generate a BookErrorSateWidget for a empty state with a [stateMessage] using default message
   const BookErrorSateWidget.bookEmptyState({
+    super.key,
     required this.onPressed,
     this.imageAssetPath = BookifyImages.bookEmptyImage,
     this.stateMessage = 'Não foi encontrado nenhum livro com esses termos.',
-    super.key,
   });
 
   @override
