@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
+import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/book_service/book_service.dart';
@@ -157,6 +158,169 @@ void main() {
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
+        verifyNever(
+          () => bookcaseService.getBookIdForImagePreview(
+              bookcaseId: any(named: 'bookcaseId')),
+        );
+        verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<BookcaseLoadingState>(),
+        isA<BookcaseErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'test if DeletedBookcasesEvent work',
+      build: () => bookcaseBloc,
+      setUp: () async {
+        when(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1);
+        when(() => bookcaseService.getAllBookcases())
+            .thenAnswer((_) async => bookcasesModel);
+        when(() => bookcaseService.getBookIdForImagePreview(
+                bookcaseId: any(named: 'bookcaseId')))
+            .thenAnswer((_) async => 'bookId');
+        when(() => bookService.getBookImage(id: any(named: 'id')))
+            .thenAnswer((_) async => 'bookImg');
+      },
+      act: (bloc) => bloc.add(
+        DeletedBookcasesEvent(
+          selectedList: [
+            BookcaseDto(bookcase: bookcasesModel[1]),
+          ],
+        ),
+      ),
+      verify: (_) {
+        verify(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(() => bookcaseService.getAllBookcases()).called(1);
+        verify(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(2);
+        verify(() => bookService.getBookImage(id: any(named: 'id'))).called(2);
+      },
+      expect: () => [
+        isA<BookcaseLoadingState>(),
+        isA<BookcaseLoadedState>(),
+      ],
+    );
+
+    blocTest(
+      'test if DeletedBookcasesEvent work with error on delete',
+      build: () => bookcaseBloc,
+      setUp: () async {
+        when(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => -1);
+      },
+      act: (bloc) => bloc.add(
+        DeletedBookcasesEvent(
+          selectedList: [
+            BookcaseDto(bookcase: bookcasesModel[1]),
+          ],
+        ),
+      ),
+      verify: (_) {
+        verify(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verifyNever(() => bookcaseService.getAllBookcases());
+        verifyNever(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        );
+        verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<BookcaseLoadingState>(),
+        isA<BookcaseErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'test if DeletedBookcasesEvent work with empty list',
+      build: () => bookcaseBloc,
+      setUp: () async {
+        when(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1);
+        when(() => bookcaseService.getAllBookcases())
+            .thenAnswer((_) async => []);
+      },
+      act: (bloc) => bloc.add(
+        DeletedBookcasesEvent(
+          selectedList: [
+            BookcaseDto(bookcase: bookcasesModel[1]),
+          ],
+        ),
+      ),
+      verify: (_) {
+        verify(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(() => bookcaseService.getAllBookcases()).called(1);
+        verifyNever(
+          () => bookcaseService.getBookIdForImagePreview(
+              bookcaseId: any(named: 'bookcaseId')),
+        );
+        verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<BookcaseLoadingState>(),
+        isA<BookcaseEmptyState>(),
+      ],
+    );
+
+    blocTest(
+      'test if DeletedBookcasesEvent work when throw LocalDatabaseException',
+      build: () => bookcaseBloc,
+      setUp: () async {
+        when(() => bookcaseService.deleteBookcase(
+                bookcaseId: any(named: 'bookcaseId')))
+            .thenThrow(LocalDatabaseException('Error on Database'));
+      },
+      act: (bloc) => bloc.add(
+        DeletedBookcasesEvent(
+          selectedList: [
+            BookcaseDto(bookcase: bookcasesModel[1]),
+          ],
+        ),
+      ),
+      verify: (_) {
+        verify(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verifyNever(() => bookcaseService.getAllBookcases());
+        verifyNever(
+          () => bookcaseService.getBookIdForImagePreview(
+              bookcaseId: any(named: 'bookcaseId')),
+        );
+        verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<BookcaseLoadingState>(),
+        isA<BookcaseErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'test if DeletedBookcasesEvent work when throw Exception',
+      build: () => bookcaseBloc,
+      setUp: () async {
+        when(() => bookcaseService.deleteBookcase(
+                bookcaseId: any(named: 'bookcaseId')))
+            .thenThrow(Exception('Generic Exception'));
+      },
+      act: (bloc) => bloc.add(
+        DeletedBookcasesEvent(
+          selectedList: [
+            BookcaseDto(bookcase: bookcasesModel[1]),
+          ],
+        ),
+      ),
+      verify: (_) {
+        verify(() => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verifyNever(() => bookcaseService.getAllBookcases());
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
               bookcaseId: any(named: 'bookcaseId')),

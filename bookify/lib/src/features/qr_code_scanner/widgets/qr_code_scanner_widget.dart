@@ -36,6 +36,16 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
     super.dispose();
   }
 
+  void _onDetectCaptures(capture) {
+    final List<Barcode> barcodes = capture.barcodes;
+
+    for (final barcode in barcodes) {
+      if (barcode.rawValue != null) {
+        widget.onDetect(barcode.rawValue!);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final widthOverlay = MediaQuery.sizeOf(context).width * 0.9;
@@ -44,7 +54,6 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
 
     return MobileScanner(
       key: const Key('MobileScanner'),
-      fit: BoxFit.contain,
       controller: scannerController,
       errorBuilder: (context, exception, _) {
         return Text(exception.errorDetails!.message!);
@@ -54,15 +63,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
         width: widthOverlay,
         height: heightOverlay,
       ),
-      onDetect: (capture) {
-        final List<Barcode> barcodes = capture.barcodes;
-
-        for (final barcode in barcodes) {
-          if (barcode.rawValue != null) {
-            widget.onDetect(barcode.rawValue!);
-          }
-        }
-      },
+      onDetect: _onDetectCaptures,
       overlay: Container(
         width: widthOverlay,
         height: heightOverlay,

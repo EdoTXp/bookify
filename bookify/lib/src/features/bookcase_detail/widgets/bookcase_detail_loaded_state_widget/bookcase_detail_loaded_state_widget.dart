@@ -12,11 +12,8 @@ class BookcaseDetailLoadedStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
-      body: Container(),
+    return Container(
+      color: Colors.red,
     );
   }
 }

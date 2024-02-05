@@ -18,6 +18,7 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     this._bookcaseService,
   ) : super(BookcaseLoadingState()) {
     on<GotAllBookcasesEvent>(_gotAllBookcasesEvent);
+    on<DeletedBookcasesEvent>(_deletedBookcasesEvent);
   }
 
   Future<void> _gotAllBookcasesEvent(
@@ -27,19 +28,53 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     try {
       emit(BookcaseLoadingState());
 
-      final bookcases = await _bookcaseService.getAllBookcases();
-
-      if (bookcases.isEmpty) {
-        emit(BookcaseEmptyState());
-        return;
-      }
-
-      await _mountBookcaseDto(bookcases, emit);
+      await _getAllBookcases(emit);
     } on LocalDatabaseException catch (e) {
       emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
     } on Exception catch (e) {
       emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
     }
+  }
+
+  Future<void> _deletedBookcasesEvent(
+    DeletedBookcasesEvent event,
+    Emitter<BookcaseState> emit,
+  ) async {
+    try {
+      emit(BookcaseLoadingState());
+
+      final selectedList = event.selectedList;
+
+      for (var bookcaseDto in selectedList) {
+        int bookcaseDeletedRow = await _bookcaseService.deleteBookcase(
+            bookcaseId: bookcaseDto.bookcase.id!);
+
+        if (bookcaseDeletedRow == -1) {
+          emit(
+            BookcaseErrorState(
+                errorMessage: 'Não foi possível deletar a estante'),
+          );
+          return;
+        }
+      }
+
+      await _getAllBookcases(emit);
+    } on LocalDatabaseException catch (e) {
+      emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
+    } on Exception catch (e) {
+      emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
+    }
+  }
+
+  Future<void> _getAllBookcases(Emitter<BookcaseState> emit) async {
+    final bookcases = await _bookcaseService.getAllBookcases();
+
+    if (bookcases.isEmpty) {
+      emit(BookcaseEmptyState());
+      return;
+    }
+
+    await _mountBookcaseDto(bookcases, emit);
   }
 
   Future<void> _mountBookcaseDto(
@@ -73,6 +108,7 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
       bookcasesDto.add(bookcaseDto);
     }
+
     emit(BookcaseLoadedState(bookcasesDto: bookcasesDto));
   }
 }

@@ -42,6 +42,8 @@ class _BookcasePageState extends State<BookcasePage> {
         BookcaseLoadedStateWidget(
           bookcasesDto: bookcasesDto,
           onRefresh: _refreshPage,
+          onPressedDeleteButton: (selectedList) =>
+              _bloc.add(DeletedBookcasesEvent(selectedList: selectedList)),
         ),
       BookcaseErrorState(errorMessage: final message) =>
         BookcaseErrorStateWidget(message: message, onPressed: _refreshPage),

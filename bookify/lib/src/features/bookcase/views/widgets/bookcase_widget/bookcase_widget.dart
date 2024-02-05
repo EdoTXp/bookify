@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class BookcaseWidget extends StatelessWidget {
   final BookcaseDto bookcaseDto;
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
 
   const BookcaseWidget({
     super.key,
     required this.bookcaseDto,
     required this.onTap,
+    required this.onLongPress,
   });
 
   @override
@@ -31,6 +33,7 @@ class BookcaseWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: onTap,
+          onLongPress: onLongPress,
           child: Container(
             decoration: BoxDecoration(
               color: colorScheme.primary.withOpacity(.2),
