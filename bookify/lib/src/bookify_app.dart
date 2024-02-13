@@ -1,4 +1,3 @@
-
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

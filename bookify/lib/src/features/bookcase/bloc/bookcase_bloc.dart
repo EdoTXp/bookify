@@ -18,6 +18,7 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     this._bookcaseService,
   ) : super(BookcaseLoadingState()) {
     on<GotAllBookcasesEvent>(_gotAllBookcasesEvent);
+    on<FindedBookcaseByNameEvent>(_findedBookcaseByNameEvent);
     on<DeletedBookcasesEvent>(_deletedBookcasesEvent);
   }
 
@@ -29,6 +30,21 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
       emit(BookcaseLoadingState());
 
       await _getAllBookcases(emit);
+    } on LocalDatabaseException catch (e) {
+      emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
+    } on Exception catch (e) {
+      emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
+    }
+  }
+
+  Future<void> _findedBookcaseByNameEvent(
+    FindedBookcaseByNameEvent event,
+    Emitter<BookcaseState> emit,
+  ) async {
+    try {
+      emit(BookcaseLoadingState());
+
+      await _findBookcaseByName(emit, event.searchQueryName);
     } on LocalDatabaseException catch (e) {
       emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
     } on Exception catch (e) {
@@ -71,6 +87,18 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
     if (bookcases.isEmpty) {
       emit(BookcaseEmptyState());
+      return;
+    }
+
+    await _mountBookcaseDto(bookcases, emit);
+  }
+
+  Future<void> _findBookcaseByName(
+      Emitter<BookcaseState> emit, String name) async {
+    final bookcases = await _bookcaseService.getBookcasesByName(name: name);
+
+    if (bookcases.isEmpty) {
+      emit(BookcaseNotFoundState());
       return;
     }
 

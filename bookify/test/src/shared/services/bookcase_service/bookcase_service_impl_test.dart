@@ -49,6 +49,19 @@ void main() {
       expect(bookcasesModel[1].color, equals(Colors.red));
     });
 
+    test('getBookcasesByName()', () async {
+      when(() =>
+              bookcaseRepository.getBookcasesByName(name: any(named: 'name')))
+          .thenAnswer((_) async => [bookcases[0]]);
+
+      final bookcaseModel =
+          await bookcaseService.getBookcasesByName(name: 'name');
+
+      expect(bookcaseModel[0].name, equals('name'));
+      expect(bookcaseModel[0].description, equals('description'));
+      expect(bookcaseModel[0].color, equals(Colors.pink));
+    });
+
     test('getAllBookcaseRelationships()', () async {
       when(() => bookOnCaseRepository
               .getBooksOnCaseRelationship(bookcaseId: any(named: 'bookcaseId')))
@@ -157,6 +170,18 @@ void main() {
 
       expect(
         () async => await bookcaseService.getAllBookcases(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('getBookcasesByName()', () async {
+      when(() =>
+              bookcaseRepository.getBookcasesByName(name: any(named: 'name')))
+          .thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookcaseService.getBookcasesByName(name: 'name'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

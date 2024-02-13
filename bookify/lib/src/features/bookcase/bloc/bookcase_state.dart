@@ -12,6 +12,8 @@ final class BookcaseLoadedState extends BookcaseState {
 
 final class BookcaseEmptyState extends BookcaseState {}
 
+final class BookcaseNotFoundState extends BookcaseState {}
+
 final class BookcaseErrorState extends BookcaseState {
   final String errorMessage;
 

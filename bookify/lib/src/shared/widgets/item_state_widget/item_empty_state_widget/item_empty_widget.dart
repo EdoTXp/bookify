@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class EmptyItemWidget extends StatelessWidget {
+class ItemEmptyStateWidget extends StatelessWidget {
   final VoidCallback onTap;
   final String label;
 
-  const EmptyItemWidget({
+  const ItemEmptyStateWidget({
     super.key,
     required this.onTap,
     required this.label,

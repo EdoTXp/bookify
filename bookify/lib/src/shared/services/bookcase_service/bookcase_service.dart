@@ -2,6 +2,7 @@ import 'package:bookify/src/shared/models/bookcase_model.dart';
 
 abstract interface class BookcaseService {
   Future<List<BookcaseModel>> getAllBookcases();
+  Future<List<BookcaseModel>> getBookcasesByName({required String name});
   Future<BookcaseModel> getBookcaseById({required int bookcaseId});
   Future<List<Map<String, dynamic>>> getAllBookcaseRelationships(
       {required int bookcaseId});

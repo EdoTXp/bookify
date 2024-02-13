@@ -30,6 +30,28 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
   }
 
   @override
+  Future<List<BookcaseModel>> getBookcasesByName({required String name}) async {
+    try {
+      final bookcasesMap = await _database.researchBy(
+        table: _bookcaseTableName,
+        column: 'name',
+        columnValues: name,
+      );
+      final bookcases = bookcasesMap
+          .map((bookcase) => BookcaseModel.fromMap(bookcase))
+          .toList();
+
+      return bookcases;
+    } on TypeError {
+      throw LocalDatabaseException(
+        'Impossível encontrar as estantes no database',
+      );
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<BookcaseModel> getById({required int bookcaseId}) async {
     try {
       final bookcaseMap = await _database.getItemById(

@@ -51,6 +51,22 @@ void main() {
       expect(bookcasesModel[1].color, Color(Colors.black.value));
     });
 
+    test('get by name()', () async {
+      when(() => localDatabase.researchBy(
+              table: any(named: 'table'),
+              column: any(named: 'column'),
+              columnValues: any(named: 'columnValues')))
+          .thenAnswer((_) async => [bookcasesMap[0]]);
+
+      final bookcaseModelByName =
+          await bookcaseRepository.getBookcasesByName(name: 'Fantasia');
+
+      expect(bookcaseModelByName[0].id, equals(1));
+      expect(bookcaseModelByName[0].name, 'Fantasia');
+      expect(bookcaseModelByName[0].description, 'Meus Livros de Fantasia');
+      expect(bookcaseModelByName[0].color, Color(Colors.pink.value));
+    });
+
     test('getById()', () async {
       when(() => localDatabase.getItemById(
           table: any(named: 'table'),
@@ -126,70 +142,99 @@ void main() {
       );
     });
 
-    test('getById() -- LocalDatabaseException', () async {
-      when(() => localDatabase.getItemById(
+    test('get by name() -- LocalDatabaseException', () async {
+      when(() => localDatabase.researchBy(
               table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
-
-      expect(
-          () async => await bookcaseRepository.getById(bookcaseId: 1),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
-    });
-
-    test('getById() -- TypeError', () async {
-      when(() => localDatabase.getItemById(
-          table: any(named: 'table'),
-          idColumn: any(named: 'idColumn'),
-          id: any(named: 'id'))).thenAnswer((_) async => {'id': 1});
-
-      expect(
-          () async => await bookcaseRepository.getById(bookcaseId: 1),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException &&
-              e.message == 'Impossível encontrar a estante no database'));
-    });
-
-    test('insert()', () async {
-      when(() => localDatabase.insert(
-              table: any(named: 'table'), values: any(named: 'values')))
+              column: any(named: 'column'),
+              columnValues: any(named: 'columnValues')))
           .thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
           () async =>
-              await bookcaseRepository.insert(bookcaseModel: bookcaseModel),
+              await bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
           throwsA((Exception e) =>
               e is LocalDatabaseException && e.message == 'Error on database'));
     });
+  });
 
-    test('update()', () async {
-      when(() => localDatabase.update(
-              table: any(named: 'table'),
-              values: any(named: 'values'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+  test('get by name() -- TypeError', () async {
+    when(() => localDatabase.researchBy(
+            table: any(named: 'table'),
+            column: any(named: 'column'),
+            columnValues: any(named: 'columnValues')))
+        .thenAnswer((_) async => [{}]);
 
-      expect(
-          () async => await bookcaseRepository.update(
-              bookcaseModel: bookcaseModel.copyWith(color: Colors.blue)),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
-    });
+    expect(
+        () async =>
+            await bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException &&
+            e.message == 'Impossível encontrar as estantes no database'));
+  });
 
-    test('delete()', () async {
-      when(() => localDatabase.delete(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+  test('getById() -- LocalDatabaseException', () async {
+    when(() => localDatabase.getItemById(
+            table: any(named: 'table'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id')))
+        .thenThrow(LocalDatabaseException('Error on database'));
 
-      expect(
-          () async => await bookcaseRepository.delete(bookcaseId: 1),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
-    });
+    expect(
+        () async => await bookcaseRepository.getById(bookcaseId: 1),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'));
+  });
+
+  test('getById() -- TypeError', () async {
+    when(() => localDatabase.getItemById(
+        table: any(named: 'table'),
+        idColumn: any(named: 'idColumn'),
+        id: any(named: 'id'))).thenAnswer((_) async => {'id': 1});
+
+    expect(
+        () async => await bookcaseRepository.getById(bookcaseId: 1),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException &&
+            e.message == 'Impossível encontrar a estante no database'));
+  });
+
+  test('insert()', () async {
+    when(() => localDatabase.insert(
+            table: any(named: 'table'), values: any(named: 'values')))
+        .thenThrow(LocalDatabaseException('Error on database'));
+
+    expect(
+        () async =>
+            await bookcaseRepository.insert(bookcaseModel: bookcaseModel),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'));
+  });
+
+  test('update()', () async {
+    when(() => localDatabase.update(
+            table: any(named: 'table'),
+            values: any(named: 'values'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id')))
+        .thenThrow(LocalDatabaseException('Error on database'));
+
+    expect(
+        () async => await bookcaseRepository.update(
+            bookcaseModel: bookcaseModel.copyWith(color: Colors.blue)),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'));
+  });
+
+  test('delete()', () async {
+    when(() => localDatabase.delete(
+            table: any(named: 'table'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id')))
+        .thenThrow(LocalDatabaseException('Error on database'));
+
+    expect(
+        () async => await bookcaseRepository.delete(bookcaseId: 1),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'));
   });
 }

@@ -64,12 +64,11 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
         int value = widget.controller!.value;
         int length = widget.items.length;
 
-        if ((value >= 0) && (value < length)) {
-          _updateIndex(value);
-        } else {
-          throw ArgumentError(
-              'Selected item: $value. The selected item must be between 0 and ${length - 1}.');
-        }
+        assert(
+          (value >= 0) && (value < length),
+          'Selected item: $value. The selected item must be between 0 and ${length - 1}.',
+        );
+        _updateIndex(value);
       });
     }
   }

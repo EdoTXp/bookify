@@ -7,6 +7,10 @@ import 'package:bookify/src/shared/services/app_services/snackbar_service/snackb
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+///Page where you can show the details of the [BookcaseModel] and the books that are part of it.
+///
+///On this page you can view the details of the [bookcaseModel],
+/// its books, edit or remove the bookcase, add or remove books.
 class BookcaseDetailPage extends StatefulWidget {
   final BookcaseModel bookcaseModel;
 
@@ -20,10 +24,17 @@ class BookcaseDetailPage extends StatefulWidget {
 }
 
 class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
+  /// It receives the bookcases from the constructor and will be updated if an updated bookcase returns from the bookcase editing page.
   late BookcaseModel _actualBookcase;
-  late BookcaseDetailBloc _bloc;
-  late bool _canPopPage;
 
+  /// Variable that gives permission to return to the previous page.
+  ///
+  ///It will start with [True] when the [initState] is called and will become [False],
+  /// when the state of the [_bloc] is on [BookcaseDetailDeletedState].
+  late bool _canPopPage;
+  late BookcaseDetailBloc _bloc;
+
+  /// Set of menu items that appear in the popup menu for bookcase options.
   final _popupMenuItemsSet = {
     'Editar Estante',
     'Apagar Estante',
@@ -40,6 +51,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     _canPopPage = true;
   }
 
+  /// Returns a widget based on the current state of the bookcase detail Page.
   Widget _getWidgetOnBookcaseDetailState(
     BuildContext context,
     BookcaseDetailState state,

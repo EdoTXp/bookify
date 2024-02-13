@@ -25,6 +25,18 @@ class BookcaseServiceImpl implements BookcaseService {
   }
 
   @override
+  Future<List<BookcaseModel>> getBookcasesByName({required String name}) async {
+    try {
+      final bookcasesModel = await _bookcaseRepository.getBookcasesByName(
+        name: name,
+      );
+      return bookcasesModel;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Map<String, dynamic>>> getAllBookcaseRelationships(
       {required int bookcaseId}) async {
     try {

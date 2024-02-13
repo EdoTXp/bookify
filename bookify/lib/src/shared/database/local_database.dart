@@ -56,6 +56,12 @@ abstract interface class LocalDatabase {
     int? limit,
   });
 
+  Future<List<Map<String, dynamic>>> researchBy({
+    required String table,
+    required String column,
+    required String columnValues,
+  });
+
   /// Retrieves specific columns from an item in the specified table based on the provided ID.
   ///
   /// [table] The name of the table from which to retrieve the item.

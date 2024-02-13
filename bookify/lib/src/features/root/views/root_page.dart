@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
@@ -16,35 +17,63 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  final _pageController = PageController();
-  final _bottomBarController = FabBottomBarController();
-
-  /// enable extendBody only home page
+  /// disable extendBody only bookcaseTabView
   bool _canExtendBody = true;
-  late final BookBloc bookBloc;
+
+  // Can Pop the application when pageView is initialPage = HomePage.
+  bool _canPop = true;
+
+  late final BookBloc _bookBloc;
+  late final PageController _pageController;
+  late final FabBottomBarController _bottomBarController;
 
   @override
   void initState() {
     super.initState();
-    bookBloc = context.read<BookBloc>();
+    _bookBloc = context.read<BookBloc>();
+    _pageController = PageController();
+    _bottomBarController = FabBottomBarController();
+  }
 
-    _pageController.addListener(_hideExtendBodyWhenBookcaseTabViewIsShown);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Set the status bar with the app theme configuration
+    // without having to instantiate the Appbar widget.
+    SystemChrome.setSystemUIOverlayStyle(
+        Theme.of(context).appBarTheme.systemOverlayStyle!);
   }
 
   @override
   void dispose() {
-    bookBloc.close();
+    _bookBloc.close();
     _pageController.dispose();
     _bottomBarController.dispose();
     super.dispose();
   }
 
-  void _hideExtendBodyWhenBookcaseTabViewIsShown() {
-    setState(
-      () {
-        _canExtendBody = (_pageController.page == 1) ? false : true;
-      },
-    );
+  void _disableExtendBodyWhenBookcaseTabViewIsShown(int page) {
+    setState(() {
+      _canExtendBody = (page == 1) ? false : true;
+    });
+  }
+
+  void _returnToInitialPage() {
+    int homePage = _pageController.initialPage;
+
+    _pageController.jumpToPage(homePage);
+    _bottomBarController.changeSelectedBottomBarItem(homePage);
+  }
+
+  void _navigateBackOrClose() {
+    setState(() {
+      if (_pageController.page != _pageController.initialPage) {
+        _canPop = false;
+        _returnToInitialPage();
+      } else {
+        _canPop = true;
+      }
+    });
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
@@ -54,62 +83,64 @@ class _RootPageState extends State<RootPage> {
     );
 
     if (isbn != null) {
-      int homePage = _pageController.initialPage;
-
-      bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
-      _pageController.jumpToPage(homePage);
-      _bottomBarController.changeSelectedBottomBarItem(homePage);
+      _bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));
+      _returnToInitialPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          HomePage(),
-          BookcaseTabViewPage(),
-          ReadingsPage(),
-          ProfilePage(),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: RectangleFloatingActionButton(
-        onPressed: (() async => await _scanAndGetIsbnCode(context)),
-        child: const Icon(
-          Icons.add,
-          size: 40,
+    return PopScope(
+      canPop: _canPop,
+      onPopInvoked: (_) => _navigateBackOrClose(),
+      child: Scaffold(
+        extendBody: _canExtendBody,
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: _disableExtendBodyWhenBookcaseTabViewIsShown,
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
+            HomePage(),
+            BookcaseTabViewPage(),
+            ReadingsPage(),
+            ProfilePage(),
+          ],
         ),
-      ),
-      extendBody: _canExtendBody,
-      bottomNavigationBar: FABBottomAppBar(
-        notchedShape: rectangleRoundedNotchedShape,
-        onSelectedItem: _pageController.jumpToPage,
-        controller: _bottomBarController,
-        items: [
-          FABBottomAppBarItem(
-            unselectedIcon: Icons.home_outlined,
-            selectedIcon: Icons.home,
-            label: 'Início',
+        bottomNavigationBar: FABBottomAppBar(
+          notchedShape: rectangleRoundedNotchedShape,
+          onSelectedItem: _pageController.jumpToPage,
+          controller: _bottomBarController,
+          items: [
+            FABBottomAppBarItem(
+              unselectedIcon: Icons.home_outlined,
+              selectedIcon: Icons.home,
+              label: 'Início',
+            ),
+            FABBottomAppBarItem(
+              unselectedIcon: BookifyIcons.bookcase_outlined,
+              selectedIcon: BookifyIcons.bookcase,
+              label: 'Estantes',
+            ),
+            FABBottomAppBarItem(
+              unselectedIcon: Icons.auto_stories_outlined,
+              selectedIcon: Icons.auto_stories,
+              label: 'Leituras',
+            ),
+            FABBottomAppBarItem(
+              unselectedIcon: Icons.person_outline,
+              selectedIcon: Icons.person,
+              label: 'Perfil',
+            ),
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: RectangleFloatingActionButton(
+          onPressed: () async => await _scanAndGetIsbnCode(context),
+          child: const Icon(
+            Icons.add,
+            size: 40,
           ),
-          FABBottomAppBarItem(
-            unselectedIcon: BookifyIcons.bookcase_outlined,
-            selectedIcon: BookifyIcons.bookcase,
-            label: 'Estantes',
-          ),
-          FABBottomAppBarItem(
-            unselectedIcon: Icons.auto_stories_outlined,
-            selectedIcon: Icons.auto_stories,
-            label: 'Leituras',
-          ),
-          FABBottomAppBarItem(
-            unselectedIcon: Icons.person_outline,
-            selectedIcon: Icons.person,
-            label: 'Perfil',
-          ),
-        ],
+        ),
       ),
     );
   }

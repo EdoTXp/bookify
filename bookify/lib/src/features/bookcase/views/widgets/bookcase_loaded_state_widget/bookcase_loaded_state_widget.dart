@@ -1,4 +1,4 @@
-import 'package:bookify/src/features/bookcase/views/widgets/bookcase_states_widget.dart';
+import 'package:bookify/src/features/bookcase/views/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
@@ -75,6 +75,23 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
     _isSelectionMode = _selectedList.isNotEmpty;
   }
 
+  void _selectAllItems(List<BookcaseDto> bookcasesDto) {
+    setState(() {
+      _selectedList.replaceRange(
+        0,
+        _selectedList.length,
+        bookcasesDto,
+      );
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _selectedList.clear();
+      _setIsSelectedMode();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -90,17 +107,9 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
             child: (_isSelectionMode)
                 ? SelectedBookcaseRow(
                     bookcaseQuantity: _selectedList.length,
-                    onSelectedAll: (isSelected) {
-                      setState(() {
-                        if (isSelected) {
-                          _selectedList.replaceRange(
-                              0, _selectedList.length, bookcasesDto);
-                        } else {
-                          _selectedList.clear();
-                          _setIsSelectedMode();
-                        }
-                      });
-                    },
+                    onSelectedAll: (isSelected) => (isSelected)
+                        ? _selectAllItems(bookcasesDto)
+                        : _clearSelection(),
                     onPressedDeleteButton: () {
                       ShowDialogService.show(
                         context: context,
@@ -133,23 +142,37 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                   ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                vertical: 25.0,
-                horizontal: 5.0,
-              ),
-              itemCount: bookcasesDto.length,
-              itemBuilder: (_, index) {
-                return (_selectedList.contains(bookcasesDto[index]))
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: colorScheme.secondary.withOpacity(.2),
-                          border: Border.all(
-                            color: Colors.transparent,
+            child: GestureDetector(
+              // Verify that the list is selected before deselecting it if click outside the BookcaseWidget.
+              onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 25.0,
+                  horizontal: 5.0,
+                ),
+                itemCount: bookcasesDto.length,
+                itemBuilder: (_, index) {
+                  return (_selectedList.contains(bookcasesDto[index]))
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: colorScheme.secondary.withOpacity(.2),
+                            border: Border.all(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: BookcaseWidget(
+                          child: BookcaseWidget(
+                            bookcaseDto: bookcasesDto[index],
+                            onTap: () => _onTap(
+                              context: context,
+                              element: bookcasesDto[index],
+                            ),
+                            onLongPress: () => _onLongPress(
+                              element: bookcasesDto[index],
+                            ),
+                          ),
+                        )
+                      : BookcaseWidget(
                           bookcaseDto: bookcasesDto[index],
                           onTap: () => _onTap(
                             context: context,
@@ -158,19 +181,9 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                           onLongPress: () => _onLongPress(
                             element: bookcasesDto[index],
                           ),
-                        ),
-                      )
-                    : BookcaseWidget(
-                        bookcaseDto: bookcasesDto[index],
-                        onTap: () => _onTap(
-                          context: context,
-                          element: bookcasesDto[index],
-                        ),
-                        onLongPress: () => _onLongPress(
-                          element: bookcasesDto[index],
-                        ),
-                      );
-              },
+                        );
+                },
+              ),
             ),
           ),
         ],

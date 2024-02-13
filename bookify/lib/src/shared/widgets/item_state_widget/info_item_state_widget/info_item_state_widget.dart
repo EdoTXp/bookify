@@ -1,26 +1,33 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
+import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../shared/widgets/buttons/buttons.dart';
-
-class BookErrorSateWidget extends StatelessWidget {
+class InfoItemStateWidget extends StatelessWidget {
+  final String message;
+  final VoidCallback onPressed;
   final String imageAssetPath;
-  final String stateMessage;
-  final void Function() onPressed;
 
-  const BookErrorSateWidget({
+  const InfoItemStateWidget({
     super.key,
-    required this.stateMessage,
+    required this.message,
+    required this.onPressed,
+    required this.imageAssetPath,
+  });
+
+  /// Generate a InfoItemStateWidget for a error state
+  const InfoItemStateWidget.withErrorState({
+    super.key,
+    required this.message,
     required this.onPressed,
     this.imageAssetPath = BookifyImages.bookErrorImage,
   });
 
-  /// Generate a BookErrorSateWidget for a empty state with a [stateMessage] using default message
-  const BookErrorSateWidget.bookEmptyState({
+  /// Generate a InfoItemStateWidget for a notFound state
+  const InfoItemStateWidget.withNotFoundState({
     super.key,
+    required this.message,
     required this.onPressed,
     this.imageAssetPath = BookifyImages.bookEmptyImage,
-    this.stateMessage = 'Não foi encontrado nenhum livro com esses termos.',
   });
 
   @override
@@ -36,7 +43,7 @@ class BookErrorSateWidget extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'OPS!! $stateMessage',
+              'OPS!! $message',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

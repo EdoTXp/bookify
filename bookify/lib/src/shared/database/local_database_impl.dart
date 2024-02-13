@@ -106,6 +106,29 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
+  Future<List<Map<String, dynamic>>> researchBy({
+    required String table,
+    required String column,
+    required String columnValues,
+  }) async {
+    try {
+      final db = await database;
+
+      final queryItems = await db!.query(
+        table,
+        where: '$column LIKE ?',
+        whereArgs: ['%$columnValues%'],
+      );
+
+      if (queryItems.isEmpty) return [];
+
+      return queryItems;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
   Future<Map<String, dynamic>> getColumnsById({
     required String table,
     List<String>? columns,

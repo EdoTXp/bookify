@@ -62,7 +62,7 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   }
 
   @override
-  Future<int> delete({required int bookcaseId}) async {
+  Future<int> deleteAllRelationships({required int bookcaseId}) async {
     try {
       final rowDeleted = await _database.delete(
         table: _bookOnCaseTableName,

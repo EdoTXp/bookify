@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -14,13 +15,13 @@ class QrCodeScannerWidget extends StatefulWidget {
 }
 
 class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
-  late final MobileScannerController scannerController;
+  late final MobileScannerController _scannerController;
 
   @override
   void initState() {
     super.initState();
 
-    scannerController = MobileScannerController(
+    _scannerController = MobileScannerController(
       formats: [
         BarcodeFormat.codebar,
         BarcodeFormat.ean13,
@@ -32,7 +33,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
 
   @override
   void dispose() {
-    scannerController.dispose();
+    _scannerController.dispose();
     super.dispose();
   }
 
@@ -54,9 +55,19 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
 
     return MobileScanner(
       key: const Key('MobileScanner'),
-      controller: scannerController,
-      errorBuilder: (context, exception, _) {
-        return Text(exception.errorDetails!.message!);
+      controller: _scannerController,
+      errorBuilder: (context, _, __) {
+        return InfoItemStateWidget.withErrorState(
+          message: 'Occoreu algum erro com a câmera',
+          onPressed: () async {
+            Future.wait(
+              [
+                _scannerController.stop(),
+                _scannerController.start(),
+              ],
+            );
+          },
+        );
       },
       scanWindow: Rect.fromCenter(
         center: centerOverlay,

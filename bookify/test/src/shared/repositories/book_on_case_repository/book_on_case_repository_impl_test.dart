@@ -77,7 +77,7 @@ void main() {
       ).thenAnswer((invocation) async => 1);
 
       final relationshipRowDeleted =
-          await bookOnCaseRepository.delete(bookcaseId: 1);
+          await bookOnCaseRepository.deleteAllRelationships(bookcaseId: 1);
       expect(relationshipRowDeleted, equals(1));
     });
   });
@@ -145,7 +145,7 @@ void main() {
       );
     });
 
-    test('delete relationship', () async {
+    test('delete all relationships', () async {
       when(
         () => localDatabase.delete(
             table: any(named: 'table'),
@@ -154,7 +154,7 @@ void main() {
       ).thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-        () async => await bookOnCaseRepository.delete(bookcaseId: 1),
+        () async => await bookOnCaseRepository.deleteAllRelationships(bookcaseId: 1),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

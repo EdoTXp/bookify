@@ -44,7 +44,7 @@ class _SelectedBookcaseRowState extends State<SelectedBookcaseRow> {
     final (selectedAllText, selectedAllIcon) = _getAllIconButtonProperties();
 
     return Container(
-      color: colorScheme.primary.withOpacity(.2),
+      color: colorScheme.primary.withOpacity(.1),
       padding: const EdgeInsets.all(8),
       child: Row(
         children: [
