@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/helpers/size/size_helper.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -8,6 +9,8 @@ class ColorPickerDialogService {
     Color? selectedColor,
   ) async {
     Color pickerColor = selectedColor ?? Colors.white;
+
+    bool isSmallDevice = MediaQuery.sizeOf(context).isSmallDevice();
 
     await showDialog(
       context: context,
@@ -26,9 +29,9 @@ class ColorPickerDialogService {
           scrollable: true,
           content: SingleChildScrollView(
             child: ColorPicker(
-              hexInputBar: true,
+              portraitOnly: true,
+              hexInputBar: !isSmallDevice,
               pickerColor: pickerColor,
-              labelTypes: const [ColorLabelType.rgb],
               paletteType: PaletteType.hueWheel,
               enableAlpha: false,
               onColorChanged: (color) => newSelectedColor = color,

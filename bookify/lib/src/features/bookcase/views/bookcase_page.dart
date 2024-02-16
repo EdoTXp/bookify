@@ -25,23 +25,31 @@ class _BookcasePageState extends State<BookcasePage> {
   void initState() {
     super.initState();
 
-    _bloc = context.read<BookcaseBloc>();
-    _refreshPage();
+    _bloc = context.read<BookcaseBloc>()..add(GotAllBookcasesEvent());
   }
 
   @override
   void didUpdateWidget(covariant BookcasePage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    final actualSearchQuery = widget.searchQuery;
+    final oldSearchQuery = oldWidget.searchQuery;
 
-    if (widget.searchQuery == null) return;
+    if (actualSearchQuery == null && oldSearchQuery != null) {
+      _refreshPage();
+      return;
+    }
 
-    if (widget.searchQuery != oldWidget.searchQuery) {
+    if (actualSearchQuery != null) {
       _bloc.add(
         FindedBookcaseByNameEvent(
-          searchQueryName: widget.searchQuery!,
+          searchQueryName: actualSearchQuery,
         ),
       );
     }
+  }
+
+  void _refreshPage() {
+    _bloc.add(GotAllBookcasesEvent());
   }
 
   Widget _getWidgetOnBookcaseState(BuildContext context, BookcaseState state) {
@@ -55,7 +63,8 @@ class _BookcasePageState extends State<BookcasePage> {
             onTap: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => const BookcaseInsertionPage()),
+                  builder: (context) => const BookcaseInsertionPage(),
+                ),
               );
               _refreshPage();
             },
@@ -69,7 +78,8 @@ class _BookcasePageState extends State<BookcasePage> {
               _bloc.add(DeletedBookcasesEvent(selectedList: selectedList)),
         ),
       BookcaseNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message: 'Nenhuma Estante encontrada com esses termos.',
+          message:
+              'Nenhuma Estante encontrada com esses termos.\nVerifique se foi digitada corretamente.',
           onPressed: _refreshPage,
         ),
       BookcaseErrorState(errorMessage: final message) =>
@@ -78,10 +88,6 @@ class _BookcasePageState extends State<BookcasePage> {
           onPressed: _refreshPage,
         ),
     };
-  }
-
-  void _refreshPage() {
-    _bloc.add(GotAllBookcasesEvent());
   }
 
   @override

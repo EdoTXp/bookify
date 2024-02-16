@@ -38,14 +38,21 @@ class InfoItemStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imageAssetPath),
+            Image.asset(imageAssetPath,),
             const SizedBox(
               height: 20,
             ),
-            Text(
-              'OPS!! $message',
-              style: const TextStyle(
+            const Text(
+              'OPS!!',
+              style: TextStyle(
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              message,
+              style: const TextStyle(
                 fontSize: 14,
               ),
               maxLines: 4,

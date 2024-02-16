@@ -4,6 +4,7 @@ import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,7 +72,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
           books: books,
         ),
       BookcaseDetailErrorState(:final errorMessage) =>
-        BookcaseDetailErrorStateWidget(
+        InfoItemStateWidget.withErrorState(
           message: errorMessage,
           onPressed: _refreshPage,
         ),

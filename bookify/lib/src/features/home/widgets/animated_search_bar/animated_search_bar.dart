@@ -57,9 +57,9 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   (String hintText, IconData searchIcon) _updateSearchBar() {
     final searchMap = switch (_searchType) {
       SearchType.title => {'Digite o Título': Icons.menu_book_rounded},
-      SearchType.author => {'Digite o Autor': Icons.person},
-      SearchType.category => {'Digite o Gênero': Icons.category},
-      SearchType.publisher => {'Digite a Editora': Icons.publish},
+      SearchType.author => {'Digite o Autor': Icons.person_rounded},
+      SearchType.category => {'Digite o Gênero': Icons.category_rounded},
+      SearchType.publisher => {'Digite a Editora': Icons.publish_rounded},
       SearchType.isbn => {'Digite o ISBN': BookifyIcons.isbn},
     };
 
@@ -88,11 +88,23 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           },
           hintText: searchHintText,
           leading: Icon(
-            Icons.search,
+            Icons.search_rounded,
             color: selectedColor,
           ),
           trailing: [
+            Visibility(
+              visible: !_searchTextIsEmpty,
+              child: IconButton(
+                tooltip: 'Apagar o texto digitado.',
+                icon: Icon(
+                  Icons.close_rounded,
+                  color: selectedColor,
+                ),
+                onPressed: _clearSearchBarText,
+              ),
+            ),
             IconButton(
+              tooltip: 'Altere o tipo de busca.',
               onPressed: () {
                 setState(() =>
                     _searchIconByTypeIsClicked = !_searchIconByTypeIsClicked);
@@ -116,16 +128,6 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                 ],
               ),
             ),
-            Visibility(
-              visible: !_searchTextIsEmpty,
-              child: IconButton(
-                icon: Icon(
-                  Icons.close,
-                  color: selectedColor,
-                ),
-                onPressed: _clearSearchBarText,
-              ),
-            ),
           ],
         ),
         Visibility(
@@ -143,22 +145,27 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               segments: const [
                 ButtonSegment<SearchType>(
                   value: SearchType.title,
+                  tooltip: 'Busca por título.',
                   icon: Icon(Icons.menu_book_rounded),
                 ),
                 ButtonSegment<SearchType>(
                   value: SearchType.author,
-                  icon: Icon(Icons.person),
+                  tooltip: 'Busca por autor.',
+                  icon: Icon(Icons.person_rounded),
                 ),
                 ButtonSegment<SearchType>(
                   value: SearchType.category,
-                  icon: Icon(Icons.category),
+                  tooltip: 'Busca por gênero.',
+                  icon: Icon(Icons.category_rounded),
                 ),
                 ButtonSegment<SearchType>(
                   value: SearchType.publisher,
-                  icon: Icon(Icons.publish),
+                  tooltip: 'Busca por editora.',
+                  icon: Icon(Icons.publish_rounded),
                 ),
                 ButtonSegment<SearchType>(
                   value: SearchType.isbn,
+                  tooltip: 'Busca por ISBN.',
                   icon: Icon(BookifyIcons.isbn),
                 ),
               ],

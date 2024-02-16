@@ -77,8 +77,7 @@ class _RootPageState extends State<RootPage> {
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
-    String? isbn = await Navigator.push(
-      context,
+    String? isbn = await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => const QrCodeScannerPage()),
     );
 
@@ -113,7 +112,7 @@ class _RootPageState extends State<RootPage> {
           items: [
             FABBottomAppBarItem(
               unselectedIcon: Icons.home_outlined,
-              selectedIcon: Icons.home,
+              selectedIcon: Icons.home_rounded,
               label: 'Início',
             ),
             FABBottomAppBarItem(
@@ -123,21 +122,22 @@ class _RootPageState extends State<RootPage> {
             ),
             FABBottomAppBarItem(
               unselectedIcon: Icons.auto_stories_outlined,
-              selectedIcon: Icons.auto_stories,
+              selectedIcon: Icons.auto_stories_rounded,
               label: 'Leituras',
             ),
             FABBottomAppBarItem(
               unselectedIcon: Icons.person_outline,
-              selectedIcon: Icons.person,
+              selectedIcon: Icons.person_rounded,
               label: 'Perfil',
             ),
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: RectangleFloatingActionButton(
+          tooltip: 'Abrir a página para escanear o código ISBN.',
           onPressed: () async => await _scanAndGetIsbnCode(context),
           child: const Icon(
-            Icons.add,
+            Icons.add_rounded,
             size: 40,
           ),
         ),

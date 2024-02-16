@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class RectangleFloatingActionButton extends StatelessWidget {
+  final void Function() onPressed;
+  final Widget child;
   final double? width;
   final double? height;
   final Color? backgroundColor;
   final Color? foregroundColor;
-  final void Function() onPressed;
-  final Widget child;
+  final String? tooltip;
 
   const RectangleFloatingActionButton({
     super.key,
-    this.width,
-    this.height,
     required this.onPressed,
     required this.child,
+    this.width,
+    this.height,
     this.backgroundColor,
     this.foregroundColor,
+    this.tooltip,
   });
 
   @override
@@ -33,6 +35,7 @@ class RectangleFloatingActionButton extends StatelessWidget {
             width: width ?? 60,
             height: height ?? 60,
             child: FloatingActionButton(
+              tooltip: tooltip,
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               onPressed: onPressed,

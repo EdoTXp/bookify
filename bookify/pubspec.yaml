@@ -37,12 +37,12 @@ dependencies:
   google_fonts: ^6.1.0 # Used for App Font.
   url_launcher: ^6.2.4 # Used to launch at the book store.
   mobile_scanner: ^4.0.0 # Used to access the camera and scan the ISBN code.
-  mask_text_input_formatter: ^2.8.0 # Used to format the ISBN text input.
+  mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
   flutter_colorpicker: ^1.0.3 # Used to pick the color for bookcase.
   awesome_snackbar_content: ^0.1.3 # Used to show snackbar.
   sqflite: ^2.3.2 # Used for local database.
-  path: ^1.8.3 # Used to find the default path of the database.
+  path: ^1.9.0 # Used to find the default path of the database.
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -100,40 +100,43 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
 
     final iconItem = isSelectedItem ? item.selectedIcon : item.unselectedIcon;
 
-    return Material(
-      borderRadius: BorderRadius.circular(90),
-      color: Colors.transparent,
-      child: InkWell(
+    return Tooltip(
+      message: 'página: ${item.label}',
+      child: Material(
         borderRadius: BorderRadius.circular(90),
-        splashColor: Colors.transparent,
-        onTap: () => onPressed(index),
-        child: Container(
-          width: 60,
-          height: 60,
-          decoration: isSelectedItem
-              // Circle created only when item is selected.
-              ? BoxDecoration(
-                  border: Border.all(color: colorItem),
-                  borderRadius: BorderRadius.circular(90),
-                )
-              : null,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                iconItem,
-                color: colorItem,
-              ),
-              Text(
-                item.label,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10,
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(90),
+          splashColor: Colors.transparent,
+          onTap: () => onPressed(index),
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: isSelectedItem
+                // Circle created only when item is selected.
+                ? BoxDecoration(
+                    border: Border.all(color: colorItem),
+                    borderRadius: BorderRadius.circular(90),
+                  )
+                : null,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconItem,
                   color: colorItem,
                 ),
-              ),
-            ],
+                Text(
+                  item.label,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    color: colorItem,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

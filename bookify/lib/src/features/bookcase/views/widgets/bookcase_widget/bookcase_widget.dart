@@ -17,6 +17,7 @@ class BookcaseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final deviceWidth = MediaQuery.sizeOf(context).width;
 
     final bookcaseColor = bookcaseDto.bookcase.color;
     final bookcaseTitle = bookcaseDto.bookcase.name;
@@ -44,35 +45,24 @@ class BookcaseWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Row(
+                Stack(
                   children: [
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        height: 41,
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: bookcaseColor,
-                          border: const Border(
-                            left: BorderSide(color: Colors.transparent),
-                          ),
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12)),
+                    Container(
+                      height: 40,
+                      width: deviceWidth,
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        border: const Border(
+                          right: BorderSide(color: Colors.transparent),
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
                       child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          border: const Border(
-                            right: BorderSide(color: Colors.transparent),
-                          ),
-                          borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(12)),
-                        ),
+                        margin: EdgeInsets.only(left: deviceWidth * .33),
                         child: Text(
                           bookcaseTitle,
                           overflow: TextOverflow.ellipsis,
@@ -84,40 +74,60 @@ class BookcaseWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Container(
+                      height: 40,
+                      width: 120,
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: bookcaseColor,
+                        border: const Border(
+                          left: BorderSide(color: Colors.transparent),
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  children: [
-                    if (imagePreview != null)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 16.0, left: 16.0, bottom: 16.0),
-                        child: BookWidget(
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      if (imagePreview != null) ...[
+                        BookWidget(
                           bookImageUrl: imagePreview,
                           height: 150,
                           width: 100,
+                          borderColor: Colors.white,
+                          withShadow: true,
                         ),
-                      ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                      ],
+                      Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
                           height: 150,
                           decoration: BoxDecoration(
-                              border: Border.all(color: colorScheme.primary),
-                              borderRadius: BorderRadius.circular(12)),
+                            border: Border.all(color: colorScheme.primary),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: Text(
                             bookcaseDescription,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 6,
                             style: const TextStyle(fontSize: 14),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
