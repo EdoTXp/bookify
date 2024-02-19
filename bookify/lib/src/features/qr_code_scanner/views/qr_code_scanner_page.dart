@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class QrCodeScannerPage extends StatefulWidget {
+  /// The Route Name = '/qr_code_scanner'
+  static const routeName = '/qr_code_scanner';
+
   const QrCodeScannerPage({super.key});
 
   @override

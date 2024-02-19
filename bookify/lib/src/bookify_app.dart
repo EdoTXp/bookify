@@ -1,8 +1,8 @@
+import 'package:bookify/src/shared/providers/providers.dart';
+import 'package:bookify/src/shared/routes/routes.dart';
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'features/root/views/root_page.dart';
-import 'shared/providers/providers.dart';
 
 class BookifyApp extends StatelessWidget {
   const BookifyApp({super.key});
@@ -24,7 +24,8 @@ class BookifyApp extends StatelessWidget {
         theme: appLightTheme,
         darkTheme: appDarkTheme,
         themeMode: ThemeMode.system,
-        home: const RootPage(),
+        routes: routes,
+        initialRoute: '/',
       ),
     );
   }

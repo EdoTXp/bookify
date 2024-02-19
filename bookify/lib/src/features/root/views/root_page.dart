@@ -10,6 +10,9 @@ import 'package:bookify/src/features/root/views/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
+ /// The Route Name = '/'
+  static const routeName = '/';
+
   const RootPage({super.key});
 
   @override
@@ -77,9 +80,10 @@ class _RootPageState extends State<RootPage> {
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
-    String? isbn = await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const QrCodeScannerPage()),
-    );
+    final isbn = await Navigator.pushNamed(
+      context,
+      QrCodeScannerPage.routeName,
+    ) as String?;
 
     if (isbn != null) {
       _bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));

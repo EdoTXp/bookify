@@ -33,12 +33,10 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
   }
 
   Future<void> _normalOnTap(BuildContext context, bookcase) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => BookcaseDetailPage(
-          bookcaseModel: bookcase,
-        ),
-      ),
+    await Navigator.pushNamed(
+      context,
+      BookcaseDetailPage.routeName,
+      arguments: bookcase,
     );
     widget.onRefresh();
   }
@@ -126,9 +124,9 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                   )
                 : TextButton.icon(
                     onPressed: () async {
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => const BookcaseInsertionPage()),
+                      await Navigator.pushNamed(
+                        context,
+                        BookcaseInsertionPage.routeName,
                       );
                       widget.onRefresh();
                     },

@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^5.4.0 # Used to receive books through the Google Books API.
+  dio: ^5.4.1 # Used to receive books through the Google Books API.
   provider: ^6.1.1 # Used for DI.
   flutter_bloc: ^8.1.4 # Used for state management.
   cached_network_image: ^3.3.1 # Used to show the cover of the cached book.

@@ -13,6 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///On this page you can view the details of the [bookcaseModel],
 /// its books, edit or remove the bookcase, add or remove books.
 class BookcaseDetailPage extends StatefulWidget {
+  /// The Route Name = '/bookcase_detail'
+  static const routeName = '/bookcase_detail';
   final BookcaseModel bookcaseModel;
 
   const BookcaseDetailPage({
@@ -79,6 +81,12 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     };
   }
 
+  /// Listen to the Bookcase based on the current state.
+  ///
+  /// When the state is [BookcaseDetailDeletedState], the [PopScope] through [_canPopPage] will be disabled.
+  /// Next, a snackbar will be shown with the success message and after 2 seconds, return to the previous page.
+  /// 
+  /// **Note**: If there is an error removing the [_bookcase], the state will always be [BookcaseDetailErrorState].
   Future<void> _handleBookcaseDetailsStateListener(
       BookcaseDetailState state, BuildContext context) async {
     if (state is BookcaseDetailDeletedState) {
@@ -105,13 +113,11 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     if (value == _popupMenuItemsSet.first) {
       final BookcaseModel? bookcaseUpdated;
 
-      bookcaseUpdated = await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => BookcaseInsertionPage(
-            bookcaseModel: _actualBookcase,
-          ),
-        ),
-      );
+      bookcaseUpdated = await Navigator.pushNamed(
+        context,
+        BookcaseInsertionPage.routeName,
+        arguments: _actualBookcase,
+      ) as BookcaseModel?;
 
       if (bookcaseUpdated != null) {
         setState(() {

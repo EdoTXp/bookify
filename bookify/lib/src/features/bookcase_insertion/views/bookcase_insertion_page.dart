@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:validatorless/validatorless.dart';
 
 class BookcaseInsertionPage extends StatefulWidget {
+
+  /// The Route Name = '/bookcase_insertion'
+  static const routeName = '/bookcase_insertion';
+  
   final BookcaseModel? bookcaseModel;
 
   const BookcaseInsertionPage({

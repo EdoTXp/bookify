@@ -10,11 +10,13 @@ import 'package:bookify/src/features/book_detail/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookDetailPage extends StatefulWidget {
-  final BookModel book;
+  /// The Route Name = '/book_detail'
+  static const routeName = '/book_detail';
+  final BookModel bookModel;
 
   const BookDetailPage({
     super.key,
-    required this.book,
+    required this.bookModel,
   });
 
   @override
@@ -39,7 +41,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   late bool _isCallVerifyBookEvent;
 
   /// [Bloc] of [BookDetailPage]
-  late BookDetailBloc bloc;
+  late BookDetailBloc _bloc;
 
   /// Controller to verify the position of the scroll.
   late ScrollController _scrollController;
@@ -51,8 +53,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
     _scrollController = ScrollController();
     _scrollController.addListener(_setAppBarTitleIsVisible);
 
-    bloc = context.read<BookDetailBloc>();
-    bloc.add(VerifiedBookIsInsertedEvent(bookId: widget.book.id));
+    _bloc = context.read<BookDetailBloc>()
+      ..add(VerifiedBookIsInsertedEvent(bookId: widget.bookModel.id));
 
     // disable the snackbar.
     _isCallVerifyBookEvent = true;
@@ -127,18 +129,18 @@ class _BookDetailPageState extends State<BookDetailPage> {
             'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
         cancelButtonFunction: () => Navigator.of(context).pop(),
         confirmButtonFunction: () {
-          bloc.add(BookRemovedEvent(bookId: book.id));
+          _bloc.add(BookRemovedEvent(bookId: book.id));
           Navigator.of(context).pop();
         },
       );
     } else {
-      bloc.add(BookInsertedEvent(bookModel: book));
+      _bloc.add(BookInsertedEvent(bookModel: book));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final book = widget.book;
+    final book = widget.bookModel;
     final authors =
         book.authors.map((author) => author.name).toList().join(', ');
     final categories =
@@ -148,7 +150,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     return BlocConsumer<BookDetailBloc, BookDetailState>(
       listener: _handleBookDetailsStateListener,
-      bloc: bloc,
+      bloc: _bloc,
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
@@ -264,7 +266,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     onTap: () =>
                         setState(() => _isEllipsisText = !_isEllipsisText),
                     child: Text(
-                      widget.book.description,
+                      book.description,
                       maxLines: (_isEllipsisText) ? 4 : null,
                       textAlign: TextAlign.justify,
                       overflow: (_isEllipsisText)
