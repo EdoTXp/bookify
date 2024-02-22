@@ -51,7 +51,7 @@ class BookWidget extends StatelessWidget {
       placeholder: (context, _) =>
           const Center(child: CircularProgressIndicator()),
       errorWidget: (_, __, ___) => Icon(
-        Icons.error,
+        Icons.error_rounded,
         color: Theme.of(context).colorScheme.error,
       ),
     );

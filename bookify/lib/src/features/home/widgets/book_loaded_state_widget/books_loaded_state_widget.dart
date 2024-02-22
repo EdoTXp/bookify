@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/shared/widgets/grid_view/books_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:bookify/src/features/home/widgets/widgets.dart';
 
 class BooksLoadedStateWidget extends StatelessWidget {
   final List<BookModel> books;

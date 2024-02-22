@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
+import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
@@ -21,5 +22,8 @@ final routes = <String, WidgetBuilder>{
   BookcaseInsertionPage.routeName: (context) => BookcaseInsertionPage(
         bookcaseModel:
             ModalRoute.of(context)!.settings.arguments as BookcaseModel?,
+      ),
+  BookcaseBooksInsertionPage.routeName: (context) => BookcaseBooksInsertionPage(
+        bookcaseId: ModalRoute.of(context)!.settings.arguments as int,
       ),
 };

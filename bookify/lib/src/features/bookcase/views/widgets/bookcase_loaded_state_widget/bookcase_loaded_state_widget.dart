@@ -95,82 +95,68 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
     final colorScheme = Theme.of(context).colorScheme;
     final bookcasesDto = widget.bookcasesDto;
 
-    return RefreshIndicator(
-      onRefresh: () async => widget.onRefresh(),
-      color: colorScheme.secondary,
-      child: Column(
-        children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            child: (_isSelectionMode)
-                ? SelectedBookcaseRow(
-                    bookcaseQuantity: _selectedList.length,
-                    onSelectedAll: (isSelected) => (isSelected)
-                        ? _selectAllItems(bookcasesDto)
-                        : _clearSelection(),
-                    onPressedDeleteButton: () {
-                      ShowDialogService.show(
-                        context: context,
-                        title: 'Deletar estantes',
-                        content:
-                            'Clicando em "CONFIRMAR" você removerá as estantes.\nTem Certeza?',
-                        cancelButtonFunction: () => Navigator.of(context).pop(),
-                        confirmButtonFunction: () {
-                          Navigator.of(context).pop();
-                          widget.onPressedDeleteButton(_selectedList);
-                        },
-                      );
-                    },
-                  )
-                : TextButton.icon(
-                    onPressed: () async {
-                      await Navigator.pushNamed(
-                        context,
-                        BookcaseInsertionPage.routeName,
-                      );
-                      widget.onRefresh();
-                    },
-                    icon: Icon(
-                      Icons.add_circle_outline_rounded,
-                      color: colorScheme.secondary,
-                    ),
-                    label: const Text(
-                      'Adicionar uma nova estante',
-                    ),
+    return Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: (_isSelectionMode)
+              ? SelectedBookcaseRow(
+                  bookcaseQuantity: _selectedList.length,
+                  onSelectedAll: (isSelected) => (isSelected)
+                      ? _selectAllItems(bookcasesDto)
+                      : _clearSelection(),
+                  onPressedDeleteButton: () {
+                    ShowDialogService.show(
+                      context: context,
+                      title: 'Deletar estantes',
+                      content:
+                          'Clicando em "CONFIRMAR" você removerá as estantes.\nTem Certeza?',
+                      cancelButtonFunction: () => Navigator.of(context).pop(),
+                      confirmButtonFunction: () {
+                        Navigator.of(context).pop();
+                        widget.onPressedDeleteButton(_selectedList);
+                      },
+                    );
+                  },
+                )
+              : TextButton.icon(
+                  onPressed: () async {
+                    await Navigator.pushNamed(
+                      context,
+                      BookcaseInsertionPage.routeName,
+                    );
+                    widget.onRefresh();
+                  },
+                  icon: Icon(
+                    Icons.add_circle_outline_rounded,
+                    color: colorScheme.secondary,
                   ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              // Verify that the list is selected before deselecting it if click outside the BookcaseWidget.
-              onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 25.0,
-                  horizontal: 5.0,
+                  label: const Text(
+                    'Adicionar uma nova estante',
+                  ),
                 ),
-                itemCount: bookcasesDto.length,
-                itemBuilder: (_, index) {
-                  return (_selectedList.contains(bookcasesDto[index]))
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: colorScheme.secondary.withOpacity(.2),
-                            border: Border.all(
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+        ),
+        Expanded(
+          child: GestureDetector(
+            // Verify that the list is selected before deselecting it if click outside the BookcaseWidget.
+            onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(
+                vertical: 25.0,
+                horizontal: 5.0,
+              ),
+              itemCount: bookcasesDto.length,
+              itemBuilder: (_, index) {
+                return (_selectedList.contains(bookcasesDto[index]))
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: colorScheme.secondary.withOpacity(.2),
+                          border: Border.all(
+                            color: Colors.transparent,
                           ),
-                          child: BookcaseWidget(
-                            bookcaseDto: bookcasesDto[index],
-                            onTap: () => _onTap(
-                              context: context,
-                              element: bookcasesDto[index],
-                            ),
-                            onLongPress: () => _onLongPress(
-                              element: bookcasesDto[index],
-                            ),
-                          ),
-                        )
-                      : BookcaseWidget(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: BookcaseWidget(
                           bookcaseDto: bookcasesDto[index],
                           onTap: () => _onTap(
                             context: context,
@@ -179,13 +165,23 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                           onLongPress: () => _onLongPress(
                             element: bookcasesDto[index],
                           ),
-                        );
-                },
-              ),
+                        ),
+                      )
+                    : BookcaseWidget(
+                        bookcaseDto: bookcasesDto[index],
+                        onTap: () => _onTap(
+                          context: context,
+                          element: bookcasesDto[index],
+                        ),
+                        onLongPress: () => _onLongPress(
+                          element: bookcasesDto[index],
+                        ),
+                      );
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

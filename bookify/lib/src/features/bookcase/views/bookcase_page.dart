@@ -57,18 +57,15 @@ class _BookcasePageState extends State<BookcasePage> {
       BookcaseLoadingState() => const Center(
           child: CircularProgressIndicator(),
         ),
-      BookcaseEmptyState() => Center(
-          child: ItemEmptyStateWidget(
-            label: 'Criar uma nova estante',
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const BookcaseInsertionPage(),
-                ),
-              );
-              _refreshPage();
-            },
-          ),
+      BookcaseEmptyState() => ItemEmptyStateWidget(
+          label: 'Criar uma nova estante',
+          onTap: () async {
+            await Navigator.pushNamed(
+              context,
+              BookcaseInsertionPage.routeName,
+            );
+            _refreshPage();
+          },
         ),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
         BookcaseLoadedStateWidget(

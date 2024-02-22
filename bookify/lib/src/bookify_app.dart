@@ -18,6 +18,8 @@ class BookifyApp extends StatelessWidget {
         ...bookcasePageProviders,
         ...bookcaseInsertionPageProviders,
         ...bookcaseDetailPageProviders,
+        ...bookcaseBooksInsertionProviders,
+        ...myBooksProviders,
       ],
       child: MaterialApp(
         title: 'Bookify',

@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/bloc/bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/bookcase_detail/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
@@ -5,6 +6,7 @@ import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
+import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,15 +65,28 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       BookcaseDetailLoadingState() ||
       BookcaseDetailDeletedState() =>
         const Center(child: CircularProgressIndicator()),
-      BookcaseDetailBooksEmptyState() => BookcaseDetailEmptyStateWidget(
-          bookcase: _actualBookcase,
-          onTap: () {
+      BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
+          onTap: () async {
+            await Navigator.pushNamed(
+              context,
+              BookcaseBooksInsertionPage.routeName,
+              arguments: _actualBookcase.id,
+            );
             _refreshPage();
           },
+          label: 'Adicionar novos Livros',
         ),
       BookcaseDetailBooksLoadedState(:final books) =>
         BookcaseDetailLoadedStateWidget(
           books: books,
+          onPressed: () async {
+            await Navigator.pushNamed(
+              context,
+              BookcaseBooksInsertionPage.routeName,
+              arguments: _actualBookcase.id,
+            );
+            _refreshPage();
+          },
         ),
       BookcaseDetailErrorState(:final errorMessage) =>
         InfoItemStateWidget.withErrorState(
@@ -85,7 +100,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
   ///
   /// When the state is [BookcaseDetailDeletedState], the [PopScope] through [_canPopPage] will be disabled.
   /// Next, a snackbar will be shown with the success message and after 2 seconds, return to the previous page.
-  /// 
+  ///
   /// **Note**: If there is an error removing the [_bookcase], the state will always be [BookcaseDetailErrorState].
   Future<void> _handleBookcaseDetailsStateListener(
       BookcaseDetailState state, BuildContext context) async {
@@ -174,7 +189,30 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
               ),
             ],
           ),
-          body: _getWidgetOnBookcaseDetailState(context, state),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                if (state is BookcaseDetailBooksEmptyState ||
+                    state is BookcaseDetailBooksLoadedState) ...[
+                  BookcaseDescriptionWidget(
+                    name: _actualBookcase.name,
+                    description: _actualBookcase.description,
+                    color: _actualBookcase.color,
+                    booksQuantity: (state is BookcaseDetailBooksLoadedState)
+                        ? state.books.length
+                        : 0,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+                Expanded(
+                  child: _getWidgetOnBookcaseDetailState(context, state),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

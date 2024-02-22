@@ -35,8 +35,8 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
   void _setSearchHintText(int selectedTab) {
     setState(() {
       _searchHintText = switch (selectedTab) {
-        1 => 'Digite o nome do livro emprestado.',
-        2 => 'Digite o nome dos seus livros.',
+        1 => 'Digite o título do livro emprestado.',
+        2 => 'Digite o título dos seus livros.',
         0 || _ => 'Digite o nome da estante.',
       };
     });
@@ -99,7 +99,8 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
           ),
           actions: [
             Visibility(
-              visible: (_searchBarIsVisible && _searchController.text.isNotEmpty),
+              visible:
+                  (_searchBarIsVisible && _searchController.text.isNotEmpty),
               child: IconButton(
                 icon: const Icon(Icons.close_rounded),
                 tooltip: 'Apagar o texto.',
@@ -149,8 +150,12 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
             BookcasePage(
               searchQuery: _searchQuery,
             ),
-            const LoanPage(),
-            const MyBooksPage(),
+            LoanPage(
+              searchQuery: _searchQuery,
+            ),
+            MyBooksPage(
+              searchQuery: _searchQuery,
+            ),
           ],
         ),
       ),

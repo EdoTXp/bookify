@@ -5,3 +5,5 @@ export '../providers/views/book_detail_page_providers.dart';
 export '../providers/views/bookcase_page_providers.dart';
 export '../providers/views/bookcase_insertion_providers.dart';
 export '../providers/views/bookcase_detail_providers.dart';
+export '../providers/views/bookcase_book_insertion_providers.dart';
+export '../providers/views/my_books_providers.dart';

@@ -101,7 +101,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     final iconItem = isSelectedItem ? item.selectedIcon : item.unselectedIcon;
 
     return Tooltip(
-      message: 'página: ${item.label}',
+      message: 'Página: ${item.label}',
       child: Material(
         borderRadius: BorderRadius.circular(90),
         color: Colors.transparent,

@@ -75,6 +75,30 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
+  Future<List<BookModel>> getBookByTitle({required String title}) async {
+    try {
+      final booksMap = await _database.researchBy(
+        table: _bookTableName,
+        column: 'title',
+        columnValues: title,
+      );
+      final books = booksMap
+          .map(
+            (book) => BookModel.fromMap(book),
+          )
+          .toList();
+
+      return books;
+    } on TypeError {
+      throw LocalDatabaseException(
+        'Impossível encontrar os livros com esse título no database',
+      );
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<bool> verifyBookIsAlreadyInserted({required String id}) async {
     try {
       final isBookInserted = await _database.verifyItemIsAlreadyInserted(

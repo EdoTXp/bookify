@@ -14,7 +14,9 @@ class ItemEmptyStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return SizedBox(
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.topCenter,
       child: Material(
         child: InkWell(
           onTap: onTap,

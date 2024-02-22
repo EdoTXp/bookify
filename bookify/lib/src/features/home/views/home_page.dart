@@ -1,7 +1,6 @@
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bookify/src/features/home/widgets/animated_search_bar/animated_search_bar.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 

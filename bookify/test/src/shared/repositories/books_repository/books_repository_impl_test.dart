@@ -86,6 +86,46 @@ void main() {
       expect(bookModelFromMap.categories, isEmpty);
     });
 
+    test('get book by name()', () async {
+      final bookMap = {
+        'id': '1',
+        'title': 'Memórias Póstumas De Brás Cubas',
+        'publisher': 'FTD Editora',
+        'description': 'É narrada pelo defunto Brás Cubas...',
+        'pageCount': 320,
+        'imageUrl': 'imageUrl',
+        'buyLink': 'buyLink',
+        'averageRating': 4.3,
+        'ratingsCount': 715,
+        'status': 1,
+      };
+
+      when(() => localDatabase.researchBy(
+              table: any(named: 'table'),
+              column: any(named: 'column'),
+              columnValues: any(named: 'columnValues')))
+          .thenAnswer((_) async => [bookMap]);
+
+      final bookModelByName = await bookRepository.getBookByTitle(
+          title: 'Memórias Póstumas De Brás Cubas');
+
+      expect(bookModelByName[0].id, equals('1'));
+      expect(bookModelByName[0].title, 'Memórias Póstumas De Brás Cubas');
+      expect(
+        bookModelByName[0].publisher,
+        'FTD Editora',
+      );
+      expect(
+        bookModelByName[0].description,
+        'É narrada pelo defunto Brás Cubas...',
+      );
+      expect(bookModelByName[0].pageCount, 320);
+      expect(bookModelByName[0].imageUrl, 'imageUrl');
+      expect(bookModelByName[0].buyLink, 'buyLink');
+      expect(bookModelByName[0].averageRating, 4.3);
+      expect(bookModelByName[0].ratingsCount, 715);
+    });
+
     test('get all books', () async {
       when(() => localDatabase.getAll(
             table: any(named: 'table'),
@@ -192,6 +232,22 @@ void main() {
             e is LocalDatabaseException &&
             e.message == 'Impossível converter o dado do database'),
       );
+    });
+
+    test('get book by name', () async {
+      when(() => localDatabase.researchBy(
+              table: any(named: 'table'),
+              column: any(named: 'column'),
+              columnValues: any(named: 'columnValues')))
+          .thenAnswer((_) async => [{}]);
+
+      expect(
+          () async => await bookRepository.getBookByTitle(
+              title: 'Memórias Postumas de Bras Cubas'),
+          throwsA((Exception e) =>
+              e is LocalDatabaseException &&
+              e.message ==
+                  'Impossível encontrar os livros com esse título no database'));
     });
 
     test('get all books', () async {

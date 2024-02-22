@@ -32,41 +32,43 @@ class InfoItemStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(imageAssetPath,),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'OPS!!',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(imageAssetPath,),
+              const SizedBox(
+                height: 20,
               ),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              message,
-              style: const TextStyle(
-                fontSize: 14,
+              const Text(
+                'OPS!!',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              maxLines: 4,
-              textAlign: TextAlign.justify,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            BookifyElevatedButton.expanded(
-              onPressed: onPressed,
-              suffixIcon: Icons.replay_outlined,
-              text: 'Tentar novamente',
-            ),
-          ],
+              Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+                maxLines: 4,
+                textAlign: TextAlign.justify,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BookifyElevatedButton.expanded(
+                onPressed: onPressed,
+                suffixIcon: Icons.replay_outlined,
+                text: 'Tentar novamente',
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// Providers which includes all the necessary classes for BookDetail [BookDetailBloc].
 final bookDetailPageProviders = [
   BlocProvider<BookDetailBloc>(
-    create: (context) => BookDetailBloc(context.read()),
+    create: (context) => BookDetailBloc(
+      context.read(),
+    ),
   ),
 ];

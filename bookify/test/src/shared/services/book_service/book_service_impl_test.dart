@@ -58,6 +58,68 @@ void main() {
   final bookCategoriesRelationship = {'bookId': '1', 'categoryId': 1};
 
   group('test normal CRUD of complete book without error ||', () {
+    test('get all book', () async {
+      when(
+        () => booksRepository.getAll(),
+      ).thenAnswer((_) async => [bookModel]);
+
+      //for author repository
+      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
+          .thenAnswer((_) async => authorModel);
+
+      // for category repository
+      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
+          .thenAnswer((_) async => categoryModel);
+
+      // for book authors repository
+      when(() => bookAuthorsRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookAuthorsRelationship]);
+
+      // for book categories repository
+      when(() => bookCategoriesRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookCategoriesRelationship]);
+
+      final booksModel = await bookService.getAllBook();
+
+      expect(booksModel[0].id, equals('1'));
+      expect(booksModel[0].title, equals('title'));
+      expect(booksModel[0].authors, equals([authorModel]));
+      expect(booksModel[0].categories, equals([categoryModel]));
+    });
+
+    test('get book by title', () async {
+      when(
+        () => booksRepository.getBookByTitle(title: any(named: 'title')),
+      ).thenAnswer((_) async => [bookModel]);
+
+      //for author repository
+      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
+          .thenAnswer((_) async => authorModel);
+
+      // for category repository
+      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
+          .thenAnswer((_) async => categoryModel);
+
+      // for book authors repository
+      when(() => bookAuthorsRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookAuthorsRelationship]);
+
+      // for book categories repository
+      when(() => bookCategoriesRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookCategoriesRelationship]);
+
+      final booksModel = await bookService.getBookByTitle(title: 'title');
+
+      expect(booksModel[0].id, equals('1'));
+      expect(booksModel[0].title, equals('title'));
+      expect(booksModel[0].authors, equals([authorModel]));
+      expect(booksModel[0].categories, equals([categoryModel]));
+    });
+
     test('get book by id', () async {
       // setUp all when
 
@@ -181,6 +243,66 @@ void main() {
   });
 
   group('test normal CRUD of complete book with error ||', () {
+    test('get all book', () async {
+      when(
+        () => booksRepository.getAll(),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      //for author repository
+      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
+          .thenAnswer((_) async => authorModel);
+
+      // for category repository
+      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
+          .thenAnswer((_) async => categoryModel);
+
+      // for book authors repository
+      when(() => bookAuthorsRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookAuthorsRelationship]);
+
+      // for book categories repository
+      when(() => bookCategoriesRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookCategoriesRelationship]);
+
+      expect(
+        () async => await bookService.getAllBook(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('get book by name', () async {
+      when(
+        () => booksRepository.getBookByTitle(title: any(named: 'title')),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      //for author repository
+      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
+          .thenAnswer((_) async => authorModel);
+
+      // for category repository
+      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
+          .thenAnswer((_) async => categoryModel);
+
+      // for book authors repository
+      when(() => bookAuthorsRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookAuthorsRelationship]);
+
+      // for book categories repository
+      when(() => bookCategoriesRepository.getRelationshipsById(
+              bookId: any(named: 'bookId')))
+          .thenAnswer((_) async => [bookCategoriesRelationship]);
+
+      expect(
+        () async => await bookService.getBookByTitle(title: 'title'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
     test('get book by id', () async {
       // setUp all when
 

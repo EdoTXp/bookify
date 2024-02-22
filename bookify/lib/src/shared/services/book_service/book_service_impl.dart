@@ -9,8 +9,8 @@ import 'package:bookify/src/shared/repositories/books_repository/books_repositor
 import 'package:bookify/src/shared/repositories/category_repository/categories_repository.dart';
 import 'package:bookify/src/shared/services/book_service/book_service.dart';
 
-
 typedef BookComponents = (List<AuthorModel>, List<CategoryModel>);
+
 class BookServiceImpl implements BookService {
   final BooksRepository _booksRepository;
   final AuthorsRepository _authorsRepository;
@@ -31,15 +31,58 @@ class BookServiceImpl implements BookService {
         _bookCategoriesRepository = bookCategoriesRepository;
 
   @override
+  Future<List<BookModel>> getAllBook() async {
+    try {
+      final booksModel = await _booksRepository.getAll();
+
+      for (var index = 0; index < booksModel.length; index++) {
+        final (authors, categories) =
+            await _getBookComponents(booksModel[index].id);
+        booksModel[index] = booksModel[index].copyWith(
+          authors: authors,
+          categories: categories,
+        );
+      }
+
+      return booksModel;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<BookModel> getBookById({required String id}) async {
     try {
       var bookModel = await _booksRepository.getBookById(id: id);
 
       final (authors, categories) = await _getBookComponents(id);
 
-      bookModel = bookModel.copyWith(authors: authors, categories: categories);
+      bookModel = bookModel.copyWith(
+        authors: authors,
+        categories: categories,
+      );
 
       return bookModel;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<BookModel>> getBookByTitle({required String title}) async {
+    try {
+      final booksModel = await _booksRepository.getBookByTitle(title: title);
+
+      for (var index = 0; index < booksModel.length; index++) {
+        final (authors, categories) =
+            await _getBookComponents(booksModel[index].id);
+        booksModel[index] = booksModel[index].copyWith(
+          authors: authors,
+          categories: categories,
+        );
+      }
+
+      return booksModel;
     } on LocalDatabaseException {
       rethrow;
     }
