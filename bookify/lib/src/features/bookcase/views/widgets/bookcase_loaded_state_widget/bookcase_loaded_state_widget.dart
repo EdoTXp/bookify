@@ -3,6 +3,7 @@ import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';
 
 class BookcaseLoadedStateWidget extends StatefulWidget {
@@ -59,11 +60,9 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
 
   void _onLongPress({required BookcaseDto element}) {
     setState(() {
-      if (!_selectedList.contains(element)) {
-        _selectedList.add(element);
-      } else {
-        _selectedList.remove(element);
-      }
+      !_selectedList.contains(element)
+          ? _selectedList.add(element)
+          : _selectedList.remove(element);
 
       _setIsSelectedMode();
     });
@@ -100,9 +99,11 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: (_isSelectionMode)
-              ? SelectedBookcaseRow(
-                  bookcaseQuantity: _selectedList.length,
-                  onSelectedAll: (isSelected) => (isSelected)
+              ? SelectedItemRow(
+                  itemQuantity: _selectedList.length,
+                  itemLabelSingular: 'Estante',
+                  itemLabelPlural: 'Estantes',
+                  onSelectedAll: (isSelectedAll) => (isSelectedAll)
                       ? _selectAllItems(bookcasesDto)
                       : _clearSelection(),
                   onPressedDeleteButton: () {
@@ -148,22 +149,25 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
               itemCount: bookcasesDto.length,
               itemBuilder: (_, index) {
                 return (_selectedList.contains(bookcasesDto[index]))
-                    ? Container(
-                        decoration: BoxDecoration(
-                          color: colorScheme.secondary.withOpacity(.2),
-                          border: Border.all(
-                            color: Colors.transparent,
+                    ? Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: colorScheme.secondary.withOpacity(.2),
+                            border: Border.all(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: BookcaseWidget(
-                          bookcaseDto: bookcasesDto[index],
-                          onTap: () => _onTap(
-                            context: context,
-                            element: bookcasesDto[index],
-                          ),
-                          onLongPress: () => _onLongPress(
-                            element: bookcasesDto[index],
+                          child: BookcaseWidget(
+                            bookcaseDto: bookcasesDto[index],
+                            onTap: () => _onTap(
+                              context: context,
+                              element: bookcasesDto[index],
+                            ),
+                            onLongPress: () => _onLongPress(
+                              element: bookcasesDto[index],
+                            ),
                           ),
                         ),
                       )

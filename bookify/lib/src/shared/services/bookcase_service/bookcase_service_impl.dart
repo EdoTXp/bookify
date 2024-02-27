@@ -49,6 +49,21 @@ class BookcaseServiceImpl implements BookcaseService {
   }
 
   @override
+  Future<int> deleteBookcaseRelationship(
+      {required int bookcaseId, required String bookId}) async {
+    try {
+      final bookcaseRelationshipRowDeleted =
+          await _bookOnCaseRepository.deleteBookcaseRelationship(
+        bookcaseId: bookcaseId,
+        bookId: bookId,
+      );
+      return bookcaseRelationshipRowDeleted;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<String?> getBookIdForImagePreview({required int bookcaseId}) async {
     try {
       final bookImage = await _bookOnCaseRepository.getBookIdForImagePreview(

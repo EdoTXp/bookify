@@ -67,17 +67,18 @@ void main() {
           await bookOnCaseRepository.insert(bookcaseId: 1, bookId: '1');
       expect(relationshipRowInserted, equals(1));
     });
-
     test('delete relationship', () async {
       when(
-        () => localDatabase.delete(
+        () => localDatabase.deleteWithAnotherColumn(
             table: any(named: 'table'),
+            otherColumn: any(named: 'otherColumn'),
+            value: any(named: 'value'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')),
       ).thenAnswer((invocation) async => 1);
 
-      final relationshipRowDeleted =
-          await bookOnCaseRepository.deleteAllRelationships(bookcaseId: 1);
+      final relationshipRowDeleted = await bookOnCaseRepository
+          .deleteBookcaseRelationship(bookcaseId: 1, bookId: '1');
       expect(relationshipRowDeleted, equals(1));
     });
   });
@@ -145,16 +146,21 @@ void main() {
       );
     });
 
-    test('delete all relationships', () async {
+    test('delete relationship', () async {
       when(
-        () => localDatabase.delete(
+        () => localDatabase.deleteWithAnotherColumn(
             table: any(named: 'table'),
+            otherColumn: any(named: 'otherColumn'),
+            value: any(named: 'value'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')),
       ).thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-        () async => await bookOnCaseRepository.deleteAllRelationships(bookcaseId: 1),
+        () async => await bookOnCaseRepository.deleteBookcaseRelationship(
+          bookcaseId: 1,
+          bookId: '1',
+        ),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

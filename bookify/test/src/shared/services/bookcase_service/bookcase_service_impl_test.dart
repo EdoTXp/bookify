@@ -161,6 +161,20 @@ void main() {
 
       expect(bookcaseRowDeleted, equals(1));
     });
+
+    test('deleteBookcaseRelationship()', () async {
+      when(
+        () => bookOnCaseRepository.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => 1);
+
+      final bookcaseRowDeleted = await bookcaseService
+          .deleteBookcaseRelationship(bookcaseId: 1, bookId: '1');
+
+      expect(bookcaseRowDeleted, equals(1));
+    });
   });
 
   group('test normal CRUD of complete book with error ||', () {
@@ -272,6 +286,22 @@ void main() {
 
       expect(
         () async => await bookcaseService.deleteBookcase(bookcaseId: 1),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('deleteBookcaseRelationship()', () async {
+      when(
+        () => bookOnCaseRepository.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookcaseService.deleteBookcaseRelationship(
+            bookcaseId: 1, bookId: '1'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

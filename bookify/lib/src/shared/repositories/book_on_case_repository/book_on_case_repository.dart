@@ -6,5 +6,8 @@ abstract interface class BookOnCaseRepository {
     required String bookId,
   });
   Future<String?> getBookIdForImagePreview({required int bookcaseId});
-  Future<int> deleteAllRelationships({required int bookcaseId});
+  Future<int> deleteBookcaseRelationship({
+    required int bookcaseId,
+    required String bookId,
+  });
 }

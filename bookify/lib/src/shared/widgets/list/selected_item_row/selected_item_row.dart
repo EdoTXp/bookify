@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
-class SelectedBookcaseRow extends StatefulWidget {
-  final int bookcaseQuantity;
+class SelectedItemRow extends StatefulWidget {
+  final int itemQuantity;
   final VoidCallback onPressedDeleteButton;
-  final Function(bool isSelected) onSelectedAll;
+  final void Function(bool isSelectedAll) onSelectedAll;
+  final String itemLabelSingular;
+  final String itemLabelPlural;
 
-  const SelectedBookcaseRow({
+  const SelectedItemRow({
     super.key,
-    required this.bookcaseQuantity,
+    required this.itemQuantity,
     required this.onPressedDeleteButton,
     required this.onSelectedAll,
+    required this.itemLabelSingular,
+    required this.itemLabelPlural,
   });
 
   @override
-  State<SelectedBookcaseRow> createState() => _SelectedBookcaseRowState();
+  State<SelectedItemRow> createState() => _SelectedItemRowState();
 }
 
-class _SelectedBookcaseRowState extends State<SelectedBookcaseRow> {
+class _SelectedItemRowState extends State<SelectedItemRow> {
   bool _isSelectedAll = false;
 
   (
@@ -38,8 +42,9 @@ class _SelectedBookcaseRowState extends State<SelectedBookcaseRow> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final bookcaseText =
-        (widget.bookcaseQuantity == 1) ? 'Estante' : 'Estantes';
+    final itemText = (widget.itemQuantity == 1)
+        ? widget.itemLabelSingular
+        : widget.itemLabelPlural;
 
     final (selectedAllText, selectedAllIcon) = _getAllIconButtonProperties();
 
@@ -49,7 +54,7 @@ class _SelectedBookcaseRowState extends State<SelectedBookcaseRow> {
       child: Row(
         children: [
           Text(
-            '$bookcaseText: ${widget.bookcaseQuantity}',
+            '$itemText: ${widget.itemQuantity}',
             style: TextStyle(
               fontSize: 16,
               color: colorScheme.primary,
@@ -71,7 +76,7 @@ class _SelectedBookcaseRowState extends State<SelectedBookcaseRow> {
           ),
           IconButton(
             onPressed: widget.onPressedDeleteButton,
-            tooltip: 'Deletar',
+            tooltip: 'Deletar ${itemText.toLowerCase()}',
             icon: const Icon(Icons.delete_rounded),
           ),
         ],

@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/widgets/grid_view/books_grid_view.dart';
+import 'package:bookify/src/shared/widgets/list/grid_view/books_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class BooksLoadedStateWidget extends StatelessWidget {

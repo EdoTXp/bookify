@@ -33,7 +33,7 @@ class BookcaseBooksInsertionBloc
         emit(
           BookcaseBooksInsertionEmptyState(
             message:
-                'Nenhum livro cadastrado. Vai à página início para cadastrar',
+                'Nenhum livro cadastrado. Volte à Página início para cadastrar.',
           ),
         );
         return;
@@ -60,7 +60,7 @@ class BookcaseBooksInsertionBloc
               )
             : BookcaseBooksInsertionEmptyState(
                 message:
-                    'Todos os livros possuídos já foram cadastrados nessa estante',
+                    'Todos os livros cadastrados já foram adicionados nessa estante.',
               ),
       );
     } on LocalDatabaseException catch (e) {

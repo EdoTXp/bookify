@@ -212,4 +212,213 @@ void main() {
       isA<BookcaseDetailErrorState>(),
     ],
   );
+
+  blocTest(
+    'test if DeletedBooksOnBookcaseEvent work',
+    build: () => bloc,
+    setUp: () {
+      when(
+        () => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(
+            named: 'bookId',
+          ),
+        ),
+      ).thenAnswer((_) async => 1);
+      when(
+        () => bookService.getBookById(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookModel);
+      when(() => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        (_) async => [
+          {'bookcaseId': 1, 'bookId': 'id'},
+        ],
+      );
+    },
+    act: (bloc) => bloc.add(
+      DeletedBooksOnBookcaseEvent(
+        bookcaseId: 1,
+        books: [bookModel],
+      ),
+    ),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'))).called(1);
+      verify(() => bookService.getBookById(id: 'id')).called(1);
+      verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
+          .called(1);
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailBooksLoadedState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBooksOnBookcaseEvent work when error on delete books',
+    build: () => bloc,
+    setUp: () {
+      when(
+        () => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(
+            named: 'bookId',
+          ),
+        ),
+      ).thenAnswer((_) async => -1);
+      when(
+        () => bookService.getBookById(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookModel);
+      when(() => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        (_) async => [
+          {'bookcaseId': 1, 'bookId': 'id'},
+        ],
+      );
+    },
+    act: (bloc) => bloc.add(
+      DeletedBooksOnBookcaseEvent(
+        bookcaseId: 1,
+        books: [bookModel],
+      ),
+    ),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'))).called(1);
+      verifyNever(() => bookService.getBookById(id: 'id'));
+      verifyNever(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBooksOnBookcaseEvent work when empty relationship',
+    build: () => bloc,
+    setUp: () {
+      when(
+        () => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(
+            named: 'bookId',
+          ),
+        ),
+      ).thenAnswer((_) async => 1);
+      when(
+        () => bookService.getBookById(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookModel);
+      when(() => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        (_) async => [],
+      );
+    },
+    act: (bloc) => bloc.add(
+      DeletedBooksOnBookcaseEvent(
+        bookcaseId: 1,
+        books: [bookModel],
+      ),
+    ),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'))).called(1);
+      verifyNever(() => bookService.getBookById(id: 'id'));
+      verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailBooksEmptyState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBooksOnBookcaseEvent work when throw LocalDatabaseException',
+    build: () => bloc,
+    setUp: () {
+      when(
+        () => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(
+            named: 'bookId',
+          ),
+        ),
+      ).thenAnswer((_) async => 1);
+      when(
+        () => bookService.getBookById(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookModel);
+      when(() => bookcaseService.getAllBookcaseRelationships(
+              bookcaseId: any(named: 'bookcaseId')))
+          .thenThrow(LocalDatabaseException('Error on Database'));
+    },
+    act: (bloc) => bloc.add(
+      DeletedBooksOnBookcaseEvent(
+        bookcaseId: 1,
+        books: [bookModel],
+      ),
+    ),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'))).called(1);
+      verifyNever(() => bookService.getBookById(id: 'id'));
+      verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
+
+  blocTest(
+    'test if DeletedBooksOnBookcaseEvent work when throw Generic Exception',
+    build: () => bloc,
+    setUp: () {
+      when(
+        () => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(
+            named: 'bookId',
+          ),
+        ),
+      ).thenAnswer((_) async => 1);
+      when(
+        () => bookService.getBookById(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookModel);
+      when(() => bookcaseService.getAllBookcaseRelationships(
+              bookcaseId: any(named: 'bookcaseId')))
+          .thenThrow(Exception('Generic Exception'));
+    },
+    act: (bloc) => bloc.add(
+      DeletedBooksOnBookcaseEvent(
+        bookcaseId: 1,
+        books: [bookModel],
+      ),
+    ),
+    verify: (_) {
+      verify(() => bookcaseService.deleteBookcaseRelationship(
+          bookcaseId: any(named: 'bookcaseId'),
+          bookId: any(named: 'bookId'))).called(1);
+      verifyNever(() => bookService.getBookById(id: 'id'));
+      verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
+    },
+    expect: () => [
+      isA<BookcaseDetailLoadingState>(),
+      isA<BookcaseDetailErrorState>(),
+    ],
+  );
 }

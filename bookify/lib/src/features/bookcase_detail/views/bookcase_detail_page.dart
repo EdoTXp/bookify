@@ -66,27 +66,19 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       BookcaseDetailDeletedState() =>
         const Center(child: CircularProgressIndicator()),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
-          onTap: () async {
-            await Navigator.pushNamed(
-              context,
-              BookcaseBooksInsertionPage.routeName,
-              arguments: _actualBookcase.id,
-            );
-            _refreshPage();
-          },
           label: 'Adicionar novos Livros',
+          onTap: () async => await _addNewBooks(),
         ),
       BookcaseDetailBooksLoadedState(:final books) =>
         BookcaseDetailLoadedStateWidget(
           books: books,
-          onPressed: () async {
-            await Navigator.pushNamed(
-              context,
-              BookcaseBooksInsertionPage.routeName,
-              arguments: _actualBookcase.id,
-            );
-            _refreshPage();
-          },
+          onAddBooksPressed: () async => await _addNewBooks(),
+          onDeletedBooksPressed: (books) => _bloc.add(
+            DeletedBooksOnBookcaseEvent(
+              bookcaseId: _actualBookcase.id!,
+              books: books,
+            ),
+          ),
         ),
       BookcaseDetailErrorState(:final errorMessage) =>
         InfoItemStateWidget.withErrorState(
@@ -94,6 +86,23 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
           onPressed: _refreshPage,
         ),
     };
+  }
+
+  Future<void> _addNewBooks() async {
+    bool? booksIsAdded = false;
+
+    booksIsAdded = await showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      builder: (_) => BookcaseBooksInsertionPage(
+        bookcaseId: _actualBookcase.id!,
+      ),
+    );
+
+    if (booksIsAdded != null && booksIsAdded) {
+      _refreshPage();
+    }
   }
 
   /// Listen to the Bookcase based on the current state.

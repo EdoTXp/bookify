@@ -239,6 +239,32 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
+  Future<int> deleteWithAnotherColumn({
+    required String table,
+    required String otherColumn,
+    required value,
+    required String idColumn,
+    required id,
+  }) async {
+    try {
+      final db = await database;
+      int rowCount = 0;
+
+      await db!.transaction((txn) async {
+        rowCount = await txn.delete(
+          table,
+          where: '$idColumn = ? AND $otherColumn = ?',
+          whereArgs: [id, value],
+        );
+      });
+
+      return rowCount;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
   Future<void> closeDatabase() async {
     try {
       final db = await database;

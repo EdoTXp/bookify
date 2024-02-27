@@ -62,14 +62,18 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   }
 
   @override
-  Future<int> deleteAllRelationships({required int bookcaseId}) async {
+  Future<int> deleteBookcaseRelationship({
+    required int bookcaseId,
+    required String bookId,
+  }) async {
     try {
-      final rowDeleted = await _database.delete(
+      final rowDeleted = await _database.deleteWithAnotherColumn(
         table: _bookOnCaseTableName,
+        otherColumn: 'bookId',
+        value: bookId,
         idColumn: 'bookcaseId',
         id: bookcaseId,
       );
-
       return rowDeleted;
     } on LocalDatabaseException {
       rethrow;

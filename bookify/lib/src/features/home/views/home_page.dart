@@ -47,17 +47,21 @@ class _HomePageState extends State<HomePage>
       BooksLoadingState() => const Center(
           child: CircularProgressIndicator(),
         ),
-      BookEmptyState() => InfoItemStateWidget.withNotFoundState(
-          message: 'Não foi encontrado nenhum livro com esses termos.',
-          onPressed: _refreshPage,
-        ),
+      BookEmptyState() => Center(
+        child: InfoItemStateWidget.withNotFoundState(
+            message: 'Não foi encontrado nenhum livro com esses termos.',
+            onPressed: _refreshPage,
+          ),
+      ),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(
           books: books,
         ),
       BookErrorSate(errorMessage: final message) =>
-        InfoItemStateWidget.withErrorState(
-          message: message,
-          onPressed: _refreshPage,
+        Center(
+          child: InfoItemStateWidget.withErrorState(
+            message: message,
+            onPressed: _refreshPage,
+          ),
         ),
     };
   }

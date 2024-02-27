@@ -131,6 +131,14 @@ abstract interface class LocalDatabase {
     required dynamic id,
   });
 
+  Future<int> deleteWithAnotherColumn({
+    required String table,
+    required String otherColumn,
+    required dynamic value,
+    required String idColumn,
+    required dynamic id,
+  });
+
   /// Close the database to free up resources
   Future<void> closeDatabase();
 }

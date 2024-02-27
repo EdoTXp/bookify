@@ -5,6 +5,7 @@ class BookWidget extends StatelessWidget {
   final String bookImageUrl;
   final double? height;
   final double? width;
+  final double borderWidth;
   final Color? borderColor;
   final bool withShadow;
 
@@ -13,6 +14,7 @@ class BookWidget extends StatelessWidget {
     required this.bookImageUrl,
     this.height,
     this.width,
+    this.borderWidth = 1.0,
     this.borderColor,
     this.withShadow = false,
   });
@@ -37,7 +39,10 @@ class BookWidget extends StatelessWidget {
                     ),
                   ]
                 : null,
-            border: Border.all(color: color),
+            border: Border.all(
+              color: color,
+              width: borderWidth,
+            ),
             image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.fill,
