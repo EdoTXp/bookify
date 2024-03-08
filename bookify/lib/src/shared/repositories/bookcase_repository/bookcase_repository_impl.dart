@@ -15,9 +15,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
   Future<List<BookcaseModel>> getAll() async {
     try {
       final bookcasesMap = await _database.getAll(table: _bookcaseTableName);
-      final bookcases = bookcasesMap
-          .map((bookcase) => BookcaseModel.fromMap(bookcase))
-          .toList();
+      final bookcases = bookcasesMap.map(BookcaseModel.fromMap).toList();
 
       return bookcases;
     } on TypeError {

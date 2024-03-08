@@ -3,6 +3,7 @@ import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';
 
@@ -120,7 +121,8 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                     );
                   },
                 )
-              : TextButton.icon(
+              : AddNewItemTextButton(
+                  label: 'Adicionar uma nova estante',
                   onPressed: () async {
                     await Navigator.pushNamed(
                       context,
@@ -128,13 +130,6 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                     );
                     widget.onRefresh();
                   },
-                  icon: Icon(
-                    Icons.add_circle_outline_rounded,
-                    color: colorScheme.secondary,
-                  ),
-                  label: const Text(
-                    'Adicionar uma nova estante',
-                  ),
                 ),
         ),
         Expanded(

@@ -14,6 +14,8 @@ import 'package:bookify/src/shared/repositories/books_repository/books_repositor
 import 'package:bookify/src/shared/repositories/books_repository/books_repository_impl.dart';
 import 'package:bookify/src/shared/repositories/category_repository/categories_repository.dart';
 import 'package:bookify/src/shared/repositories/category_repository/categories_repository_impl.dart';
+import 'package:bookify/src/shared/repositories/loan_repository/loan_repository.dart';
+import 'package:bookify/src/shared/repositories/loan_repository/loan_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -42,5 +44,8 @@ final repositoriesProviders = [
   ),
   RepositoryProvider<BookOnCaseRepository>(
     create: (context) => BookOnCaseRepositoryImpl(context.read()),
+  ),
+  RepositoryProvider<LoanRepository>(
+    create: (context) => LoanRepositoryImpl(context.read()),
   ),
 ];

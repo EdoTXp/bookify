@@ -1,9 +1,17 @@
-export '../providers/repositories/repositories_providers.dart';
-export '../providers/services/services_providers.dart';
-export '../providers/views/home_page_providers.dart';
-export '../providers/views/book_detail_page_providers.dart';
-export '../providers/views/bookcase_page_providers.dart';
-export '../providers/views/bookcase_insertion_providers.dart';
-export '../providers/views/bookcase_detail_providers.dart';
-export '../providers/views/bookcase_book_insertion_providers.dart';
-export '../providers/views/my_books_providers.dart';
+import 'package:bookify/src/shared/providers/repositories/repositories_providers.dart';
+import 'package:bookify/src/shared/providers/services/services_providers.dart';
+import 'package:bookify/src/shared/providers/views/views_providers.dart';
+import 'package:provider/single_child_widget.dart';
+
+final providers = <SingleChildStatelessWidget>[
+  ...repositoriesProviders,
+  ...servicesProviders,
+  ...homePageProviders,
+  ...bookDetailPageProviders,
+  ...bookcasePageProviders,
+  ...bookcaseInsertionPageProviders,
+  ...bookcaseDetailPageProviders,
+  ...bookcaseBooksInsertionProviders,
+  ...loanPageProviders,
+  ...myBooksProviders,
+];

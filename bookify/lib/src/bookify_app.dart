@@ -10,24 +10,14 @@ class BookifyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ...repositoriesProviders,
-        ...servicesProviders,
-        ...homePageProviders,
-        ...bookDetailPageProviders,
-        ...bookcasePageProviders,
-        ...bookcaseInsertionPageProviders,
-        ...bookcaseDetailPageProviders,
-        ...bookcaseBooksInsertionProviders,
-        ...myBooksProviders,
-      ],
+      providers: providers,
       child: MaterialApp(
         title: 'Bookify',
         theme: appLightTheme,
         darkTheme: appDarkTheme,
         themeMode: ThemeMode.system,
-        routes: routes,
         initialRoute: '/',
+        routes: routes,
       ),
     );
   }

@@ -35,7 +35,13 @@ abstract interface class LocalDatabase {
   /// Retrieves all items from the specified table.
   ///
   /// [table] The name of the table from which to retrieve the items.
-  Future<List<Map<String, dynamic>>> getAll({required String table});
+  ///
+  /// [orderBy] Choose the order the query should return: [OrderByType.descendant] or [OrderByType.ascendant].
+  Future<List<Map<String, dynamic>>> getAll({
+    required String table,
+    String? orderColumn,
+    OrderByType? orderBy,
+  });
 
   /// Retrieves items from the specified table based on the provided column values.
   ///

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BookcaseModel {
-  int? id;
+  final int? id;
   final String name;
   final String description;
   final Color color;

@@ -48,10 +48,19 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
-  Future<List<Map<String, Object?>>> getAll({required String table}) async {
+  Future<List<Map<String, dynamic>>> getAll({
+    required String table,
+    String? orderColumn,
+    OrderByType? orderBy,
+  }) async {
     try {
       final db = await database;
-      final queryItems = await db!.query(table);
+      final queryItems = await db!.query(
+        table,
+        orderBy: (orderColumn != null && orderBy != null)
+            ? '$orderColumn ${orderBy.orderToString()}'
+            : null,
+      );
       return queryItems;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());
@@ -59,7 +68,7 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
-  Future<Map<String, Object?>> getItemById({
+  Future<Map<String, dynamic>> getItemById({
     required String table,
     required String idColumn,
     required dynamic id,
@@ -154,8 +163,10 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
-  Future<int> insert(
-      {required String table, required Map<String, dynamic> values}) async {
+  Future<int> insert({
+    required String table,
+    required Map<String, dynamic> values,
+  }) async {
     try {
       final db = await database;
       int newId = 0;

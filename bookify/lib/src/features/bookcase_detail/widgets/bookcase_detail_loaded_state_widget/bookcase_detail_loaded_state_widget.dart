@@ -2,6 +2,7 @@ import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
+import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';
 
@@ -119,13 +120,9 @@ class _BookcaseDetailLoadedStateWidgetState
                     );
                   },
                 )
-              : TextButton.icon(
+              : AddNewItemTextButton(
+                  label: 'Adicionar novos livros',
                   onPressed: widget.onAddBooksPressed,
-                  icon: Icon(
-                    Icons.add_circle_outline_rounded,
-                    color: colorScheme.secondary,
-                  ),
-                  label: const Text('Adicionar novos livros'),
                 ),
         ),
         const SizedBox(
