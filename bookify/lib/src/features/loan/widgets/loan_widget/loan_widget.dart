@@ -131,27 +131,15 @@ class LoanWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Tooltip(
-                                message: loan.loanModel.observation,
-                                child: SizedBox(
-                                  width: 100,
-                                  child: ContactInformationWidget(
-                                    iconData: Icons.description_outlined,
-                                    title: 'Observação',
-                                    content: loan.loanModel.observation,
-                                  ),
-                                ),
+                              ContactInformationWidget(
+                                iconData: Icons.description_outlined,
+                                title: 'Observação',
+                                content: loan.loanModel.observation,
                               ),
-                              Tooltip(
-                                message: loan.bookTitlePreview,
-                                child: SizedBox(
-                                  width: 100,
-                                  child: ContactInformationWidget(
-                                    iconData: Icons.book_outlined,
-                                    title: 'Livro',
-                                    content: loan.bookTitlePreview,
-                                  ),
-                                ),
+                              ContactInformationWidget(
+                                iconData: Icons.book_outlined,
+                                title: 'Livro',
+                                content: loan.bookTitlePreview,
                               ),
                             ],
                           ),

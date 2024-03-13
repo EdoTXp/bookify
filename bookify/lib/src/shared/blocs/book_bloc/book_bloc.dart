@@ -171,10 +171,4 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
-
-  @override
-  Future<void> close() {
-    _booksRepository.dispose();
-    return super.close();
-  }
 }

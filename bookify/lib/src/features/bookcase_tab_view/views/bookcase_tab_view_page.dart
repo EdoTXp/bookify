@@ -108,9 +108,11 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
               ),
             ),
             IconButton(
-              icon: Icon((!_searchBarIsVisible)
-                  ? Icons.search_rounded
-                  : Icons.search_off_rounded),
+              icon: Icon(
+                (_searchBarIsVisible)
+                    ? Icons.search_off_rounded
+                    : Icons.search_rounded,
+              ),
               tooltip: (_searchBarIsVisible)
                   ? 'Desativar a barra de pesquisa.'
                   : 'Ativar a barra de pesquisa.',

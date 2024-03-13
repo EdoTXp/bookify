@@ -82,11 +82,7 @@ class BooksRepositoryImpl implements BooksRepository {
         column: 'title',
         columnValues: title,
       );
-      final books = booksMap
-          .map(
-            (book) => BookModel.fromMap(book),
-          )
-          .toList();
+      final books = booksMap.map(BookModel.fromMap).toList();
 
       return books;
     } on TypeError {

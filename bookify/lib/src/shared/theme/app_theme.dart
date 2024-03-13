@@ -77,6 +77,7 @@ final appDarkTheme = ThemeData(
 const _appBarTheme = AppBarTheme(
   backgroundColor: Colors.transparent,
   shadowColor: Colors.transparent,
+  surfaceTintColor: Colors.transparent,
   iconTheme: IconThemeData(color: bookifySecondaryColor),
 );
 

@@ -71,8 +71,11 @@ class _BookcasePageState extends State<BookcasePage> {
         BookcaseLoadedStateWidget(
           bookcasesDto: bookcasesDto,
           onRefresh: _refreshPage,
-          onPressedDeleteButton: (selectedList) =>
-              _bloc.add(DeletedBookcasesEvent(selectedList: selectedList)),
+          onPressedDeleteButton: (selectedList) => _bloc.add(
+            DeletedBookcasesEvent(
+              selectedList: selectedList,
+            ),
+          ),
         ),
       BookcaseNotFoundState() => InfoItemStateWidget.withNotFoundState(
           message:

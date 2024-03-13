@@ -90,28 +90,26 @@ class _MyBooksPageState extends State<MyBooksPage> {
     return BlocBuilder<MyBooksBloc, MyBooksState>(
       bloc: _bloc,
       builder: (context, state) {
-        return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (state is MyBooksLoadedState) ...[
-                  Text(
-                    '${state.books.length} Livros',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (state is MyBooksLoadedState) ...[
+                Text(
+                  '${state.books.length} ${(state.books.length == 1) ? 'livro' : 'livros'}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-                Expanded(
-                  child: _getWidgetOnMyBooksState(context, state),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
-            ),
+              Expanded(
+                child: _getWidgetOnMyBooksState(context, state),
+              ),
+            ],
           ),
         );
       },

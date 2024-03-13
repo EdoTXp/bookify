@@ -4,48 +4,62 @@ class ContactInformationWidget extends StatelessWidget {
   final IconData iconData;
   final String title;
   final String content;
-  final CrossAxisAlignment columnCrossAxisAlignment;
+  final double? height;
+  final double? width;
+  final bool enableToolTip;
 
   const ContactInformationWidget({
     super.key,
     required this.iconData,
     required this.title,
     required this.content,
-    this.columnCrossAxisAlignment = CrossAxisAlignment.end
+    this.height,
+    this.width = 100,
+    this.enableToolTip = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Column(
-      crossAxisAlignment: columnCrossAxisAlignment,
-      children: [
-        Row(
+    return Tooltip(
+      message: (enableToolTip) ? content : null,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              iconData,
-              size: 18,
-              color: colorScheme.secondary,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  iconData,
+                  size: 18,
+                  color: colorScheme.secondary,
+                ),
+                const SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
             Text(
-              title,
+              content,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w400,
               ),
             ),
           ],
         ),
-        Text(
-          content,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 12,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

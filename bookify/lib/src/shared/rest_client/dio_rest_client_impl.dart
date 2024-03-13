@@ -6,6 +6,7 @@ import '../errors/book_exception/book_exception.dart';
 import 'rest_client.dart';
 
 const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
+
 class DioRestClientImpl implements RestClient {
   final _dio = Dio(
     BaseOptions(
@@ -32,10 +33,5 @@ class DioRestClientImpl implements RestClient {
     } catch (e) {
       throw Exception(e.toString());
     }
-  }
-
-  @override
-  void dispose() {
-    _dio.close(force: true);
   }
 }

@@ -40,12 +40,12 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
         columnValues: categoryName,
       );
 
-      if (categoryMap.isNotEmpty) {
-        final actualAuthorId = categoryMap.last['id'] as int;
-        return actualAuthorId;
+      if (categoryMap.isEmpty) {
+        return -1;
       }
 
-      return -1;
+      final actualAuthorId = categoryMap.last['id'] as int;
+      return actualAuthorId;
     } on TypeError {
       throw LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {

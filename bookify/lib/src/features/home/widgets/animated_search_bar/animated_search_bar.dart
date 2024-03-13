@@ -37,12 +37,6 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
     });
   }
 
-  @override
-  void dispose() {
-    widget.searchEC.dispose();
-    super.dispose();
-  }
-
   void _changeIconButtonVisibilityOnSearchTextIsEmpty() {
     final bool searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
     setState(() => _searchTextIsEmpty = searchTextIsEmpty ? true : false);
@@ -106,8 +100,10 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
             IconButton(
               tooltip: 'Altere o tipo de busca.',
               onPressed: () {
-                setState(() =>
-                    _searchIconByTypeIsClicked = !_searchIconByTypeIsClicked);
+                setState(
+                  () =>
+                      _searchIconByTypeIsClicked = !_searchIconByTypeIsClicked,
+                );
               },
               icon: Column(
                 children: [

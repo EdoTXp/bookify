@@ -10,7 +10,7 @@ import 'package:bookify/src/features/root/views/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
- /// The Route Name = '/'
+  /// The Route Name = '/'
   static const routeName = '/';
 
   const RootPage({super.key});
@@ -49,7 +49,6 @@ class _RootPageState extends State<RootPage> {
 
   @override
   void dispose() {
-    _bookBloc.close();
     _pageController.dispose();
     _bottomBarController.dispose();
     super.dispose();

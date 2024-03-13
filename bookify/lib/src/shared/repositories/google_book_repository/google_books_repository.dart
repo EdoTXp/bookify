@@ -12,6 +12,4 @@ abstract interface class GoogleBooksRepository {
   Future<List<BookModel>> findBooksByTitle({required String title});
 
   Future<List<BookModel>> findBooksByIsbn({required String isbn});
-
-  void dispose();
 }

@@ -11,28 +11,19 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin<HomePage> {
+class _HomePageState extends State<HomePage> {
   late final BookBloc _bookBloc;
   late final TextEditingController _searchEC;
-  late bool _searchBarIsVisible;
 
   @override
   void initState() {
     super.initState();
-
     _searchEC = TextEditingController();
-    _searchBarIsVisible = true;
-    _bookBloc = context.read<BookBloc>();
-    _bookBloc.add(GotAllBooksEvent());
+    _bookBloc = context.read<BookBloc>()..add(GotAllBooksEvent());
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   void dispose() {
-    _bookBloc.close();
     _searchEC.dispose();
     super.dispose();
   }
@@ -48,26 +39,21 @@ class _HomePageState extends State<HomePage>
           child: CircularProgressIndicator(),
         ),
       BookEmptyState() => Center(
-        child: InfoItemStateWidget.withNotFoundState(
+          child: InfoItemStateWidget.withNotFoundState(
             message: 'Não foi encontrado nenhum livro com esses termos.',
             onPressed: _refreshPage,
           ),
-      ),
+        ),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(
           books: books,
         ),
-      BookErrorSate(errorMessage: final message) =>
-        Center(
+      BookErrorSate(errorMessage: final message) => Center(
           child: InfoItemStateWidget.withErrorState(
             message: message,
             onPressed: _refreshPage,
           ),
         ),
     };
-  }
-
-  void _bookStateListener(BookState state) {
-    _searchBarIsVisible = state is BooksLoadedState ? false : true;
   }
 
   void _onSubmittedSearch(String value, SearchType searchType) {
@@ -94,31 +80,29 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return RefreshIndicator(
       onRefresh: () async => _refreshPage(),
       color: Theme.of(context).colorScheme.secondary,
-      child: BlocConsumer<BookBloc, BookState>(
+      child: BlocBuilder<BookBloc, BookState>(
         bloc: _bookBloc,
-        listener: (_, state) => _bookStateListener(state),
         builder: (BuildContext context, state) {
           return Column(
             children: [
-              SafeArea(
-                bottom: false,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 16.0, right: 16.0, left: 16.0),
-                  child: Offstage(
-                    offstage: _searchBarIsVisible,
+              if (state is BooksLoadedState)
+                SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16.0,
+                      right: 16.0,
+                      left: 16.0,
+                    ),
                     child: AnimatedSearchBar(
                       searchEC: _searchEC,
                       onSubmitted: _onSubmittedSearch,
                     ),
                   ),
                 ),
-              ),
               Expanded(
                 child: _getBookStateWidget(context, state),
               ),

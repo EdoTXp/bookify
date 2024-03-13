@@ -40,12 +40,12 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
         columnValues: authorName,
       );
 
-      if (authorMap.isNotEmpty) {
-        final actualAuthorId = authorMap.last['id'] as int;
-        return actualAuthorId;
+      if (authorMap.isEmpty) {
+        return -1;
       }
 
-      return -1;
+      final actualAuthorId = authorMap.last['id'] as int;
+      return actualAuthorId;
     } on TypeError {
       throw LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {

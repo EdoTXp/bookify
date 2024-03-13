@@ -35,9 +35,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
         column: 'name',
         columnValues: name,
       );
-      final bookcases = bookcasesMap
-          .map((bookcase) => BookcaseModel.fromMap(bookcase))
-          .toList();
+      final bookcases = bookcasesMap.map(BookcaseModel.fromMap).toList();
 
       return bookcases;
     } on TypeError {

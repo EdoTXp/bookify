@@ -28,7 +28,7 @@ class _LoanLoadedStateWidgetState extends State<LoanLoadedStateWidget> {
         ),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(10),
             itemCount: loansDto.length,
             itemBuilder: (context, index) {
               return LoanWidget(

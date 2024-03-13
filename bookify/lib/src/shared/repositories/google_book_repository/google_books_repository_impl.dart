@@ -60,11 +60,6 @@ class GoogleBookRepositoryImpl implements GoogleBooksRepository {
     return books;
   }
 
-  @override
-  void dispose() {
-    _httpSource.dispose();
-  }
-
   Future<List<BookModel>> _fetch(String url) async {
     try {
       final response = await _httpSource.get(url);
