@@ -5,14 +5,16 @@ sealed class BookcaseInsertionState {}
 
 final class BookcaseInsertionLoadingState extends BookcaseInsertionState {}
 
-final class BookcaseInsertionLoadedState extends BookcaseInsertionState {
+final class BookcaseInsertionInsertedState extends BookcaseInsertionState {
   final String bookcaseInsertionMessage;
 
-  BookcaseInsertionLoadedState({required this.bookcaseInsertionMessage});
+  BookcaseInsertionInsertedState({required this.bookcaseInsertionMessage});
 }
 
 final class BookcaseInsertionErrorState extends BookcaseInsertionState {
   final String errorMessage;
 
-  BookcaseInsertionErrorState({required this.errorMessage});
+  BookcaseInsertionErrorState({
+    required this.errorMessage,
+  });
 }

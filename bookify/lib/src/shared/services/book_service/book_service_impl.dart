@@ -146,6 +146,16 @@ class BookServiceImpl implements BookService {
   }
 
   @override
+  Future<BookStatus> getBookStatus({required String id}) async {
+    try {
+      final bookStatus = await _booksRepository.getBookStatus(id: id);
+      return bookStatus;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> updateStatus({
     required String id,
     required BookStatus status,

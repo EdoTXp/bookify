@@ -37,6 +37,14 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
     });
   }
 
+  @override
+  void dispose() {
+    widget.searchEC.removeListener(() {
+      _changeIconButtonVisibilityOnSearchTextIsEmpty();
+    });
+    super.dispose();
+  }
+
   void _changeIconButtonVisibilityOnSearchTextIsEmpty() {
     final bool searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
     setState(() => _searchTextIsEmpty = searchTextIsEmpty ? true : false);

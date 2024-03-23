@@ -27,12 +27,12 @@ final appLightTheme = ThemeData(
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme:
       _floatingActionButtonTheme.copyWith(backgroundColor: Colors.white),
-  disabledColor: bookifyDisabledColor,
+  disabledColor: AppColor.bookifyDisabledColor,
   colorScheme: const ColorScheme.light(
-    primary: bookifyPrimaryColor,
-    secondary: bookifySecondaryColor,
-    tertiary: bookifyTertiaryColor,
-    error: bookifyErrorColor,
+    primary: AppColor.bookifyPrimaryColor,
+    secondary: AppColor.bookifySecondaryColor,
+    tertiary: AppColor.bookifyTertiaryColor,
+    error: AppColor.bookifyErrorColor,
   ),
 );
 
@@ -40,9 +40,9 @@ final appLightTheme = ThemeData(
 final appDarkTheme = ThemeData(
   appBarTheme: _appBarTheme.copyWith(
     systemOverlayStyle: const SystemUiOverlayStyle(
-      systemNavigationBarColor: bookifyDarkBackgroundColor,
+      systemNavigationBarColor: AppColor.bookifyDarkBackgroundColor,
       systemNavigationBarIconBrightness: Brightness.light,
-      statusBarColor: bookifyDarkBackgroundColor,
+      statusBarColor: AppColor.bookifyDarkBackgroundColor,
       statusBarIconBrightness: Brightness.light, // For Android (light icons)
       statusBarBrightness: Brightness.dark, // For iOS (light icons)
     ),
@@ -59,15 +59,15 @@ final appDarkTheme = ThemeData(
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
-    backgroundColor: bookifyDarkBackgroundColor,
+    backgroundColor: AppColor.bookifyDarkBackgroundColor,
   ),
-  disabledColor: bookifyDisabledColor,
+  disabledColor: AppColor.bookifyDisabledColor,
   colorScheme: const ColorScheme.dark(
-    primary: bookifyPrimaryColor,
-    secondary: bookifySecondaryColor,
-    tertiary: bookifyTertiaryColor,
-    error: bookifyErrorColor,
-    background: bookifyDarkBackgroundColor,
+    primary: AppColor.bookifyPrimaryColor,
+    secondary: AppColor.bookifySecondaryColor,
+    tertiary: AppColor.bookifyTertiaryColor,
+    error: AppColor.bookifyErrorColor,
+    background: AppColor.bookifyDarkBackgroundColor,
   ),
 );
 
@@ -78,11 +78,14 @@ const _appBarTheme = AppBarTheme(
   backgroundColor: Colors.transparent,
   shadowColor: Colors.transparent,
   surfaceTintColor: Colors.transparent,
-  iconTheme: IconThemeData(color: bookifySecondaryColor),
+  iconTheme: IconThemeData(
+    color: AppColor.bookifySecondaryColor,
+  ),
 );
 
-const _progressIndicatorTheme =
-    ProgressIndicatorThemeData(color: bookifySecondaryColor);
+const _progressIndicatorTheme = ProgressIndicatorThemeData(
+  color: AppColor.bookifySecondaryColor,
+);
 
 final _textTheme = TextTheme(
   displayLarge: GoogleFonts.roboto(fontSize: 64),
@@ -132,13 +135,13 @@ final _textTheme = TextTheme(
 );
 
 const _textSelectionTheme = TextSelectionThemeData(
-  cursorColor: bookifyPrimaryColor,
-  selectionColor: bookifyPrimaryColor,
+  cursorColor: AppColor.bookifyPrimaryColor,
+  selectionColor: AppColor.bookifyPrimaryColor,
 );
 
 const _searchBarTheme = SearchBarThemeData(
   side: MaterialStatePropertyAll(
-    BorderSide(color: bookifySecondaryColor),
+    BorderSide(color: AppColor.bookifySecondaryColor),
   ),
   elevation: MaterialStatePropertyAll(0),
   padding: MaterialStatePropertyAll(
@@ -149,29 +152,31 @@ const _searchBarTheme = SearchBarThemeData(
   )),
   hintStyle: MaterialStatePropertyAll(TextStyle(
     fontSize: 14,
-    color: bookifySecondaryColor,
+    color: AppColor.bookifySecondaryColor,
   )),
 );
 
 const _segmentedButtonTheme = SegmentedButtonThemeData(
   style: ButtonStyle(
-    surfaceTintColor: MaterialStatePropertyAll(bookifySecondaryColor),
+    surfaceTintColor: MaterialStatePropertyAll(AppColor.bookifySecondaryColor),
     visualDensity: VisualDensity.comfortable,
     textStyle: MaterialStatePropertyAll(TextStyle(
       fontSize: 12,
       overflow: TextOverflow.ellipsis,
     )),
-    side: MaterialStatePropertyAll(BorderSide(color: bookifySecondaryColor)),
-    iconColor: MaterialStatePropertyAll(bookifySecondaryColor),
+    side: MaterialStatePropertyAll(
+        BorderSide(color: AppColor.bookifySecondaryColor)),
+    iconColor: MaterialStatePropertyAll(AppColor.bookifySecondaryColor),
   ),
 );
 
-const _iconTheme = IconThemeData(color: bookifyPrimaryColor);
+const _iconTheme = IconThemeData(color: AppColor.bookifyPrimaryColor);
 
 final _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: const MaterialStatePropertyAll(bookifyPrimaryColor),
-    iconColor: const MaterialStatePropertyAll(bookifyPrimaryColor),
+    foregroundColor:
+        const MaterialStatePropertyAll(AppColor.bookifyPrimaryColor),
+    iconColor: const MaterialStatePropertyAll(AppColor.bookifyPrimaryColor),
     overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
     textStyle: const MaterialStatePropertyAll(
       TextStyle(fontWeight: FontWeight.bold),
@@ -181,7 +186,9 @@ final _textButtonTheme = TextButtonThemeData(
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    backgroundColor: const MaterialStatePropertyAll(bookifySecondaryColor),
+    backgroundColor: const MaterialStatePropertyAll(
+      AppColor.bookifySecondaryColor,
+    ),
     foregroundColor: const MaterialStatePropertyAll(Colors.white),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -195,7 +202,9 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
 
 final _outlinedButtonTheme = OutlinedButtonThemeData(
   style: ButtonStyle(
-    foregroundColor: const MaterialStatePropertyAll(bookifySecondaryColor),
+    foregroundColor: const MaterialStatePropertyAll(
+      AppColor.bookifySecondaryColor,
+    ),
     overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
     shape: MaterialStatePropertyAll(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -203,14 +212,14 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
     side: const MaterialStatePropertyAll(
       BorderSide(
         width: 2,
-        color: bookifySecondaryColor,
+        color: AppColor.bookifySecondaryColor,
       ),
     ),
-    iconColor: const MaterialStatePropertyAll(bookifySecondaryColor),
+    iconColor: const MaterialStatePropertyAll(AppColor.bookifySecondaryColor),
     textStyle: const MaterialStatePropertyAll(
       TextStyle(
         fontSize: 14,
-        color: bookifySecondaryColor,
+        color: AppColor.bookifySecondaryColor,
       ),
     ),
   ),
@@ -219,33 +228,37 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
 final _inputDecorationTheme = InputDecorationTheme(
   focusedBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-      color: bookifySecondaryColor,
+      width: 2,
+      color: AppColor.bookifySecondaryColor,
     ),
   ),
   enabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-      color: bookifyPrimaryColor,
+      width: 2,
+      color: AppColor.bookifyPrimaryColor,
     ),
   ),
   errorBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-      color: bookifyErrorColor,
+      width: 2,
+      color: AppColor.bookifyErrorColor,
     ),
   ),
   focusedErrorBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-      color: bookifyErrorColor,
+      
+      color: AppColor.bookifyErrorColor,
     ),
   ),
   errorStyle: const TextStyle(
     fontSize: 12,
-    color: bookifyErrorColor,
+    color: AppColor.bookifyErrorColor,
   ),
   labelStyle: MaterialStateTextStyle.resolveWith(
     (Set<MaterialState> states) {
       if (states.contains(MaterialState.focused)) {
         return const TextStyle(
-          color: bookifySecondaryColor,
+          color: AppColor.bookifySecondaryColor,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {
@@ -255,7 +268,7 @@ final _inputDecorationTheme = InputDecorationTheme(
       }
 
       return const TextStyle(
-        color: bookifyPrimaryColor,
+        color: AppColor.bookifyPrimaryColor,
         fontSize: 14,
       );
     },
@@ -264,7 +277,7 @@ final _inputDecorationTheme = InputDecorationTheme(
     (Set<MaterialState> states) {
       if (states.contains(MaterialState.focused)) {
         return const TextStyle(
-          color: bookifySecondaryColor,
+          color: AppColor.bookifySecondaryColor,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {
@@ -274,7 +287,7 @@ final _inputDecorationTheme = InputDecorationTheme(
       }
 
       return const TextStyle(
-        color: bookifyPrimaryColor,
+        color: AppColor.bookifyPrimaryColor,
         fontSize: 14,
       );
     },
@@ -283,9 +296,9 @@ final _inputDecorationTheme = InputDecorationTheme(
 
 const _floatingActionButtonTheme = FloatingActionButtonThemeData(
   splashColor: Colors.transparent,
-  foregroundColor: bookifyPrimaryColor,
+  foregroundColor: AppColor.bookifyPrimaryColor,
   shape: RoundedRectangleBorder(
-    side: BorderSide(color: bookifyPrimaryColor),
+    side: BorderSide(color: AppColor.bookifyPrimaryColor),
     borderRadius: BorderRadius.all(Radius.circular(15)),
   ),
 );

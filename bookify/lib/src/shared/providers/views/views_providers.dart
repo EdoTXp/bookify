@@ -6,3 +6,4 @@ export 'package:bookify/src/shared/providers/views/bookcase_detail_providers.dar
 export 'package:bookify/src/shared/providers/views/bookcase_book_insertion_providers.dart';
 export 'package:bookify/src/shared/providers/views/my_books_providers.dart';
 export 'package:bookify/src/shared/providers/views/loan_page_providers.dart';
+export 'package:bookify/src/shared/providers/views/loan_insertion_page_providers.dart';

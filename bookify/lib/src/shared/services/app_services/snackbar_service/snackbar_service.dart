@@ -1,4 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 enum SnackBarType {
@@ -7,21 +8,31 @@ enum SnackBarType {
   error,
   success;
 
-  String typeToString() {
-    return switch (this) {
-      SnackBarType.info => 'Informação',
-      SnackBarType.warning => 'Atenção',
-      SnackBarType.error => 'Erro',
-      SnackBarType.success => 'Sucesso',
-    };
-  }
-
   ContentType _toContentType() {
     return switch (this) {
       SnackBarType.info => ContentType.help,
       SnackBarType.warning => ContentType.warning,
       SnackBarType.error => ContentType.failure,
       SnackBarType.success => ContentType.success,
+    };
+  }
+
+  Color _toColor() {
+    return switch (this) {
+      SnackBarType.info => AppColor.bookifyPrimaryColor,
+      SnackBarType.warning => AppColor.bookifyWarningColor,
+      SnackBarType.error => AppColor.bookifyErrorColor,
+      SnackBarType.success => AppColor.bookifySuccessColor,
+    };
+  }
+
+  @override
+  String toString() {
+    return switch (this) {
+      SnackBarType.info => 'Informação',
+      SnackBarType.warning => 'Atenção',
+      SnackBarType.error => 'Erro',
+      SnackBarType.success => 'Sucesso',
     };
   }
 }
@@ -38,9 +49,10 @@ class SnackbarService {
       backgroundColor: Colors.transparent,
       duration: duration,
       content: AwesomeSnackbarContent(
-        title: snackBarType.typeToString(),
+        title: snackBarType.toString(),
         message: message,
         contentType: snackBarType._toContentType(),
+        color: snackBarType._toColor(),
       ),
     );
 

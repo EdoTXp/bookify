@@ -2,6 +2,7 @@ import 'package:bookify/src/features/loan/widgets/loan_widget/widgets/contact_in
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/helpers/date_time_format/date_time_format.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
+import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
 
 class LoanWidget extends StatelessWidget {
@@ -64,22 +65,9 @@ class LoanWidget extends StatelessWidget {
                         Positioned(
                           top: -3,
                           right: -3,
-                          child: CircleAvatar(
-                            backgroundImage: (loan.contactDto?.photo != null)
-                                ? MemoryImage(loan.contactDto!.photo!)
-                                : null,
-                            backgroundColor: (loan.contactDto?.photo == null)
-                                ? colorScheme.secondary
-                                : null,
-                            child: (loan.contactDto?.photo == null)
-                                ? (Text(
-                                    loan.contactDto!.name[0].toUpperCase(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))
-                                : null,
+                          child: ContactCircleAvatar(
+                            name: loan.contactDto!.name,
+                            photo: loan.contactDto!.photo,
                           ),
                         ),
                       ],

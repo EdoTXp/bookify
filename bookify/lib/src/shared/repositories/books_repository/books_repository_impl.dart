@@ -109,6 +109,27 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
+  Future<BookStatus> getBookStatus({required String id}) async {
+    try {
+      final statusMap = await _database.getColumnsById(
+        table: _bookTableName,
+        columns: ['status'],
+        idColumn: 'id',
+        id: id,
+      );
+
+      final bookStatus = BookStatus.fromMap(statusMap['status'] as int);
+      return bookStatus!;
+    } on TypeError {
+      throw LocalDatabaseException(
+        'Impossível encontrar o status do livro no database',
+      );
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> updateBookStatus({
     required String id,
     required BookStatus status,

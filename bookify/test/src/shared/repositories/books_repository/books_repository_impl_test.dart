@@ -161,6 +161,21 @@ void main() {
       expect(image, equals('http:www//imageurl.com'));
     });
 
+    test('getStatus', () async {
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'status': 1});
+
+      final bookStatus = await bookRepository.getBookStatus(id: 'bookId');
+
+      expect(bookStatus, equals(BookStatus.library));
+    });
+
     test('update book status', () async {
       when(() => localDatabase.update(
             table: any(named: 'table'),
@@ -178,7 +193,7 @@ void main() {
   });
 
   group('Test normal CRUD book with error ||', () {
-    test('insert book', () async {
+    test('insert book -- LocalDatabaseException', () async {
       when(() => localDatabase.insert(
             table: any(named: 'table'),
             values: any(named: 'values'),
@@ -191,7 +206,7 @@ void main() {
       );
     });
 
-    test('delete book', () async {
+    test('delete book -- LocalDatabaseException', () async {
       when(() => localDatabase.delete(
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),
@@ -205,7 +220,7 @@ void main() {
       );
     });
 
-    test('verify book is already inserted', () async {
+    test('verify book is already inserted -- LocalDatabaseException', () async {
       when(() => localDatabase.verifyItemIsAlreadyInserted(
             table: any(named: 'table'),
             column: any(named: 'column'),
@@ -219,7 +234,7 @@ void main() {
       );
     });
 
-    test('get book by id', () async {
+    test('get book by id -- TypeError', () async {
       when(() => localDatabase.getItemById(
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),
@@ -234,7 +249,21 @@ void main() {
       );
     });
 
-    test('get book by name', () async {
+    test('get book by id -- LocalDatabaseException', () async {
+      when(() => localDatabase.getItemById(
+            table: any(named: 'table'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id'),
+          )).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookRepository.getBookById(id: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('get book by Title -- TypeError', () async {
       when(() => localDatabase.researchBy(
               table: any(named: 'table'),
               column: any(named: 'column'),
@@ -250,7 +279,21 @@ void main() {
                   'Impossível encontrar os livros com esse título no database'));
     });
 
-    test('get all books', () async {
+    test('get book by Title -- LocalDatabaseException', () async {
+      when(() => localDatabase.researchBy(
+              table: any(named: 'table'),
+              column: any(named: 'column'),
+              columnValues: any(named: 'columnValues')))
+          .thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+          () async => await bookRepository.getBookByTitle(
+              title: 'Memórias Postumas de Bras Cubas'),
+          throwsA((Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database'));
+    });
+
+    test('get all books -- TypeError', () async {
       when(() => localDatabase.getAll(
             table: any(named: 'table'),
           )).thenAnswer((_) async => [
@@ -265,7 +308,19 @@ void main() {
       );
     });
 
-    test('get book image', () async {
+    test('get all books -- LocalDatabaseException', () async {
+      when(() => localDatabase.getAll(
+            table: any(named: 'table'),
+          )).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookRepository.getAll(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('get book image -- TypeError', () async {
       when(() => localDatabase.getColumnsById(
             table: any(named: 'table'),
             columns: any(named: 'columns'),
@@ -281,7 +336,57 @@ void main() {
       );
     });
 
-    test('update book status', () async {
+    test('get book image -- LocalDatabaseException', () async {
+      when(() => localDatabase.getColumnsById(
+            table: any(named: 'table'),
+            columns: any(named: 'columns'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id'),
+          )).thenThrow(LocalDatabaseException('Error on Database'));
+
+      expect(
+        () async => await bookRepository.getBookImageById(id: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on Database'),
+      );
+    });
+
+    test('getStatus -- typeError', () async {
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'status': null});
+
+      expect(
+        () async => await bookRepository.getBookStatus(id: 'bookId'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException &&
+            e.message == 'Impossível encontrar o status do livro no database'),
+      );
+    });
+
+    test('getStatus -- LocalDatabaseException', () async {
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(LocalDatabaseException('error on database'));
+
+      expect(
+        () async => await bookRepository.getBookStatus(id: 'bookId'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'error on database'),
+      );
+    });
+
+    test('update book status -- LocalDatabaseException', () async {
       when(() => localDatabase.update(
               table: any(named: 'table'),
               idColumn: any(named: 'idColumn'),

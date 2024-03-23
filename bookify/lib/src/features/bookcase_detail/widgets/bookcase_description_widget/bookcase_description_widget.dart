@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/helpers/color_brightness/color_brightness.dart';
 import 'package:flutter/material.dart';
 
 class BookcaseDescriptionWidget extends StatelessWidget {
@@ -57,7 +58,11 @@ class BookcaseDescriptionWidget extends StatelessWidget {
             fontSize: 14,
           ),
         ),
-        Divider(color: colorScheme.primary.withOpacity(.3)),
+        Divider(
+          color: (Theme.of(context).brightness == Brightness.dark)
+              ? color.lighten(.2)
+              : color.darken(.2),
+        ),
       ],
     );
   }

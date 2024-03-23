@@ -212,6 +212,15 @@ void main() {
       expect(bookIsInserted, isTrue);
     });
 
+    test('get status', () async {
+      when(
+        () => booksRepository.getBookStatus(id: any(named: 'id')),
+      ).thenAnswer((_) async => BookStatus.reading);
+
+      final bookStatus = await bookService.getBookStatus(id: '1');
+      expect(bookStatus, equals(BookStatus.reading));
+    });
+
     test('update status', () async {
       when(
         () => booksRepository.updateBookStatus(
@@ -393,6 +402,18 @@ void main() {
 
       expect(
         () async => await bookService.verifyBookIsAlreadyInserted(id: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('get status', () async {
+      when(
+        () => booksRepository.getBookStatus(id: any(named: 'id')),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookService.getBookStatus(id: '1'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

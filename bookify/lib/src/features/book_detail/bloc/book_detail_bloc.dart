@@ -75,14 +75,29 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     try {
       emit(BookDetailLoadingState());
 
-      final bookRemoved = await _bookService.deleteBook(id: event.bookId);
+      final bookStatus = await _bookService.getBookStatus(id: event.bookId);
 
-      if (bookRemoved != 1) {
-        emit(BookDetailErrorState(errorMessage: 'Erro ao remover o livro'));
+      if (bookStatus != BookStatus.library) {
+        emit(
+          BookDetailErrorState(
+            errorMessage:
+                'Impossível remover o livro porque está ${bookStatus.toString()}.',
+          ),
+        );
         return;
       }
 
+      final bookRemoved = await _bookService.deleteBook(id: event.bookId);
+      if (bookRemoved != 1) {
+        emit(
+          BookDetailErrorState(
+            errorMessage: 'Erro ao remover o livro',
+          ),
+        );
+        return;
+      }
       emit(BookDetailLoadedState(bookIsInserted: false));
+      return;
     } on LocalDatabaseException catch (e) {
       emit(BookDetailErrorState(
         errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
@@ -93,6 +108,4 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       ));
     }
   }
-
-  Future<void> dispose() async => await close();
 }

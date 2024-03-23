@@ -10,10 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:validatorless/validatorless.dart';
 
 class BookcaseInsertionPage extends StatefulWidget {
-
   /// The Route Name = '/bookcase_insertion'
   static const routeName = '/bookcase_insertion';
-  
+
   final BookcaseModel? bookcaseModel;
 
   const BookcaseInsertionPage({
@@ -50,7 +49,8 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     _bookcaseNameEC.text = widget.bookcaseModel?.name ?? '';
     _bookcaseDescriptionEC.text = widget.bookcaseModel?.description ?? '';
-    _selectedColor = widget.bookcaseModel?.color ?? Colors.white;
+    _selectedColor =
+        widget.bookcaseModel?.color ?? Theme.of(context).colorScheme.secondary;
   }
 
   @override
@@ -90,7 +90,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         );
 
         break;
-      case BookcaseInsertionLoadedState(
+      case BookcaseInsertionInsertedState(
           bookcaseInsertionMessage: final succesMessage,
         ):
         SnackbarService.showSnackBar(
@@ -134,7 +134,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
               centerTitle: true,
               title: Text(
                 titlePage,
-                style: const TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 14),
               ),
               actions: [
                 IconButton(
@@ -165,6 +165,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                           decoration: const InputDecoration(
                             labelText: 'Nome',
                           ),
+                          textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -178,9 +179,11 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                           decoration: const InputDecoration(
                             labelText: 'Descrição',
                           ),
+                          textInputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          style: const TextStyle(fontSize: 16),
                           readOnly: true,
                           onTap: () async {
                             _selectedColor = await ColorPickerDialogService

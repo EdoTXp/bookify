@@ -104,12 +104,14 @@ void main() {
 
       expect(bookcaseUpdatedRow, equals(1));
     });
-
     test('delete()', () async {
-      when(() => localDatabase.delete(
+      when(
+        () => localDatabase.delete(
           table: any(named: 'table'),
           idColumn: any(named: 'idColumn'),
-          id: any(named: 'id'))).thenAnswer((_) async => 1);
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => 1);
 
       final bookcaseDeletedRow = await bookcaseRepository.delete(bookcaseId: 1);
 

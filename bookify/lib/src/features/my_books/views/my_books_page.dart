@@ -66,6 +66,7 @@ class _MyBooksPageState extends State<MyBooksPage> {
               BookDetailPage.routeName,
               arguments: book,
             );
+            _refreshPage();
           },
         ),
       MyBooksNotFoundState() => InfoItemStateWidget.withNotFoundState(

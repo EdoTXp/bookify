@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/loan/bloc/loan_bloc.dart';
 import 'package:bookify/src/features/loan/widgets/loan_loaded_state_widget/loan_loaded_state_widget.dart';
+import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
@@ -53,10 +54,17 @@ class _LoanPageState extends State<LoanPage> {
         ),
       LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
           loansDto: loansDto,
+          refreshPage: _refreshPage,
         ),
       LoanEmptyState() => ItemEmptyStateWidget(
           label: 'Criar um novo empréstimo',
-          onTap: () {},
+          onTap: () async {
+            await Navigator.pushNamed(
+              context,
+              LoanInsertionPage.routeName,
+            );
+            _refreshPage();
+          },
         ),
       LoanErrorState(:final errorMessage) => Center(
           child: InfoItemStateWidget.withErrorState(

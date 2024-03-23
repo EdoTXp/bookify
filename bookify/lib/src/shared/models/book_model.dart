@@ -26,6 +26,15 @@ enum BookStatus {
         return null;
     }
   }
+
+  @override
+  String toString() {
+    return switch (this) {
+      BookStatus.library => 'na estante',
+      BookStatus.reading => 'em leitura',
+      BookStatus.loaned => 'em empréstimo',
+    };
+  }
 }
 
 class BookModel {

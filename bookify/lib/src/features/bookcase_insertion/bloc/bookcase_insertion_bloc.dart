@@ -40,7 +40,7 @@ class BookcaseInsertionBloc
         return;
       }
 
-      emit(BookcaseInsertionLoadedState(
+      emit(BookcaseInsertionInsertedState(
           bookcaseInsertionMessage: 'Estante inserida com sucesso'));
     } on LocalDatabaseException catch (e) {
       emit(BookcaseInsertionErrorState(
@@ -68,7 +68,7 @@ class BookcaseInsertionBloc
       final bookcaseRowUpdated =
           await _bookcaseService.updateBookcase(bookcaseModel: bookcaseModel);
 
-      if (bookcaseRowUpdated != 1) {
+      if (bookcaseRowUpdated < 1) {
         emit(
           BookcaseInsertionErrorState(
             errorMessage: 'Ocorreu um erro ao atualizar a estante',
@@ -77,7 +77,7 @@ class BookcaseInsertionBloc
         return;
       }
 
-      emit(BookcaseInsertionLoadedState(
+      emit(BookcaseInsertionInsertedState(
           bookcaseInsertionMessage: 'Estante atualizada com sucesso'));
     } on LocalDatabaseException catch (e) {
       emit(BookcaseInsertionErrorState(

@@ -52,7 +52,7 @@ void main() {
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
-        isA<BookcaseInsertionLoadedState>(),
+        isA<BookcaseInsertionInsertedState>(),
       ],
     );
 
@@ -142,7 +142,7 @@ void main() {
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
-        isA<BookcaseInsertionLoadedState>(),
+        isA<BookcaseInsertionInsertedState>(),
       ],
     );
 

@@ -37,7 +37,6 @@ void main() {
     blocTest(
       'Initial state is empty',
       build: () => bookDetailBloc,
-      verify: (_) => bookDetailBloc.dispose(),
       expect: () => [],
     );
 
@@ -163,11 +162,17 @@ void main() {
     blocTest(
       'test if BookRemovedEvent work',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.deleteBook(id: '1'),
-      ).thenAnswer((_) async => 1),
+      setUp: () {
+        when(
+          () => bookService.deleteBook(id: '1'),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => bookService.getBookStatus(id: '1'),
+        ).thenAnswer((_) async => BookStatus.library);
+      },
       act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
       verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
         verify(() => bookService.deleteBook(id: '1')).called(1);
       },
       expect: () => [
@@ -179,12 +184,52 @@ void main() {
     blocTest(
       'test if BookRemovedEvent work with error on delete',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.deleteBook(id: '1'),
-      ).thenAnswer((_) async => 0),
+      setUp: () {
+        when(
+          () => bookService.deleteBook(id: '1'),
+        ).thenAnswer((_) async => 0);
+        when(
+          () => bookService.getBookStatus(id: '1'),
+        ).thenAnswer((_) async => BookStatus.library);
+      },
       act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
       verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
         verify(() => bookService.deleteBook(id: '1')).called(1);
+      },
+      expect: () => [
+        isA<BookDetailLoadingState>(),
+        isA<BookDetailErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'test if BookRemovedEvent work with bookStatus is BookStatus.reading',
+      build: () => bookDetailBloc,
+      setUp: () => when(
+        () => bookService.getBookStatus(id: '1'),
+      ).thenAnswer((_) async => BookStatus.reading),
+      act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
+      verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
+        verifyNever(() => bookService.deleteBook(id: '1'));
+      },
+      expect: () => [
+        isA<BookDetailLoadingState>(),
+        isA<BookDetailErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'test if BookRemovedEvent work with bookStatus is BookStatus.loaned',
+      build: () => bookDetailBloc,
+      setUp: () => when(
+        () => bookService.getBookStatus(id: '1'),
+      ).thenAnswer((_) async => BookStatus.loaned),
+      act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
+      verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
+        verifyNever(() => bookService.deleteBook(id: '1'));
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -195,11 +240,17 @@ void main() {
     blocTest(
       'test if BookRemovedEvent work with error state',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.deleteBook(id: '1'),
-      ).thenThrow(LocalDatabaseException('error on database')),
+      setUp: () {
+        when(
+          () => bookService.deleteBook(id: '1'),
+        ).thenThrow(LocalDatabaseException('error on database'));
+        when(
+          () => bookService.getBookStatus(id: '1'),
+        ).thenAnswer((_) async => BookStatus.library);
+      },
       act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
       verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
         verify(() => bookService.deleteBook(id: '1')).called(1);
       },
       expect: () => [
@@ -211,11 +262,17 @@ void main() {
     blocTest(
       'test if BookRemovedEvent work with error state on generic exception',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.deleteBook(id: '1'),
-      ).thenThrow(Exception('generic exception')),
+      setUp: () {
+        when(
+          () => bookService.deleteBook(id: '1'),
+        ).thenThrow(Exception('generic exception'));
+        when(
+          () => bookService.getBookStatus(id: '1'),
+        ).thenAnswer((_) async => BookStatus.library);
+      },
       act: (bloc) => bloc.add(BookRemovedEvent(bookId: bookModel.id)),
       verify: (_) {
+        verify(() => bookService.getBookStatus(id: '1')).called(1);
         verify(() => bookService.deleteBook(id: '1')).called(1);
       },
       expect: () => [

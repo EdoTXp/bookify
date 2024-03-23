@@ -1,4 +1,3 @@
-import 'package:bookify/src/shared/services/app_services/contacts_service/contacts_service.dart';
 import 'package:bookify/src/shared/services/book_service/book_service.dart';
 import 'package:bookify/src/shared/services/book_service/book_service_impl.dart';
 import 'package:bookify/src/shared/services/bookcase_service/bookcase_service.dart';
@@ -28,8 +27,5 @@ final servicesProviders = [
     create: (context) => LoanServiceImpl(
       context.read(),
     ),
-  ),
-  Provider<ContactsService>(
-    create: (context) => ContactsService(),
   ),
 ];

@@ -35,13 +35,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
   bool _bookIsInserted = false;
 
   /// Used to avoid multiple clicks on the [ElevatedButton].
-  bool _canClickToAddOrRemove = false;
+  bool _canClickToInsertOrRemoveButton = false;
+
+  /// [Bloc] of [BookDetailPage]
+  late final BookDetailBloc _bloc;
 
   /// Disable the snackbar when the [VerifiedBookIsInsertedEvent] event is called.
   late bool _isCallVerifyBookEvent;
-
-  /// [Bloc] of [BookDetailPage]
-  late BookDetailBloc _bloc;
 
   /// Controller to verify the position of the scroll.
   late ScrollController _scrollController;
@@ -77,14 +77,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     bool isTitleVisible = (currentScroll <= underTitleBookScroll);
 
-    setState(() => _isScrollWhenTitleVisible = (isTitleVisible) ? true : false);
+    setState(
+      () => _isScrollWhenTitleVisible = (isTitleVisible) ? true : false,
+    );
   }
 
   void _handleBookDetailsStateListener(context, state) {
     switch (state) {
       case BookDetailLoadingState():
         // Avoid the click on ElevatedButton.
-        _canClickToAddOrRemove = false;
+        _canClickToInsertOrRemoveButton = false;
         break;
 
       case BookDetailLoadedState():
@@ -92,7 +94,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
         _bookIsInserted = state.bookIsInserted;
 
         // enable the click on ElevatedButton.
-        _canClickToAddOrRemove = true;
+        _canClickToInsertOrRemoveButton = true;
 
         if (!_isCallVerifyBookEvent) {
           final message = (_bookIsInserted)
@@ -111,6 +113,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
         break;
 
       case BookDetailErrorState(errorMessage: final message):
+        // enable the click on ElevatedButton.
+        _canClickToInsertOrRemoveButton = true;
+
         SnackbarService.showSnackBar(
           context,
           message,
@@ -120,7 +125,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     }
   }
 
-  void _addOrRemoveBook(BookModel book) async {
+  void _insertOrRemoveBook(BookModel book) async {
     if (_bookIsInserted) {
       await ShowDialogService.show(
         context: context,
@@ -245,8 +250,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           // Update the text
                           text: (_bookIsInserted) ? 'Remover' : 'Adicionar',
                           // When is [BookDetailLoadingState] disable the click
-                          onPressed: () => (_canClickToAddOrRemove)
-                              ? _addOrRemoveBook(book)
+                          onPressed: () => (_canClickToInsertOrRemoveButton)
+                              ? _insertOrRemoveBook(book)
                               : null,
                         ),
                       ),
@@ -314,9 +319,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             ),
                             const SizedBox(height: 30),
                             BookDescriptionWidget(
-                                title: 'Editora: ', content: book.publisher),
+                              title: 'Editora: ',
+                              content: book.publisher,
+                            ),
                             BookDescriptionWidget(
-                                title: 'Gêneros: ', content: categories),
+                              title: 'Gêneros: ',
+                              content: categories,
+                            ),
                           ],
                         ),
                       ),
