@@ -3,7 +3,7 @@ import 'package:bookify/src/features/loan_insertion/views/widgets/widgets.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:flutter/material.dart';
-//mport 'package:provider/provider.dart';
+//import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoanInsertionPage extends StatefulWidget {
   /// The Route Name = '/loan_insertion'
@@ -20,12 +20,12 @@ class LoanInsertionPage extends StatefulWidget {
 }
 
 class _LoanInsertionPageState extends State<LoanInsertionPage> {
-  // late final LoanInsertionBloc _bloc;
+ // late final LoanInsertionBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    //   _bloc = context.read<LoanInsertionBloc>();
+   // _bloc = context.read<LoanInsertionBloc>();
   }
 
   @override
@@ -127,7 +127,12 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
               ),
               BookifyElevatedButton.expanded(
                 text: 'Enviar',
-                onPressed: () {},
+                onPressed: () {
+               /*   _bloc.add(
+                    InsertedLoanInsertionEvent(),
+                    ),
+                  );*/
+                },
               ),
             ],
           ),

@@ -98,8 +98,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
         if (!_isCallVerifyBookEvent) {
           final message = (_bookIsInserted)
-              ? 'Livro inserido com sucesso'
-              : 'Livro removido com sucesso';
+              ? 'Livro inserido com sucesso.'
+              : 'Livro removido com sucesso.';
 
           SnackbarService.showSnackBar(
             context,

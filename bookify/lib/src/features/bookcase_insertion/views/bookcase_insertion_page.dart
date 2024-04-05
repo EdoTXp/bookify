@@ -49,8 +49,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     _bookcaseNameEC.text = widget.bookcaseModel?.name ?? '';
     _bookcaseDescriptionEC.text = widget.bookcaseModel?.description ?? '';
-    _selectedColor =
-        widget.bookcaseModel?.color ?? Theme.of(context).colorScheme.secondary;
+    _selectedColor = widget.bookcaseModel?.color ?? Colors.white;
   }
 
   @override

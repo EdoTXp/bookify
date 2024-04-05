@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:bookify/src/shared/routes/routes.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/shared/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -16,7 +15,7 @@ class NotificationsServiceImpl implements NotificationsService {
     _setupNotifications();
   }
 
-  _setupNotifications() async {
+  Future<void> _setupNotifications() async {
     await _setupNotificationPermission();
     await _setupTimezone();
     await _initializeNotifications();
@@ -28,6 +27,11 @@ class NotificationsServiceImpl implements NotificationsService {
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()!
           .requestNotificationsPermission();
+
+      await _notifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()!
+          .requestExactAlarmsPermission();
     }
   }
 
@@ -42,38 +46,65 @@ class NotificationsServiceImpl implements NotificationsService {
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const iosSettings = DarwinInitializationSettings();
+    final iosSettings = DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (id, _, __, payload) =>
+          _navigateToNotificationPage(payload, id),
+    );
 
-    const initializationSettings = InitializationSettings(
+    final initializationSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     );
 
     await _notifications.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
+      onDidReceiveNotificationResponse: _onTapOnNotification,
     );
-
     tz.initializeTimeZones();
   }
 
-  void _onDidReceiveNotificationResponse(NotificationResponse details) {
-    final String? payload = details.payload;
-
-    if (payload != null && payload.isNotEmpty) {
-      Navigator.of(Routes.navigatorKey!.currentContext!).pushNamed(payload);
+  void _onTapOnNotification(
+    NotificationResponse notificationResponse,
+  ) {
+    if (notificationResponse.notificationResponseType ==
+        NotificationResponseType.selectedNotification) {
+      final NotificationResponse(:id, :payload) = notificationResponse;
+      _navigateToNotificationPage(payload, id);
     }
   }
 
-  @override
-  Future<void> cancelNotificationById({required int id}) async {
-    await _notifications.cancel(id);
+  void _navigateToNotificationPage(String? payload, int? id) {
+    if (payload != null && payload.isNotEmpty) {
+      NotificationNavigator.navigateTo(
+        payload,
+        id,
+      );
+    }
+  }
+
+  NotificationDetails _getNotificationDetails(
+      NotificationChannel channel, String bigText) {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        icon: '@drawable/ic_stat_ic_notification',
+        channel.channelId(),
+        channel.toString(),
+        channelDescription: channel.description(),
+        styleInformation: BigTextStyleInformation(
+          bigText,
+        ),
+        importance: Importance.high,
+      ),
+      iOS: DarwinNotificationDetails(
+        categoryIdentifier: channel.toString(),
+      ),
+    );
   }
 
   @override
-  Future<void> scheduleNotification({
-    required CustomNotification notification,
-  }) async {
+  Future<void> scheduleNotification(
+    CustomNotification notification,
+  ) async {
     await _notifications.zonedSchedule(
       notification.id,
       notification.title,
@@ -82,11 +113,9 @@ class NotificationsServiceImpl implements NotificationsService {
         notification.scheduledDate,
         tz.local,
       ),
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          notification.channelId,
-          notification.channelName,
-        ),
+      _getNotificationDetails(
+        notification.notificationChannel,
+        notification.body,
       ),
       payload: notification.payload,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
@@ -96,11 +125,37 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   @override
+  Future<void> periodicallyShowNotification({
+    required int id,
+    required String title,
+    required String body,
+    required NotificationChannel notificationChannel,
+  }) async {
+    await _notifications.periodicallyShow(
+      id,
+      title,
+      body,
+      RepeatInterval.daily,
+      _getNotificationDetails(
+        notificationChannel,
+        body,
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  @override
+  Future<void> cancelNotificationById({required int id}) async {
+    await _notifications.cancel(id);
+  }
+
+  @override
   Future<void> checkForNotifications() async {
     final details = await _notifications.getNotificationAppLaunchDetails();
-    if (details?.notificationResponse != null &&
-        details!.didNotificationLaunchApp) {
-      _onDidReceiveNotificationResponse(details.notificationResponse!);
+    if (details != null && details.didNotificationLaunchApp) {
+      if (details.notificationResponse != null) {
+        _onTapOnNotification(details.notificationResponse!);
+      }
     }
   }
 }

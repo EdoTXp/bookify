@@ -12,18 +12,17 @@ class BookifyApp extends StatefulWidget {
 }
 
 class _BookifyAppState extends State<BookifyApp> {
+  late final NotificationsService _notificationService;
+
   @override
   void initState() {
     super.initState();
-    _initializeAppService();
+    _notificationService = context.read<NotificationsService>();
+    _checkForNotificationsOnInitializeApp();
   }
 
-  Future<void> _initializeAppService() async {
-    await _checkNotification();
-  }
-
-  Future<void> _checkNotification() async {
-    await context.read<NotificationsService>().checkForNotifications();
+  Future<void> _checkForNotificationsOnInitializeApp() async {
+    await _notificationService.checkForNotifications();
   }
 
   @override
@@ -33,6 +32,7 @@ class _BookifyAppState extends State<BookifyApp> {
       theme: appLightTheme,
       darkTheme: appDarkTheme,
       themeMode: ThemeMode.system,
+      navigatorKey: Routes.navigatorKey,
       routes: Routes.routes,
       initialRoute: Routes.initialRoute,
     );

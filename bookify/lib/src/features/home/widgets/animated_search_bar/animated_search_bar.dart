@@ -10,8 +10,8 @@ enum SearchType {
 }
 
 class AnimatedSearchBar extends StatefulWidget {
-  final void Function(String value, SearchType searchType) onSubmitted;
   final TextEditingController searchEC;
+  final void Function(String value, SearchType searchType) onSubmitted;
 
   const AnimatedSearchBar({
     super.key,
@@ -25,35 +25,10 @@ class AnimatedSearchBar extends StatefulWidget {
 
 class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   SearchType _searchType = SearchType.title;
-  bool _searchTextIsEmpty = true;
   bool _searchIconByTypeIsClicked = false;
 
-  @override
-  void initState() {
-    super.initState();
-
-    widget.searchEC.addListener(() {
-      _changeIconButtonVisibilityOnSearchTextIsEmpty();
-    });
-  }
-
-  @override
-  void dispose() {
-    widget.searchEC.removeListener(() {
-      _changeIconButtonVisibilityOnSearchTextIsEmpty();
-    });
-    super.dispose();
-  }
-
-  void _changeIconButtonVisibilityOnSearchTextIsEmpty() {
-    final bool searchTextIsEmpty = widget.searchEC.value.text.isEmpty;
-    setState(() => _searchTextIsEmpty = searchTextIsEmpty ? true : false);
-  }
-
   void _clearSearchBarText() {
-    if (widget.searchEC.text.isNotEmpty) {
-      setState(() => widget.searchEC.clear());
-    }
+    if (widget.searchEC.text.isNotEmpty) widget.searchEC.clear();
   }
 
   (String hintText, IconData searchIcon) _updateSearchBar() {
@@ -94,16 +69,21 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
             color: selectedColor,
           ),
           trailing: [
-            Visibility(
-              visible: !_searchTextIsEmpty,
-              child: IconButton(
-                tooltip: 'Apagar o texto digitado.',
-                icon: Icon(
-                  Icons.close_rounded,
-                  color: selectedColor,
-                ),
-                onPressed: _clearSearchBarText,
-              ),
+            ValueListenableBuilder(
+              valueListenable: widget.searchEC,
+              builder: (context, value, _) {
+                if (value.text.isNotEmpty) {
+                  return IconButton(
+                    tooltip: 'Apagar o texto digitado.',
+                    icon: Icon(
+                      Icons.close_rounded,
+                      color: selectedColor,
+                    ),
+                    onPressed: _clearSearchBarText,
+                  );
+                }
+                return const SizedBox.shrink();
+              },
             ),
             IconButton(
               tooltip: 'Altere o tipo de busca.',

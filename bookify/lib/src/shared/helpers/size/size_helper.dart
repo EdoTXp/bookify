@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-extension SizeForSmallDevice on Size {
+extension SizeForSmallDeviceExtension on Size {
   bool isSmallDevice() => height < 675;
 }

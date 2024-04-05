@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/shared/helpers/date_time_format/date_time_format.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/loan_model.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/custom_notification.dart';
@@ -36,10 +37,11 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         status: BookStatus.loaned,
       );
 
-      if (bookUpdatedStatus == 0) {
+      if (bookUpdatedStatus < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao adicionar o livro ao empréstimo',
+            errorMessage:
+                'Ocorreu um erro ao adicionar o livro ao empréstimo. Verifique se o livro já não foi emprestado ou em lista de leitura',
           ),
         );
         return;
@@ -55,32 +57,26 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
 
       final loanId = await _loanService.insert(loanModel: loanModel);
 
-      if (loanId == 0) {
+      if (loanId < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao inserir o empréstimo',
+            errorMessage: 'Ocorreu um erro ao criar o empréstimo',
           ),
         );
         return;
       }
 
-      await _notificationsService.scheduleNotification(
-        notification: CustomNotification(
-          id: loanId,
-          title: 'Empréstimo do livro: ${event.bookTitle}',
-          body:
-              'Chegou o dia de receber o livro: ${event.bookTitle}, emprestado para ${event.contactName}',
-          channelId: 'loan_channel_id',
-          channelName: 'loan_channel',
-          scheduledDate: event.devolutionDate,
-        ),
+      await _createNotification(
+        loanId,
+        event.contactName,
+        event.bookTitle,
+        event.loanDate,
+        event.devolutionDate,
       );
 
       emit(
         LoanInsertionInsertedState(
-          loanId: loanId,
           loanInsertionMessage: 'Empréstimo inserido com sucesso',
-          devolutionDate: event.devolutionDate,
         ),
       );
     } on LocalDatabaseException catch (e) {
@@ -108,9 +104,9 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         idContact: event.idContact,
       );
 
-      final loanId = await _loanService.update(loanModel: loanModel);
+      final rowUpdated = await _loanService.update(loanModel: loanModel);
 
-      if (loanId < 1) {
+      if (rowUpdated < 1) {
         emit(
           LoanInsertionErrorState(
             errorMessage: 'Ocorreu um erro ao atualizar o empréstimo',
@@ -119,25 +115,18 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         return;
       }
 
-      await _notificationsService.cancelNotificationById(id: loanId);
-      
-      await _notificationsService.scheduleNotification(
-        notification: CustomNotification(
-          id: loanId,
-          title: 'Empréstimo do livro: ${event.bookTitle}',
-          body:
-              'Chegou o dia de receber o livro: ${event.bookTitle}, emprestado para ${event.contactName}',
-          channelId: 'loan_channel_id',
-          channelName: 'loan_channel',
-          scheduledDate: event.devolutionDate,
-        ),
+      await _notificationsService.cancelNotificationById(id: event.id);
+      await _createNotification(
+        rowUpdated,
+        event.contactName,
+        event.bookTitle,
+        event.loanDate,
+        event.devolutionDate,
       );
 
       emit(
         LoanInsertionInsertedState(
-          loanId: loanId,
           loanInsertionMessage: 'Empréstimo atualizado com sucesso',
-          devolutionDate: event.devolutionDate,
         ),
       );
     } on LocalDatabaseException catch (e) {
@@ -147,5 +136,25 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
       emit(LoanInsertionErrorState(
           errorMessage: 'Ocorreu um erro não esperado: $e'));
     }
+  }
+
+  Future<void> _createNotification(
+    int loanId,
+    String contactName,
+    String bookTitle,
+    DateTime loanDate,
+    DateTime devolutionDate,
+  ) async {
+    final customNotification = CustomNotification(
+      id: loanId,
+      title: 'Ei, seu livro tá voltando!',
+      body:
+          'Olá! Só passando pra lembrar que tá na hora de ${contactName.toUpperCase()} devolver o ${bookTitle.toUpperCase()} que você emprestou no dia ${loanDate.toFormattedDate()}.',
+      notificationChannel: NotificationChannel.loanChannel,
+      scheduledDate: devolutionDate,
+      payload: '/qr_code_scanner',
+    );
+
+    await _notificationsService.scheduleNotification(customNotification);
   }
 }

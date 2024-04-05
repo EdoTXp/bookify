@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +7,12 @@ enum SnackBarType {
   error,
   success;
 
-  ContentType _toContentType() {
+  IconData _getIcon() {
     return switch (this) {
-      SnackBarType.info => ContentType.help,
-      SnackBarType.warning => ContentType.warning,
-      SnackBarType.error => ContentType.failure,
-      SnackBarType.success => ContentType.success,
+      SnackBarType.info => Icons.info_outline_rounded,
+      SnackBarType.warning => Icons.warning_amber_rounded,
+      SnackBarType.error => Icons.error_outline_rounded,
+      SnackBarType.success => Icons.check_circle_outline_rounded,
     };
   }
 
@@ -48,11 +47,37 @@ class SnackbarService {
       elevation: 0,
       backgroundColor: Colors.transparent,
       duration: duration,
-      content: AwesomeSnackbarContent(
-        title: snackBarType.toString(),
-        message: message,
-        contentType: snackBarType._toContentType(),
-        color: snackBarType._toColor(),
+      content: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.transparent,
+          ),
+          color: snackBarType._toColor(),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Icon(
+              snackBarType._getIcon(),
+              color: Colors.white,
+              size: 32,
+            ),
+            Text(
+              message,
+              //overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
       ),
     );
 

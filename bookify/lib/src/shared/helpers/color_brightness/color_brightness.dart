@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Extension on the Color class to add functionality for darkening and lightening colors.
-extension ColorBrightness on Color {
+extension ColorBrightnessExtension on Color {
   /// Method to darken the color by a specified amount.
   /// The amount parameter defaults to 0.1 (10%) if not provided.
   ///

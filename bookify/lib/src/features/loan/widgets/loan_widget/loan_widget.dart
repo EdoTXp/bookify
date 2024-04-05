@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:bookify/src/features/loan/widgets/loan_widget/widgets/contact_information_widget.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/helpers/date_time_format/date_time_format.dart';
+import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +18,20 @@ class LoanWidget extends StatelessWidget {
     required this.onTap,
   });
 
+  bool _isLateDevolutionDate() {
+    final loanDateLate = loan.loanModel.devolutionDate.add(
+      const Duration(
+        days: 1,
+      ),
+    );
+
+    return DateTime.now().isAfter(loanDateLate);
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isLateDevolutionDate = _isLateDevolutionDate();
 
     return Material(
       borderRadius: BorderRadius.circular(12),
@@ -55,12 +69,19 @@ class LoanWidget extends StatelessWidget {
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        BookWidget(
-                          bookImageUrl: loan.bookImagePreview,
-                          borderColor: Colors.white,
-                          withShadow: true,
-                          height: 150,
-                          width: 100,
+                        ImageFiltered(
+                          enabled: isLateDevolutionDate,
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 2.0,
+                            sigmaY: 2.0,
+                          ),
+                          child: BookWidget(
+                            bookImageUrl: loan.bookImagePreview,
+                            borderColor: Colors.white,
+                            withShadow: true,
+                            height: 150,
+                            width: 100,
+                          ),
                         ),
                         Positioned(
                           top: -3,
@@ -70,6 +91,21 @@ class LoanWidget extends StatelessWidget {
                             photo: loan.contactDto!.photo,
                           ),
                         ),
+                        if (isLateDevolutionDate)
+                          const Positioned(
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            child: Tooltip(
+                              message: 'Empréstimo atrasado',
+                              child: Icon(
+                                Icons.warning_amber_rounded,
+                                size: 62,
+                                color: AppColor.bookifyWarningColor,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                     const SizedBox(

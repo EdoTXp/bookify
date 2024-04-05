@@ -9,7 +9,7 @@ final appServicesProviders = [
   Provider<NotificationsService>(
     create: (_) => NotificationsServiceImpl(),
   ),
-    Provider<ContactsService>(
+  Provider<ContactsService>(
     create: (context) => ContactsServiceImpl(),
   ),
 ];
