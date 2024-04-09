@@ -57,17 +57,16 @@ class _BookcaseBooksInsertionLoadedStateWidgetState
 
     return Column(
       children: [
-        Visibility(
-          visible: _isSelectionMode,
-          child: BooksSelectedRow(
+        if (_isSelectionMode) ...[
+          BooksSelectedRow(
             booksQuantity: _selectedList.length,
             onClearPressed: _clearSelection,
             onConfirmPressed: () => widget.onSelectedBooks(_selectedList),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
         Expanded(
           child: GestureDetector(
             onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,

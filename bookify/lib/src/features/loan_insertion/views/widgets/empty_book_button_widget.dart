@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class EmptyBookButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
+  final double height;
+  final double width;
+
   const EmptyBookButtonWidget({
     super.key,
     required this.onTap,
+    this.height = 200,
+    this.width = 100,
   });
 
   @override
@@ -12,8 +17,8 @@ class EmptyBookButtonWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 250,
-        width: 170,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           color: Colors.grey[50],
           border: Border.all(

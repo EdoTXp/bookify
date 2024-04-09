@@ -2,6 +2,7 @@ import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
+import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
@@ -33,6 +34,7 @@ class Routes {
     LoanInsertionPage.routeName: (context) => LoanInsertionPage(
           loanDto: ModalRoute.of(context)!.settings.arguments as LoanDto?,
         ),
+    ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
   };
 
   static String initialRoute = RootPage.routeName;

@@ -1,8 +1,12 @@
 //import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
-import 'package:bookify/src/features/loan_insertion/views/widgets/widgets.dart';
+import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
+import 'package:bookify/src/shared/dtos/conctact_dto.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
+import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:bookify/src/features/loan_insertion/views/widgets/widgets.dart';
+
 //import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoanInsertionPage extends StatefulWidget {
@@ -20,12 +24,52 @@ class LoanInsertionPage extends StatefulWidget {
 }
 
 class _LoanInsertionPageState extends State<LoanInsertionPage> {
- // late final LoanInsertionBloc _bloc;
+  late final TextEditingController contactNameEC;
+  late final TextEditingController contactPhoneNumberEC;
+  late final TextEditingController observationEC;
+  late final TextEditingController loanDateEC;
+  late final TextEditingController devolutionDateEC;
+
+  // late final LoanInsertionBloc _bloc;
+  ContactDto? contact;
 
   @override
   void initState() {
     super.initState();
-   // _bloc = context.read<LoanInsertionBloc>();
+    // _bloc = context.read<LoanInsertionBloc>();
+
+    contactNameEC = TextEditingController();
+    contactPhoneNumberEC = TextEditingController();
+    observationEC = TextEditingController();
+    loanDateEC = TextEditingController();
+    devolutionDateEC = TextEditingController();
+  }
+
+  void _clearData() {
+    contactNameEC.clear();
+    contactPhoneNumberEC.clear();
+    observationEC.clear();
+    loanDateEC.clear();
+    devolutionDateEC.clear();
+
+    setState(() {
+      contact = null;
+    });
+  }
+
+  Future<void> _getContact(BuildContext context) async {
+    final contactDto = await showModalBottomSheet<ContactDto?>(
+      context: context,
+      builder: (context) => const ContactsPickerPage(),
+    );
+
+    if (contactDto != null) {
+      setState(() {
+        contact = contactDto;
+      });
+      contactNameEC.text = contactDto.name;
+      contactPhoneNumberEC.text = contactDto.phoneNumber ?? 'sem número';
+    }
   }
 
   @override
@@ -43,7 +87,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
             icon: const Icon(
               Icons.delete_forever_outlined,
             ),
-            onPressed: () {},
+            onPressed: _clearData,
           ),
         ],
       ),
@@ -52,19 +96,34 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              const SizedBox(
+                 height: 10,
+              ),
               Center(
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
                     EmptyBookButtonWidget(
                       onTap: () {},
+                      height: 250,
+                      width: 170,
                     ),
                     Positioned(
                       right: -20,
                       top: -20,
-                      child: EmptyContactButtonWidget(
-                        onTap: () {},
-                      ),
+                      child: contact == null
+                          ? EmptyContactButtonWidget(
+                              onTap: () async => await _getContact(context),
+                              height: 80,
+                              width: 80,
+                            )
+                          : ContactCircleAvatar(
+                              name: contact!.name,
+                              photo: contact!.photo,
+                              onTap: () async => await _getContact(context),
+                              height: 80,
+                              width: 80,
+                            ),
                     ),
                   ],
                 ),
@@ -73,7 +132,9 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                 height: 20,
               ),
               TextFormField(
+                controller: contactNameEC,
                 style: const TextStyle(fontSize: 14),
+                enabled: false,
                 decoration: const InputDecoration(
                   label: Text('Nome'),
                 ),
@@ -82,7 +143,9 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                 height: 10,
               ),
               TextFormField(
+                controller: contactPhoneNumberEC,
                 style: const TextStyle(fontSize: 14),
+                enabled: false,
                 decoration: const InputDecoration(
                   label: Text('Contato'),
                 ),
@@ -91,6 +154,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                 height: 10,
               ),
               TextFormField(
+                controller: observationEC,
                 style: const TextStyle(fontSize: 14),
                 decoration: const InputDecoration(
                   label: Text('Observação'),
@@ -103,6 +167,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                 children: [
                   Flexible(
                     child: TextFormField(
+                      controller: loanDateEC,
                       style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
                         label: Text('Data do empréstimo'),
@@ -114,6 +179,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                   ),
                   Flexible(
                     child: TextFormField(
+                      controller: devolutionDateEC,
                       style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
                         label: Text('Data para devolução'),
@@ -128,7 +194,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
               BookifyElevatedButton.expanded(
                 text: 'Enviar',
                 onPressed: () {
-               /*   _bloc.add(
+                  /*   _bloc.add(
                     InsertedLoanInsertionEvent(),
                     ),
                   );*/

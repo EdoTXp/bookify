@@ -29,7 +29,33 @@ class ContactsServiceImpl implements ContactsService {
   }
 
   @override
-  Future<List<ContactDto?>?> getContacts() async {
+  Future<List<ContactDto>?> getContacts() async {
+    if (await Permission.contacts.request().isGranted) {
+      final contacts = await FastContacts.getAllContacts(
+        fields: [
+          ContactField.displayName,
+          ContactField.phoneNumbers,
+        ],
+      );
+
+      final List<ContactDto> contactsDto = [];
+      for (Contact contact in contacts) {
+        final photo = await FastContacts.getContactImage(contact.id);
+
+        final contactDto = ContactDto(
+          id: contact.id,
+          name: contact.displayName,
+          phoneNumber: (contact.phones.isNotEmpty)
+              ? contact.phones.first.number
+              : 'Sem número',
+          photo: photo,
+        );
+
+        contactsDto.add(contactDto);
+      }
+
+      return contactsDto;
+    }
     return null;
   }
 }

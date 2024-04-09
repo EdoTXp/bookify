@@ -232,6 +232,12 @@ final _inputDecorationTheme = InputDecorationTheme(
       color: AppColor.bookifySecondaryColor,
     ),
   ),
+  disabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(
+      width: 2,
+      color: Colors.grey,
+    ),
+  ),
   enabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(
       width: 2,
@@ -246,7 +252,6 @@ final _inputDecorationTheme = InputDecorationTheme(
   ),
   focusedErrorBorder: const OutlineInputBorder(
     borderSide: BorderSide(
-      
       color: AppColor.bookifyErrorColor,
     ),
   ),
@@ -259,6 +264,11 @@ final _inputDecorationTheme = InputDecorationTheme(
       if (states.contains(MaterialState.focused)) {
         return const TextStyle(
           color: AppColor.bookifySecondaryColor,
+          fontSize: 14,
+        );
+      } else if (states.contains(MaterialState.disabled)) {
+        return const TextStyle(
+          color: Colors.grey,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {
@@ -278,6 +288,11 @@ final _inputDecorationTheme = InputDecorationTheme(
       if (states.contains(MaterialState.focused)) {
         return const TextStyle(
           color: AppColor.bookifySecondaryColor,
+          fontSize: 14,
+        );
+      } else if (states.contains(MaterialState.disabled)) {
+        return const TextStyle(
+          color: Colors.grey,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {
