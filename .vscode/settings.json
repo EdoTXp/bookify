@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/bookify/windows"
+    "cmake.sourceDirectory": "${workspaceFolder}/bookify/windows",
+    "java.configuration.updateBuildConfiguration": "disabled"
 }
