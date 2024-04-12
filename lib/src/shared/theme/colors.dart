@@ -22,6 +22,6 @@ class AppColor {
   ///Bookify Dark Background Color = [Color(0xff121212)]
   static const bookifyDarkBackgroundColor = Color(0xff121212);
 
-  ///Bookify disabled Color = [Color(0XFFE1E1E1)]
-  static const bookifyDisabledColor = Color(0XFFE1E1E1);
+  ///Bookify disabled Color = [Color(0XFF939393)]
+  static const bookifyDisabledColor = Color(0XFF939393);
 }

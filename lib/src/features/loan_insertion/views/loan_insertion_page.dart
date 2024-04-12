@@ -1,7 +1,10 @@
 //import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
+import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/shared/dtos/conctact_dto.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
+import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
   // late final LoanInsertionBloc _bloc;
   ContactDto? contact;
+  BookModel? bookModel;
 
   @override
   void initState() {
@@ -54,12 +58,21 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
     setState(() {
       contact = null;
+      bookModel = null;
     });
   }
 
   Future<void> _getContact(BuildContext context) async {
     final contactDto = await showModalBottomSheet<ContactDto?>(
       context: context,
+      constraints: BoxConstraints.loose(
+        Size(
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height * 0.75,
+        ),
+      ),
+      isScrollControlled: true,
+      showDragHandle: true,
       builder: (context) => const ContactsPickerPage(),
     );
 
@@ -69,6 +82,27 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
       });
       contactNameEC.text = contactDto.name;
       contactPhoneNumberEC.text = contactDto.phoneNumber ?? 'sem número';
+    }
+  }
+
+  Future<void> _getBook(BuildContext context) async {
+    final book = await showModalBottomSheet<BookModel?>(
+      context: context,
+      constraints: BoxConstraints.loose(
+        Size(
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height * 0.75,
+        ),
+      ),
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (context) => const BooksPickerPage(),
+    );
+
+    if (book != null) {
+      setState(() {
+        bookModel = book;
+      });
     }
   }
 
@@ -97,17 +131,28 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           child: Column(
             children: [
               const SizedBox(
-                 height: 10,
+                height: 10,
               ),
               Center(
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    EmptyBookButtonWidget(
-                      onTap: () {},
-                      height: 250,
-                      width: 170,
-                    ),
+                    (bookModel == null)
+                        ? EmptyBookButtonWidget(
+                            onTap: () async => await _getBook(context),
+                            height: 250,
+                            width: 170,
+                          )
+                        : Material(
+                            child: InkWell(
+                              onTap: () async => await _getBook(context),
+                              child: BookWidget(
+                                bookImageUrl: bookModel!.imageUrl,
+                                height: 250,
+                                width: 170,
+                              ),
+                            ),
+                          ),
                     Positioned(
                       right: -20,
                       top: -20,

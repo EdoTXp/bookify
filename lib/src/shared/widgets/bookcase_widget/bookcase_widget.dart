@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 class BookcaseWidget extends StatelessWidget {
   final BookcaseDto bookcaseDto;
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
 
   const BookcaseWidget({
     super.key,
     required this.bookcaseDto,
-    required this.onTap,
-    required this.onLongPress,
+    this.onTap,
+    this.onLongPress,
   });
 
   @override

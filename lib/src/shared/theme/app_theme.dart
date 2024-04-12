@@ -235,7 +235,7 @@ final _inputDecorationTheme = InputDecorationTheme(
   disabledBorder: const OutlineInputBorder(
     borderSide: BorderSide(
       width: 2,
-      color: Colors.grey,
+      color: AppColor.bookifyDisabledColor,
     ),
   ),
   enabledBorder: const OutlineInputBorder(
@@ -268,7 +268,7 @@ final _inputDecorationTheme = InputDecorationTheme(
         );
       } else if (states.contains(MaterialState.disabled)) {
         return const TextStyle(
-          color: Colors.grey,
+          color: AppColor.bookifyDisabledColor,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {
@@ -292,7 +292,7 @@ final _inputDecorationTheme = InputDecorationTheme(
         );
       } else if (states.contains(MaterialState.disabled)) {
         return const TextStyle(
-          color: Colors.grey,
+          color: AppColor.bookifyDisabledColor,
           fontSize: 14,
         );
       } else if (states.contains(MaterialState.error)) {

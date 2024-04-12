@@ -43,156 +43,168 @@ void main() {
     ),
   ];
 
-  setUp(() => bloc = MyBooksBloc(bookService));
-  blocTest(
-    'Test if GotAllBooksEvent work',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getAllBook(),
-    ).thenAnswer(
-      (_) async => booksModel,
-    ),
-    act: (bloc) => bloc.add(GotAllBooksEvent()),
-    verify: (_) => verify(() => bookService.getAllBook()).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksLoadedState>(),
-    ],
+  setUp(
+    () => bloc = MyBooksBloc(bookService),
   );
 
-  blocTest(
-    'Test if GotAllBooksEvent work with empty state',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getAllBook(),
-    ).thenAnswer(
-      (_) async => [],
-    ),
-    act: (bloc) => bloc.add(GotAllBooksEvent()),
-    verify: (_) => verify(() => bookService.getAllBook()).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksEmptyState>(),
-    ],
-  );
+  group('Test MyBooksBloc ||', () {
+    blocTest(
+      'Initial state is empty',
+      build: () => bloc,
+      verify: (bloc) async => await bloc.close(),
+      expect: () => [],
+    );
 
-  blocTest(
-    'Test if GotAllBooksEvent work when throw LocalDatabaseException',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getAllBook(),
-    ).thenThrow(LocalDatabaseException('Error on Database')),
-    act: (bloc) => bloc.add(GotAllBooksEvent()),
-    verify: (_) => verify(() => bookService.getAllBook()).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksErrorState>(),
-    ],
-  );
+    blocTest(
+      'Test if GotAllBooksEvent work',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getAllBook(),
+      ).thenAnswer(
+        (_) async => booksModel,
+      ),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
+      verify: (_) => verify(() => bookService.getAllBook()).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksLoadedState>(),
+      ],
+    );
 
-  blocTest(
-    'Test if GotAllBooksEvent work when throw Generic Exception',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getAllBook(),
-    ).thenThrow(Exception('Generic Exception')),
-    act: (bloc) => bloc.add(GotAllBooksEvent()),
-    verify: (_) => verify(() => bookService.getAllBook()).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksErrorState>(),
-    ],
-  );
+    blocTest(
+      'Test if GotAllBooksEvent work with empty state',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getAllBook(),
+      ).thenAnswer(
+        (_) async => [],
+      ),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
+      verify: (_) => verify(() => bookService.getAllBook()).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksEmptyState>(),
+      ],
+    );
 
-  blocTest(
-    'Test if SearchedEvent work',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
-      ),
-    ).thenAnswer(
-      (_) async => booksModel,
-    ),
-    act: (bloc) => bloc.add(
-      SearchedBooksEvent(searchQuery: 'title'),
-    ),
-    verify: (_) => verify(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
-      ),
-    ).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksLoadedState>(),
-    ],
-  );
+    blocTest(
+      'Test if GotAllBooksEvent work when throw LocalDatabaseException',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getAllBook(),
+      ).thenThrow(LocalDatabaseException('Error on Database')),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
+      verify: (_) => verify(() => bookService.getAllBook()).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksErrorState>(),
+      ],
+    );
 
-  blocTest(
-    'Test if SearchedEvent work with not found state',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
-      ),
-    ).thenAnswer(
-      (_) async => [],
-    ),
-    act: (bloc) => bloc.add(
-      SearchedBooksEvent(searchQuery: 'title'),
-    ),
-    verify: (_) => verify(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
-      ),
-    ).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksNotFoundState>(),
-    ],
-  );
+    blocTest(
+      'Test if GotAllBooksEvent work when throw Generic Exception',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getAllBook(),
+      ).thenThrow(Exception('Generic Exception')),
+      act: (bloc) => bloc.add(GotAllBooksEvent()),
+      verify: (_) => verify(() => bookService.getAllBook()).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksErrorState>(),
+      ],
+    );
 
-  blocTest(
-    'Test if SearchedEvent work when throw LocalDatabaseException',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
+    blocTest(
+      'Test if SearchedEvent work',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenAnswer(
+        (_) async => booksModel,
       ),
-    ).thenThrow(LocalDatabaseException('Error on Database')),
-    act: (bloc) => bloc.add(
-      SearchedBooksEvent(searchQuery: 'title'),
-    ),
-    verify: (_) => verify(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
+      act: (bloc) => bloc.add(
+        SearchedBooksEvent(searchQuery: 'title'),
       ),
-    ).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksErrorState>(),
-    ],
-  );
+      verify: (_) => verify(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksLoadedState>(),
+      ],
+    );
 
-  blocTest(
-    'Test if SearchedEvent work when throw Generic Exception',
-    build: () => bloc,
-    setUp: () => when(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
+    blocTest(
+      'Test if SearchedEvent work with not found state',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenAnswer(
+        (_) async => [],
       ),
-    ).thenThrow(Exception('Generic Exception')),
-    act: (bloc) => bloc.add(
-      SearchedBooksEvent(searchQuery: 'title'),
-    ),
-    verify: (_) => verify(
-      () => bookService.getBookByTitle(
-        title: any(named: 'title'),
+      act: (bloc) => bloc.add(
+        SearchedBooksEvent(searchQuery: 'title'),
       ),
-    ).called(1),
-    expect: () => [
-      isA<MyBooksLoadingState>(),
-      isA<MyBooksErrorState>(),
-    ],
-  );
+      verify: (_) => verify(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksNotFoundState>(),
+      ],
+    );
+
+    blocTest(
+      'Test if SearchedEvent work when throw LocalDatabaseException',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenThrow(LocalDatabaseException('Error on Database')),
+      act: (bloc) => bloc.add(
+        SearchedBooksEvent(searchQuery: 'title'),
+      ),
+      verify: (_) => verify(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'Test if SearchedEvent work when throw Generic Exception',
+      build: () => bloc,
+      setUp: () => when(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenThrow(Exception('Generic Exception')),
+      act: (bloc) => bloc.add(
+        SearchedBooksEvent(searchQuery: 'title'),
+      ),
+      verify: (_) => verify(
+        () => bookService.getBookByTitle(
+          title: any(named: 'title'),
+        ),
+      ).called(1),
+      expect: () => [
+        isA<MyBooksLoadingState>(),
+        isA<MyBooksErrorState>(),
+      ],
+    );
+  });
 }

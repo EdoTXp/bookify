@@ -6,7 +6,9 @@ import 'package:fast_contacts/fast_contacts.dart';
 class ContactsServiceImpl implements ContactsService {
   @override
   Future<ContactDto?> getContactById({required String id}) async {
-    if (await Permission.contacts.request().isGranted) {
+    final permissionStatus = await Permission.contacts.request();
+
+    if (permissionStatus.isGranted) {
       final contact = await FastContacts.getContact(
         id,
         fields: [
@@ -20,7 +22,8 @@ class ContactsServiceImpl implements ContactsService {
         return ContactDto(
           id: contact.id,
           name: contact.displayName,
-          phoneNumber: contact.phones.first.number,
+          phoneNumber:
+              (contact.phones.isNotEmpty) ? contact.phones.first.number : null,
           photo: photo,
         );
       }
@@ -30,7 +33,9 @@ class ContactsServiceImpl implements ContactsService {
 
   @override
   Future<List<ContactDto>?> getContacts() async {
-    if (await Permission.contacts.request().isGranted) {
+    final permissionStatus = await Permission.contacts.request();
+
+    if (permissionStatus.isGranted) {
       final contacts = await FastContacts.getAllContacts(
         fields: [
           ContactField.displayName,
@@ -45,9 +50,8 @@ class ContactsServiceImpl implements ContactsService {
         final contactDto = ContactDto(
           id: contact.id,
           name: contact.displayName,
-          phoneNumber: (contact.phones.isNotEmpty)
-              ? contact.phones.first.number
-              : 'Sem número',
+          phoneNumber:
+              (contact.phones.isNotEmpty) ? contact.phones.first.number : null,
           photo: photo,
         );
 

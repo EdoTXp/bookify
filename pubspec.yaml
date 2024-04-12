@@ -35,7 +35,7 @@ dependencies:
   cached_network_image: ^3.3.1 # Used to show the cover of the cached book.
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
   google_fonts: ^6.2.1 # Used for App Font.
-  url_launcher: ^6.2.5 # Used to launch at the book store.
+  url_launcher: ^6.2.6 # Used to launch at the book store.
   mobile_scanner: ^4.0.1 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.

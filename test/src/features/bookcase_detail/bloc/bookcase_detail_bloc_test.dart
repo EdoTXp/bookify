@@ -33,7 +33,10 @@ void main() {
   );
 
   setUp(() {
-    bloc = BookcaseDetailBloc(bookService, bookcaseService);
+    bloc = BookcaseDetailBloc(
+      bookService,
+      bookcaseService,
+    );
   });
 
   group('Test bookcaseDetail bloc ||', () {

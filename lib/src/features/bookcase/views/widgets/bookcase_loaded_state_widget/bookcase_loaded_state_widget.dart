@@ -1,8 +1,8 @@
-import 'package:bookify/src/features/bookcase/views/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/shared/widgets/bookcase_widget/bookcase_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';

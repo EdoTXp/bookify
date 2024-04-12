@@ -95,6 +95,13 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       context: context,
       isDismissible: false,
       enableDrag: false,
+      constraints: BoxConstraints.loose(
+        Size(
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height * 0.75,
+        ),
+      ),
+      isScrollControlled: true,
       builder: (_) => BookcaseBooksInsertionPage(
         bookcaseId: _actualBookcase.id!,
       ),

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ContactsPickerLoadedStateWidget extends StatefulWidget {
-  final List<ContactDto> contatcts;
+  final List<ContactDto> contacts;
   final void Function(ContactDto contactDto) onSelectedContact;
 
   const ContactsPickerLoadedStateWidget({
     super.key,
-    required this.contatcts,
+    required this.contacts,
     required this.onSelectedContact,
   });
 
@@ -67,13 +67,13 @@ class _ContactsPickerLoadedStateWidgetState
           child: GestureDetector(
             onTap: _clearData,
             child: ListView.builder(
-              itemCount: widget.contatcts.length,
+              itemCount: widget.contacts.length,
               itemBuilder: (context, index) {
                 return ContactWidget(
-                  contactDto: widget.contatcts[index],
+                  contactDto: widget.contacts[index],
                   isSelected: selectedIndex == index,
                   onTap: () => _clickOnContact(
-                    widget.contatcts[index],
+                    widget.contacts[index],
                     index,
                   ),
                 );

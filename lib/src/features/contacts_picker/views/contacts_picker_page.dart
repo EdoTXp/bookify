@@ -45,7 +45,7 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
         ),
       ContactsPickerLoadedState(:final contacts) =>
         ContactsPickerLoadedStateWidget(
-          contatcts: contacts,
+          contacts: contacts,
           onSelectedContact: (contactDto) => Navigator.pop(context, contactDto),
         ),
       ContactsPickerErrorState(:final errorMessage) => Center(
@@ -64,6 +64,7 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             centerTitle: true,
             title: const Text(
               'Contatos',
