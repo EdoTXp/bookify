@@ -57,7 +57,7 @@ class _LoanPageState extends State<LoanPage> {
           refreshPage: _refreshPage,
         ),
       LoanEmptyState() => ItemEmptyStateWidget(
-          label: 'Criar um novo empréstimo',
+          label: 'Criar um novo empréstimo de um livro',
           onTap: () async {
             await Navigator.pushNamed(
               context,

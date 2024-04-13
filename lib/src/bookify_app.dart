@@ -1,5 +1,6 @@
 import 'package:bookify/src/shared/routes/routes.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,10 @@ class _BookifyAppState extends State<BookifyApp> {
       navigatorKey: Routes.navigatorKey,
       routes: Routes.routes,
       initialRoute: Routes.initialRoute,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
     );
   }
 }

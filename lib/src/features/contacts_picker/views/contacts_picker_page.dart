@@ -1,7 +1,6 @@
 import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.dart';
 import 'package:bookify/src/features/contacts_picker/views/widgets/contacts_picker_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
-import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,10 +36,10 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
           child: CircularProgressIndicator(),
         ),
       ContactsPickerEmptyState() => Center(
-          child: ItemEmptyStateWidget(
-            label:
-                'Não foi encontrado nenhum contato. Tente adicionar na sua lista do celular.',
-            onTap: _onRefresh,
+          child: InfoItemStateWidget.withNotFoundState(
+            message:
+                'Não foi encontrado nenhum contato.\nTente adicionar na sua lista do celular.',
+            onPressed: _onRefresh,
           ),
         ),
       ContactsPickerLoadedState(:final contacts) =>

@@ -21,7 +21,7 @@ class LoanLoadedStateWidget extends StatelessWidget {
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: AddNewItemTextButton(
-            label: 'Adicionar um novo empréstimo',
+            label: 'Emprestar um livro',
             onPressed: () async {
               await Navigator.pushNamed(
                 context,
@@ -33,12 +33,14 @@ class LoanLoadedStateWidget extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.all(10),
             itemCount: loansDto.length,
             itemBuilder: (_, index) {
-              return LoanWidget(
-                loan: loansDto[index],
-                onTap: () {},
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LoanWidget(
+                  loan: loansDto[index],
+                  onTap: () {},
+                ),
               );
             },
           ),

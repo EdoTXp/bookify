@@ -76,7 +76,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
     });
   }
 
-  void _handleBoookcaseInsertionState(
+  Future<void> _handleBoookcaseInsertionState(
     BuildContext context,
     BookcaseInsertionState state,
   ) async {
@@ -126,6 +126,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
     return PopScope(
       canPop: _canPopPage,
       child: BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
+        bloc: _bloc,
         listener: _handleBoookcaseInsertionState,
         builder: (context, state) {
           return Scaffold(
