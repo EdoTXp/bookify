@@ -49,6 +49,7 @@ class _IsbnManuallyTextFormFieldWidgetState
                 key: const Key('isbnManuallyTextFormField'),
                 textAlign: TextAlign.center,
                 controller: isbnManuallyEC,
+                keyboardType: TextInputType.number,
                 inputFormatters: [isbnMaskFormatter],
                 validator: Validatorless.multiple([
                   Validatorless.required('Esse campo não pode estar vazio'),
@@ -58,7 +59,7 @@ class _IsbnManuallyTextFormFieldWidgetState
                   ),
                 ]),
                 style: const TextStyle(
-                  fontSize: 30,
+                  fontSize: 24,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),

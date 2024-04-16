@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/helpers/local_decimal_format/local_decimal_format_extension.dart';
 import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class BookRating extends StatelessWidget {
     return Column(
       children: [
         Text(
-          averageRating.toString().replaceAll('.', ','),
+          averageRating.toLocaleDecimalFormat(),
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,

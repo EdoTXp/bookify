@@ -69,11 +69,47 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   }
 
   void _clearAllTextField() {
+    _formKey.currentState!.reset();
+    _bookcaseNameEC.clear();
+    _bookcaseDescriptionEC.clear();
+
     setState(() {
-      _bookcaseNameEC.text = '';
-      _bookcaseDescriptionEC.text = '';
       _selectedColor = Colors.white;
     });
+  }
+
+  /// Checks whether all fields are valid,
+  /// then enters the new or update bookcase.
+  void _onPressedButton(BookcaseModel? bookcaseModel) {
+    if (_formKey.currentState!.validate()) {
+      if (bookcaseModel == null) {
+        _bloc.add(
+          InsertedBookcaseEvent(
+            name: _bookcaseNameEC.value.text,
+            description: _bookcaseDescriptionEC.value.text,
+            color: _selectedColor,
+          ),
+        );
+      } else {
+        _bloc.add(
+          UpdatedBookcaseEvent(
+            id: bookcaseModel.id!,
+            name: _bookcaseNameEC.value.text,
+            description: _bookcaseDescriptionEC.value.text,
+            color: _selectedColor,
+          ),
+        );
+
+        bookcaseUpdated = bookcaseModel.copyWith(
+            name: _bookcaseNameEC.value.text,
+            description: _bookcaseDescriptionEC.value.text,
+            color: _selectedColor);
+      }
+
+      setState(() {
+        _canPopPage = false;
+      });
+    }
   }
 
   Future<void> _handleBoookcaseInsertionState(
@@ -123,140 +159,111 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     final colorScheme = Theme.of(context).colorScheme;
 
-    return PopScope(
-      canPop: _canPopPage,
-      child: BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
-        bloc: _bloc,
-        listener: _handleBoookcaseInsertionState,
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                titlePage,
-                style: const TextStyle(fontSize: 14),
-              ),
-              actions: [
-                IconButton(
-                  onPressed: _clearAllTextField,
-                  tooltip: 'Limpar todos os campos',
-                  icon: const Icon(Icons.delete_forever_outlined),
-                ),
-              ],
+    return BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
+      bloc: _bloc,
+      listener: _handleBoookcaseInsertionState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              titlePage,
+              style: const TextStyle(fontSize: 14),
             ),
-            body: Padding(
+            actions: [
+              IconButton(
+                onPressed: _clearAllTextField,
+                tooltip: 'Limpar todos os campos',
+                icon: const Icon(Icons.delete_forever_outlined),
+              ),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 12),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: _bookcaseNameEC,
-                          cursorColor: colorScheme.secondary,
-                          validator: Validatorless.required(
-                            'Esse campo não pode estar vazio',
-                          ),
-                          onTapOutside: (_) => context.unfocus(),
-                          style: const TextStyle(fontSize: 16),
-                          decoration: const InputDecoration(
-                            labelText: 'Nome',
-                          ),
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          controller: _bookcaseDescriptionEC,
-                          cursorColor: colorScheme.secondary,
-                          validator: Validatorless.required(
-                            'Esse campo não pode estar vazio',
-                          ),
-                          onTapOutside: (_) => context.unfocus(),
-                          style: const TextStyle(fontSize: 16),
-                          decoration: const InputDecoration(
-                            labelText: 'Descrição',
-                          ),
-                          textInputAction: TextInputAction.done,
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 16),
-                          readOnly: true,
-                          onTap: () async {
-                            _selectedColor = await ColorPickerDialogService
-                                .showColorPickerDialog(
-                              context,
-                              _selectedColor,
-                            );
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Cor',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            prefixIcon: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Container(
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: _selectedColor,
-                                  border:
-                                      Border.all(color: colorScheme.primary),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                              ),
-                            ),
-                            suffixIcon: const Icon(
-                              Icons.arrow_drop_down_rounded,
-                            ),
-                          ),
-                        ),
-                      ],
+              child: Form(
+                key: _formKey,
+                canPop: _canPopPage,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const Spacer(),
-                  BookifyOutlinedButton.expanded(
-                    text: 'Confirmar',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (bookcaseModel == null) {
-                          _bloc.add(
-                            InsertedBookcaseEvent(
-                              name: _bookcaseNameEC.value.text,
-                              description: _bookcaseDescriptionEC.value.text,
+                    TextFormField(
+                      controller: _bookcaseNameEC,
+                      cursorColor: colorScheme.secondary,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validatorless.required(
+                        'Esse campo não pode estar vazio',
+                      ),
+                      onTapOutside: (_) => context.unfocus(),
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        labelText: 'Nome',
+                      ),
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _bookcaseDescriptionEC,
+                      cursorColor: colorScheme.secondary,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validatorless.required(
+                        'Esse campo não pode estar vazio',
+                      ),
+                      onTapOutside: (_) => context.unfocus(),
+                      style: const TextStyle(fontSize: 16),
+                      decoration: const InputDecoration(
+                        labelText: 'Descrição',
+                      ),
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 16),
+                      readOnly: true,
+                      keyboardType: TextInputType.none,
+                      onTap: () async {
+                        _selectedColor = await ColorPickerDialogService
+                            .showColorPickerDialog(
+                          context,
+                          _selectedColor,
+                        );
+                      },
+                      onTapOutside: (_) => context.unfocus(),
+                      decoration: InputDecoration(
+                        labelText: 'Cor',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 100,
+                            decoration: BoxDecoration(
                               color: _selectedColor,
+                              border: Border.all(color: colorScheme.primary),
+                              borderRadius: BorderRadius.circular(4.0),
                             ),
-                          );
-                        } else {
-                          _bloc.add(
-                            UpdatedBookcaseEvent(
-                              id: bookcaseModel.id!,
-                              name: _bookcaseNameEC.value.text,
-                              description: _bookcaseDescriptionEC.value.text,
-                              color: _selectedColor,
-                            ),
-                          );
-
-                          bookcaseUpdated = bookcaseModel.copyWith(
-                              name: _bookcaseNameEC.value.text,
-                              description: _bookcaseDescriptionEC.value.text,
-                              color: _selectedColor);
-                        }
-
-                        setState(() {
-                          _canPopPage = false;
-                        });
-                      }
-                    },
-                  ),
-                ],
+                          ),
+                        ),
+                        suffixIcon: const Icon(
+                          Icons.arrow_drop_down_rounded,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BookifyOutlinedButton.expanded(
+                      text: 'Confirmar',
+                      onPressed: () => _onPressedButton(bookcaseModel),
+                    ),
+                  ],
+                ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -72,6 +72,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
   /// Clears all input fields, book and contact buttons.
   void _clearData() {
+    _formKey.currentState!.reset();
     _contactNameEC.clear();
     _contactPhoneNumberEC.clear();
     _observationEC.clear();
@@ -133,23 +134,69 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   /// Opens a date picker dialog to select loan and devolution dates.
   Future<void> _getDate(
     BuildContext context,
+    TextEditingController dateController,
   ) async {
-    final loanDate = (_loanDateEC.text.isNotEmpty)
-        ? _loanDateEC.text.parseFormattedDate()
+    final date = (dateController.text.isNotEmpty)
+        ? dateController.text.parseFormattedDate()
         : null;
 
-    final devolutionDate = (_devolutionDateEC.text.isNotEmpty)
-        ? _devolutionDateEC.text.parseFormattedDate()
-        : null;
-
-    final dateResult = await DatePickerDialogService.showDateTimePickerRange(
+    final dateResult = await DatePickerDialogService.showDateTimePicker(
       context: context,
-      value: [loanDate, devolutionDate],
+      value: [date],
     );
 
     if (dateResult != null) {
-      _loanDateEC.text = dateResult.first!.toFormattedDate();
-      _devolutionDateEC.text = dateResult.last!.toFormattedDate();
+      dateController.text = dateResult.toFormattedDate();
+    }
+  }
+
+  String? _validateDevolutionDate() {
+    if (_loanDateEC.text.isNotEmpty && _devolutionDateEC.text.isNotEmpty) {
+      final loanDate = _loanDateEC.text.parseFormattedDate();
+      final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
+
+      if (devolutionDate.isBefore(loanDate) ||
+          devolutionDate.isAtSameMomentAs(loanDate)) {
+        return 'Data inválida';
+      }
+    }
+
+    return null;
+  }
+
+  /// Checks whether all fields and buttons are valid,
+  /// then enters the new loan.
+  void _onPressedButton(BuildContext context) {
+    if (_formKey.currentState!.validate() && _bookModel != null) {
+      // Added 7 hours to the devolution date to ensure that the devolution date occurs on the desired day.
+      final devolutionDateWithHours = _devolutionDateEC.text
+          .parseFormattedDate()
+          .add(const Duration(hours: 7));
+
+      _bloc.add(
+        InsertedLoanInsertionEvent(
+          idContact: _contact!.id,
+          bookId: _bookModel!.id,
+          bookTitle: _bookModel!.title,
+          contactName: _contactNameEC.text,
+          observation: _observationEC.text,
+          loanDate: _loanDateEC.text.parseFormattedDate(),
+          devolutionDate: devolutionDateWithHours,
+        ),
+      );
+
+      // disable popPage to ensure the loan is inserted.
+      setState(() {
+        _canPopPage = false;
+      });
+    } else {
+      // Informs the user that one of the textformfields or one of the contact or book buttons is empty.
+      // this way, cannot complete insert.
+      SnackbarService.showSnackBar(
+        context,
+        'Tem algum campo vazio.\nVerifique se adicionou o livro, o contato, a observação, e as datas.',
+        SnackBarType.error,
+      );
     }
   }
 
@@ -195,215 +242,204 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: _canPopPage,
-      child: BlocConsumer<LoanInsertionBloc, LoanInsertionState>(
-        bloc: _bloc,
-        listener: _handleLoanInsertionState,
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text(
-                'Criar empréstimo de um livro',
-                style: TextStyle(fontSize: 14),
-              ),
-              actions: [
-                IconButton(
-                  tooltip: 'Limpar todos os campos',
-                  icon: const Icon(
-                    Icons.delete_forever_outlined,
-                  ),
-                  onPressed: _clearData,
-                ),
-              ],
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return BlocConsumer<LoanInsertionBloc, LoanInsertionState>(
+      bloc: _bloc,
+      listener: _handleLoanInsertionState,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              'Criar empréstimo de um livro',
+              style: TextStyle(fontSize: 14),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            (_bookModel == null)
-                                ? EmptyBookButtonWidget(
+            actions: [
+              IconButton(
+                tooltip: 'Limpar todos os campos',
+                icon: const Icon(
+                  Icons.delete_forever_outlined,
+                ),
+                onPressed: _clearData,
+              ),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                canPop: _canPopPage,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          (_bookModel == null)
+                              ? EmptyBookButtonWidget(
+                                  onTap: () async => await _getBook(context),
+                                  height: 250,
+                                  width: 170,
+                                )
+                              : Material(
+                                  child: InkWell(
                                     onTap: () async => await _getBook(context),
-                                    height: 250,
-                                    width: 170,
-                                  )
-                                : Material(
-                                    child: InkWell(
-                                      onTap: () async =>
-                                          await _getBook(context),
-                                      child: BookWidget(
-                                        bookImageUrl: _bookModel!.imageUrl,
-                                        height: 250,
-                                        width: 170,
-                                      ),
+                                    child: BookWidget(
+                                      bookImageUrl: _bookModel!.imageUrl,
+                                      height: 250,
+                                      width: 170,
                                     ),
                                   ),
-                            Positioned(
-                              right: -20,
-                              top: -20,
-                              child: _contact == null
-                                  ? EmptyContactButtonWidget(
-                                      onTap: () async =>
-                                          await _getContact(context),
-                                      height: 80,
-                                      width: 80,
-                                    )
-                                  : ContactCircleAvatar(
-                                      name: _contact!.name,
-                                      photo: _contact!.photo,
-                                      onTap: () async =>
-                                          await _getContact(context),
-                                      height: 80,
-                                      width: 80,
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: _contactNameEC,
-                        readOnly: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator:
-                            Validatorless.required('Esse campo é obrigatório.'),
-                        onTap: () async => await _getContact(context),
-                        style: const TextStyle(fontSize: 14),
-                        decoration: const InputDecoration(
-                          label: Text('Nome'),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _contactPhoneNumberEC,
-                        readOnly: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator:
-                            Validatorless.required('Esse campo é obrigatório.'),
-                        onTap: () async => await _getContact(context),
-                        style: const TextStyle(fontSize: 14),
-                        decoration: const InputDecoration(
-                          label: Text('Contato'),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _observationEC,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator:
-                            Validatorless.required('Esse campo é obrigatório'),
-                        onTapOutside: (_) => context.unfocus(),
-                        style: const TextStyle(fontSize: 14),
-                        decoration: const InputDecoration(
-                          label: Text('Observação'),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: TextFormField(
-                              controller: _loanDateEC,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              readOnly: true,
-                              validator: Validatorless.required(
-                                  'Esse campo é obrigatório'),
-                              onTap: () async => await _getDate(context),
-                              style: const TextStyle(fontSize: 14),
-                              decoration: const InputDecoration(
-                                label: Text('Data do empréstimo'),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: TextFormField(
-                              controller: _devolutionDateEC,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              readOnly: true,
-                              validator: Validatorless.required(
-                                  'Esse campo é obrigatório'),
-                              onTap: () async => await _getDate(context),
-                              style: const TextStyle(fontSize: 14),
-                              decoration: const InputDecoration(
-                                label: Text('Data para devolução'),
-                              ),
-                            ),
+                                ),
+                          Positioned(
+                            right: -20,
+                            top: -20,
+                            child: _contact == null
+                                ? EmptyContactButtonWidget(
+                                    onTap: () async =>
+                                        await _getContact(context),
+                                    height: 80,
+                                    width: 80,
+                                  )
+                                : ContactCircleAvatar(
+                                    name: _contact!.name,
+                                    photo: _contact!.photo,
+                                    onTap: () async =>
+                                        await _getContact(context),
+                                    height: 80,
+                                    width: 80,
+                                  ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _contactNameEC,
+                      readOnly: true,
+                      keyboardType: TextInputType.none,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validatorless.required(
+                        'Esse campo é obrigatório.',
                       ),
-                      BookifyElevatedButton.expanded(
-                        text: 'Enviar',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
-                              _bookModel != null) {
-                            // Added 7 hours to the devolution date to ensure that the devolution date occurs on the desired day.
-                            final devolutionDateWithHours = _devolutionDateEC
-                                .text
-                                .parseFormattedDate()
-                                .add(const Duration(hours: 7));
-
-                            _bloc.add(
-                              InsertedLoanInsertionEvent(
-                                idContact: _contact!.id,
-                                bookId: _bookModel!.id,
-                                bookTitle: _bookModel!.title,
-                                contactName: _contactNameEC.text,
-                                observation: _observationEC.text,
-                                loanDate: _loanDateEC.text.parseFormattedDate(),
-                                devolutionDate: devolutionDateWithHours,
-                              ),
-                            );
-
-                            // disable popPage to ensure the loan is inserted.
-                            setState(() {
-                              _canPopPage = false;
-                            });
-                          } else {
-                            // Informs the user that one of the textformfields or one of the contact or book buttons is empty.
-                            // this way, cannot complete insert.
-                            SnackbarService.showSnackBar(
+                      onTap: () async => await _getContact(context),
+                      onTapOutside: (_) => context.unfocus(),
+                      style: const TextStyle(fontSize: 14),
+                      decoration: const InputDecoration(
+                        label: Text('Nome'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _contactPhoneNumberEC,
+                      readOnly: true,
+                      keyboardType: TextInputType.none,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validatorless.required(
+                        'Esse campo é obrigatório.',
+                      ),
+                      onTap: () async => await _getContact(context),
+                      onTapOutside: (_) => context.unfocus(),
+                      style: const TextStyle(fontSize: 14),
+                      decoration: const InputDecoration(
+                        label: Text('Contato'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _observationEC,
+                      cursorColor: colorScheme.secondary,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validatorless.required(
+                        'Esse campo é obrigatório',
+                      ),
+                      onTapOutside: (_) => context.unfocus(),
+                      style: const TextStyle(fontSize: 14),
+                      decoration: const InputDecoration(
+                        label: Text('Observação'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            controller: _loanDateEC,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            validator: Validatorless.required(
+                              'Esse campo é obrigatório',
+                            ),
+                            onTap: () async => await _getDate(
                               context,
-                              'Tem algum campo vazio.\nVerifique se adicionou o livro, o contato, a observação, e as datas.',
-                              SnackBarType.error,
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                              _loanDateEC,
+                            ),
+                            onTapOutside: (_) => context.unfocus(),
+                            style: const TextStyle(fontSize: 14),
+                            decoration: const InputDecoration(
+                              label: Text('Data do empréstimo'),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          child: TextFormField(
+                            controller: _devolutionDateEC,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            validator: Validatorless.multiple([
+                              Validatorless.required(
+                                'Esse campo é obrigatório',
+                              ),
+                              (_) => _validateDevolutionDate(),
+                            ]),
+                            onTap: () async => await _getDate(
+                              context,
+                              _devolutionDateEC,
+                            ),
+                            onTapOutside: (_) => context.unfocus(),
+                            style: const TextStyle(fontSize: 14),
+                            decoration: const InputDecoration(
+                              label: Text('Data para devolução'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    BookifyElevatedButton.expanded(
+                      text: 'Enviar',
+                      onPressed: () => _onPressedButton(context),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
