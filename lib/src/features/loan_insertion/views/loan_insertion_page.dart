@@ -3,8 +3,8 @@ import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
 import 'package:bookify/src/shared/dtos/conctact_dto.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
-import 'package:bookify/src/shared/helpers/date_time_format/date_time_format.dart';
-import 'package:bookify/src/shared/helpers/form/form_helper.dart';
+import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/date_picker_dialog_service/date_picker_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';

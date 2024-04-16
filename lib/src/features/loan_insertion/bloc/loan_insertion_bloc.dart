@@ -1,5 +1,5 @@
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/shared/helpers/date_time_format/date_time_format.dart';
+import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/loan_model.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/custom_notification.dart';

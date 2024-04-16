@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/helpers/size/size_helper.dart';
+import 'package:bookify/src/shared/helpers/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';

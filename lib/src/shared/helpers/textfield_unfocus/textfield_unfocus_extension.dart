@@ -13,7 +13,7 @@ void unfocus(BuildContext context) => FocusScope.of(context).unfocus();
 /// directly from a [BuildContext] instance. It's a shorthand for
 /// calling `FocusScope.of(context).unfocus()`, making it easier to read
 /// and maintain in the codebase.
-extension UnFocusExtension on BuildContext {
+extension TextFieldUnFocusExtension on BuildContext {
   /// Unfocuses the current focus scope associated with this [BuildContext].
   ///
   /// This method is equivalent to calling `FocusScope.of(this).unfocus()`.
