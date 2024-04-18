@@ -52,38 +52,61 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
     final widthOverlay = MediaQuery.sizeOf(context).width * 0.9;
     final heightOverlay = MediaQuery.sizeOf(context).height * 0.3;
     final centerOverlay = Offset(widthOverlay * .78, heightOverlay * .78);
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return MobileScanner(
-      key: const Key('MobileScanner'),
-      controller: _scannerController,
-      errorBuilder: (context, _, __) {
-        return InfoItemStateWidget.withErrorState(
-          message: 'Occoreu algum erro com a câmera',
-          onPressed: () async {
-            await Future.wait(
-              [
-                _scannerController.stop(),
-                _scannerController.start(),
-              ],
+    return Stack(
+      children: [
+        MobileScanner(
+          key: const Key('MobileScanner'),
+          controller: _scannerController,
+          errorBuilder: (context, _, __) {
+            return InfoItemStateWidget.withErrorState(
+              message: 'Occoreu algum erro com a câmera',
+              onPressed: () async {
+                await Future.wait(
+                  [
+                    _scannerController.stop(),
+                    _scannerController.start(),
+                  ],
+                );
+              },
             );
           },
-        );
-      },
-      scanWindow: Rect.fromCenter(
-        center: centerOverlay,
-        width: widthOverlay,
-        height: heightOverlay,
-      ),
-      onDetect: _onDetectCaptures,
-      overlay: Container(
-        width: widthOverlay,
-        height: heightOverlay,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.white,
+          scanWindow: Rect.fromCenter(
+            center: centerOverlay,
+            width: widthOverlay,
+            height: heightOverlay,
+          ),
+          onDetect: _onDetectCaptures,
+          overlay: Container(
+            width: widthOverlay,
+            height: heightOverlay,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
-      ),
+        Positioned(
+          right: 10,
+          child: IconButton(
+            color: colorScheme.secondary,
+            onPressed: _scannerController.toggleTorch,
+            icon: ValueListenableBuilder(
+              valueListenable: _scannerController.torchState,
+              builder: (_, value, __) {
+                return Icon(
+                  value.rawValue == 0
+                      ? Icons.flash_on_rounded
+                      : Icons.flash_off_rounded,
+                  color: colorScheme.secondary,
+                );
+              },
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -32,6 +32,17 @@ abstract interface class LocalDatabase {
     required dynamic id,
   });
 
+  Future<List<Map<String, dynamic>>> getByJoin({
+    required String table,
+    required List<String> columns,
+    required String innerJoinTable,
+    required String onColumn,
+    required String onArgs,
+    required String whereColumn,
+    required String whereArgs,
+    bool usingLikeCondition,
+  });
+
   /// Retrieves all items from the specified table.
   ///
   /// [table] The name of the table from which to retrieve the items.

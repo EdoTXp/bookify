@@ -44,7 +44,7 @@ class MyBooksBloc extends Bloc<MyBooksEvent, MyBooksState> {
     try {
       emit(MyBooksLoadingState());
 
-      final books = await _bookService.getBookByTitle(title: event.searchQuery);
+      final books = await _bookService.getBooksByTitle(title: event.searchQuery);
 
       if (books.isEmpty) {
         emit(MyBooksNotFoundState());

@@ -1,5 +1,4 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as database_script;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:path/path.dart';
@@ -7,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 
 class LocalDatabaseImpl implements LocalDatabase {
   Database? _database;
-  String databaseName = database_script.databaseName;
+  final databaseScripts = DatabaseScripts();
 
   Future<Database?> get database async {
     if (_database != null) return _database;
@@ -18,7 +17,10 @@ class LocalDatabaseImpl implements LocalDatabase {
   Future<Database> _initDatabase() async {
     try {
       final databasesPath = await getDatabasesPath();
-      String path = join(databasesPath, databaseName);
+      String path = join(
+        databasesPath,
+        databaseScripts.databaseName,
+      );
 
       return await openDatabase(
         path,
@@ -34,15 +36,15 @@ class LocalDatabaseImpl implements LocalDatabase {
   Future<void> _onCreate(Database db, int version) async {
     final Batch batch = db.batch();
 
-    batch.execute(database_script.bookScript);
-    batch.execute(database_script.categoryScript);
-    batch.execute(database_script.authorScript);
-    batch.execute(database_script.bookAuthorsScript);
-    batch.execute(database_script.bookCategoriesScript);
-    batch.execute(database_script.bookReadingScript);
-    batch.execute(database_script.loanScript);
-    batch.execute(database_script.bookcaseScript);
-    batch.execute(database_script.bookOnCaseScript);
+    batch.execute(databaseScripts.bookScript);
+    batch.execute(databaseScripts.categoryScript);
+    batch.execute(databaseScripts.authorScript);
+    batch.execute(databaseScripts.bookAuthorsScript);
+    batch.execute(databaseScripts.bookCategoriesScript);
+    batch.execute(databaseScripts.bookReadingScript);
+    batch.execute(databaseScripts.loanScript);
+    batch.execute(databaseScripts.bookcaseScript);
+    batch.execute(databaseScripts.bookOnCaseScript);
 
     await batch.commit();
   }
@@ -61,6 +63,36 @@ class LocalDatabaseImpl implements LocalDatabase {
             ? '$orderColumn ${orderBy.orderToString()}'
             : null,
       );
+      return queryItems;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getByJoin({
+    required String table,
+    required List<String> columns,
+    required String innerJoinTable,
+    required String onColumn,
+    required String onArgs,
+    required String whereColumn,
+    required String whereArgs,
+    bool usingLikeCondition = false,
+  }) async {
+    try {
+      final db = await database;
+
+      final whereCondition = usingLikeCondition ? 'LIKE' : '=';
+
+      final query =
+          'SELECT ${columns.join(', ')} FROM $table INNER JOIN $innerJoinTable ON $onColumn = $onArgs WHERE $whereColumn $whereCondition ?';
+
+      final queryItems = await db!.rawQuery(
+        query,
+        [usingLikeCondition ? '%$whereArgs%' : whereArgs],
+      );
+
       return queryItems;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());

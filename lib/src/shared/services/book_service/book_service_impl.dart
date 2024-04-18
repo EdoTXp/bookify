@@ -69,9 +69,9 @@ class BookServiceImpl implements BookService {
   }
 
   @override
-  Future<List<BookModel>> getBookByTitle({required String title}) async {
+  Future<List<BookModel>> getBooksByTitle({required String title}) async {
     try {
-      final booksModel = await _booksRepository.getBookByTitle(title: title);
+      final booksModel = await _booksRepository.getBooksByTitle(title: title);
 
       for (var index = 0; index < booksModel.length; index++) {
         final (authors, categories) =

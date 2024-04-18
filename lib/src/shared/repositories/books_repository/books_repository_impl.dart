@@ -1,5 +1,4 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as book_table;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
@@ -7,7 +6,7 @@ import 'package:bookify/src/shared/repositories/books_repository/books_repositor
 
 class BooksRepositoryImpl implements BooksRepository {
   final LocalDatabase _database;
-  final _bookTableName = book_table.bookTableName;
+  final _bookTableName = DatabaseScripts().bookTableName;
 
   BooksRepositoryImpl(this._database);
 
@@ -75,7 +74,7 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
-  Future<List<BookModel>> getBookByTitle({required String title}) async {
+  Future<List<BookModel>> getBooksByTitle({required String title}) async {
     try {
       final booksMap = await _database.researchBy(
         table: _bookTableName,

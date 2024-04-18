@@ -1,12 +1,11 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as book_authors;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/repositories/book_authors_repository/book_authors_repository.dart';
 
 class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
   final LocalDatabase _database;
-  final _bookAuthorsTableName = book_authors.bookAuthorsTableName;
+  final _bookAuthorsTableName = DatabaseScripts().bookAuthorsTableName;
 
   BookAuthorsRepositoryImpl(this._database);
 

@@ -1,5 +1,4 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as database_scripts;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/models/author_model.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/category_model.dart';
@@ -52,15 +51,15 @@ void main() {
     final batch = database.batch();
 
     // Execute all tables scripts
-    batch.execute(database_scripts.bookScript);
-    batch.execute(database_scripts.categoryScript);
-    batch.execute(database_scripts.authorScript);
-    batch.execute(database_scripts.bookAuthorsScript);
-    batch.execute(database_scripts.bookCategoriesScript);
-    batch.execute(database_scripts.bookReadingScript);
-    batch.execute(database_scripts.loanScript);
-    batch.execute(database_scripts.bookcaseScript);
-    batch.execute(database_scripts.bookOnCaseScript);
+    batch.execute(DatabaseScripts().bookScript);
+    batch.execute(DatabaseScripts().categoryScript);
+    batch.execute(DatabaseScripts().authorScript);
+    batch.execute(DatabaseScripts().bookAuthorsScript);
+    batch.execute(DatabaseScripts().bookCategoriesScript);
+    batch.execute(DatabaseScripts().bookReadingScript);
+    batch.execute(DatabaseScripts().loanScript);
+    batch.execute(DatabaseScripts().bookcaseScript);
+    batch.execute(DatabaseScripts().bookOnCaseScript);
 
     await batch.commit();
   });
@@ -71,11 +70,11 @@ void main() {
 
   group('test all SQL methods in all tables ||', () {
     test('book, author & category tables', () async {
-      final bookTableName = database_scripts.bookTableName;
-      final authorTableName = database_scripts.authorTableName;
-      final categoryTableName = database_scripts.categoryTableName;
-      final bookAuthorsTableName = database_scripts.bookAuthorsTableName;
-      final bookCategoriesTableName = database_scripts.bookCategoriesTableName;
+      final bookTableName = DatabaseScripts().bookTableName;
+      final authorTableName = DatabaseScripts().authorTableName;
+      final categoryTableName = DatabaseScripts().categoryTableName;
+      final bookAuthorsTableName = DatabaseScripts().bookAuthorsTableName;
+      final bookCategoriesTableName = DatabaseScripts().bookCategoriesTableName;
 
       final authors = <AuthorModel>[
         ...booksModel[0].authors,
@@ -229,8 +228,8 @@ void main() {
     });
 
     test('book & reading tables', () async {
-      final bookTableName = database_scripts.bookTableName;
-      final readingTableName = database_scripts.bookReadingTableName;
+      final bookTableName = DatabaseScripts().bookTableName;
+      final readingTableName = DatabaseScripts().bookReadingTableName;
 
       // TEST insertion of book
       int bookRowsInserted = 0;
@@ -310,8 +309,8 @@ void main() {
     });
 
     test('book, loan & people tables', () async {
-      final bookTableName = database_scripts.bookTableName;
-      final loanTableName = database_scripts.loanTableName;
+      final bookTableName = DatabaseScripts().bookTableName;
+      final loanTableName = DatabaseScripts().loanTableName;
 
       // TEST insertion of book
       final bookRowInserted = await _insertOnDatabase(
@@ -367,9 +366,9 @@ void main() {
     });
 
     test('book & bookcase tables', () async {
-      final bookTableName = database_scripts.bookTableName;
-      final bookcaseTableName = database_scripts.bookcaseTableName;
-      final bookOnCaseTableName = database_scripts.bookOnCaseTableName;
+      final bookTableName = DatabaseScripts().bookTableName;
+      final bookcaseTableName = DatabaseScripts().bookcaseTableName;
+      final bookOnCaseTableName = DatabaseScripts().bookOnCaseTableName;
 
       // TEST insertion of book
       int bookRowsInserted = 0;
@@ -431,7 +430,8 @@ void main() {
         [1],
       );
       expect(newBookcase.last['name'], equals('Tecnologia'));
-      expect(newBookcase.last['description'], equals('Meus livros de tecnologia'));
+      expect(
+          newBookcase.last['description'], equals('Meus livros de tecnologia'));
 
       //TEST DELETE bookcase and expect its relations to be deleted.
       final bookcaseRowDeleted = await _deleteRowWhenId(

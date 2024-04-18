@@ -193,8 +193,16 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       controller: _bookcaseNameEC,
                       cursorColor: colorScheme.secondary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: Validatorless.required(
-                        'Esse campo não pode estar vazio',
+                      validator: Validatorless.multiple(
+                        [
+                          Validatorless.required(
+                            'Esse campo não pode estar vazio',
+                          ),
+                          Validatorless.min(
+                            3,
+                            'Esse campo precisa ter no mínimo 3 caracteres',
+                          ),
+                        ],
                       ),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 16),

@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as loan_table;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/loan_model.dart';
@@ -8,7 +6,8 @@ import 'package:bookify/src/shared/repositories/loan_repository/loan_repository.
 
 class LoanRepositoryImpl implements LoanRepository {
   final LocalDatabase _database;
-  final _loanTableName = loan_table.loanTableName;
+  final _loanTableName = DatabaseScripts().loanTableName;
+  final _bookTableName = DatabaseScripts().bookTableName;
 
   LoanRepositoryImpl(this._database);
 
@@ -19,6 +18,31 @@ class LoanRepositoryImpl implements LoanRepository {
         table: _loanTableName,
         orderColumn: 'devolutionDate',
         orderBy: OrderByType.ascendant,
+      );
+      final loans = loanMap.map(LoanModel.fromMap).toList();
+
+      return loans;
+    } on TypeError {
+      throw LocalDatabaseException(
+        'Impossível encontrar os empréstimos no database',
+      );
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<LoanModel>> getLoansByBookTitle({required String title}) async {
+    try {
+      final loanMap = await _database.getByJoin(
+        columns: ['$_loanTableName.*'],
+        table: _loanTableName,
+        innerJoinTable: _bookTableName,
+        onColumn: '$_loanTableName.bookId',
+        onArgs: '$_bookTableName.id',
+        whereColumn: 'title',
+        whereArgs: title,
+        usingLikeCondition: true,
       );
       final loans = loanMap.map(LoanModel.fromMap).toList();
 

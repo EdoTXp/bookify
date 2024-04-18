@@ -214,5 +214,215 @@ void main() {
         isA<LoanErrorState>(),
       ],
     );
+
+    blocTest(
+      'Test FindedLoanByBookNameEvent work',
+      build: () => loanBloc,
+      setUp: () {
+        when(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).thenAnswer(
+          (_) async => [
+            LoanModel(
+              id: 1,
+              observation: 'observation',
+              loanDate: DateTime(2024, 03, 06),
+              devolutionDate: DateTime(2024, 04, 06),
+              idContact: 'idContact',
+              bookId: 'bookId',
+            ),
+          ],
+        );
+        when(() => bookService.getBookById(id: any(named: 'id'))).thenAnswer(
+          (_) async => BookModel(
+            id: 'id',
+            title: 'title',
+            authors: [AuthorModel.withEmptyName()],
+            publisher: 'publisher',
+            description: 'description',
+            categories: [CategoryModel.withEmptyName()],
+            pageCount: 320,
+            imageUrl: 'imageUrl',
+            buyLink: 'buyLink',
+            averageRating: 3.4,
+            ratingsCount: 12,
+          ),
+        );
+
+        when(() => contactsService.getContactById(id: any(named: 'id')))
+            .thenAnswer(
+          (_) async => ContactDto(
+            id: 'id',
+            name: 'name',
+            photo: Uint8List(32),
+            phoneNumber: 'number',
+          ),
+        );
+      },
+      act: (bloc) => bloc.add(
+        FindedLoanByBookNameEvent(searchQueryName: 'searchQueryName'),
+      ),
+      verify: (_) {
+        verify(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).called(1);
+        verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
+        verify(() => contactsService.getContactById(id: any(named: 'id')))
+            .called(1);
+      },
+      expect: () => [
+        isA<LoanLoadingState>(),
+        isA<LoanLoadedState>(),
+      ],
+    );
+
+    blocTest(
+      'Test FindedLoanByBookNameEvent work when loans are empty',
+      build: () => loanBloc,
+      setUp: () {
+        when(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).thenAnswer(
+          (_) async => [],
+        );
+      },
+      act: (bloc) => bloc
+          .add(FindedLoanByBookNameEvent(searchQueryName: 'searchQueryName')),
+      verify: (_) {
+        verify(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).called(1);
+        verifyNever(() => bookService.getBookById(id: any(named: 'id')));
+        verifyNever(() => contactsService.getContactById(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<LoanLoadingState>(),
+        isA<LoanNotFoundState>(),
+      ],
+    );
+
+    blocTest(
+      'Test FindedLoanByBookNameEvent work when loan id is empty',
+      build: () => loanBloc,
+      setUp: () {
+        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
+            .thenAnswer(
+          (_) async => [
+            LoanModel(
+              observation: 'observation',
+              loanDate: DateTime(2024, 03, 06),
+              devolutionDate: DateTime(2024, 04, 06),
+              idContact: 'idContact',
+              bookId: 'bookId',
+            ),
+          ],
+        );
+      },
+      act: (bloc) => bloc
+          .add(FindedLoanByBookNameEvent(searchQueryName: 'searchQueryName')),
+      verify: (_) {
+        verify(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).called(1);
+        verifyNever(() => bookService.getBookById(id: any(named: 'id')));
+        verifyNever(() => contactsService.getContactById(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<LoanLoadingState>(),
+        isA<LoanErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'Test FindedLoanByBookNameEvent work when throw LocalDatabaseException',
+      build: () => loanBloc,
+      setUp: () {
+        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
+            .thenAnswer(
+          (_) async => [
+            LoanModel(
+              observation: 'observation',
+              loanDate: DateTime(2024, 03, 06),
+              devolutionDate: DateTime(2024, 04, 06),
+              idContact: 'idContact',
+              bookId: 'bookId',
+            ),
+          ],
+        );
+        when(
+          () => bookService.getBookById(
+            id: any(named: 'id'),
+          ),
+        ).thenThrow(
+          LocalDatabaseException('Error on Database'),
+        );
+      },
+      act: (bloc) => bloc.add(
+        FindedLoanByBookNameEvent(searchQueryName: 'searchQueryName'),
+      ),
+      verify: (_) {
+        verify(() =>
+                loanService.getLoansByBookTitle(title: any(named: 'title')))
+            .called(1);
+        verifyNever(() => bookService.getBookById(id: any(named: 'id')));
+        verifyNever(() => contactsService.getContactById(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<LoanLoadingState>(),
+        isA<LoanErrorState>(),
+      ],
+    );
+
+    blocTest(
+      'Test FindedLoanByBookNameEvent work when throw Generic Exception',
+      build: () => loanBloc,
+      setUp: () {
+        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
+            .thenAnswer(
+          (_) async => [
+            LoanModel(
+              observation: 'observation',
+              loanDate: DateTime(2024, 03, 06),
+              devolutionDate: DateTime(2024, 04, 06),
+              idContact: 'idContact',
+              bookId: 'bookId',
+            ),
+          ],
+        );
+        when(
+          () => bookService.getBookById(
+            id: any(named: 'id'),
+          ),
+        ).thenThrow(
+          Exception('Generic Error'),
+        );
+      },
+      act: (bloc) => bloc.add(
+        FindedLoanByBookNameEvent(searchQueryName: 'searchQueryName'),
+      ),
+      verify: (_) {
+        verify(
+          () => loanService.getLoansByBookTitle(
+            title: any(named: 'title'),
+          ),
+        ).called(1);
+        verifyNever(() => bookService.getBookById(id: any(named: 'id')));
+        verifyNever(() => contactsService.getContactById(id: any(named: 'id')));
+      },
+      expect: () => [
+        isA<LoanLoadingState>(),
+        isA<LoanErrorState>(),
+      ],
+    );
   });
 }

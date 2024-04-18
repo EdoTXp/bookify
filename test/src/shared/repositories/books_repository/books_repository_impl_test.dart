@@ -106,7 +106,7 @@ void main() {
               columnValues: any(named: 'columnValues')))
           .thenAnswer((_) async => [bookMap]);
 
-      final bookModelByName = await bookRepository.getBookByTitle(
+      final bookModelByName = await bookRepository.getBooksByTitle(
           title: 'Memórias Póstumas De Brás Cubas');
 
       expect(bookModelByName[0].id, equals('1'));
@@ -271,7 +271,7 @@ void main() {
           .thenAnswer((_) async => [{}]);
 
       expect(
-          () async => await bookRepository.getBookByTitle(
+          () async => await bookRepository.getBooksByTitle(
               title: 'Memórias Postumas de Bras Cubas'),
           throwsA((Exception e) =>
               e is LocalDatabaseException &&
@@ -287,7 +287,7 @@ void main() {
           .thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-          () async => await bookRepository.getBookByTitle(
+          () async => await bookRepository.getBooksByTitle(
               title: 'Memórias Postumas de Bras Cubas'),
           throwsA((Exception e) =>
               e is LocalDatabaseException && e.message == 'Error on database'));

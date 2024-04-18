@@ -34,6 +34,10 @@ class LoanLoadedStateWidget extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemCount: loansDto.length,
+            padding: const EdgeInsets.symmetric(
+              vertical: 25.0,
+              horizontal: 5.0,
+            ),
             itemBuilder: (_, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -91,7 +91,7 @@ void main() {
 
     test('get book by title', () async {
       when(
-        () => booksRepository.getBookByTitle(title: any(named: 'title')),
+        () => booksRepository.getBooksByTitle(title: any(named: 'title')),
       ).thenAnswer((_) async => [bookModel]);
 
       //for author repository
@@ -112,7 +112,7 @@ void main() {
               bookId: any(named: 'bookId')))
           .thenAnswer((_) async => [bookCategoriesRelationship]);
 
-      final booksModel = await bookService.getBookByTitle(title: 'title');
+      final booksModel = await bookService.getBooksByTitle(title: 'title');
 
       expect(booksModel[0].id, equals('1'));
       expect(booksModel[0].title, equals('title'));
@@ -284,7 +284,7 @@ void main() {
 
     test('get book by name', () async {
       when(
-        () => booksRepository.getBookByTitle(title: any(named: 'title')),
+        () => booksRepository.getBooksByTitle(title: any(named: 'title')),
       ).thenThrow(LocalDatabaseException('Error on database'));
 
       //for author repository
@@ -306,7 +306,7 @@ void main() {
           .thenAnswer((_) async => [bookCategoriesRelationship]);
 
       expect(
-        () async => await bookService.getBookByTitle(title: 'title'),
+        () async => await bookService.getBooksByTitle(title: 'title'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

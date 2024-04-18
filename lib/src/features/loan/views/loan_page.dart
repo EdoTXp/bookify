@@ -39,7 +39,11 @@ class _LoanPageState extends State<LoanPage> {
     }
 
     if (actualSearchQuery != null) {
-      //
+      _bloc.add(
+        FindedLoanByBookNameEvent(
+          searchQueryName: actualSearchQuery,
+        ),
+      );
     }
   }
 
@@ -65,6 +69,11 @@ class _LoanPageState extends State<LoanPage> {
             );
             _refreshPage();
           },
+        ),
+      LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
+          message:
+              'Nenhuma Empréstimo encontrado com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
+          onPressed: _refreshPage,
         ),
       LoanErrorState(:final errorMessage) => Center(
           child: InfoItemStateWidget.withErrorState(

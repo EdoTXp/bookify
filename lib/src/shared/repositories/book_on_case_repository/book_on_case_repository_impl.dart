@@ -1,12 +1,11 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as book_on_case;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/repositories/book_on_case_repository/book_on_case_repository.dart';
 
 class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   final LocalDatabase _database;
-  final _bookOnCaseTableName = book_on_case.bookOnCaseTableName;
+  final _bookOnCaseTableName = DatabaseScripts().bookOnCaseTableName;
 
   BookOnCaseRepositoryImpl(this._database);
 

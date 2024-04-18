@@ -12,6 +12,8 @@ final class LoanLoadedState extends LoanState {
 
 final class LoanEmptyState extends LoanState {}
 
+final class LoanNotFoundState extends LoanState{}
+
 final class LoanErrorState extends LoanState {
   final String errorMessage;
 

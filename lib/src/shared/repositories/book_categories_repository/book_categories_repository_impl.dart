@@ -1,12 +1,11 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as book_categories;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/repositories/book_categories_repository/book_categories_repository.dart';
 
 class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
   final LocalDatabase _database;
-  final _bookCategoriesTableName = book_categories.bookCategoriesTableName;
+  final _bookCategoriesTableName = DatabaseScripts().bookCategoriesTableName;
 
   BookCategoriesRepositoryImpl(this._database);
 

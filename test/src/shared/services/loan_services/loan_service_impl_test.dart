@@ -70,6 +70,33 @@ void main() {
       expect(loansModel[0].bookId, equals('bookId'));
     });
 
+    test('getLoansByBookTitle', () async {
+      when(
+        () => loanRepository.getLoansByBookTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenAnswer(
+        (_) async => loans,
+      );
+
+      final loansModel = await loanService.getLoansByBookTitle(title: 'title');
+
+      expect(loansModel.length, equals(3));
+      expect(loansModel[0].id, equals(1));
+      expect(loansModel[0].observation, equals('observation'));
+      expect(
+        loansModel[0].loanDate,
+        equals(DateTime(2024, 01, 10)),
+      );
+      expect(
+          loansModel[0].devolutionDate,
+          equals(
+            DateTime(DateTime.april, 2024),
+          ));
+      expect(loansModel[0].idContact, equals('idContact'));
+      expect(loansModel[0].bookId, equals('bookId'));
+    });
+
     test('get by Id', () async {
       when(() => loanRepository.getById(loanId: any(named: 'loanId')))
           .thenAnswer(
@@ -139,6 +166,20 @@ void main() {
 
       expect(
         () async => await loanService.getAll(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on Database'),
+      );
+    });
+
+    test('getLoansByBookTitle -- LocalDatabaseException', () async {
+      when(
+        () => loanRepository.getLoansByBookTitle(
+          title: any(named: 'title'),
+        ),
+      ).thenThrow(LocalDatabaseException('Error on Database'));
+
+      expect(
+        () async => await loanService.getLoansByBookTitle(title: 'title'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on Database'),
       );

@@ -1,5 +1,4 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as category_table;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/category_model.dart';
@@ -7,7 +6,7 @@ import 'package:bookify/src/shared/repositories/category_repository/categories_r
 
 class CategoriesRepositoryImpl implements CategoriesRepository {
   final LocalDatabase _database;
-  final _categoryTableName = category_table.categoryTableName;
+  final _categoryTableName = DatabaseScripts().categoryTableName;
 
   CategoriesRepositoryImpl(this._database);
 

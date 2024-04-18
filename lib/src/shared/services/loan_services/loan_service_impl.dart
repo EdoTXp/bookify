@@ -29,6 +29,18 @@ class LoanServiceImpl implements LoanService {
   }
 
   @override
+  Future<List<LoanModel>> getLoansByBookTitle({required String title}) async {
+    try {
+      final loansModel = await _loanRepository.getLoansByBookTitle(
+        title: title,
+      );
+      return loansModel;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> insert({required LoanModel loanModel}) async {
     try {
       final newLoanId = _loanRepository.insert(loanModel: loanModel);

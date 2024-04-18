@@ -1,5 +1,4 @@
-import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart'
-    as bookcase_table;
+import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/shared/database/local_database.dart';
 import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
@@ -7,7 +6,7 @@ import 'package:bookify/src/shared/repositories/bookcase_repository/bookcase_rep
 
 class BookcaseRepositoryImpl implements BookcaseRepository {
   final LocalDatabase _database;
-  final _bookcaseTableName = bookcase_table.bookcaseTableName;
+  final _bookcaseTableName = DatabaseScripts().bookcaseTableName;
 
   BookcaseRepositoryImpl(this._database);
 

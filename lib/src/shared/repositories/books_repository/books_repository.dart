@@ -4,7 +4,7 @@ abstract interface class BooksRepository {
   Future<List<BookModel>> getAll();
   Future<BookModel> getBookById({required String id});
   Future<String> getBookImageById({required String id});
-  Future<List<BookModel>> getBookByTitle({required String title});
+  Future<List<BookModel>> getBooksByTitle({required String title});
   Future<int> insert({required BookModel bookModel});
   Future<bool> verifyBookIsAlreadyInserted({required String id});
   Future<BookStatus>getBookStatus({required String id});

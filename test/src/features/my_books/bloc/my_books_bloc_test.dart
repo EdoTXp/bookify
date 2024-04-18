@@ -119,7 +119,7 @@ void main() {
       'Test if SearchedEvent work',
       build: () => bloc,
       setUp: () => when(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).thenAnswer(
@@ -129,7 +129,7 @@ void main() {
         SearchedBooksEvent(searchQuery: 'title'),
       ),
       verify: (_) => verify(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).called(1),
@@ -143,7 +143,7 @@ void main() {
       'Test if SearchedEvent work with not found state',
       build: () => bloc,
       setUp: () => when(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).thenAnswer(
@@ -153,7 +153,7 @@ void main() {
         SearchedBooksEvent(searchQuery: 'title'),
       ),
       verify: (_) => verify(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).called(1),
@@ -167,7 +167,7 @@ void main() {
       'Test if SearchedEvent work when throw LocalDatabaseException',
       build: () => bloc,
       setUp: () => when(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).thenThrow(LocalDatabaseException('Error on Database')),
@@ -175,7 +175,7 @@ void main() {
         SearchedBooksEvent(searchQuery: 'title'),
       ),
       verify: (_) => verify(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).called(1),
@@ -189,7 +189,7 @@ void main() {
       'Test if SearchedEvent work when throw Generic Exception',
       build: () => bloc,
       setUp: () => when(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).thenThrow(Exception('Generic Exception')),
@@ -197,7 +197,7 @@ void main() {
         SearchedBooksEvent(searchQuery: 'title'),
       ),
       verify: (_) => verify(
-        () => bookService.getBookByTitle(
+        () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
       ).called(1),

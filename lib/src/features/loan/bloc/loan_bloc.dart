@@ -20,6 +20,7 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     this._contactsService,
   ) : super(LoanLoadingState()) {
     on<GotAllLoansEvent>(_getAllLoansEvent);
+    on<FindedLoanByBookNameEvent>(_findedLoanByBookNameEvent);
   }
 
   Future<void> _getAllLoansEvent(
@@ -33,6 +34,30 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
       if (loans.isEmpty) {
         emit(LoanEmptyState());
+        return;
+      }
+
+      await _mountLoanDto(loans, emit);
+    } on LocalDatabaseException catch (e) {
+      emit(LoanErrorState(errorMessage: 'Erro no database: ${e.message}'));
+    } on Exception catch (e) {
+      emit(LoanErrorState(errorMessage: 'Erro inesperado: $e'));
+    }
+  }
+
+  Future<void> _findedLoanByBookNameEvent(
+    FindedLoanByBookNameEvent event,
+    Emitter<LoanState> emit,
+  ) async {
+    try {
+      emit(LoanLoadingState());
+
+      final loans = await _loanService.getLoansByBookTitle(
+        title: event.searchQueryName,
+      );
+
+      if (loans.isEmpty) {
+        emit(LoanNotFoundState());
         return;
       }
 

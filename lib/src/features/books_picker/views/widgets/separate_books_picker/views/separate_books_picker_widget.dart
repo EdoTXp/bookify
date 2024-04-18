@@ -41,9 +41,12 @@ class _SeparateBooksPickerWidgetState extends State<SeparateBooksPickerWidget> {
           child: CircularProgressIndicator(),
         ),
       SeparateBooksPickerEmptyState() => const Center(
-          child: Text(
-            'Não possui nenhum livro que possa ser adicionado. Tente adicionar algum livro primeiro.',
-            textAlign: TextAlign.center,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Não possui nenhum livro que possa ser adicionado. Tente adicionar algum livro primeiro.',
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       SeparateBooksPickerLoadedState(:final books) => BookSelectorWidget(

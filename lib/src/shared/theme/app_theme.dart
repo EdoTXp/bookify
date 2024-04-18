@@ -273,6 +273,7 @@ final _inputDecorationTheme = InputDecorationTheme(
         );
       } else if (states.contains(MaterialState.error)) {
         return const TextStyle(
+           color: AppColor.bookifyErrorColor,
           fontSize: 14,
         );
       }
@@ -297,6 +298,7 @@ final _inputDecorationTheme = InputDecorationTheme(
         );
       } else if (states.contains(MaterialState.error)) {
         return const TextStyle(
+          color: AppColor.bookifyErrorColor,
           fontSize: 14,
         );
       }

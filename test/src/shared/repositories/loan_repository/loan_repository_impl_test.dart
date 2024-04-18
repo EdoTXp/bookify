@@ -79,6 +79,39 @@ void main() {
       expect(loansModel[0].bookId, equals('bookId'));
     });
 
+    test('getLoansByBookTitle', () async {
+      when(
+        () => localDatabase.getByJoin(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          innerJoinTable: any(named: 'innerJoinTable'),
+          onColumn: any(named: 'onColumn'),
+          onArgs: any(named: 'onArgs'),
+          whereColumn: any(named: 'whereColumn'),
+          whereArgs: any(named: 'whereArgs'),
+          usingLikeCondition: true,
+        ),
+      ).thenAnswer((_) async => loansMap);
+
+      final loansModel =
+          await loanRepository.getLoansByBookTitle(title: 'title');
+
+      expect(loansModel.length, equals(3));
+      expect(loansModel[0].id, equals(1));
+      expect(loansModel[0].observation, equals('observation'));
+      expect(
+        loansModel[0].loanDate,
+        equals(DateTime(2024, 01, 10)),
+      );
+      expect(
+          loansModel[0].devolutionDate,
+          equals(
+            DateTime(DateTime.april, 2024),
+          ));
+      expect(loansModel[0].idContact, equals('idContact'));
+      expect(loansModel[0].bookId, equals('bookId'));
+    });
+
     test('get by Id', () async {
       when(() => localDatabase.getItemById(
           table: any(named: 'table'),
@@ -175,6 +208,30 @@ void main() {
       );
     });
 
+    test('getLoansByBookTitle -- TypeError', () async {
+      when(
+        () => localDatabase.getByJoin(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          innerJoinTable: any(named: 'innerJoinTable'),
+          onColumn: any(named: 'onColumn'),
+          onArgs: any(named: 'onArgs'),
+          whereColumn: any(named: 'whereColumn'),
+          whereArgs: any(named: 'whereArgs'),
+          usingLikeCondition: true,
+        ),
+      ).thenAnswer((_) async => [
+            {'id': 1}
+          ]);
+
+      expect(
+        () async => await loanRepository.getLoansByBookTitle(title: 'title'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException &&
+            e.message == 'Impossível encontrar os empréstimos no database'),
+      );
+    });
+
     test('get All -- LocalDatabaseException', () async {
       when(
         () => localDatabase.getAll(
@@ -186,6 +243,27 @@ void main() {
 
       expect(
         () async => await loanRepository.getAll(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('getLoansByBookTitle -- LocalDatabaseException', () async {
+      when(
+        () => localDatabase.getByJoin(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          innerJoinTable: any(named: 'innerJoinTable'),
+          onColumn: any(named: 'onColumn'),
+          onArgs: any(named: 'onArgs'),
+          whereColumn: any(named: 'whereColumn'),
+          whereArgs: any(named: 'whereArgs'),
+          usingLikeCondition: true,
+        ),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await loanRepository.getLoansByBookTitle(title: 'title'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );
