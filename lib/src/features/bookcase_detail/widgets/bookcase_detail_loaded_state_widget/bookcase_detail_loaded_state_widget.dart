@@ -112,7 +112,6 @@ class _BookcaseDetailLoadedStateWidgetState
                       title: 'Deletar Livros',
                       content:
                           'Clicando em "CONFIRMAR" você removerá os livros.\nTem Certeza?',
-                      cancelButtonFunction: () => Navigator.of(context).pop(),
                       confirmButtonFunction: () {
                         Navigator.of(context).pop();
                         widget.onDeletedBooksPressed(_selectedList);

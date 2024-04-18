@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/loan/widgets/loan_widget/loan_widget.dart';
+import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
@@ -43,7 +44,14 @@ class LoanLoadedStateWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: LoanWidget(
                   loan: loansDto[index],
-                  onTap: () {},
+                  onTap: () async {
+                    await Navigator.pushNamed(
+                      context,
+                      LoanDetailPage.routeName,
+                      arguments: loansDto[index].loanModel.id!,
+                    );
+                    refreshPage();
+                  },
                 ),
               );
             },

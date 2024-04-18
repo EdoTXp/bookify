@@ -64,7 +64,9 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     return switch (state) {
       BookcaseDetailLoadingState() ||
       BookcaseDetailDeletedState() =>
-        const Center(child: CircularProgressIndicator()),
+        const Center(
+          child: CircularProgressIndicator(),
+        ),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
           label: 'Adicionar novos Livros',
           onTap: () async => await _addNewBooks(),
@@ -162,7 +164,6 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
         title: 'Deletar a estante',
         content:
             'Clicando em "CONFIRMAR" você removerá a estante ${_actualBookcase.name}.\nTem Certeza?',
-        cancelButtonFunction: () => Navigator.of(context).pop(),
         confirmButtonFunction: () {
           _bloc.add(
             DeletedBookcaseEvent(bookcaseId: _actualBookcase.id!),

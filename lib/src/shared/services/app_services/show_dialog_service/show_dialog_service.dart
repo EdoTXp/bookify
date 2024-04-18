@@ -5,7 +5,7 @@ class ShowDialogService {
     required BuildContext context,
     required String title,
     required String content,
-    required VoidCallback cancelButtonFunction,
+    VoidCallback? cancelButtonFunction,
     required VoidCallback confirmButtonFunction,
   }) async {
     await showDialog(
@@ -25,7 +25,8 @@ class ShowDialogService {
           ),
           actions: [
             TextButton(
-              onPressed: cancelButtonFunction,
+              onPressed:
+                  cancelButtonFunction ?? () => Navigator.of(context).pop(),
               child: const Text(
                 'NÃO',
                 style: TextStyle(

@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/services/app_services/launch_url_service/launch_url_service.dart';
+import 'package:bookify/src/shared/services/app_services/launcher_service/launcher_service.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +132,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
         title: 'Remover o livro "${book.title}"',
         content:
             'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
-        cancelButtonFunction: () => Navigator.of(context).pop(),
         confirmButtonFunction: () {
           _bloc.add(BookRemovedEvent(bookId: book.id));
           Navigator.of(context).pop();
@@ -238,7 +237,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           text: 'Ir para loja',
                           suffixIcon: Icons.store,
                           onPressed: () async =>
-                              await LaunchUrlService.launchUrl(book.buyLink),
+                              await LauncherService.launchUrl(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),

@@ -113,7 +113,6 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                       title: 'Deletar estantes',
                       content:
                           'Clicando em "CONFIRMAR" você removerá as estantes.\nTem Certeza?',
-                      cancelButtonFunction: () => Navigator.of(context).pop(),
                       confirmButtonFunction: () {
                         Navigator.of(context).pop();
                         widget.onPressedDeleteButton(_selectedList);

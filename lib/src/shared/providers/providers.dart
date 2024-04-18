@@ -15,6 +15,7 @@ class Providers {
     ...bookcaseDetailPageProviders,
     ...bookcaseBooksInsertionProviders,
     ...loanPageProviders,
+    ...loanDetailPageProviders,
     ...loanInsertionPageProviders,
     ...myBooksProviders,
     ...contactsPickerProviders,
