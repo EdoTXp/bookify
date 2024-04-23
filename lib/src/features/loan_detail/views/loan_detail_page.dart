@@ -43,7 +43,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
     LoanDetailState state,
   ) {
     return switch (state) {
-      LoanDetailLoadingState() || LoanDetailDeletedState() => const Center(
+      LoanDetailLoadingState() || LoanDetailFinishedState() => const Center(
           child: CircularProgressIndicator(),
         ),
       LoanDetailLoadedState(:final loanDto) => LoanDetailLoadedWidget(
@@ -51,12 +51,12 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
           onPressedButton: () async {
             await ShowDialogService.show(
               context: context,
-              title: 'Deletar o empréstimo',
+              title: 'Finalizar o empréstimo',
               content:
-                  'Clicando em "CONFIRMAR" você removerá este empréstimo.\nTem Certeza?',
+                  'Clicando em "CONFIRMAR" você finalizará este empréstimo.\nVerifique se o livro está em seu possesso antes de finalizar.',
               confirmButtonFunction: () {
                 _bloc.add(
-                  DeletedLoanDetailEvent(
+                  FinishedLoanDetailEvent(
                     loanId: loanDto.loanModel.id!,
                     bookId: loanDto.loanModel.bookId,
                   ),
@@ -69,12 +69,12 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
       LoanDetailErrorState(:final errorMessage) =>
         InfoItemStateWidget.withErrorState(
           message: errorMessage,
-          onPressed: _onRefreshPage,
+          onPressed: _refreshPage,
         ),
     };
   }
 
-  void _onRefreshPage() {
+  void _refreshPage() {
     _bloc.add(
       GotLoanDetailEvent(
         id: widget.loanId,
@@ -86,14 +86,14 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
     BuildContext context,
     LoanDetailState state,
   ) async {
-    if (state is LoanDetailDeletedState) {
+    if (state is LoanDetailFinishedState) {
       setState(() {
         canPopPage = false;
       });
 
       SnackbarService.showSnackBar(
         context,
-        'Emprestímo Apagado com sucesso!\nAguarde até voltar à página anterior',
+        'Emprestímo Finalizado com sucesso!\nAguarde até voltar à página anterior',
         SnackBarType.success,
       );
 

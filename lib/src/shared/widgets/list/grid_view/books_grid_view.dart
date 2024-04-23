@@ -18,30 +18,34 @@ class BooksGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      physics: physics,
-      shrinkWrap: shrinkWrap,
-      itemCount: books.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: .7,
-        crossAxisCount: 3,
-      ),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Tooltip(
-            message: books[index].title,
-            child: Material(
-              child: InkWell(
-                splashColor: Colors.transparent,
-                onTap: () => onTap(books[index]),
-                child: BookWidget(
-                  bookImageUrl: books[index].imageUrl,
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return GridView.builder(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          physics: physics,
+          shrinkWrap: shrinkWrap,
+          itemCount: books.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            childAspectRatio: .7,
+            crossAxisCount: orientation == Orientation.portrait ? 3 : 6,
+          ),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Tooltip(
+                message: books[index].title,
+                child: Material(
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    onTap: () => onTap(books[index]),
+                    child: BookWidget(
+                      bookImageUrl: books[index].imageUrl,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );

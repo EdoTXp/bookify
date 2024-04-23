@@ -10,11 +10,11 @@ final class GotLoanDetailEvent extends LoanDetailEvent {
   });
 }
 
-final class DeletedLoanDetailEvent extends LoanDetailEvent {
+final class FinishedLoanDetailEvent extends LoanDetailEvent {
   final int loanId;
   final String bookId;
 
-  DeletedLoanDetailEvent({
+  FinishedLoanDetailEvent({
     required this.loanId,
     required this.bookId,
   });

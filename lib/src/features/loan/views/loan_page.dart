@@ -40,7 +40,7 @@ class _LoanPageState extends State<LoanPage> {
 
     if (actualSearchQuery != null) {
       _bloc.add(
-        FindedLoanByBookNameEvent(
+        FindedLoanByBookTitleEvent(
           searchQueryName: actualSearchQuery,
         ),
       );
@@ -72,7 +72,7 @@ class _LoanPageState extends State<LoanPage> {
         ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
           message:
-              'Nenhuma Empréstimo encontrado com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
+              'Nenhum Empréstimo encontrado com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
           onPressed: _refreshPage,
         ),
       LoanErrorState(:final errorMessage) => Center(

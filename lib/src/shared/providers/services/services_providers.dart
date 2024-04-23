@@ -4,6 +4,8 @@ import 'package:bookify/src/shared/services/bookcase_service/bookcase_service.da
 import 'package:bookify/src/shared/services/bookcase_service/bookcase_service_impl.dart';
 import 'package:bookify/src/shared/services/loan_services/loan_service.dart';
 import 'package:bookify/src/shared/services/loan_services/loan_service_impl.dart';
+import 'package:bookify/src/shared/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/services/reading_services/reading_service_impl.dart';
 import 'package:provider/provider.dart';
 
 /// Provider that includes all services.
@@ -25,6 +27,11 @@ final servicesProviders = [
   ),
   Provider<LoanService>(
     create: (context) => LoanServiceImpl(
+      context.read(),
+    ),
+  ),
+  Provider<ReadingService>(
+    create: (context) => ReadingServiceImpl(
       context.read(),
     ),
   ),

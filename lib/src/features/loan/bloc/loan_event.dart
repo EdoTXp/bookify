@@ -4,10 +4,10 @@ sealed class LoanEvent {}
 
 final class GotAllLoansEvent extends LoanEvent {}
 
-final class FindedLoanByBookNameEvent extends LoanEvent {
+final class FindedLoanByBookTitleEvent extends LoanEvent {
   final String searchQueryName;
 
-  FindedLoanByBookNameEvent({
+  FindedLoanByBookTitleEvent({
     required this.searchQueryName,
   });
 }

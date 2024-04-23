@@ -182,13 +182,13 @@ void main() {
         ),
       ).thenAnswer((_) async => 1);
 
-      final rowDeleted = await loanRepository.delete(loanModelId: 2);
+      final rowDeleted = await loanRepository.delete(loanId: 2);
 
       expect(rowDeleted, equals(1));
     });
   });
 
-  group('Test normal CRUD bookcase with error ||', () {
+  group('Test normal CRUD loan with error ||', () {
     test('getAll -- TypeError', () async {
       when(
         () => localDatabase.getAll(
@@ -205,6 +205,22 @@ void main() {
         throwsA((Exception e) =>
             e is LocalDatabaseException &&
             e.message == 'Impossível encontrar os empréstimos no database'),
+      );
+    });
+
+    test('get All -- LocalDatabaseException', () async {
+      when(
+        () => localDatabase.getAll(
+          table: any(named: 'table'),
+          orderColumn: any(named: 'orderColumn'),
+          orderBy: any(named: 'orderBy'),
+        ),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await loanRepository.getAll(),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
       );
     });
 
@@ -229,22 +245,6 @@ void main() {
         throwsA((Exception e) =>
             e is LocalDatabaseException &&
             e.message == 'Impossível encontrar os empréstimos no database'),
-      );
-    });
-
-    test('get All -- LocalDatabaseException', () async {
-      when(
-        () => localDatabase.getAll(
-          table: any(named: 'table'),
-          orderColumn: any(named: 'orderColumn'),
-          orderBy: any(named: 'orderBy'),
-        ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
-
-      expect(
-        () async => await loanRepository.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
       );
     });
 
@@ -276,10 +276,13 @@ void main() {
           id: any(named: 'id'))).thenAnswer((_) async => {'id': 1});
 
       expect(
-          () async => await loanRepository.getById(loanId: 1),
-          throwsA((Exception e) =>
+        () async => await loanRepository.getById(loanId: 1),
+        throwsA(
+          (Exception e) =>
               e is LocalDatabaseException &&
-              e.message == 'Impossível encontrar o empréstimo no database'));
+              e.message == 'Impossível encontrar o empréstimo no database',
+        ),
+      );
     });
 
     test('getById -- LocalDatabaseException', () async {
@@ -290,9 +293,12 @@ void main() {
           .thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-          () async => await loanRepository.getById(loanId: 1),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
+        () async => await loanRepository.getById(loanId: 1),
+        throwsA(
+          (Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database',
+        ),
+      );
     });
 
     test('insert -- LocalDatabaseException', () async {
@@ -301,25 +307,34 @@ void main() {
           .thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-          () async => await loanRepository.insert(
-              loanModel: LoanModel.fromMap(loansMap[0])),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
+        () async => await loanRepository.insert(
+            loanModel: LoanModel.fromMap(loansMap[0])),
+        throwsA(
+          (Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database',
+        ),
+      );
     });
 
     test('update -- LocalDatabaseException', () async {
       when(() => localDatabase.update(
-              table: any(named: 'table'),
-              values: any(named: 'values'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'))).thenThrow(
+        LocalDatabaseException(
+          'Error on database',
+        ),
+      );
 
       expect(
-          () async => await loanRepository.update(
-              loanModel: LoanModel.fromMap(loansMap[0])),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
+        () async => await loanRepository.update(
+            loanModel: LoanModel.fromMap(loansMap[0])),
+        throwsA(
+          (Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database',
+        ),
+      );
     });
 
     test('delete -- LocalDatabaseException', () async {
@@ -330,9 +345,12 @@ void main() {
           .thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-          () async => await loanRepository.delete(loanModelId: 1),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
+        () async => await loanRepository.delete(loanId: 1),
+        throwsA(
+          (Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database',
+        ),
+      );
     });
   });
 }

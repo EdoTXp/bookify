@@ -44,436 +44,249 @@ void main() {
     );
   });
 
-  group(
-    'Test Loan Insertion Bloc',
-    () {
-      blocTest(
-        'Initial state is empty',
-        build: () => loanInsertionBloc,
-        verify: (bloc) async => await bloc.close(),
-        expect: () => [],
-      );
+  group('Test Loan Insertion Bloc', () {
+    blocTest(
+      'Initial state is empty',
+      build: () => loanInsertionBloc,
+      verify: (bloc) async => await bloc.close(),
+      expect: () => [],
+    );
 
-      blocTest(
-        'Test InsertedLoanEvent work',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).thenAnswer(
-            (_) async => 1,
-          );
-          when(
-            () => loanService.insert(loanModel: loanModel),
-          ).thenAnswer(
-            (_) async => 1,
-          );
-          when(
-            () => notificationsService.scheduleNotification(any()),
-          ).thenAnswer((_) async {});
-        },
-        act: (bloc) => bloc.add(
-          InsertedLoanInsertionEvent(
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+    blocTest(
+      'Test InsertedLoanEvent work',
+      build: () => loanInsertionBloc,
+      setUp: () {
+        when(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
+        ).thenAnswer(
+          (_) async => 1,
+        );
+        when(
+          () => loanService.insert(loanModel: loanModel),
+        ).thenAnswer(
+          (_) async => 1,
+        );
+        when(
+          () => notificationsService.scheduleNotification(any()),
+        ).thenAnswer((_) async {});
+      },
+      act: (bloc) => bloc.add(
+        InsertedLoanInsertionEvent(
+          observation: 'observation',
+          loanDate: DateTime(2024, 02, 23),
+          devolutionDate: DateTime(2024, 03, 22),
+          contactName: 'contactName',
+          idContact: 'idContact',
+          bookId: 'bookId',
+          bookTitle: 'bookTitle',
         ),
-        verify: (_) {
-          verify(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).called(1);
-          verify(
-            () => loanService.insert(loanModel: loanModel),
-          ).called(1);
-          verify(
-            () => notificationsService.scheduleNotification(any()),
-          ).called(1);
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionInsertedState>(),
-        ],
-      );
+      ),
+      verify: (_) {
+        verify(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
+          ),
+        ).called(1);
+        verify(
+          () => loanService.insert(loanModel: loanModel),
+        ).called(1);
+        verify(
+          () => notificationsService.scheduleNotification(any()),
+        ).called(1);
+      },
+      expect: () => [
+        isA<LoanInsertionLoadingState>(),
+        isA<LoanInsertionInsertedState>(),
+      ],
+    );
 
-      blocTest(
-        'Test InsertedLoanEvent work when bookstatus is 0',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).thenAnswer(
-            (_) async => 0,
-          );
-        },
-        act: (bloc) => bloc.add(
-          InsertedLoanInsertionEvent(
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+    blocTest(
+      'Test InsertedLoanEvent work when bookstatus is 0',
+      build: () => loanInsertionBloc,
+      setUp: () {
+        when(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
+        ).thenAnswer(
+          (_) async => 0,
+        );
+      },
+      act: (bloc) => bloc.add(
+        InsertedLoanInsertionEvent(
+          observation: 'observation',
+          loanDate: DateTime(2024, 02, 23),
+          devolutionDate: DateTime(2024, 03, 22),
+          contactName: 'contactName',
+          idContact: 'idContact',
+          bookId: 'bookId',
+          bookTitle: 'bookTitle',
         ),
-        verify: (_) {
-          verify(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).called(1);
-          verifyNever(
-            () => loanService.insert(loanModel: loanModel),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
+      ),
+      verify: (_) {
+        verify(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
+          ),
+        ).called(1);
+        verifyNever(
+          () => loanService.insert(loanModel: loanModel),
+        );
+        verifyNever(
+          () => notificationsService.scheduleNotification(
+            customNotification,
+          ),
+        );
+      },
+      expect: () => [
+        isA<LoanInsertionLoadingState>(),
+        isA<LoanInsertionErrorState>(),
+      ],
+    );
 
-      blocTest(
-        'Test InsertedLoanEvent work when loanId is 0',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).thenAnswer(
-            (_) async => 1,
-          );
-          when(
-            () => loanService.insert(loanModel: loanModel),
-          ).thenAnswer(
-            (_) async => 0,
-          );
-        },
-        act: (bloc) => bloc.add(
-          InsertedLoanInsertionEvent(
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+    blocTest(
+      'Test InsertedLoanEvent work when loanId is 0',
+      build: () => loanInsertionBloc,
+      setUp: () {
+        when(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
+        ).thenAnswer(
+          (_) async => 1,
+        );
+        when(
+          () => loanService.insert(loanModel: loanModel),
+        ).thenAnswer(
+          (_) async => 0,
+        );
+      },
+      act: (bloc) => bloc.add(
+        InsertedLoanInsertionEvent(
+          observation: 'observation',
+          loanDate: DateTime(2024, 02, 23),
+          devolutionDate: DateTime(2024, 03, 22),
+          contactName: 'contactName',
+          idContact: 'idContact',
+          bookId: 'bookId',
+          bookTitle: 'bookTitle',
         ),
-        verify: (_) {
-          verify(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).called(1);
-          verify(
-            () => loanService.insert(loanModel: loanModel),
-          ).called(1);
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
+      ),
+      verify: (_) {
+        verify(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
+          ),
+        ).called(1);
+        verify(
+          () => loanService.insert(loanModel: loanModel),
+        ).called(1);
+        verifyNever(
+          () => notificationsService.scheduleNotification(
+            customNotification,
+          ),
+        );
+      },
+      expect: () => [
+        isA<LoanInsertionLoadingState>(),
+        isA<LoanInsertionErrorState>(),
+      ],
+    );
 
-      blocTest(
-        'Test InsertedLoanEvent work when throw LocalDatabaseException',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).thenThrow(LocalDatabaseException('Error on Database'));
-        },
-        act: (bloc) => bloc.add(
-          InsertedLoanInsertionEvent(
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+    blocTest(
+      'Test InsertedLoanEvent work when throw LocalDatabaseException',
+      build: () => loanInsertionBloc,
+      setUp: () {
+        when(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
+        ).thenThrow(LocalDatabaseException('Error on Database'));
+      },
+      act: (bloc) => bloc.add(
+        InsertedLoanInsertionEvent(
+          observation: 'observation',
+          loanDate: DateTime(2024, 02, 23),
+          devolutionDate: DateTime(2024, 03, 22),
+          contactName: 'contactName',
+          idContact: 'idContact',
+          bookId: 'bookId',
+          bookTitle: 'bookTitle',
         ),
-        verify: (_) {
-          verify(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).called(1);
-          verifyNever(
-            () => loanService.insert(loanModel: loanModel),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
+      ),
+      verify: (_) {
+        verify(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
+          ),
+        ).called(1);
+        verifyNever(
+          () => loanService.insert(loanModel: loanModel),
+        );
+        verifyNever(
+          () => notificationsService.scheduleNotification(
+            customNotification,
+          ),
+        );
+      },
+      expect: () => [
+        isA<LoanInsertionLoadingState>(),
+        isA<LoanInsertionErrorState>(),
+      ],
+    );
 
-      blocTest(
-        'Test InsertedLoanEvent work when throw Generic Exception',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).thenThrow(Exception('Generic Error'));
-        },
-        act: (bloc) => bloc.add(
-          InsertedLoanInsertionEvent(
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+    blocTest(
+      'Test InsertedLoanEvent work when throw Generic Exception',
+      build: () => loanInsertionBloc,
+      setUp: () {
+        when(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
+        ).thenThrow(Exception('Generic Error'));
+      },
+      act: (bloc) => bloc.add(
+        InsertedLoanInsertionEvent(
+          observation: 'observation',
+          loanDate: DateTime(2024, 02, 23),
+          devolutionDate: DateTime(2024, 03, 22),
+          contactName: 'contactName',
+          idContact: 'idContact',
+          bookId: 'bookId',
+          bookTitle: 'bookTitle',
         ),
-        verify: (_) {
-          verify(
-            () => bookService.updateStatus(
-              id: 'bookId',
-              status: BookStatus.loaned,
-            ),
-          ).called(1);
-          verifyNever(
-            () => loanService.insert(loanModel: loanModel),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
-
-      blocTest(
-        'Test UpdatedLoanEvent work',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).thenAnswer(
-            (_) async => 1,
-          );
-          when(
-            () => notificationsService.cancelNotificationById(id: 1),
-          ).thenAnswer((_) async {});
-          when(
-            () => notificationsService.scheduleNotification(
-              any(),
-            ),
-          ).thenAnswer((_) async => 1);
-        },
-        act: (bloc) => bloc.add(
-          UpdatedLoanInsertionEvent(
-            id: 1,
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+      ),
+      verify: (_) {
+        verify(
+          () => bookService.updateStatus(
+            id: 'bookId',
+            status: BookStatus.loaned,
           ),
-        ),
-        verify: (_) {
-          verify(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).called(1);
-          verify(
-            () => notificationsService.cancelNotificationById(id: 1),
-          ).called(1);
-          verify(
-            () => notificationsService.scheduleNotification(
-              any(),
-            ),
-          ).called(1);
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionInsertedState>(),
-        ],
-      );
-
-      blocTest(
-        'Test UpdatedLoanEvent work when loanUpdatedRow < 1',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).thenAnswer(
-            (_) async => -1,
-          );
-        },
-        act: (bloc) => bloc.add(
-          UpdatedLoanInsertionEvent(
-            id: 1,
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
+        ).called(1);
+        verifyNever(
+          () => loanService.insert(loanModel: loanModel),
+        );
+        verifyNever(
+          () => notificationsService.scheduleNotification(
+            customNotification,
           ),
-        ),
-        verify: (_) {
-          verify(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).called(1);
-          verifyNever(
-            () => notificationsService.cancelNotificationById(id: 1),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
-
-      blocTest(
-        'Test UpdatedLoanEvent work when throw LocalDatabaseException',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).thenThrow(LocalDatabaseException('Error on Database'));
-        },
-        act: (bloc) => bloc.add(
-          UpdatedLoanInsertionEvent(
-            id: 1,
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
-          ),
-        ),
-        verify: (_) {
-          verify(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).called(1);
-          verifyNever(
-            () => notificationsService.cancelNotificationById(id: 1),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
-
-      blocTest(
-        'Test UpdatedLoanEvent work when throw Generic Exception',
-        build: () => loanInsertionBloc,
-        setUp: () {
-          when(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).thenThrow(Exception('Generic Exception'));
-        },
-        act: (bloc) => bloc.add(
-          UpdatedLoanInsertionEvent(
-            id: 1,
-            observation: 'observation',
-            loanDate: DateTime(2024, 02, 23),
-            devolutionDate: DateTime(2024, 03, 22),
-            contactName: 'contactName',
-            idContact: 'idContact',
-            bookId: 'bookId',
-            bookTitle: 'bookTitle',
-          ),
-        ),
-        verify: (_) {
-          verify(
-            () => loanService.update(
-              loanModel: loanModel.copyWith(id: 1),
-            ),
-          ).called(1);
-          verifyNever(
-            () => notificationsService.cancelNotificationById(id: 1),
-          );
-          verifyNever(
-            () => notificationsService.scheduleNotification(
-              customNotification,
-            ),
-          );
-        },
-        expect: () => [
-          isA<LoanInsertionLoadingState>(),
-          isA<LoanInsertionErrorState>(),
-        ],
-      );
-    },
-  );
+        );
+      },
+      expect: () => [
+        isA<LoanInsertionLoadingState>(),
+        isA<LoanInsertionErrorState>(),
+      ],
+    );
+  });
 }

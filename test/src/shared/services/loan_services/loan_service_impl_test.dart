@@ -150,16 +150,16 @@ void main() {
 
     test('delete', () async {
       when(
-        () => loanRepository.delete(loanModelId: any(named: 'loanModelId')),
+        () => loanRepository.delete(loanId: any(named: 'loanId')),
       ).thenAnswer((_) async => 1);
 
-      final rowDeleted = await loanService.delete(loanModelId: 2);
+      final rowDeleted = await loanService.delete(loanId: 2);
 
       expect(rowDeleted, equals(1));
     });
   });
 
-  group('test normal CRUD of loan service without error ||', () {
+  group('test normal CRUD of loan service with error ||', () {
     test('get all -- LocalDatabaseException', () async {
       when(() => loanRepository.getAll())
           .thenThrow(LocalDatabaseException('Error on Database'));
@@ -219,11 +219,11 @@ void main() {
     });
 
     test('delete -- LocalDatabaseException', () async {
-      when(() => loanRepository.delete(loanModelId: any(named: 'loanModelId')))
+      when(() => loanRepository.delete(loanId: any(named: 'loanId')))
           .thenThrow(LocalDatabaseException('Error on Database'));
 
       expect(
-        () async => await loanService.delete(loanModelId: 1),
+        () async => await loanService.delete(loanId: 1),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on Database'),
       );

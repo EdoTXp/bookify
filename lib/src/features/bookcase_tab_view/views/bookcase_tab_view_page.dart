@@ -9,10 +9,10 @@ class BookcaseTabViewPage extends StatefulWidget {
 }
 
 class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
-  late TextEditingController _searchController;
+  late final TextEditingController _searchController;
+  late final FocusNode _focusNode;
   late bool _searchBarIsVisible;
   late String _searchHintText;
-  late FocusNode _focusNode;
 
   String? _searchQuery;
 

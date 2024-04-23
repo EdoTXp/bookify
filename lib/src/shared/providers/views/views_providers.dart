@@ -8,5 +8,6 @@ export 'package:bookify/src/shared/providers/views/my_books_providers.dart';
 export 'package:bookify/src/shared/providers/views/loan_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/loan_detail_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/loan_insertion_page_providers.dart';
+export 'package:bookify/src/shared/providers/views/readings_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/contacts_picker_providers.dart';
 export 'package:bookify/src/shared/providers/views/books_picker_providers.dart';

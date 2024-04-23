@@ -1,14 +1,13 @@
-import 'package:bookify/src/shared/widgets/contact_information_widget/contact_information_widget.dart';
+import 'package:bookify/src/features/loan_detail/views/widgets/book_card.dart';
+import 'package:bookify/src/features/loan_detail/views/widgets/contact_card.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_is_late_widget.dart';
 import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/shared/services/app_services/launcher_service/launcher_service.dart';
-import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
-import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
+import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 
 import 'package:flutter/material.dart';
-
 
 class LoanDetailLoadedWidget extends StatelessWidget {
   final LoanDto loanDto;
@@ -32,129 +31,87 @@ class LoanDetailLoadedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contactName = loanDto.contactDto?.name ?? 'Sem nome';
     final loanIsLate = _isLateDevolutionDate();
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (loanIsLate) ...[
-            const LoanIsLateWidget(),
-            const SizedBox(
-              height: 10,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (loanIsLate) ...[
+              const LoanIsLateWidget(),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+            const Text(
+              'Livro',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ],
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: BookWidget(
-                  height: 270,
-                  bookImageUrl: loanDto.bookImagePreview,
-                ),
+            const SizedBox(
+              height: 5,
+            ),
+            BookCard(
+              bookUrl: loanDto.bookImagePreview,
+              bookTitle: loanDto.bookTitlePreview,
+              observation: loanDto.loanModel.observation,
+              loanDate: loanDto.loanModel.loanDate.toFormattedDate(),
+              devolutionDate:
+                  loanDto.loanModel.devolutionDate.toFormattedDate(),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Contato',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            ContactCard(
+              name: loanDto.contactDto?.name,
+              photo: loanDto.contactDto?.photo,
+              phone: loanDto.contactDto?.phoneNumber,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: colorScheme.primary,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            if (loanDto.contactDto?.phoneNumber != null) ...[
+              BookifyOutlinedButton.expanded(
+                onPressed: () async {
+                  await LauncherService.launchCall(
+                    loanDto.contactDto!.phoneNumber!,
+                  );
+                },
+                text: 'Ligar para o contato',
+                suffixIcon: Icons.call_rounded,
               ),
               const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: ContactCircleAvatar(
-                        width: 80,
-                        height: 80,
-                        name: contactName,
-                        photo: loanDto.contactDto?.photo,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ContactInformationWidget(
-                      iconData: Icons.person,
-                      title: 'Nome',
-                      content: contactName,
-                      width: 200,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ContactInformationWidget(
-                      iconData: Icons.smartphone_outlined,
-                      title: 'Contato',
-                      content: loanDto.contactDto?.phoneNumber ?? 'Sem número',
-                      width: 200,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ContactInformationWidget(
-                      iconData: Icons.book,
-                      title: 'Livro',
-                      content: loanDto.bookTitlePreview,
-                      width: 200,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ContactInformationWidget(
-                      iconData: Icons.description_outlined,
-                      title: 'Observação',
-                      content: loanDto.loanModel.observation,
-                      width: 200,
-                    ),
-                  ],
-                ),
+                height: 10,
               ),
             ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ContactInformationWidget(
-                iconData: Icons.calendar_month_rounded,
-                title: 'Empréstimo',
-                content: loanDto.loanModel.loanDate.toFormattedDate(),
-              ),
-              ContactInformationWidget(
-                iconData: Icons.calendar_month_rounded,
-                title: 'Devolução',
-                content: loanDto.loanModel.devolutionDate.toFormattedDate(),
-              ),
-            ],
-          ),
-          const Spacer(),
-          Divider(
-            color: colorScheme.primary,
-          ),
-          if (loanDto.contactDto?.phoneNumber != null) ...[
             BookifyElevatedButton.expanded(
-              onPressed: () async {
-                await LauncherService.launchCall(
-                  loanDto.contactDto!.phoneNumber!,
-                );
-              },
-              text: 'Ligar para o contato',
-              suffixIcon: Icons.call,
-            ),
-            const SizedBox(
-              height: 10,
+              onPressed: onPressedButton,
+              text: 'Finalizar Empréstimo',
+              suffixIcon: Icons.arrow_circle_down_rounded,
             ),
           ],
-          BookifyElevatedButton.expanded(
-            onPressed: onPressedButton,
-            text: 'Finalizar Empréstimo',
-            suffixIcon: Icons.arrow_circle_down_outlined,
-          ),
-        ],
+        ),
       ),
     );
   }

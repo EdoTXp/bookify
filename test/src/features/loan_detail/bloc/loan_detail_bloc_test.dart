@@ -220,7 +220,7 @@ void main() {
     );
 
     blocTest(
-      'test if DeletedLoanDetailEvent work',
+      'test if FinishedLoanDetailEvent work',
       build: () => bloc,
       setUp: () {
         when(
@@ -242,14 +242,14 @@ void main() {
 
         when(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).thenAnswer(
           (_) async => 1,
         );
       },
       act: (bloc) => bloc.add(
-        DeletedLoanDetailEvent(
+        FinishedLoanDetailEvent(
           loanId: 1,
           bookId: 'bookId',
         ),
@@ -268,18 +268,18 @@ void main() {
         ).called(1);
         verify(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).called(1);
       },
       expect: () => [
         isA<LoanDetailLoadingState>(),
-        isA<LoanDetailDeletedState>(),
+        isA<LoanDetailFinishedState>(),
       ],
     );
 
     blocTest(
-      'test if DeletedLoanDetailEvent work when bookStatusUpdated != 1',
+      'test if FinishedLoanDetailEvent work when bookStatusUpdated != 1',
       build: () => bloc,
       setUp: () {
         when(
@@ -300,7 +300,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        DeletedLoanDetailEvent(
+        FinishedLoanDetailEvent(
           loanId: 1,
           bookId: 'bookId',
         ),
@@ -319,7 +319,7 @@ void main() {
         ).called(1);
         verifyNever(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         );
       },
@@ -330,7 +330,7 @@ void main() {
     );
 
     blocTest(
-      'test if DeletedLoanDetailEvent work when loanRemovedRow != 1',
+      'test if FinishedLoanDetailEvent work when loanRemovedRow != 1',
       build: () => bloc,
       setUp: () {
         when(
@@ -352,14 +352,14 @@ void main() {
 
         when(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).thenAnswer(
           (_) async => -1,
         );
       },
       act: (bloc) => bloc.add(
-        DeletedLoanDetailEvent(
+        FinishedLoanDetailEvent(
           loanId: 1,
           bookId: 'bookId',
         ),
@@ -378,7 +378,7 @@ void main() {
         ).called(1);
         verify(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).called(1);
       },
@@ -389,7 +389,7 @@ void main() {
     );
 
     blocTest(
-      'test if DeletedLoanDetailEvent work throw LocalDatabaseException',
+      'test if FinishedLoanDetailEvent work throw LocalDatabaseException',
       build: () => bloc,
       setUp: () {
         when(
@@ -411,12 +411,12 @@ void main() {
 
         when(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).thenThrow(LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(
-        DeletedLoanDetailEvent(
+        FinishedLoanDetailEvent(
           loanId: 1,
           bookId: 'bookId',
         ),
@@ -435,7 +435,7 @@ void main() {
         ).called(1);
         verify(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).called(1);
       },
@@ -446,7 +446,7 @@ void main() {
     );
 
     blocTest(
-      'test if DeletedLoanDetailEvent work throw Generic Exception',
+      'test if FinishedLoanDetailEvent work throw Generic Exception',
       build: () => bloc,
       setUp: () {
         when(
@@ -468,12 +468,12 @@ void main() {
 
         when(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).thenThrow(Exception('Generic Error'));
       },
       act: (bloc) => bloc.add(
-        DeletedLoanDetailEvent(
+        FinishedLoanDetailEvent(
           loanId: 1,
           bookId: 'bookId',
         ),
@@ -492,7 +492,7 @@ void main() {
         ).called(1);
         verify(
           () => loanService.delete(
-            loanModelId: any(named: 'loanModelId'),
+            loanId: any(named: 'loanId'),
           ),
         ).called(1);
       },

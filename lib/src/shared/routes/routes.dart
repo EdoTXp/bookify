@@ -8,7 +8,6 @@ import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
-import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +32,7 @@ class Routes {
         BookcaseBooksInsertionPage(
           bookcaseId: ModalRoute.of(context)!.settings.arguments as int,
         ),
-    LoanInsertionPage.routeName: (context) => LoanInsertionPage(
-          loanDto: ModalRoute.of(context)!.settings.arguments as LoanDto?,
-        ),
+    LoanInsertionPage.routeName: (context) => const LoanInsertionPage(),
     LoanDetailPage.routeName: (context) => LoanDetailPage(
           loanId: ModalRoute.of(context)!.settings.arguments as int,
         ),

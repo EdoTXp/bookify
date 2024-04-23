@@ -22,7 +22,6 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     this._notificationsService,
   ) : super(LoanInsertionLoadingState()) {
     on<InsertedLoanInsertionEvent>(_insertedLoanEvent);
-    on<UpdatedLoanInsertionEvent>(_updatedLoanEvent);
   }
 
   Future<void> _insertedLoanEvent(
@@ -88,56 +87,6 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     }
   }
 
-  Future<void> _updatedLoanEvent(
-    UpdatedLoanInsertionEvent event,
-    Emitter<LoanInsertionState> emit,
-  ) async {
-    try {
-      emit(LoanInsertionLoadingState());
-
-      final loanModel = LoanModel(
-        id: event.id,
-        observation: event.observation,
-        loanDate: event.loanDate,
-        devolutionDate: event.devolutionDate,
-        bookId: event.bookId,
-        idContact: event.idContact,
-      );
-
-      final rowUpdated = await _loanService.update(loanModel: loanModel);
-
-      if (rowUpdated < 1) {
-        emit(
-          LoanInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao atualizar o empréstimo',
-          ),
-        );
-        return;
-      }
-
-      await _notificationsService.cancelNotificationById(id: event.id);
-      await _createNotification(
-        rowUpdated,
-        event.contactName,
-        event.bookTitle,
-        event.loanDate,
-        event.devolutionDate,
-      );
-
-      emit(
-        LoanInsertionInsertedState(
-          loanInsertionMessage: 'Empréstimo atualizado com sucesso',
-        ),
-      );
-    } on LocalDatabaseException catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
-    } on Exception catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
-    }
-  }
-
   Future<void> _createNotification(
     int loanId,
     String contactName,
@@ -152,7 +101,7 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
           'Olá! Só passando pra lembrar que tá na hora de ${contactName.toUpperCase()} devolver o ${bookTitle.toUpperCase()} que você emprestou no dia ${loanDate.toFormattedDate()}.',
       notificationChannel: NotificationChannel.loanChannel,
       scheduledDate: devolutionDate,
-      payload: '/qr_code_scanner',
+      payload: '/loan_detail',
     );
 
     await _notificationsService.scheduleNotification(customNotification);

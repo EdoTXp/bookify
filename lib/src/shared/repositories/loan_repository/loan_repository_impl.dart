@@ -93,7 +93,7 @@ class LoanRepositoryImpl implements LoanRepository {
   @override
   Future<int> update({required LoanModel loanModel}) async {
     try {
-      final rowUpdated = _database.update(
+      final rowUpdated = await _database.update(
         table: _loanTableName,
         values: loanModel.toMap(),
         idColumn: 'id',
@@ -107,12 +107,12 @@ class LoanRepositoryImpl implements LoanRepository {
   }
 
   @override
-  Future<int> delete({required int loanModelId}) async {
+  Future<int> delete({required int loanId}) async {
     try {
       final deleteRow = await _database.delete(
         table: _loanTableName,
         idColumn: 'id',
-        id: loanModelId,
+        id: loanId,
       );
 
       return deleteRow;

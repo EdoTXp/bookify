@@ -201,8 +201,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   const SizedBox(height: 12),
                   Center(
                     child: BookWidget(
-                      height: 300,
-                      width: 200,
+                      height: 250,
+                      width: 170,
                       bookImageUrl: book.imageUrl,
                     ),
                   ),

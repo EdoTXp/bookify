@@ -2,7 +2,6 @@ import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
 import 'package:bookify/src/shared/dtos/conctact_dto.dart';
-import 'package:bookify/src/shared/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
@@ -21,11 +20,9 @@ import 'package:validatorless/validatorless.dart';
 class LoanInsertionPage extends StatefulWidget {
   /// The Route Name = '/loan_insertion'
   static const routeName = '/loan_insertion';
-  final LoanDto? loanDto;
 
   const LoanInsertionPage({
     super.key,
-    this.loanDto,
   });
 
   @override
@@ -55,6 +52,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
     _observationEC = TextEditingController();
     _loanDateEC = TextEditingController();
     _devolutionDateEC = TextEditingController();
+
     _bloc = context.read<LoanInsertionBloc>();
     _canPopPage = true;
   }
@@ -171,7 +169,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
       if (devolutionDate.isBefore(dateNow) ||
           devolutionDate.isAtSameMomentAs(dateNow)) {
-        return 'Não pode ser hoje';
+        return 'Não pode ser hoje ou antes';
       }
     }
 
@@ -182,10 +180,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   /// then enters the new loan.
   void _onPressedButton(BuildContext context) {
     if (_formKey.currentState!.validate() && _bookModel != null) {
+      final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
       // Added 7 hours to the devolution date to ensure that the devolution date occurs on the desired day.
-      final devolutionDateWithHours = _devolutionDateEC.text
-          .parseFormattedDate()
-          .add(const Duration(hours: 7));
+      final devolutionDateWithHours = devolutionDate.add(
+        const Duration(
+          hours: 7,
+        ),
+      );
 
       _bloc.add(
         InsertedLoanInsertionEvent(

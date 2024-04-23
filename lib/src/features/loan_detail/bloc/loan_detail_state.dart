@@ -12,7 +12,7 @@ final class LoanDetailLoadedState extends LoanDetailState {
   });
 }
 
-final class LoanDetailDeletedState extends LoanDetailState {}
+final class LoanDetailFinishedState extends LoanDetailState {}
 
 final class LoanDetailErrorState extends LoanDetailState {
   final String errorMessage;

@@ -43,7 +43,7 @@ class LoanServiceImpl implements LoanService {
   @override
   Future<int> insert({required LoanModel loanModel}) async {
     try {
-      final newLoanId = _loanRepository.insert(loanModel: loanModel);
+      final newLoanId = await _loanRepository.insert(loanModel: loanModel);
       return newLoanId;
     } on LocalDatabaseException {
       rethrow;
@@ -64,10 +64,10 @@ class LoanServiceImpl implements LoanService {
   }
 
   @override
-  Future<int> delete({required int loanModelId}) async {
+  Future<int> delete({required int loanId}) async {
     try {
       final rowDeleted = await _loanRepository.delete(
-        loanModelId: loanModelId,
+        loanId: loanId,
       );
 
       return rowDeleted;

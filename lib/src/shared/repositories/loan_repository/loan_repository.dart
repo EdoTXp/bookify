@@ -6,5 +6,5 @@ abstract interface class LoanRepository {
   Future<LoanModel> getById({required int loanId});
   Future<int> insert({required LoanModel loanModel});
   Future<int> update({required LoanModel loanModel});
-  Future<int> delete({required int loanModelId});
+  Future<int> delete({required int loanId});
 }

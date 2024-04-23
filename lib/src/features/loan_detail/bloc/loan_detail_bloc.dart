@@ -23,7 +23,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
     this._notificationsService,
   ) : super(LoanDetailLoadingState()) {
     on<GotLoanDetailEvent>(_gotLoanDetailEvent);
-    on<DeletedLoanDetailEvent>(_deletedLoanDetailEvent);
+    on<FinishedLoanDetailEvent>(_finishedLoanDetailEvent);
   }
 
   Future<void> _gotLoanDetailEvent(
@@ -60,8 +60,8 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
     }
   }
 
-  Future<void> _deletedLoanDetailEvent(
-    DeletedLoanDetailEvent event,
+  Future<void> _finishedLoanDetailEvent(
+    FinishedLoanDetailEvent event,
     Emitter<LoanDetailState> emit,
   ) async {
     try {
@@ -80,7 +80,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       }
 
       final loanRemovedRow =
-          await _loanService.delete(loanModelId: event.loanId);
+          await _loanService.delete(loanId: event.loanId);
 
       if (loanRemovedRow != 1) {
         emit(
@@ -89,7 +89,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
         return;
       }
 
-      emit(LoanDetailDeletedState());
+      emit(LoanDetailFinishedState());
     } on LocalDatabaseException catch (e) {
       emit(
         LoanDetailErrorState(errorMessage: 'Erro no database: ${e.message}'),

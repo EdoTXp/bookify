@@ -43,8 +43,9 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   Future<void> _initializeNotifications() async {
-    const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@drawable/ic_stat_ic_notification',
+    );
 
     final iosSettings = DarwinInitializationSettings(
       onDidReceiveLocalNotification: (id, _, __, payload) =>
@@ -83,10 +84,11 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   NotificationDetails _getNotificationDetails(
-      NotificationChannel channel, String bigText) {
+    NotificationChannel channel,
+    String bigText,
+  ) {
     return NotificationDetails(
       android: AndroidNotificationDetails(
-        icon: '@drawable/ic_stat_ic_notification',
         channel.channelId(),
         channel.toString(),
         channelDescription: channel.description(),
@@ -118,6 +120,7 @@ class NotificationsServiceImpl implements NotificationsService {
         notification.body,
       ),
       payload: notification.payload,
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -145,7 +148,8 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   @override
-  Future<void> cancelNotificationById({required int id}) async {
+  Future<void> cancelNotificationById(
+      {required int id}) async {
     await _notifications.cancel(id);
   }
 
