@@ -133,14 +133,18 @@ class _ReadingsPageState extends State<ReadingsPage> {
                     ),
                   ),
                   actions: [
-                    Visibility(
-                      visible: (_searchBarIsVisible &&
-                          _searchController.text.isNotEmpty),
-                      child: IconButton(
-                        icon: const Icon(Icons.close_rounded),
-                        tooltip: 'Apagar o texto.',
-                        onPressed: _searchController.clear,
-                      ),
+                    ValueListenableBuilder(
+                      valueListenable: _searchController,
+                      builder: (context, value, _) {
+                        if (value.text.isNotEmpty) {
+                          return IconButton(
+                            icon: const Icon(Icons.close_rounded),
+                            tooltip: 'Apagar o texto.',
+                            onPressed: _searchController.clear,
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
                     ),
                     IconButton(
                       icon: Icon(
