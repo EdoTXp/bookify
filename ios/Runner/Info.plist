@@ -16,6 +16,9 @@
 	<string>bookify</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<!--Disable Impeller for build-->
+	<key>FLTEnableImpeller</key>
+  	<false />
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
@@ -24,9 +27,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!--Permission for Contatcs-->
-	<key>NSContactsUsageDescription</key>
-    <string>Este aplicativo precisa de acesso aos contatos para criar empréstimos.</string>
 	<!--Permission for URL launcher-->
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -36,8 +36,9 @@
 	<!--Permission for Mobile Scanner-->
 	<key>NSCameraUsageDescription</key>
 	<string>Este aplicativo precisa de acesso à câmera para ler códigos ISBN.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Este aplicativo precisa de acesso às fotos para obter o código QR da biblioteca de fotos.</string>
+	<!--Permission for Contatcs-->
+	<key>NSContactsUsageDescription</key>
+    <string>Este aplicativo precisa de acesso aos contatos para criar empréstimos.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -57,5 +58,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
