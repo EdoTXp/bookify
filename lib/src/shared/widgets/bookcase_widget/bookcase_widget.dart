@@ -65,6 +65,7 @@ class BookcaseWidget extends StatelessWidget {
                         margin: EdgeInsets.only(left: deviceWidth * .33),
                         child: Text(
                           bookcaseTitle,
+                          textScaler: TextScaler.noScaling,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: const TextStyle(

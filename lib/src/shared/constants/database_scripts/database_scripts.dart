@@ -110,8 +110,8 @@ class DatabaseScripts {
   static const String _bookReadingScript = '''
      CREATE TABLE $_bookReadingTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pagesReaded INTEGER,
-      lastReadingDate INTEGER NOT NULL,
+      pagesReaded INTEGER NOT NULL,
+      lastReadingDate INTEGER,
       bookId TEXT UNIQUE NOT NULL,
       FOREIGN KEY (bookId) REFERENCES book (id) ON DELETE CASCADE
       )

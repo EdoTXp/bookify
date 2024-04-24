@@ -54,9 +54,9 @@ class _RootPageState extends State<RootPage> {
     super.dispose();
   }
 
-  void _disableExtendBodyWhenBookcaseTabViewIsShown(int page) {
+  void _toggleExtendBody(int page) {
     setState(() {
-      _canExtendBody = (page == 1) ? false : true;
+      _canExtendBody = (page == 0) ? true : false;
     });
   }
 
@@ -99,7 +99,7 @@ class _RootPageState extends State<RootPage> {
         extendBody: _canExtendBody,
         body: PageView(
           controller: _pageController,
-          onPageChanged: _disableExtendBodyWhenBookcaseTabViewIsShown,
+          onPageChanged: _toggleExtendBody,
           physics: const NeverScrollableScrollPhysics(),
           children: const [
             HomePage(),

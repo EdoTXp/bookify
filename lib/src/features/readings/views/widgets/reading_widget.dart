@@ -56,12 +56,15 @@ class ReadingWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 child: Row(
                   children: [
-                    BookWidget(
-                      bookImageUrl: readingDto.book.imageUrl,
-                      height: 150,
-                      width: 100,
-                      borderColor: Colors.white,
-                      withShadow: true,
+                    Tooltip(
+                      message: readingDto.book.title,
+                      child: BookWidget(
+                        bookImageUrl: readingDto.book.imageUrl,
+                        height: 150,
+                        width: 100,
+                        borderColor: Colors.white,
+                        withShadow: true,
+                      ),
                     ),
                     const SizedBox(
                       width: 12,
@@ -104,14 +107,14 @@ class ReadingWidget extends StatelessWidget {
                                 child: Container(
                                   margin:
                                       EdgeInsets.only(left: deviceWidth * .40),
-                                  child:  Text(
+                                  child: Text(
                                     '$percentReading%',
+                                    textScaler: TextScaler.noScaling,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
-                                     
                                     ),
                                   ),
                                 ),
@@ -129,11 +132,14 @@ class ReadingWidget extends StatelessWidget {
                                     bottomLeft: Radius.circular(22),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Continue lendo',
+                                child: Text(
+                                  (readingDto.reading.pagesReaded > 0)
+                                      ? 'Continue lendo'
+                                      : 'Iniciar Leitura',
+                                  textScaler: TextScaler.noScaling,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
                                   ),

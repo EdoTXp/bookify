@@ -32,11 +32,17 @@ class BookifyOutlinedButton extends StatelessWidget {
             ? OutlinedButton.icon(
                 onPressed: onPressed,
                 icon: Icon(suffixIcon),
-                label: Text(text),
+                label: Text(
+                  text,
+                  textScaler: TextScaler.noScaling,
+                ),
               )
             : OutlinedButton(
                 onPressed: onPressed,
-                child: Text(text),
+                child: Text(
+                  text,
+                  textScaler: TextScaler.noScaling,
+                ),
               ),
       ),
     );

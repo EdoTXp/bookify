@@ -449,10 +449,10 @@ packages:
     dependency: "direct main"
     description:
       name: mobile_scanner
-      sha256: "3e11ee91d53d1180d31a8b78356e06a3e8618ff12e4546814edcabf6033bedd1"
+      sha256: f34c83198d9381f6c100dfaec647c275630840cbcda5d6c5eb6ba264beb96be4
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.1"
   mocktail:
     dependency: "direct dev"
     description:
@@ -822,10 +822,10 @@ packages:
     dependency: "direct main"
     description:
       name: timezone
-      sha256: "1cfd8ddc2d1cfd836bc93e67b9be88c3adaeca6f40a00ca999104c30693cdca0"
+      sha256: a6ccda4a69a442098b602c44e61a1e2b4bf6f5516e875bbf0f427d5df14745d5
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.2"
+    version: "0.9.3"
   typed_data:
     dependency: transitive
     description:

@@ -147,13 +147,17 @@ const _searchBarTheme = SearchBarThemeData(
   padding: MaterialStatePropertyAll(
     EdgeInsets.symmetric(horizontal: 16),
   ),
-  textStyle: MaterialStatePropertyAll(TextStyle(
-    fontSize: 14,
-  )),
-  hintStyle: MaterialStatePropertyAll(TextStyle(
-    fontSize: 14,
-    color: AppColor.bookifySecondaryColor,
-  )),
+  textStyle: MaterialStatePropertyAll(
+    TextStyle(
+      fontSize: 14,
+    ),
+  ),
+  hintStyle: MaterialStatePropertyAll(
+    TextStyle(
+      fontSize: 14,
+      color: AppColor.bookifySecondaryColor,
+    ),
+  ),
 );
 
 const _segmentedButtonTheme = SegmentedButtonThemeData(
@@ -172,14 +176,18 @@ const _segmentedButtonTheme = SegmentedButtonThemeData(
 
 const _iconTheme = IconThemeData(color: AppColor.bookifyPrimaryColor);
 
-final _textButtonTheme = TextButtonThemeData(
+const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
-    foregroundColor:
-        const MaterialStatePropertyAll(AppColor.bookifyPrimaryColor),
-    iconColor: const MaterialStatePropertyAll(AppColor.bookifyPrimaryColor),
-    overlayColor: MaterialStatePropertyAll(Colors.grey[200]),
-    textStyle: const MaterialStatePropertyAll(
-      TextStyle(fontWeight: FontWeight.bold),
+    foregroundColor: MaterialStatePropertyAll(
+      AppColor.bookifyPrimaryColor,
+    ),
+    iconColor: MaterialStatePropertyAll(
+      AppColor.bookifyPrimaryColor,
+    ),
+    textStyle: MaterialStatePropertyAll(
+      TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
     ),
   ),
 );
@@ -273,7 +281,7 @@ final _inputDecorationTheme = InputDecorationTheme(
         );
       } else if (states.contains(MaterialState.error)) {
         return const TextStyle(
-           color: AppColor.bookifyErrorColor,
+          color: AppColor.bookifyErrorColor,
           fontSize: 14,
         );
       }

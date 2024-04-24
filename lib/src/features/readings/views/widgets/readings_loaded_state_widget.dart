@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 class ReadingsLoadedStateWidget extends StatelessWidget {
   final List<ReadingDto> readingsDto;
-  final VoidCallback refreshPage;
+  final VoidCallback onNewReading;
 
   const ReadingsLoadedStateWidget({
     super.key,
     required this.readingsDto,
-    required this.refreshPage,
+    required this.onNewReading,
   });
 
   @override
@@ -21,9 +21,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
           width: MediaQuery.sizeOf(context).width,
           child: AddNewItemTextButton(
             label: 'Iniciar uma leitura',
-            onPressed: () async {
-              refreshPage();
-            },
+            onPressed: onNewReading,
           ),
         ),
         Expanded(
@@ -38,9 +36,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ReadingWidget(
                   readingDto: readingsDto[index],
-                  onTap: () {
-                    refreshPage();
-                  },
+                  onTap: () {},
                 ),
               );
             },

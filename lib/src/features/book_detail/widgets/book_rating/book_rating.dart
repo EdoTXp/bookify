@@ -20,6 +20,7 @@ class BookRating extends StatelessWidget {
       children: [
         Text(
           averageRating.toLocaleDecimalFormat(),
+          textScaler: TextScaler.noScaling,
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -31,6 +32,7 @@ class BookRating extends StatelessWidget {
         ),
         Text(
           'Total: $ratingsCount',
+          textScaler: TextScaler.noScaling,
           style: TextStyle(
             color: colorScheme.primary,
             fontSize: 16,

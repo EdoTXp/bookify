@@ -43,6 +43,7 @@ class ContactInformationWidget extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  textScaler: TextScaler.noScaling,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

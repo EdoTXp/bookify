@@ -129,6 +129,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
                 ),
                 Text(
                   item.label,
+                  textScaler: TextScaler.noScaling,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 10,

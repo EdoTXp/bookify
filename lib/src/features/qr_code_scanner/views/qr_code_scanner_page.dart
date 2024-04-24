@@ -72,6 +72,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
             width: MediaQuery.sizeOf(context).width / 2,
             child: Text(
               titleText,
+              textScaler: TextScaler.noScaling,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 18,
@@ -85,12 +86,12 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
           Expanded(
             child: (_qrCodeScannerIsVisible)
                 ? QrCodeScannerWidget(
-                  key: const Key('qrCodeScannerWidget'),
+                    key: const Key('qrCodeScannerWidget'),
                     onDetect: (qrCodeValue) =>
                         _searchIsbn(context, qrCodeValue),
                   )
                 : IsbnManuallyTextFormFieldWidget(
-                  key: const Key('isbnManuallyTextFormFieldWidget'),
+                    key: const Key('isbnManuallyTextFormFieldWidget'),
                     onTap: (textFormFieldValue) =>
                         _searchIsbn(context, textFormFieldValue),
                   ),
@@ -102,7 +103,10 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
               textDirection: TextDirection.rtl,
               child: TextButton.icon(
                 key: const Key('changeModeTextButton'),
-                label: Text(changeModeText),
+                label: Text(
+                  changeModeText,
+                  textScaler: TextScaler.noScaling,
+                ),
                 icon: Icon(changeModeIcon),
                 onPressed: () {
                   setState(() {

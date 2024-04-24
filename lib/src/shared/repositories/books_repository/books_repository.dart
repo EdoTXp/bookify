@@ -9,5 +9,6 @@ abstract interface class BooksRepository {
   Future<bool> verifyBookIsAlreadyInserted({required String id});
   Future<BookStatus>getBookStatus({required String id});
   Future<int> updateBookStatus({required String id, required BookStatus status});
+  Future<int> updateBookPageCount({required String id, required int pageCount});
   Future<int> deleteBookById({required String id});
 }

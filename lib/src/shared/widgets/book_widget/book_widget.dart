@@ -19,6 +19,16 @@ class BookWidget extends StatelessWidget {
     this.withShadow = false,
   });
 
+  const BookWidget.normalSize({
+    super.key,
+    required this.bookImageUrl,
+    this.height = 250,
+    this.width = 170,
+    this.borderWidth = 1.0,
+    this.borderColor,
+    this.withShadow = false,
+  });
+
   @override
   Widget build(BuildContext context) {
     final color = borderColor ?? Colors.blueGrey[200]!;

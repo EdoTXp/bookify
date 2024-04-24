@@ -161,8 +161,26 @@ class BookServiceImpl implements BookService {
     required BookStatus status,
   }) async {
     try {
-      final bookUpdated =
-          await _booksRepository.updateBookStatus(id: id, status: status);
+      final bookUpdated = await _booksRepository.updateBookStatus(
+        id: id,
+        status: status,
+      );
+      return bookUpdated;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> updatePageCount({
+    required String id,
+    required int pageCount,
+  }) async {
+    try {
+      final bookUpdated = await _booksRepository.updateBookPageCount(
+        id: id,
+        pageCount: pageCount,
+      );
       return bookUpdated;
     } on LocalDatabaseException {
       rethrow;

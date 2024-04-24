@@ -29,6 +29,7 @@ class ContactWidget extends StatelessWidget {
           ),
           title: Text(
             contactDto.name,
+            textScaler: TextScaler.noScaling,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 12,
@@ -36,6 +37,7 @@ class ContactWidget extends StatelessWidget {
           ),
           trailing: Text(
             contactDto.phoneNumber ?? 'sem número',
+            textScaler: TextScaler.noScaling,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 12,

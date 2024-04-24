@@ -304,10 +304,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                               : Material(
                                   child: InkWell(
                                     onTap: () async => await _getBook(context),
-                                    child: BookWidget(
+                                    child: BookWidget.normalSize(
                                       bookImageUrl: _bookModel!.imageUrl,
-                                      height: 250,
-                                      width: 170,
                                     ),
                                   ),
                                 ),

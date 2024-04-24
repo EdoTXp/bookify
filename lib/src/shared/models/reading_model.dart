@@ -1,13 +1,13 @@
 class ReadingModel {
   final int? id;
   final int pagesReaded;
-  final DateTime lastReadingDate;
+  final DateTime? lastReadingDate;
   final String bookId;
 
   ReadingModel({
     this.id,
     required this.pagesReaded,
-    required this.lastReadingDate,
+    this.lastReadingDate,
     required this.bookId,
   });
 
@@ -29,7 +29,7 @@ class ReadingModel {
     return <String, dynamic>{
       'id': id,
       'pagesReaded': pagesReaded,
-      'lastReadingDate': lastReadingDate.millisecondsSinceEpoch,
+      'lastReadingDate': lastReadingDate?.millisecondsSinceEpoch,
       'bookId': bookId,
     };
   }
@@ -38,8 +38,9 @@ class ReadingModel {
     return ReadingModel(
       id: map['id'] != null ? map['id'] as int : null,
       pagesReaded: map['pagesReaded'] as int,
-      lastReadingDate:
-          DateTime.fromMillisecondsSinceEpoch(map['lastReadingDate'] as int),
+      lastReadingDate: map['lastReadingDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['lastReadingDate'] as int)
+          : null,
       bookId: map['bookId'] as String,
     );
   }

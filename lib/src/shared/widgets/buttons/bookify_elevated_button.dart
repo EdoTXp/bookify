@@ -32,11 +32,17 @@ class BookifyElevatedButton extends StatelessWidget {
             ? ElevatedButton.icon(
                 onPressed: onPressed,
                 icon: Icon(suffixIcon),
-                label: Text(text),
+                label: Text(
+                  text,
+                  textScaler: TextScaler.noScaling,
+                ),
               )
             : ElevatedButton(
                 onPressed: onPressed,
-                child: Text(text),
+                child: Text(
+                  text,
+                  textScaler: TextScaler.noScaling,
+                ),
               ),
       ),
     );

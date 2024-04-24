@@ -227,8 +227,23 @@ void main() {
             id: any(named: 'id'), status: BookStatus.reading),
       ).thenAnswer((_) async => 1);
 
-      final bookRowUpdated =
-          await bookService.updateStatus(id: '1', status: BookStatus.reading);
+      final bookRowUpdated = await bookService.updateStatus(
+        id: '1',
+        status: BookStatus.reading,
+      );
+      expect(bookRowUpdated, equals(1));
+    });
+
+    test('update pageCount', () async {
+      when(
+        () => booksRepository.updateBookPageCount(
+            id: any(named: 'id'), pageCount: any(named: 'pageCount')),
+      ).thenAnswer((_) async => 1);
+
+      final bookRowUpdated = await bookService.updatePageCount(
+        id: '1',
+        pageCount: 100,
+      );
       expect(bookRowUpdated, equals(1));
     });
 
@@ -426,8 +441,26 @@ void main() {
       ).thenThrow(LocalDatabaseException('Error on database'));
 
       expect(
-        () async =>
-            await bookService.updateStatus(id: '1', status: BookStatus.reading),
+        () async => await bookService.updateStatus(
+          id: '1',
+          status: BookStatus.reading,
+        ),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('update pageCount', () async {
+      when(
+        () => booksRepository.updateBookPageCount(
+            id: any(named: 'id'), pageCount: any(named: 'pageCount')),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookService.updatePageCount(
+          id: '1',
+          pageCount: 100,
+        ),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

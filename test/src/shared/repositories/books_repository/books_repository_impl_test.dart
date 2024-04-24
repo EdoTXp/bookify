@@ -190,6 +190,21 @@ void main() {
           id: '1', status: BookStatus.reading);
       expect(bookUpdated, equals(1));
     });
+
+    test('update book page Count', () async {
+      when(() => localDatabase.update(
+            table: any(named: 'table'),
+            idColumn: any(named: 'idColumn'),
+            id: any(named: 'id'),
+            values: any(named: 'values'),
+          )).thenAnswer(
+        (_) async => 1,
+      );
+
+      final bookUpdated =
+          await bookRepository.updateBookPageCount(id: '1', pageCount: 100);
+      expect(bookUpdated, equals(1));
+    });
   });
 
   group('Test normal CRUD book with error ||', () {
@@ -398,6 +413,44 @@ void main() {
         () async => await bookRepository.updateBookStatus(
           id: '1',
           status: BookStatus.reading,
+        ),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('update book page Count -- assertion failed', () async {
+      when(() => localDatabase.update(
+              table: any(named: 'table'),
+              idColumn: any(named: 'idColumn'),
+              id: any(named: 'id'),
+              values: any(named: 'values')))
+          .thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookRepository.updateBookPageCount(
+          id: '1',
+          pageCount: 0,
+        ),
+        throwsA(
+          (AssertionError e) =>
+              e.message == 'pagesCount must be greater than 0',
+        ),
+      );
+    });
+
+    test('update book page Count -- LocalDatabaseException', () async {
+      when(() => localDatabase.update(
+              table: any(named: 'table'),
+              idColumn: any(named: 'idColumn'),
+              id: any(named: 'id'),
+              values: any(named: 'values')))
+          .thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookRepository.updateBookPageCount(
+          id: '1',
+          pageCount: 100,
         ),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),

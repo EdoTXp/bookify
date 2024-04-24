@@ -23,6 +23,7 @@ class AddNewItemTextButton extends StatelessWidget {
       ),
       label: Text(
         label,
+        textScaler: TextScaler.noScaling,
       ),
       onPressed: onPressed,
     );

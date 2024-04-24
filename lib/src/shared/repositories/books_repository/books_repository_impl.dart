@@ -148,6 +148,27 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
+  Future<int> updateBookPageCount({
+    required String id,
+    required int pageCount,
+  }) async {
+    assert(pageCount > 0, 'pagesCount must be greater than 0');
+
+    try {
+      final bookPagesCountUpdate = await _database.update(
+        table: _bookTableName,
+        idColumn: 'id',
+        id: id,
+        values: {'pageCount': pageCount},
+      );
+
+      return bookPagesCountUpdate;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> deleteBookById({required String id}) async {
     try {
       final rowDeleted = await _database.delete(

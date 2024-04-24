@@ -200,9 +200,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   const SizedBox(height: 12),
                   Center(
-                    child: BookWidget(
-                      height: 250,
-                      width: 170,
+                    child: BookWidget.normalSize(
                       bookImageUrl: book.imageUrl,
                     ),
                   ),
@@ -212,6 +210,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     children: [
                       Text(
                         '${book.pageCount} PÁGINAS',
+                        textScaler: TextScaler.noScaling,
                         style: TextStyle(
                           color: colorScheme.primary,
                           fontSize: 14,
@@ -220,6 +219,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       const SizedBox(width: 24),
                       Text(
                         '9H PARA LER',
+                        textScaler: TextScaler.noScaling,
                         style: TextStyle(
                           color: colorScheme.primary,
                           fontSize: 14,
@@ -259,6 +259,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   const SizedBox(height: 24),
                   const Text(
                     'Sinopse',
+                    textScaler: TextScaler.noScaling,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -291,6 +292,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         children: [
                           const Text(
                             'Avaliações',
+                            textScaler: TextScaler.noScaling,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -311,6 +313,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           children: [
                             const Text(
                               'Informações do Livro',
+                              textScaler: TextScaler.noScaling,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
