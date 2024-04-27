@@ -22,19 +22,21 @@ class _ReadingsPageState extends State<ReadingsPage> {
   late final TextEditingController _searchController;
   late final FocusNode _focusNode;
   late bool _searchBarIsVisible;
+  late int _lastSearchLength;
 
   @override
   void initState() {
     super.initState();
-
-    _searchController = TextEditingController();
-    _focusNode = FocusNode();
-    _searchBarIsVisible = false;
-
     _bloc = context.read<ReadingsBloc>()
       ..add(
         GotAllReadingsEvent(),
       );
+    _lastSearchLength = 0;
+    _searchController = TextEditingController();
+    _searchController.addListener(_searchReading);
+
+    _focusNode = FocusNode();
+    _searchBarIsVisible = false;
   }
 
   @override
@@ -48,6 +50,22 @@ class _ReadingsPageState extends State<ReadingsPage> {
     _bloc.add(
       GotAllReadingsEvent(),
     );
+  }
+
+  void _searchReading() {
+    final currentSearchLength = _searchController.text.length;
+
+    if (currentSearchLength >= 3) {
+      _bloc.add(
+        FindedReadingByBookTitleEvent(
+          searchQueryName: _searchController.text,
+        ),
+      );
+    } else if (currentSearchLength < 3 && _lastSearchLength > 3) {
+      _refreshPage();
+    }
+
+    _lastSearchLength = currentSearchLength;
   }
 
   Widget _getWidgetOnReadingsState(BuildContext context, ReadingsState state) {
@@ -67,7 +85,6 @@ class _ReadingsPageState extends State<ReadingsPage> {
                 'Nenhuma Leitura encontrada com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
             onPressed: () {
               _searchController.clear();
-
               _toggleSearchBarVisible();
               _refreshPage();
             },
@@ -76,6 +93,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
       ReadingsLoadedState(:final readingsDto) => ReadingsLoadedStateWidget(
           readingsDto: readingsDto,
           onNewReading: () => _insertNewReading(context),
+          onRefreshPage: _refreshPage,
         ),
       ReadingsErrorState(:final errorMessage) => Center(
           child: InfoItemStateWidget.withErrorState(
@@ -136,15 +154,6 @@ class _ReadingsPageState extends State<ReadingsPage> {
             ),
             style: const TextStyle(fontSize: 14),
             onTapOutside: (_) => _focusNode.unfocus(),
-            onChanged: (_) {
-              _bloc.add(
-                _searchController.text.length >= 3
-                    ? FindedReadingByBookTitleEvent(
-                        searchQueryName: _searchController.text,
-                      )
-                    : GotAllReadingsEvent(),
-              );
-            },
           ),
         ),
         bottom: PreferredSize(

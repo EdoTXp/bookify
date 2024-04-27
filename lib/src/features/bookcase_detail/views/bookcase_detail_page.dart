@@ -159,7 +159,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       }
     } else {
       // Ask the user for confirmation before deleting the bookcase
-      await ShowDialogService.show(
+      await ShowDialogService.showAlertDialog(
         context: context,
         title: 'Deletar a estante',
         content:

@@ -47,7 +47,7 @@ class _BooksPickerPageState extends State<BooksPickerPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Switch(
+            child: Switch.adaptive(
               value: isSelectionBook,
               onChanged: (value) {
                 setState(() {

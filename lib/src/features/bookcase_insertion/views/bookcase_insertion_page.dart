@@ -2,10 +2,10 @@ import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_
 import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
+import 'package:bookify/src/shared/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -37,12 +37,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   @override
   void initState() {
     super.initState();
-    // Lock the screen only portrait
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
+    LockScreenOrientationService.lockOrientationScreen(
+      orientation: Orientation.portrait,
+    );
     _canPopPage = true;
 
     _bloc = context.read<BookcaseInsertionBloc>();
@@ -54,17 +51,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
   @override
   void dispose() {
+    LockScreenOrientationService.unLockOrientationScreen();
     _bookcaseNameEC.dispose();
     _bookcaseDescriptionEC.dispose();
-
-    // Unlock the screen
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
     super.dispose();
   }
 

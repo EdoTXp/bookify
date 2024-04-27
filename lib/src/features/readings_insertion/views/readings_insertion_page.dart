@@ -2,9 +2,8 @@ import 'package:bookify/src/features/readings_insertion/bloc/readings_insertion_
 import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
-import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
-import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
+import 'package:bookify/src/shared/widgets/reading_detail_widget/reading_detail_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -118,41 +117,10 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          children: [
-                            BookWidget(
-                              bookImageUrl: book.imageUrl,
-                              height: 220,
-                              width: 150,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            BookifyRatingWidget(
-                              averageRating: book.averageRating,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                book.description,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 10,
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    ReadingDetailWidget(
+                      bookImageUrl: book.imageUrl,
+                      bookDescription: book.description,
+                      bookAverageRating: book.averageRating,
                     ),
                     const SizedBox(
                       height: 20,

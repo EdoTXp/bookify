@@ -108,7 +108,7 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                       ? _selectAllItems(bookcasesDto)
                       : _clearSelection(),
                   onPressedDeleteButton: () {
-                    ShowDialogService.show(
+                    ShowDialogService.showAlertDialog(
                       context: context,
                       title: 'Deletar estantes',
                       content:

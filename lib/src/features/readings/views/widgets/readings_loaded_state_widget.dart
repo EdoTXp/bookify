@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/readings/views/widgets/reading_widget.dart';
+import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/shared/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,13 @@ import 'package:flutter/material.dart';
 class ReadingsLoadedStateWidget extends StatelessWidget {
   final List<ReadingDto> readingsDto;
   final VoidCallback onNewReading;
+  final VoidCallback onRefreshPage;
 
   const ReadingsLoadedStateWidget({
     super.key,
     required this.readingsDto,
     required this.onNewReading,
+    required this.onRefreshPage,
   });
 
   @override
@@ -36,7 +39,14 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ReadingWidget(
                   readingDto: readingsDto[index],
-                  onTap: () {},
+                  onTap: () async {
+                    await Navigator.of(context).pushNamed(
+                      ReadingsDetailPage.routeName,
+                      arguments: readingsDto[index],
+                    );
+
+                    onRefreshPage();
+                  },
                 ),
               );
             },

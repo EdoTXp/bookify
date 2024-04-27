@@ -107,7 +107,7 @@ class _BookcaseDetailLoadedStateWidgetState
                       ? _selectAllItems(books)
                       : _clearSelection(),
                   onPressedDeleteButton: () {
-                    ShowDialogService.show(
+                    ShowDialogService.showAlertDialog(
                       context: context,
                       title: 'Deletar Livros',
                       content:

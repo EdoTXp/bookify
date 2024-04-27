@@ -21,6 +21,7 @@ final appLightTheme = ThemeData(
   segmentedButtonTheme: _segmentedButtonTheme,
   splashColor: Colors.transparent,
   iconTheme: _iconTheme,
+  sliderTheme: _sliderTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
@@ -54,6 +55,7 @@ final appDarkTheme = ThemeData(
   segmentedButtonTheme: _segmentedButtonTheme,
   splashColor: Colors.transparent,
   iconTheme: _iconTheme,
+  sliderTheme: _sliderTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
@@ -164,10 +166,12 @@ const _segmentedButtonTheme = SegmentedButtonThemeData(
   style: ButtonStyle(
     surfaceTintColor: MaterialStatePropertyAll(AppColor.bookifySecondaryColor),
     visualDensity: VisualDensity.comfortable,
-    textStyle: MaterialStatePropertyAll(TextStyle(
-      fontSize: 12,
-      overflow: TextOverflow.ellipsis,
-    )),
+    textStyle: MaterialStatePropertyAll(
+      TextStyle(
+        fontSize: 12,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ),
     side: MaterialStatePropertyAll(
         BorderSide(color: AppColor.bookifySecondaryColor)),
     iconColor: MaterialStatePropertyAll(AppColor.bookifySecondaryColor),
@@ -175,6 +179,23 @@ const _segmentedButtonTheme = SegmentedButtonThemeData(
 );
 
 const _iconTheme = IconThemeData(color: AppColor.bookifyPrimaryColor);
+
+final _sliderTheme = SliderThemeData(
+  trackHeight: 2.0,
+  activeTrackColor: AppColor.bookifyPrimaryColor,
+  inactiveTrackColor: AppColor.bookifyPrimaryColor.withOpacity(.10),
+  disabledActiveTrackColor: AppColor.bookifyPrimaryColor,
+  disabledInactiveTrackColor: AppColor.bookifyPrimaryColor.withOpacity(.10),
+  trackShape: const RoundedRectSliderTrackShape(),
+  tickMarkShape: SliderTickMarkShape.noTickMark,
+  overlayShape: SliderComponentShape.noOverlay,
+  valueIndicatorTextStyle: const TextStyle(fontSize: 14),
+  valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+  thumbShape: const RoundSliderThumbShape(),
+  thumbColor: AppColor.bookifySecondaryColor,
+  disabledThumbColor: AppColor.bookifySecondaryColor,
+  valueIndicatorColor: AppColor.bookifySecondaryColor,
+);
 
 const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(

@@ -127,7 +127,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   void _insertOrRemoveBook(BookModel book) async {
     if (_bookIsInserted) {
-      await ShowDialogService.show(
+      await ShowDialogService.showAlertDialog(
         context: context,
         title: 'Remover o livro "${book.title}"',
         content:

@@ -19,7 +19,7 @@ class ReadingRepositoryImpl implements ReadingRepository {
       final readingMap = await _database.getAll(
         table: _readingTableName,
         orderColumn: 'lastReadingDate',
-        orderBy: OrderByType.ascendant,
+        orderBy: OrderByType.descendant,
       );
 
       final readings = readingMap.map(ReadingModel.fromMap).toList();

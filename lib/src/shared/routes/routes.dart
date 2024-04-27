@@ -7,8 +7,11 @@ import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.
 import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
+import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
+import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
+import 'package:bookify/src/shared/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +42,12 @@ class Routes {
         ),
     ReadingsInsertionPage.routeName: (context) => ReadingsInsertionPage(
           book: ModalRoute.of(context)!.settings.arguments as BookModel,
+        ),
+    ReadingsDetailPage.routeName: (context) => ReadingsDetailPage(
+          readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
+        ),
+    ReadingsTimerPage.routeName: (context) => ReadingsTimerPage(
+          readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
         ),
     ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
     BooksPickerPage.routeName: (context) => const BooksPickerPage(),

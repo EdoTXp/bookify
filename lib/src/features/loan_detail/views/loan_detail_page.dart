@@ -49,7 +49,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
       LoanDetailLoadedState(:final loanDto) => LoanDetailLoadedWidget(
           loanDto: loanDto,
           onPressedButton: () async {
-            await ShowDialogService.show(
+            await ShowDialogService.showAlertDialog(
               context: context,
               title: 'Finalizar o empréstimo',
               content:
