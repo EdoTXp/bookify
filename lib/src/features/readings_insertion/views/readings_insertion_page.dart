@@ -3,7 +3,7 @@ import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_e
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:bookify/src/shared/widgets/reading_detail_widget/reading_detail_widget.dart';
+import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -117,7 +117,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ReadingDetailWidget(
+                    BookWithDetailWidget(
                       bookImageUrl: book.imageUrl,
                       bookDescription: book.description,
                       bookAverageRating: book.averageRating,

@@ -74,6 +74,8 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       BookcaseDetailBooksLoadedState(:final books) =>
         BookcaseDetailLoadedStateWidget(
           books: books,
+          bookcaseId: _actualBookcase.id!,
+          refreshPage: _refreshPage,
           onAddBooksPressed: () async => await _addNewBooks(),
           onDeletedBooksPressed: (books) => _bloc.add(
             DeletedBooksOnBookcaseEvent(

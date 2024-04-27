@@ -61,6 +61,21 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   }
 
   @override
+  Future<int> countBookcasesByBook({required String bookId}) async {
+    try {
+      final bookcasesCount = await _database.countItemsById(
+        table: _bookOnCaseTableName,
+        idColumn: 'bookId',
+        id: bookId,
+      );
+
+      return bookcasesCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> deleteBookcaseRelationship({
     required int bookcaseId,
     required String bookId,

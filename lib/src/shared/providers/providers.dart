@@ -13,6 +13,7 @@ class Providers {
     ...bookcasePageProviders,
     ...bookcaseInsertionPageProviders,
     ...bookcaseDetailPageProviders,
+    ...bookOnBookcaseDetailPageProviders,
     ...bookcaseBooksInsertionProviders,
     ...loanPageProviders,
     ...loanDetailPageProviders,

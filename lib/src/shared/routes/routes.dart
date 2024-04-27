@@ -1,4 +1,5 @@
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
+import 'package:bookify/src/features/book_on_bookcase_detail/views/book_on_bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
@@ -28,6 +29,15 @@ class Routes {
           bookcaseModel:
               ModalRoute.of(context)!.settings.arguments as BookcaseModel,
         ),
+    BookOnBookcaseDetailPage.routeName: (context) {
+      final arguments = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+
+
+      return BookOnBookcaseDetailPage(
+          bookModel: arguments.first as BookModel,
+          bookcaseId: arguments.last as int,
+        );
+    },
     BookcaseInsertionPage.routeName: (context) => BookcaseInsertionPage(
           bookcaseModel:
               ModalRoute.of(context)!.settings.arguments as BookcaseModel?,

@@ -135,6 +135,12 @@ abstract interface class LocalDatabase {
     required dynamic columnValue,
   });
 
+  Future<int> countItemsById({
+    required String table,
+    required String idColumn,
+    required dynamic id,
+  });
+
   /// Deletes an item from the specified table based on the provided ID.
   ///
   /// [table] The name of the table from which to delete the item.

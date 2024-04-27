@@ -5,7 +5,7 @@ import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_ext
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
-import 'package:bookify/src/shared/widgets/reading_detail_widget/reading_detail_widget.dart';
+import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -160,7 +160,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    ReadingDetailWidget(
+                    BookWithDetailWidget(
                       bookImageUrl: book.imageUrl,
                       bookDescription: book.description,
                       bookAverageRating: book.averageRating,

@@ -120,7 +120,6 @@ class NotificationsServiceImpl implements NotificationsService {
         notification.body,
       ),
       payload: notification.payload,
-      matchDateTimeComponents: DateTimeComponents.dateAndTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -148,8 +147,7 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   @override
-  Future<void> cancelNotificationById(
-      {required int id}) async {
+  Future<void> cancelNotificationById({required int id}) async {
     await _notifications.cancel(id);
   }
 

@@ -1,4 +1,4 @@
-import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
+import 'package:bookify/src/features/book_on_bookcase_detail/views/book_on_bookcase_detail_page.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 
 class BookcaseDetailLoadedStateWidget extends StatefulWidget {
   final List<BookModel> books;
+  final int bookcaseId;
   final VoidCallback onAddBooksPressed;
+  final VoidCallback refreshPage;
   final void Function(List<BookModel> books) onDeletedBooksPressed;
 
   const BookcaseDetailLoadedStateWidget({
@@ -16,6 +18,8 @@ class BookcaseDetailLoadedStateWidget extends StatefulWidget {
     required this.books,
     required this.onAddBooksPressed,
     required this.onDeletedBooksPressed,
+    required this.bookcaseId,
+    required this.refreshPage,
   });
 
   @override
@@ -37,9 +41,13 @@ class _BookcaseDetailLoadedStateWidgetState
   Future<void> _normalOnTap(BuildContext context, BookModel book) async {
     await Navigator.pushNamed(
       context,
-      BookDetailPage.routeName,
-      arguments: book,
+      BookOnBookcaseDetailPage.routeName,
+      arguments: [
+        book,
+        widget.bookcaseId,
+      ],
     );
+    widget.refreshPage();
   }
 
   void _onTap({required BuildContext context, required BookModel element}) {

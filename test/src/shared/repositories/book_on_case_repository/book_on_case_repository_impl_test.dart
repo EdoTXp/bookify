@@ -67,6 +67,22 @@ void main() {
           await bookOnCaseRepository.insert(bookcaseId: 1, bookId: '1');
       expect(relationshipRowInserted, equals(1));
     });
+
+    test('countBookcasesByBook', () async {
+      when(
+        () => localDatabase.countItemsById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => 2);
+
+      final bookcasesCount =
+          await bookOnCaseRepository.countBookcasesByBook(bookId: 'bookId');
+
+      expect(bookcasesCount, equals(2));
+    });
+
     test('delete relationship', () async {
       when(
         () => localDatabase.deleteWithAnotherColumn(
@@ -141,6 +157,23 @@ void main() {
       expect(
         () async =>
             await bookOnCaseRepository.insert(bookcaseId: 1, bookId: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('countBookcasesByBook', () async {
+      when(
+        () => localDatabase.countItemsById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(LocalDatabaseException('Error on database'));
+
+      expect(
+        () async =>
+            await bookOnCaseRepository.countBookcasesByBook(bookId: '1'),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

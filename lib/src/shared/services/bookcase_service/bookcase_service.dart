@@ -16,6 +16,7 @@ abstract interface class BookcaseService {
     required int bookcaseId,
     required String bookId,
   });
+  Future<int> countBookcasesByBook({required String bookId});
   Future<String?> getBookIdForImagePreview({required int bookcaseId});
   Future<int> updateBookcase({required BookcaseModel bookcaseModel});
   Future<int> deleteBookcase({required int bookcaseId});

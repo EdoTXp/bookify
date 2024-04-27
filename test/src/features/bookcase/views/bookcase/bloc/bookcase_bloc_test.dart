@@ -149,7 +149,7 @@ void main() {
     );
 
     blocTest(
-      'test if GotAllBookcaseEvent work when throw Exception',
+      'test if GotAllBookcaseEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getAllBookcases())
@@ -295,7 +295,7 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work when throw Exception',
+      'test if FindedBookcaseByNameEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -452,7 +452,7 @@ void main() {
     );
 
     blocTest(
-      'test if DeletedBookcasesEvent work when throw Exception',
+      'test if DeletedBookcasesEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.deleteBookcase(
