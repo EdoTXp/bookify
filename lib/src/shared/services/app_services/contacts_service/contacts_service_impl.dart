@@ -27,6 +27,8 @@ class ContactsServiceImpl implements ContactsService {
           photo: photo,
         );
       }
+    } else if (permissionStatus.isPermanentlyDenied) {
+      openAppSettings();
     }
     return null;
   }
@@ -59,6 +61,8 @@ class ContactsServiceImpl implements ContactsService {
       }
 
       return contactsDto;
+    } else if (permissionStatus.isPermanentlyDenied) {
+      openAppSettings();
     }
     return null;
   }
