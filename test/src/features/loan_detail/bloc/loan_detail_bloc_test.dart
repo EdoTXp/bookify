@@ -51,7 +51,7 @@ void main() {
     ratingsCount: 120,
   );
 
-  final contactDto = ContactDto(
+  const contactDto = ContactDto(
     id: 'ContactId',
     name: 'Alice',
   );

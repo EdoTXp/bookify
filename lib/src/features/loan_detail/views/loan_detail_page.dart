@@ -2,6 +2,7 @@ import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_detail_loaded_widget.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,9 +44,9 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
     LoanDetailState state,
   ) {
     return switch (state) {
-      LoanDetailLoadingState() || LoanDetailFinishedState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      LoanDetailLoadingState() ||
+      LoanDetailFinishedState() =>
+        const CenterCircularProgressIndicator(),
       LoanDetailLoadedState(:final loanDto) => LoanDetailLoadedWidget(
           loanDto: loanDto,
           onPressedButton: () async {

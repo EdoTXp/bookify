@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/bookcase/views/widgets/bookcase_loaded_state_widget/bookcase_loaded_state_widget.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,9 +55,7 @@ class _BookcasePageState extends State<BookcasePage> {
 
   Widget _getWidgetOnBookcaseState(BuildContext context, BookcaseState state) {
     return switch (state) {
-      BookcaseLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      BookcaseLoadingState() => const CenterCircularProgressIndicator(),
       BookcaseEmptyState() => ItemEmptyStateWidget(
           label: 'Criar uma nova estante',
           onTap: () async {

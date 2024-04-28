@@ -6,7 +6,7 @@ class ContactDto {
   final Uint8List? photo;
   final String? phoneNumber;
   
-  ContactDto({
+  const ContactDto({
     required this.id,
     required this.name,
     this.photo,

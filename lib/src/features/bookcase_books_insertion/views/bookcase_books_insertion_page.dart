@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/bookcase_books_insertion_loaded_state_widget/bookcase_books_insertion_loaded_state.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/bloc/bookcase_books_insertion_bloc.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/widgets.dart';
@@ -45,9 +46,7 @@ class _BookcaseBooksInsertionPageState
     return switch (state) {
       BookcaseBooksInsertionLoadingState() ||
       BookcaseBooksInsertionInsertedState() =>
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
+        const CenterCircularProgressIndicator(),
       BookcaseBooksInsertionEmptyState(:final message) => Center(
           child: Text(
             message,

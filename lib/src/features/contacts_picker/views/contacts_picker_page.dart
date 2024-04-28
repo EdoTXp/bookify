@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.dart';
 import 'package:bookify/src/features/contacts_picker/views/widgets/contacts_picker_loaded_state_widget.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +33,7 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
     ContactsPickerState state,
   ) {
     return switch (state) {
-      ContactsPickerLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      ContactsPickerLoadingState() => const CenterCircularProgressIndicator(),
       ContactsPickerEmptyState() => Center(
           child: InfoItemStateWidget.withNotFoundState(
             message:

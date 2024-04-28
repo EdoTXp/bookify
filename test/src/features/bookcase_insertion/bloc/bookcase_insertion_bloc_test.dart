@@ -14,7 +14,7 @@ void main() {
   final bookcaseService = BookcaseServiceMock();
   late BookcaseInsertionBloc bookcaseInsertionBloc;
 
-  final bookcaseModel = BookcaseModel(
+  const bookcaseModel = BookcaseModel(
     name: 'name',
     description: 'description',
     color: Colors.pink,

@@ -116,50 +116,56 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
         ),
         Visibility(
           visible: _searchIconByTypeIsClicked,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: SegmentedButton<SearchType>(
-              style: ButtonStyle(
-                iconColor: MaterialStateProperty.resolveWith(
-                  (states) => states.contains(MaterialState.selected)
-                      ? Colors.white
-                      : selectedColor,
+          maintainAnimation: true,
+          maintainState: true,
+          child: AnimatedOpacity(
+            opacity: _searchIconByTypeIsClicked ? 1 : 0,
+            duration: const Duration(seconds: 1),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: SegmentedButton<SearchType>(
+                style: ButtonStyle(
+                  iconColor: MaterialStateProperty.resolveWith(
+                    (states) => states.contains(MaterialState.selected)
+                        ? Colors.white
+                        : selectedColor,
+                  ),
                 ),
+                segments: const [
+                  ButtonSegment<SearchType>(
+                    value: SearchType.title,
+                    tooltip: 'Busca por título.',
+                    icon: Icon(Icons.menu_book_rounded),
+                  ),
+                  ButtonSegment<SearchType>(
+                    value: SearchType.author,
+                    tooltip: 'Busca por autor.',
+                    icon: Icon(Icons.person_rounded),
+                  ),
+                  ButtonSegment<SearchType>(
+                    value: SearchType.category,
+                    tooltip: 'Busca por gênero.',
+                    icon: Icon(Icons.category_rounded),
+                  ),
+                  ButtonSegment<SearchType>(
+                    value: SearchType.publisher,
+                    tooltip: 'Busca por editora.',
+                    icon: Icon(Icons.publish_rounded),
+                  ),
+                  ButtonSegment<SearchType>(
+                    value: SearchType.isbn,
+                    tooltip: 'Busca por ISBN.',
+                    icon: Icon(BookifyIcons.isbn),
+                  ),
+                ],
+                selected: <SearchType>{_searchType},
+                onSelectionChanged: (Set<SearchType> newSelection) {
+                  setState(() {
+                    _searchType = newSelection.first;
+                    _clearSearchBarText();
+                  });
+                },
               ),
-              segments: const [
-                ButtonSegment<SearchType>(
-                  value: SearchType.title,
-                  tooltip: 'Busca por título.',
-                  icon: Icon(Icons.menu_book_rounded),
-                ),
-                ButtonSegment<SearchType>(
-                  value: SearchType.author,
-                  tooltip: 'Busca por autor.',
-                  icon: Icon(Icons.person_rounded),
-                ),
-                ButtonSegment<SearchType>(
-                  value: SearchType.category,
-                  tooltip: 'Busca por gênero.',
-                  icon: Icon(Icons.category_rounded),
-                ),
-                ButtonSegment<SearchType>(
-                  value: SearchType.publisher,
-                  tooltip: 'Busca por editora.',
-                  icon: Icon(Icons.publish_rounded),
-                ),
-                ButtonSegment<SearchType>(
-                  value: SearchType.isbn,
-                  tooltip: 'Busca por ISBN.',
-                  icon: Icon(BookifyIcons.isbn),
-                ),
-              ],
-              selected: <SearchType>{_searchType},
-              onSelectionChanged: (Set<SearchType> newSelection) {
-                setState(() {
-                  _searchType = newSelection.first;
-                  _clearSearchBarText();
-                });
-              },
             ),
           ),
         ),

@@ -21,7 +21,7 @@ class BookcasesCountWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: statusType == StatusType.loaded
             ? colorScheme.secondary
-            : colorScheme.onError,
+            : colorScheme.error,
         borderRadius: BorderRadius.circular(
           22,
         ),

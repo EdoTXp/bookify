@@ -30,13 +30,13 @@ class Routes {
               ModalRoute.of(context)!.settings.arguments as BookcaseModel,
         ),
     BookOnBookcaseDetailPage.routeName: (context) {
-      final arguments = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
-
+      final arguments =
+          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
 
       return BookOnBookcaseDetailPage(
-          bookModel: arguments.first as BookModel,
-          bookcaseId: arguments.last as int,
-        );
+        bookModel: arguments.first as BookModel,
+        bookcaseId: arguments.last as int,
+      );
     },
     BookcaseInsertionPage.routeName: (context) => BookcaseInsertionPage(
           bookcaseModel:

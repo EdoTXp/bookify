@@ -12,8 +12,8 @@ void main() {
   late ContactsPickerBloc contactsPickerBloc;
 
   final List<ContactDto> contacts = [
-    ContactDto(id: 'id', name: 'name'),
-    ContactDto(id: 'id2', name: 'name2'),
+    const ContactDto(id: 'id', name: 'name'),
+    const ContactDto(id: 'id2', name: 'name2'),
   ];
 
   setUp(() {

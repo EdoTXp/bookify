@@ -24,7 +24,7 @@ void main() {
     },
   ];
 
-  final bookcaseModel = BookcaseModel(
+  const bookcaseModel = BookcaseModel(
     name: 'Livros 2024',
     description: 'Meus livros de 2024',
     color: Colors.red,

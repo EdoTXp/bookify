@@ -51,7 +51,7 @@ class BookModel {
   final int ratingsCount;
   final BookStatus? status;
 
-  BookModel({
+  const BookModel({
     required this.id,
     required this.title,
     required this.authors,

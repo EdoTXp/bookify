@@ -6,7 +6,7 @@ class BookcaseModel {
   final String description;
   final Color color;
 
-  BookcaseModel({
+  const BookcaseModel({
     this.id,
     required this.name,
     required this.description,

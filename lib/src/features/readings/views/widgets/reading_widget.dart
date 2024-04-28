@@ -105,8 +105,9 @@ class ReadingWidget extends StatelessWidget {
                                   ),
                                 ),
                                 child: Container(
-                                  margin:
-                                      EdgeInsets.only(left: deviceWidth * .40),
+                                  margin: EdgeInsets.only(
+                                    left: deviceWidth * .40,
+                                  ),
                                   child: Text(
                                     '$percentReading%',
                                     textScaler: TextScaler.noScaling,
@@ -120,7 +121,7 @@ class ReadingWidget extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                width: 150,
+                                width: deviceWidth * .40,
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: colorScheme.primary,

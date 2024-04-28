@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
@@ -11,7 +12,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage> {
   late final BookBloc _bookBloc;
   late final TextEditingController _searchEC;
 
@@ -28,6 +30,9 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  @override
+  bool get wantKeepAlive => true;
+
   void _refreshPage() {
     _bookBloc.add(GotAllBooksEvent());
     _searchEC.clear();
@@ -35,9 +40,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
-      BooksLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      BooksLoadingState() => const CenterCircularProgressIndicator(),
       BookEmptyState() => Center(
           child: InfoItemStateWidget.withNotFoundState(
             message: 'Não foi encontrado nenhum livro com esses termos.',
@@ -80,7 +83,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
+    super.build(context);
+
+    return RefreshIndicator.adaptive(
       onRefresh: () async => _refreshPage(),
       color: Theme.of(context).colorScheme.secondary,
       child: BlocBuilder<BookBloc, BookState>(

@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/my_books/bloc/my_books_bloc.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/list/grid_view/books_grid_view.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,9 +49,7 @@ class _MyBooksPageState extends State<MyBooksPage> {
 
   Widget _getWidgetOnMyBooksState(BuildContext context, MyBooksState state) {
     return switch (state) {
-      MyBooksLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      MyBooksLoadingState() => const CenterCircularProgressIndicator(),
       MyBooksEmptyState() => const Center(
           child: SizedBox(
             child: Text(

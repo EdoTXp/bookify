@@ -6,7 +6,8 @@ class LoanDto {
   final ContactDto? contactDto;
   final String bookImagePreview;
   final String bookTitlePreview;
-  LoanDto({
+  
+  const LoanDto({
     required this.loanModel,
     this.contactDto,
     required this.bookImagePreview,

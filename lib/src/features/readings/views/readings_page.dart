@@ -5,6 +5,7 @@ import 'package:bookify/src/features/readings/bloc/readings_bloc.dart';
 import 'package:bookify/src/features/readings/views/widgets/readings_loaded_state_widget.dart';
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +71,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
 
   Widget _getWidgetOnReadingsState(BuildContext context, ReadingsState state) {
     return switch (state) {
-      ReadingsLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      ReadingsLoadingState() => const CenterCircularProgressIndicator(),
       ReadingsEmptyState() => Center(
           child: ItemEmptyStateWidget(
             label: 'Iniciar uma nova leitura',

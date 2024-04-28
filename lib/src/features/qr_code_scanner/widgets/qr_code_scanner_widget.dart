@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -67,21 +68,22 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
               key: const Key('MobileScanner'),
               controller: _scannerController,
               errorBuilder: (context, _, __) {
-                return InfoItemStateWidget.withErrorState(
-                  message: 'Occoreu algum erro com a câmera',
-                  onPressed: () async {
-                    await Future.wait(
-                      [
-                        _scannerController.stop(),
-                        _scannerController.start(),
-                      ],
-                    );
-                  },
+                return Center(
+                  child: InfoItemStateWidget.withErrorState(
+                    message: 'Occoreu algum erro com a câmera',
+                    onPressed: () async {
+                      await Future.wait(
+                        [
+                          _scannerController.stop(),
+                          _scannerController.start(),
+                        ],
+                      );
+                    },
+                  ),
                 );
               },
-              placeholderBuilder: (_, __) => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              placeholderBuilder: (_, __) =>
+                  const CenterCircularProgressIndicator(),
               scanWindow: Rect.fromCenter(
                 center: centerOverlay,
                 width: widthOverlay,
@@ -101,23 +103,28 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
             );
           },
         ),
-        Positioned(
-          right: 10,
-          child: IconButton(
-            color: colorScheme.secondary,
-            onPressed: _scannerController.toggleTorch,
-            icon: ListenableBuilder(
-              listenable: _scannerController,
-              builder: (_, __) {
-                return Icon(
-                  _scannerController.value.torchState.rawValue == 0
-                      ? Icons.flash_on_rounded
-                      : Icons.flash_off_rounded,
+        ListenableBuilder(
+          listenable: _scannerController,
+          builder: (_, __) {
+            final scannerValue = _scannerController.value;
+
+            if (scannerValue.isRunning) {
+              return Positioned(
+                right: 10,
+                child: IconButton(
                   color: colorScheme.secondary,
-                );
-              },
-            ),
-          ),
+                  onPressed: _scannerController.toggleTorch,
+                  icon: Icon(
+                    scannerValue.torchState.rawValue == 0
+                        ? Icons.flash_on_rounded
+                        : Icons.flash_off_rounded,
+                    color: colorScheme.secondary,
+                  ),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
       ],
     );

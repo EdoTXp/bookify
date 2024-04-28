@@ -5,6 +5,7 @@ import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion
 import 'package:bookify/src/shared/models/bookcase_model.dart';
 import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
@@ -64,9 +65,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     return switch (state) {
       BookcaseDetailLoadingState() ||
       BookcaseDetailDeletedState() =>
-        const Center(
-          child: CircularProgressIndicator(),
-        ),
+        const CenterCircularProgressIndicator(),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
           label: 'Adicionar novos Livros',
           onTap: () async => await _addNewBooks(),

@@ -37,7 +37,7 @@ void main() {
     bookCategoriesRepository: bookCategoriesRepository,
   );
 
-  final bookModel = BookModel(
+  const bookModel = BookModel(
     id: '1',
     title: 'title',
     authors: [],

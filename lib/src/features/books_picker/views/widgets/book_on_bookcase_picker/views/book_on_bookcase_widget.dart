@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/books_picker/views/widgets/book_on_bookcase_picker/bloc/book_on_bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/book_selector_widget.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,9 +42,8 @@ class _BookOnBookcaseWidgetState extends State<BookOnBookcaseWidget> {
   Widget _getWidgetOnBookOnBookcasePickerState(
       BuildContext context, BookOnBookcasePickerState state) {
     return switch (state) {
-      BookOnBookcasePickerLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      BookOnBookcasePickerLoadingState() =>
+        const CenterCircularProgressIndicator(),
       BookOnBookcasePickerEmptyState() => const Center(
           child: Text(
             'A estante está vazia ou não contém nenhum livro que possa ser selecionado. Tente adicionar algum livro primeiro.',

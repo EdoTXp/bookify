@@ -18,13 +18,13 @@ void main() {
   late BookcasePickerBloc bookcasePickerBloc;
 
   final bookcasesModel = [
-    BookcaseModel(
+    const BookcaseModel(
       id: 1,
       name: 'name',
       description: 'description',
       color: Colors.red,
     ),
-    BookcaseModel(
+    const BookcaseModel(
       id: 2,
       name: 'name2',
       description: 'description2',
@@ -102,7 +102,7 @@ void main() {
       build: () => bookcasePickerBloc,
       setUp: () async {
         when(() => bookcaseService.getAllBookcases()).thenAnswer((_) async => [
-              BookcaseModel(
+              const BookcaseModel(
                 name: 'name',
                 description: 'description',
                 color: Colors.black,

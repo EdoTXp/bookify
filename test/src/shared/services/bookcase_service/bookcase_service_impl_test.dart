@@ -22,12 +22,12 @@ void main() {
   );
 
   final bookcases = [
-    BookcaseModel(
+    const BookcaseModel(
       name: 'name',
       description: 'description',
       color: Colors.pink,
     ),
-    BookcaseModel(
+    const BookcaseModel(
       name: 'name2',
       description: 'description2',
       color: Colors.red,

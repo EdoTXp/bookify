@@ -4,9 +4,9 @@ import 'package:bookify/src/shared/models/bookcase_model.dart';
 
 class BookcaseDto {
   final BookcaseModel bookcase;
-  String? bookImagePreview;
+  final String? bookImagePreview;
   
-  BookcaseDto({
+  const BookcaseDto({
     required this.bookcase,
     this.bookImagePreview,
   });

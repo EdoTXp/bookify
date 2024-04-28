@@ -10,6 +10,8 @@ import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
+
 class BookOnBookcaseDetailPage extends StatefulWidget {
   /// The Route Name = '/bookcase_detail'
   static const routeName = '/bookcase_on_bookcase_detail';
@@ -124,7 +126,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                             const SizedBox(
                               height: 50,
                               width: 50,
-                              child: CircularProgressIndicator(),
+                              child: CenterCircularProgressIndicator(),
                             ),
                           BookOnBookcaseDetailLoadedState(
                             :final bookcasesCount

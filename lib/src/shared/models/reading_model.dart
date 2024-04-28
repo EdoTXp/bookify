@@ -4,7 +4,7 @@ class ReadingModel {
   final DateTime? lastReadingDate;
   final String bookId;
 
-  ReadingModel({
+  const ReadingModel({
     this.id,
     required this.pagesReaded,
     this.lastReadingDate,

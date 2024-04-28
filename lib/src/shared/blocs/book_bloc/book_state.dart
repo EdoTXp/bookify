@@ -1,4 +1,4 @@
-part of '../../../shared/blocs/book_bloc/book_bloc.dart';
+part of 'book_bloc.dart';
 
 sealed class BookState {}
 

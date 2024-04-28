@@ -38,6 +38,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   late final TextEditingController _devolutionDateEC;
   late final LoanInsertionBloc _bloc;
   late bool _canPopPage;
+  late bool _bookIsValid;
+  late bool _contactIsValid;
 
   ContactDto? _contact;
   BookModel? _bookModel;
@@ -55,6 +57,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
     _bloc = context.read<LoanInsertionBloc>();
     _canPopPage = true;
+    _bookIsValid = true;
+    _contactIsValid = true;
   }
 
   @override
@@ -80,6 +84,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
     setState(() {
       _contact = null;
       _bookModel = null;
+      _bookIsValid = true;
+      _contactIsValid = true;
     });
   }
 
@@ -212,6 +218,18 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         'Tem algum campo vazio.\nVerifique se adicionou o livro, o contato, a observação, e as datas.',
         SnackBarType.error,
       );
+
+      if (_bookModel == null) {
+        setState(() {
+          _bookIsValid = false;
+        });
+      }
+
+      if (_contact == null) {
+        setState(() {
+          _contactIsValid = false;
+        });
+      }
     }
   }
 
@@ -300,6 +318,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                   onTap: () async => await _getBook(context),
                                   height: 250,
                                   width: 170,
+                                  bookIsValid: _bookIsValid,
                                 )
                               : Material(
                                   child: InkWell(
@@ -318,6 +337,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                         await _getContact(context),
                                     height: 80,
                                     width: 80,
+                                    contactIsValid: _contactIsValid,
                                   )
                                 : ContactCircleAvatar(
                                     name: _contact!.name,

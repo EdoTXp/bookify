@@ -1,6 +1,7 @@
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/bloc/bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/views/widgets/bookcase_picker_loaded_state_widget/bookcase_picker_loaded_state_widget.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,9 +35,7 @@ class _BookcasePickerWidgetState extends State<BookcasePickerWidget> {
   Widget _getWidgetOnBookcasePickerState(
       BuildContext context, BookcasePickerState state) {
     return switch (state) {
-      BookcasePickerLoadingState() => const Center(
-          child: CircularProgressIndicator(),
-        ),
+      BookcasePickerLoadingState() => const CenterCircularProgressIndicator(),
       BookcasePickerEmptyState() => const Center(
           child: Text(
             'Não foi encontrada nenhuma estante que possa conter algum livro. Tente cria-la primeiro.',

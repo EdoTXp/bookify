@@ -17,7 +17,7 @@ void main() {
   final readingService = ReadingServiceMock();
   late ReadingsInsertionBloc readingsInsertionBloc;
 
-  final readingModel = ReadingModel(
+  const readingModel = ReadingModel(
     bookId: 'bookId',
     pagesReaded: 0,
   );

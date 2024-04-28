@@ -12,7 +12,7 @@ class BookStateWidget extends StatelessWidget {
   Color _getColor() {
     return switch (bookStatus) {
       BookStatus.library => Colors.green,
-      BookStatus.reading => Colors.amber,
+      BookStatus.reading => Colors.orange,
       BookStatus.loaned => Colors.blue,
     };
   }

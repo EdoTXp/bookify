@@ -1,7 +1,7 @@
 import 'package:bookify/src/shared/models/author_model.dart';
 import 'package:bookify/src/shared/models/category_model.dart';
 
-import '../models/book_model.dart';
+import 'package:bookify/src/shared/models/book_model.dart';
 
 /// Class that returns a [BookModel] adapting all data that the Google Books API returns NULL.
 class GoogleBooksAdapter {

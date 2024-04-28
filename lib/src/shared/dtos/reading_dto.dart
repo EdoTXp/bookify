@@ -4,7 +4,8 @@ import 'package:bookify/src/shared/models/reading_model.dart';
 class ReadingDto {
   final ReadingModel reading;
   final BookModel book;
-  ReadingDto({
+  
+  const ReadingDto({
     required this.reading,
     required this.book,
   });

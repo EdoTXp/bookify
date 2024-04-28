@@ -19,13 +19,13 @@ void main() {
   late BookcaseBloc bookcaseBloc;
 
   final bookcasesModel = [
-    BookcaseModel(
+    const BookcaseModel(
       id: 1,
       name: 'name',
       description: 'description',
       color: Colors.red,
     ),
-    BookcaseModel(
+    const BookcaseModel(
       id: 2,
       name: 'name2',
       description: 'description2',
@@ -104,7 +104,7 @@ void main() {
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getAllBookcases()).thenAnswer((_) async => [
-              BookcaseModel(
+              const BookcaseModel(
                 name: 'name',
                 description: 'description',
                 color: Colors.black,
@@ -176,7 +176,7 @@ void main() {
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
             .thenAnswer((_) async => [
-                  BookcaseModel(
+                  const BookcaseModel(
                     id: 1,
                     name: 'Fantasia',
                     description: 'Fantasia Description',
@@ -244,7 +244,7 @@ void main() {
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
             .thenAnswer((_) async => [
-                  BookcaseModel(
+                  const BookcaseModel(
                     name: 'Fantasia',
                     description: 'description',
                     color: Colors.black,

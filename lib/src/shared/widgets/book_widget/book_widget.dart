@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -63,8 +64,7 @@ class BookWidget extends StatelessWidget {
           ),
         );
       },
-      placeholder: (context, _) =>
-          const Center(child: CircularProgressIndicator()),
+      placeholder: (context, _) => const CenterCircularProgressIndicator(),
       errorWidget: (_, __, ___) => Icon(
         Icons.error_rounded,
         color: Theme.of(context).colorScheme.error,
