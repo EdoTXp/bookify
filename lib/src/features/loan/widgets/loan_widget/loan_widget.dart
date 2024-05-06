@@ -18,20 +18,10 @@ class LoanWidget extends StatelessWidget {
     required this.onTap,
   });
 
-  bool _isLateDevolutionDate() {
-    final loanDateLate = loan.loanModel.devolutionDate.add(
-      const Duration(
-        days: 1,
-      ),
-    );
-
-    return DateTime.now().isAfter(loanDateLate);
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isLateDevolutionDate = _isLateDevolutionDate();
+    final isLateDevolutionDate = loan.loanIsLate;
 
     return Material(
       borderRadius: BorderRadius.circular(12),
@@ -127,7 +117,8 @@ class LoanWidget extends StatelessWidget {
                               ContactInformationWidget(
                                 iconData: Icons.smartphone_outlined,
                                 title: 'Contato',
-                                content: loan.contactDto?.phoneNumber ?? 'Sem número',
+                                content: loan.contactDto?.phoneNumber ??
+                                    'Sem número',
                               ),
                             ],
                           ),

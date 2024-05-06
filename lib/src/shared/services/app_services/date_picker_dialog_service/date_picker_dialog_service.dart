@@ -15,7 +15,7 @@ class DatePickerDialogService {
       context: context,
       config: CalendarDatePicker2WithActionButtonsConfig(
         calendarType: CalendarDatePicker2Type.single,
-        calendarViewMode: DatePickerMode.day,
+        calendarViewMode: CalendarDatePicker2Mode.day,
         selectedDayHighlightColor: colorScheme.secondary,
         calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
         centerAlignModePicker: true,

@@ -30,9 +30,6 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
       ],
       detectionTimeoutMs: 2000,
     );
-
-    _scannerController.barcodes.listen(_onDetectCaptures);
-    _scannerController.start();
   }
 
   @override
@@ -47,6 +44,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
     for (final barcode in barcodes) {
       if (barcode.rawValue != null) {
         widget.onDetect(barcode.rawValue!);
+        return;
       }
     }
   }
@@ -67,6 +65,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
             return MobileScanner(
               key: const Key('MobileScanner'),
               controller: _scannerController,
+              onDetect: _onDetectCaptures,
               errorBuilder: (context, _, __) {
                 return Center(
                   child: InfoItemStateWidget.withErrorState(

@@ -19,19 +19,9 @@ class LoanDetailLoadedWidget extends StatelessWidget {
     required this.onPressedButton,
   });
 
-  bool _isLateDevolutionDate() {
-    final loanDateLate = loanDto.loanModel.devolutionDate.add(
-      const Duration(
-        days: 1,
-      ),
-    );
-
-    return DateTime.now().isAfter(loanDateLate);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final loanIsLate = _isLateDevolutionDate();
+    final loanIsLate = loanDto.loanIsLate;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(

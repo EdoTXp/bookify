@@ -40,21 +40,23 @@ dependencies:
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
   google_fonts: ^6.2.1 # Used for App Font.
   url_launcher: ^6.2.6 # Used to launch at the book store.
-  mobile_scanner: ^5.0.1 # Used to access the camera and scan the ISBN code.
+  mobile_scanner: ^5.1.0 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
   flutter_colorpicker: ^1.0.3 # Used to pick the color for bookcase.
-  calendar_date_picker2: ^0.5.6 # Used to pick the date for loan.
+  calendar_date_picker2: ^1.0.2 # Used to pick the date for loan.
   circular_countdown_timer: ^0.2.3 # Used for timer.
   flutter_ringtone_player: ^4.0.0+2 # Used for play default alarm ringtone.
-  wakelock_plus: ^1.2.4 # Used for keep the screen awake when timer is started.
+  wakelock_plus: ^1.2.5 # Used for keep the screen awake when timer is started.
   permission_handler: ^11.3.1 # Used to get permission for contacts.
   fast_contacts: ^3.1.3 # Used to get Phone Contacts.
-  flutter_local_notifications: ^17.1.0 # Used for send notifications.
+  flutter_local_notifications: ^17.1.2 # Used for send notifications.
+  flutter_timezone: ^1.0.8 # Used for get local timezone.
   timezone: ^0.9.3 # Used for get timezone for schedule notification.
   intl: ^0.18.1 # Used for set a format to datetime.
-  sqflite: ^2.3.3 # Used for local database.
+  sqflite: ^2.3.3+1 # Used for local database.
   path: ^1.9.0 # Used to find the default path of the database.
+  shared_preferences: ^2.2.3 # Used for storage the user setting.
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

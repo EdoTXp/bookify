@@ -12,6 +12,7 @@ import 'package:bookify/src/features/readings_detail/views/readings_detail_page.
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
+import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/shared/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/models/book_model.dart';
 import 'package:bookify/src/shared/models/bookcase_model.dart';
@@ -61,6 +62,7 @@ class Routes {
         ),
     ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
     BooksPickerPage.routeName: (context) => const BooksPickerPage(),
+    SettingsPage.routeName: (context) => const SettingsPage(),
   };
 
   static String initialRoute = RootPage.routeName;

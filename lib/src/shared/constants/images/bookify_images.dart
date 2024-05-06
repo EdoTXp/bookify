@@ -4,7 +4,6 @@
 // Cross Error: https://www.kindpng.com/imgv/iRJmhih_cross-hd-png-download/
 
 class BookifyImages {
-
   BookifyImages._();
 
   /// Error bookImage ![](bookify/assets/images/error_book.png)
@@ -12,4 +11,8 @@ class BookifyImages {
 
   /// Empty bookImage ![](bookify/assets/images/empty_book.png)
   static const bookEmptyImage = 'assets/images/empty_book.png';
+
+  /// Profile Header Background ![](bookify/assets/images/profile_header_background.png)
+  static const profileHeaderBackground =
+      'assets/images/profile_header_background.png';
 }

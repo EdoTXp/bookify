@@ -4,11 +4,14 @@ import 'package:bookify/src/shared/models/reading_model.dart';
 class ReadingDto {
   final ReadingModel reading;
   final BookModel book;
-  
+
   const ReadingDto({
     required this.reading,
     required this.book,
   });
+
+  int get percentReading =>
+      ((reading.pagesReaded / book.pageCount) * 100).round();
 
   ReadingDto copyWith({
     ReadingModel? reading,

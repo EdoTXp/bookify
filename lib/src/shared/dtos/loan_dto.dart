@@ -6,13 +6,15 @@ class LoanDto {
   final ContactDto? contactDto;
   final String bookImagePreview;
   final String bookTitlePreview;
-  
+
   const LoanDto({
     required this.loanModel,
     this.contactDto,
     required this.bookImagePreview,
     required this.bookTitlePreview,
   });
+
+  bool get loanIsLate => _isLateDevolutionDate();
 
   LoanDto copyWith({
     LoanModel? loanModel,
@@ -49,5 +51,15 @@ class LoanDto {
         bookImagePreview.hashCode ^
         bookTitlePreview.hashCode ^
         contactDto.hashCode;
+  }
+
+  bool _isLateDevolutionDate() {
+    final loanDateLate = loanModel.devolutionDate.add(
+      const Duration(
+        days: 1,
+      ),
+    );
+
+    return DateTime.now().isAfter(loanDateLate);
   }
 }

@@ -16,9 +16,7 @@ class ReadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final deviceWidth = MediaQuery.sizeOf(context).width;
-    final percentReading =
-        ((readingDto.reading.pagesReaded / readingDto.book.pageCount) * 100)
-            .toInt();
+    final percentReading = readingDto.percentReading;
 
     return Material(
       borderRadius: BorderRadius.circular(12),

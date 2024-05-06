@@ -22,6 +22,7 @@ final appLightTheme = ThemeData(
   splashColor: Colors.transparent,
   iconTheme: _iconTheme,
   sliderTheme: _sliderTheme,
+  radioTheme: _radioTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
@@ -56,6 +57,7 @@ final appDarkTheme = ThemeData(
   splashColor: Colors.transparent,
   iconTheme: _iconTheme,
   sliderTheme: _sliderTheme,
+  radioTheme: _radioTheme,
   textButtonTheme: _textButtonTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
@@ -197,6 +199,14 @@ final _sliderTheme = SliderThemeData(
   valueIndicatorColor: AppColor.bookifySecondaryColor,
 );
 
+const _radioTheme = RadioThemeData(
+    fillColor: MaterialStatePropertyAll(
+      AppColor.bookifySecondaryColor,
+    ),
+    overlayColor: MaterialStatePropertyAll(
+      AppColor.bookifySecondaryColor,
+    ));
+
 const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(
     foregroundColor: MaterialStatePropertyAll(
@@ -220,11 +230,19 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
     ),
     foregroundColor: const MaterialStatePropertyAll(Colors.white),
     shape: MaterialStatePropertyAll(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          20,
+        ),
+      ),
     ),
-    iconColor: const MaterialStatePropertyAll(Colors.white),
+    iconColor: const MaterialStatePropertyAll(
+      Colors.white,
+    ),
     textStyle: const MaterialStatePropertyAll(
-      TextStyle(fontSize: 14),
+      TextStyle(
+        fontSize: 14,
+      ),
     ),
   ),
 );

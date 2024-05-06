@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BookifyElevatedButton extends StatelessWidget {
-  final void Function() onPressed;
+  final VoidCallback onPressed;
   final String text;
   final IconData? suffixIcon;
   final bool isExpanded;

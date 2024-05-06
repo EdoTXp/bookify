@@ -4,6 +4,7 @@ import 'package:bookify/src/shared/services/app_services/notifications_service/c
 import 'package:bookify/src/shared/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
@@ -32,14 +33,18 @@ class NotificationsServiceImpl implements NotificationsService {
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()!
           .requestExactAlarmsPermission();
+    } else if (Platform.isIOS) {
+      await _notifications
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()!
+          .requestPermissions();
     }
   }
 
   Future<void> _setupTimezone() async {
     tz.initializeTimeZones();
-    tz.setLocalLocation(
-      tz.getLocation('America/Sao_Paulo'),
-    );
+    final timezoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timezoneName));
   }
 
   Future<void> _initializeNotifications() async {
