@@ -40,7 +40,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
   google_fonts: ^6.2.1 # Used for App Font.
   url_launcher: ^6.2.6 # Used to launch at the book store.
-  mobile_scanner: ^5.1.0 # Used to access the camera and scan the ISBN code.
+  mobile_scanner: ^5.1.1 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
   flutter_colorpicker:
@@ -60,13 +60,13 @@ dependencies:
   sqflite: ^2.3.3+1 # Used for local database.
   path: ^1.9.0 # Used to find the default path of the database.
   shared_preferences: ^2.2.3 # Used for storage the user setting.
-  social_login_buttons: ^1.0.7
-  firebase_auth: ^4.19.5
-  firebase_core: ^2.31.0
-  google_sign_in: ^6.2.1
-  flutter_facebook_auth: ^6.2.0
-  sign_in_with_apple: ^6.1.0
-  crypto: ^3.0.3
+  social_login_buttons: ^1.0.7 # Used for show login button on auth page.
+  firebase_auth: ^4.19.5 # Used for authentificate user on Firebase.
+  firebase_core: ^2.31.0 # Used for initialize the Firebase.
+  google_sign_in: ^6.2.1 # Used for login with Google.
+  flutter_facebook_auth: ^6.2.0 # Used for login with Facebook.
+  sign_in_with_apple: ^6.1.0 # Used for login with Apple.
+  crypto: ^3.0.3 # Used for create sha256 code for Apple login.
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
