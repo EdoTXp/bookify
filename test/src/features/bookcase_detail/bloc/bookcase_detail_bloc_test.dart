@@ -105,7 +105,7 @@ void main() {
       setUp: () {
         when(
           () => bookService.getBookById(id: any(named: 'id')),
-        ).thenThrow(LocalDatabaseException('Error on database'));
+        ).thenThrow(const LocalDatabaseException('Error on database'));
 
         when(() => bookcaseService.getAllBookcaseRelationships(
             bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
@@ -189,7 +189,7 @@ void main() {
     build: () => bloc,
     setUp: () => when(() => bookcaseService.deleteBookcase(
             bookcaseId: any(named: 'bookcaseId')))
-        .thenThrow(LocalDatabaseException('Error on database')),
+        .thenThrow(const LocalDatabaseException('Error on database')),
     act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
     verify: (_) {
       verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
@@ -364,7 +364,7 @@ void main() {
       ).thenAnswer((_) async => bookModel);
       when(() => bookcaseService.getAllBookcaseRelationships(
               bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
     },
     act: (bloc) => bloc.add(
       DeletedBooksOnBookcaseEvent(

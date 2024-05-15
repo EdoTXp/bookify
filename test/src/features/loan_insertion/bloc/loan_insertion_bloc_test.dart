@@ -210,7 +210,7 @@ void main() {
             id: 'bookId',
             status: BookStatus.loaned,
           ),
-        ).thenThrow(LocalDatabaseException('Error on Database'));
+        ).thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(
         InsertedLoanInsertionEvent(

@@ -125,8 +125,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               padding: const EdgeInsets.only(top: 12.0),
               child: SegmentedButton<SearchType>(
                 style: ButtonStyle(
-                  iconColor: MaterialStateProperty.resolveWith(
-                    (states) => states.contains(MaterialState.selected)
+                  iconColor: WidgetStateProperty.resolveWith(
+                    (states) => states.contains(WidgetState.selected)
                         ? Colors.white
                         : selectedColor,
                   ),

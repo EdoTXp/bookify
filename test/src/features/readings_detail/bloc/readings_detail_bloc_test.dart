@@ -95,7 +95,7 @@ void main() {
           readingModel: readingModel,
         ),
       ).thenThrow(
-        LocalDatabaseException('Error on Database'),
+        const LocalDatabaseException('Error on Database'),
       ),
       act: (bloc) => bloc.add(
         UpdatedReadingsEvent(
@@ -270,7 +270,7 @@ void main() {
             readingId: any(named: 'readingId'),
           ),
         ).thenThrow(
-          LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException('Error on Database'),
         );
       },
       act: (bloc) => bloc.add(

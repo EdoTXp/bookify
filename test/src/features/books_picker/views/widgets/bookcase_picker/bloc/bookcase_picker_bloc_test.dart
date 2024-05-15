@@ -129,7 +129,7 @@ void main() {
       build: () => bookcasePickerBloc,
       setUp: () async {
         when(() => bookcaseService.getAllBookcases())
-            .thenThrow(LocalDatabaseException('Error on Database'));
+            .thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {

@@ -67,7 +67,7 @@ void main() {
         () => storage.getStorage(
           key: any(named: 'key'),
         ),
-      ).thenThrow(StorageException('Storage error'));
+      ).thenThrow(const StorageException('Storage error'));
 
       expect(
         () async => await userThemeRepository.getThemeMode(),
@@ -82,7 +82,7 @@ void main() {
           key: any(named: 'key'),
           value: any(named: 'value'),
         ),
-      ).thenThrow(StorageException('Storage error'));
+      ).thenThrow(const StorageException('Storage error'));
 
       expect(
         () async => await userThemeRepository.setThemeMode(

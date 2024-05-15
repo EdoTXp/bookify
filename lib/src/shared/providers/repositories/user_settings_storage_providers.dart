@@ -1,3 +1,5 @@
+import 'package:bookify/src/shared/repositories/auth_repository/auth_repository.dart';
+import 'package:bookify/src/shared/repositories/auth_repository/auth_repository_impl.dart';
 import 'package:bookify/src/shared/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/shared/repositories/user_theme_repository/user_theme_repository_impl.dart';
 import 'package:bookify/src/shared/storage/shared_preference_storage.dart';
@@ -11,6 +13,11 @@ final userSettingsStorageProviders = [
   ),
   RepositoryProvider<UserThemeRepository>(
     create: (context) => UserThemeRepositoryImpl(
+      storage: context.read(),
+    ),
+  ),
+  RepositoryProvider<AuthRepository>(
+    create: (context) => AuthRepositoryImpl(
       storage: context.read(),
     ),
   ),

@@ -1,77 +1,55 @@
-import 'package:bookify/src/features/profile/views/widgets/widgets.dart';
-import 'package:bookify/src/features/settings/views/settings_page.dart';
-import 'package:bookify/src/shared/constants/images/bookify_images.dart';
-import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
+import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
+import 'package:bookify/src/features/profile/views/widgets/profile_loaded_state_widget.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
+import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+  State<ProfilePage> createState() => _ProfilePageState();
+}
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            clipBehavior: Clip.none,
-            children: [
-              Image.asset(
-                BookifyImages.profileHeaderBackground,
-                height: 136,
-                width: MediaQuery.sizeOf(context).width,
-                fit: BoxFit.fill,
-              ),
-              const Positioned(
-                bottom: -90,
-                child: ContactCircleAvatar(
-                  height: 133,
-                  width: 133,
-                  name: 'name',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 120,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: UserInformationRow(),
-          ),
-          Divider(
-            color: colorScheme.primary,
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          TextIconButton(
-            label: 'Configurações',
-            iconData: Icons.settings,
-            onPressed: () async {
-              await Navigator.pushNamed(
-                context,
-                SettingsPage.routeName,
-              );
-            },
-          ),
-          TextIconButton(
-            label: 'Notificações',
-            iconData: Icons.notifications_outlined,
-            onPressed: () {},
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          TextIconButton(
-            label: 'Sair',
-            iconData: Icons.exit_to_app_outlined,
-            onPressed: () {},
-          ),
-        ],
+class _ProfilePageState extends State<ProfilePage> {
+  late final ProfileBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = context.read<ProfileBloc>()
+      ..add(
+        GotUserProfileEvent(),
+      );
+  }
+
+  Widget _getWidgetOnProfileState(BuildContext context, ProfileState state) {
+    return switch (state) {
+      ProfileLoadingState() => const CenterCircularProgressIndicator(),
+      ProfileLoadedState(:final userModel) => ProfileLoadedStateWidget(
+          userModel: userModel,
+        ),
+      ProfileErrorState(:final errorMessage) =>
+        InfoItemStateWidget.withErrorState(
+          message: errorMessage,
+          onPressed: _refreshPage,
+        ),
+    };
+  }
+
+  void _refreshPage() {
+    _bloc.add(
+      GotUserProfileEvent(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: _bloc,
+        builder: _getWidgetOnProfileState,
       ),
     );
   }

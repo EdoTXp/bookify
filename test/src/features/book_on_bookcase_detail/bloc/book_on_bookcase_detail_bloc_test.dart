@@ -53,7 +53,7 @@ void main() {
         () => bookcaseService.countBookcasesByBook(
           bookId: any(named: 'bookId'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(
         GotCountOfBookcasesByBookEvent(bookId: 'bookId'),
       ),
@@ -152,7 +152,7 @@ void main() {
           bookId: any(named: 'bookId'),
           bookcaseId: any(named: 'bookcaseId'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(
         DeletedBookOnBookcaseEvent(
           bookId: 'bookId',

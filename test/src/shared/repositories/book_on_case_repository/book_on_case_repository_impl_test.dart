@@ -105,7 +105,7 @@ void main() {
               table: any(named: 'table'),
               column: any(named: 'column'),
               columnValues: any(named: 'columnValues')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookOnCaseRepository.getBooksOnCaseRelationship(
@@ -121,7 +121,7 @@ void main() {
             columns: any(named: 'columns'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id'),
-          )).thenThrow(LocalDatabaseException('Error on database'));
+          )).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -152,7 +152,7 @@ void main() {
       when(
         () => localDatabase.insert(
             table: any(named: 'table'), values: any(named: 'values')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -169,7 +169,7 @@ void main() {
           idColumn: any(named: 'idColumn'),
           id: any(named: 'id'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -187,7 +187,7 @@ void main() {
             value: any(named: 'value'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookOnCaseRepository.deleteBookcaseRelationship(

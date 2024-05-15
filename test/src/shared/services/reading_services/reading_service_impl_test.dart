@@ -140,7 +140,7 @@ void main() {
   group('test normal CRUD of reading service with error ||', () {
     test('get all -- LocalDatabaseException', () async {
       when(() => readingRepository.getAll())
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.getAll(),
@@ -154,7 +154,7 @@ void main() {
         () => readingRepository.getReadingsByBookTitle(
           title: any(named: 'title'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database'));
+      ).thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.getReadingsByBookTitle(title: 'title'),
@@ -165,7 +165,7 @@ void main() {
 
     test('get by Id -- LocalDatabaseException', () async {
       when(() => readingRepository.getById(readingId: any(named: 'readingId')))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.getById(readingId: 1),
@@ -176,7 +176,7 @@ void main() {
 
     test('insert -- LocalDatabaseException', () async {
       when(() => readingRepository.insert(readingModel: readings[1]))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.insert(readingModel: readings[1]),
@@ -187,7 +187,7 @@ void main() {
 
     test('update -- LocalDatabaseException', () async {
       when(() => readingRepository.update(readingModel: readings[1]))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.update(readingModel: readings[1]),
@@ -198,7 +198,7 @@ void main() {
 
     test('delete -- LocalDatabaseException', () async {
       when(() => readingRepository.delete(readingId: any(named: 'readingId')))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await readingService.delete(readingId: 1),

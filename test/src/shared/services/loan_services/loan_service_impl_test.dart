@@ -162,7 +162,7 @@ void main() {
   group('test normal CRUD of loan service with error ||', () {
     test('get all -- LocalDatabaseException', () async {
       when(() => loanRepository.getAll())
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.getAll(),
@@ -176,7 +176,7 @@ void main() {
         () => loanRepository.getLoansByBookTitle(
           title: any(named: 'title'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database'));
+      ).thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.getLoansByBookTitle(title: 'title'),
@@ -187,7 +187,7 @@ void main() {
 
     test('get by Id -- LocalDatabaseException', () async {
       when(() => loanRepository.getById(loanId: any(named: 'loanId')))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.getById(loanId: 1),
@@ -198,7 +198,7 @@ void main() {
 
     test('insert -- LocalDatabaseException', () async {
       when(() => loanRepository.insert(loanModel: loans[1]))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.insert(loanModel: loans[1]),
@@ -209,7 +209,7 @@ void main() {
 
     test('update -- LocalDatabaseException', () async {
       when(() => loanRepository.update(loanModel: loans[1]))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.update(loanModel: loans[1]),
@@ -220,7 +220,7 @@ void main() {
 
     test('delete -- LocalDatabaseException', () async {
       when(() => loanRepository.delete(loanId: any(named: 'loanId')))
-          .thenThrow(LocalDatabaseException('Error on Database'));
+          .thenThrow(const LocalDatabaseException('Error on Database'));
 
       expect(
         () async => await loanService.delete(loanId: 1),

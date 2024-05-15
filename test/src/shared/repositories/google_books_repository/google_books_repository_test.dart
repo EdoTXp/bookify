@@ -114,13 +114,13 @@ void main() {
     });
 
     test('test a BookException', () async {
-      when(() => dio.get(any())).thenThrow(BookException(''));
+      when(() => dio.get(any())).thenThrow(const BookException(''));
       expect(bookRepository.getAllBooks(), throwsA(isA<BookException>()));
     });
 
     test('test a BookNotFoundException', () async {
       when(() => dio.get(any()))
-          .thenThrow(BookNotFoundException('BookNotFoundException'));
+          .thenThrow(const BookNotFoundException('BookNotFoundException'));
       expect(
           bookRepository.getAllBooks(), throwsA(isA<BookNotFoundException>()));
     });

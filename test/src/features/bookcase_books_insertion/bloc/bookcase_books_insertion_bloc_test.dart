@@ -188,7 +188,7 @@ void main() {
 
         when(
           () => bookService.getAllBook(),
-        ).thenThrow(LocalDatabaseException('Error on Database'));
+        ).thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(GotAllBooksForThisBookcaseEvent(bookcaseId: 1)),
       verify: (_) {
@@ -353,7 +353,7 @@ void main() {
           bookcaseId: any(named: 'bookcaseId'),
           bookId: any(named: 'bookId'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(InsertBooksOnBookcaseEvent(
         bookcaseId: 2,
         books: [

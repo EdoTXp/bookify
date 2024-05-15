@@ -62,7 +62,7 @@ void main() {
     blocTest<BookBloc, BookState>(
       '4- Test if the GetAllBooksEvent is a error state',
       setUp: () => when((() => repository.getAllBooks()))
-          .thenThrow(BookException('this is a error')),
+          .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) => bloc.add(GotAllBooksEvent()),
       verify: (_) {
@@ -112,7 +112,7 @@ void main() {
     blocTest<BookBloc, BookState>(
       '7- Test if the FindBookByIsbnEvent is a error state',
       setUp: () => when((() => repository.findBooksByIsbn(isbn: '11111')))
-          .thenThrow(BookException('this is a error')),
+          .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) => bloc.add(FoundBooksByIsbnEvent(isbn: '11111')),
       expect: () => [
@@ -154,7 +154,7 @@ void main() {
     blocTest<BookBloc, BookState>(
       '10- Test if the FindBooksByAuthorEvent is a error state',
       setUp: () => when((() => repository.findBooksByAuthor(author: 'author')))
-          .thenThrow(BookException('this is a error')),
+          .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) => bloc.add(FoundBooksByAuthorEvent(author: 'author')),
       verify: (_) {
@@ -204,7 +204,7 @@ void main() {
       '13- Test if the FindBooksByCategoryEvent is a error state',
       setUp: () =>
           when((() => repository.findBooksByCategory(category: 'category')))
-              .thenThrow(BookException('this is a error')),
+              .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) => bloc.add(FoundBooksByCategoryEvent(category: 'category')),
       verify: (_) {
@@ -257,7 +257,7 @@ void main() {
       '16- Test if the FindBooksByPublisherEvent is a error state',
       setUp: () =>
           when((() => repository.findBooksByPublisher(publisher: 'publisher')))
-              .thenThrow(BookException('this is a error')),
+              .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) =>
           bloc.add(FoundBooksByPublisherEvent(publisher: 'publisher')),
@@ -304,7 +304,7 @@ void main() {
     blocTest<BookBloc, BookState>(
       '19- Test if the FindBooksByTitleEvent is a error state',
       setUp: () => when((() => repository.findBooksByTitle(title: 'title')))
-          .thenThrow(BookException('this is a error')),
+          .thenThrow(const BookException('this is a error')),
       build: () => bookBloc,
       act: (bloc) => bloc.add(FoundBooksByTitleEvent(title: 'title')),
       verify: (_) {

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bookify/src/shared/services/app_services/notifications_service/custom_notification.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -97,6 +98,7 @@ class NotificationsServiceImpl implements NotificationsService {
         channel.channelId(),
         channel.toString(),
         channelDescription: channel.description(),
+        color: AppColor.bookifySecondaryColor,
         styleInformation: BigTextStyleInformation(
           bigText,
         ),

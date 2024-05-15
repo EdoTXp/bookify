@@ -76,7 +76,7 @@ void main() {
       build: () => userThemeBloc,
       setUp: () => when(
         () => userRepository.getThemeMode(),
-      ).thenThrow(StorageException('Error on storage Data')),
+      ).thenThrow(const StorageException('Error on storage Data')),
       act: (bloc) => bloc.add(GotUserThemeEvent()),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
@@ -144,7 +144,7 @@ void main() {
       build: () => userThemeBloc,
       setUp: () => when(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).thenThrow(StorageException('Error on storage Data')),
+      ).thenThrow(const StorageException('Error on storage Data')),
       act: (bloc) => bloc.add(InsertedUserThemeEvent(
         themeMode: ThemeMode.system,
       )),

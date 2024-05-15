@@ -5,12 +5,15 @@ import 'package:provider/single_child_widget.dart';
 
 class Providers {
   static final List<SingleChildStatelessWidget> providers = [
-    ...appServicesProviders,
     ...localDatabaseRepositoriesProviders,
     ...userSettingsStorageProviders,
+    ...appServicesProviders,
+    ...userSettingsServicesProviders,
     ...servicesProviders,
     ...userThemeProviders,
+    ...authPageProviders,
     ...homePageProviders,
+    ...profilePageProviders,
     ...bookDetailPageProviders,
     ...bookcasePageProviders,
     ...bookcaseInsertionPageProviders,

@@ -131,7 +131,7 @@ void main() {
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getAllBookcases())
-            .thenThrow(LocalDatabaseException('Error on Database'));
+            .thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
@@ -274,7 +274,7 @@ void main() {
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenThrow(LocalDatabaseException('Error on Database'));
+            .thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) =>
           bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
@@ -426,7 +426,7 @@ void main() {
       setUp: () async {
         when(() => bookcaseService.deleteBookcase(
                 bookcaseId: any(named: 'bookcaseId')))
-            .thenThrow(LocalDatabaseException('Error on Database'));
+            .thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(

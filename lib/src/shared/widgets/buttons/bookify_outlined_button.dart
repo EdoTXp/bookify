@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class BookifyOutlinedButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final IconData? suffixIcon;
   final String text;
+  final IconData? suffixIcon;
+  final Color? color;
   final bool isExpanded;
 
   const BookifyOutlinedButton({
@@ -12,6 +13,7 @@ class BookifyOutlinedButton extends StatelessWidget {
     required this.text,
     this.suffixIcon,
     this.isExpanded = false,
+    this.color,
   });
 
   const BookifyOutlinedButton.expanded({
@@ -20,6 +22,7 @@ class BookifyOutlinedButton extends StatelessWidget {
     required this.text,
     this.suffixIcon,
     this.isExpanded = true,
+    this.color,
   });
 
   @override
@@ -31,17 +34,51 @@ class BookifyOutlinedButton extends StatelessWidget {
         child: (suffixIcon != null)
             ? OutlinedButton.icon(
                 onPressed: onPressed,
+                style: color != null
+                    ? ButtonStyle(
+                        foregroundColor: WidgetStatePropertyAll(
+                          color,
+                        ),
+                        side: WidgetStatePropertyAll(
+                          BorderSide(
+                            width: 2,
+                            color: color!,
+                          ),
+                        ),
+                        iconColor: WidgetStatePropertyAll(color!),
+                      )
+                    : null,
                 icon: Icon(suffixIcon),
                 label: Text(
                   text,
                   textScaler: TextScaler.noScaling,
+                  style: TextStyle(
+                    color: color,
+                  ),
                 ),
               )
             : OutlinedButton(
                 onPressed: onPressed,
+                style: color != null
+                    ? ButtonStyle(
+                        foregroundColor: WidgetStatePropertyAll(
+                          color,
+                        ),
+                        side: WidgetStatePropertyAll(
+                          BorderSide(
+                            width: 2,
+                            color: color!,
+                          ),
+                        ),
+                        iconColor: WidgetStatePropertyAll(color!),
+                      )
+                    : null,
                 child: Text(
                   text,
                   textScaler: TextScaler.noScaling,
+                  style: TextStyle(
+                    color: color,
+                  ),
                 ),
               ),
       ),

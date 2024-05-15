@@ -21,7 +21,7 @@ class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
       );
 
       if (bookAuthorsRelationships.last.isEmpty) {
-        throw LocalDatabaseException('Impossível buscar os dados');
+        throw const LocalDatabaseException('Impossível buscar os dados');
       }
 
       return bookAuthorsRelationships;

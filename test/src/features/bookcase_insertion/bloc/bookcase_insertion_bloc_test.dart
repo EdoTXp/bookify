@@ -83,7 +83,7 @@ void main() {
       build: () => bookcaseInsertionBloc,
       setUp: () => when(() =>
               bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-          .thenThrow(LocalDatabaseException('Error on database')),
+          .thenThrow(const LocalDatabaseException('Error on database')),
       act: (bloc) => bloc.add(InsertedBookcaseEvent(
         name: 'name',
         description: 'description',
@@ -177,7 +177,7 @@ void main() {
         () => bookcaseService.updateBookcase(
           bookcaseModel: bookcaseModel.copyWith(id: 1),
         ),
-      ).thenThrow(LocalDatabaseException('Error on database')),
+      ).thenThrow(const LocalDatabaseException('Error on database')),
       act: (bloc) => bloc.add(UpdatedBookcaseEvent(
         id: 1,
         name: 'name',

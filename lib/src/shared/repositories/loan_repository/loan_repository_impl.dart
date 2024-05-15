@@ -23,7 +23,7 @@ class LoanRepositoryImpl implements LoanRepository {
 
       return loans;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar os empréstimos no database',
       );
     } on LocalDatabaseException {
@@ -48,7 +48,7 @@ class LoanRepositoryImpl implements LoanRepository {
 
       return loans;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar os empréstimos no database',
       );
     } on LocalDatabaseException {
@@ -68,7 +68,7 @@ class LoanRepositoryImpl implements LoanRepository {
 
       return loan;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar o empréstimo no database',
       );
     } on LocalDatabaseException {

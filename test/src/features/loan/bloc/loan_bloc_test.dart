@@ -161,7 +161,7 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException('Error on Database'),
         );
       },
       act: (bloc) => bloc.add(GotAllLoansEvent()),
@@ -359,7 +359,7 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException('Error on Database'),
         );
       },
       act: (bloc) => bloc.add(

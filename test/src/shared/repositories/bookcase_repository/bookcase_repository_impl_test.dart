@@ -122,7 +122,7 @@ void main() {
   group('Test normal CRUD bookcase with error ||', () {
     test('getAll() -- LocalDatabaseException', () async {
       when(() => localDatabase.getAll(table: any(named: 'table')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
           () async => await bookcaseRepository.getAll(),
@@ -149,7 +149,7 @@ void main() {
               table: any(named: 'table'),
               column: any(named: 'column'),
               columnValues: any(named: 'columnValues')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
           () async =>
@@ -179,7 +179,7 @@ void main() {
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')))
-        .thenThrow(LocalDatabaseException('Error on database'));
+        .thenThrow(const LocalDatabaseException('Error on database'));
 
     expect(
         () async => await bookcaseRepository.getById(bookcaseId: 1),
@@ -203,7 +203,7 @@ void main() {
   test('insert()', () async {
     when(() => localDatabase.insert(
             table: any(named: 'table'), values: any(named: 'values')))
-        .thenThrow(LocalDatabaseException('Error on database'));
+        .thenThrow(const LocalDatabaseException('Error on database'));
 
     expect(
         () async =>
@@ -218,7 +218,7 @@ void main() {
             values: any(named: 'values'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')))
-        .thenThrow(LocalDatabaseException('Error on database'));
+        .thenThrow(const LocalDatabaseException('Error on database'));
 
     expect(
         () async => await bookcaseRepository.update(
@@ -232,7 +232,7 @@ void main() {
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id')))
-        .thenThrow(LocalDatabaseException('Error on database'));
+        .thenThrow(const LocalDatabaseException('Error on database'));
 
     expect(
         () async => await bookcaseRepository.delete(bookcaseId: 1),

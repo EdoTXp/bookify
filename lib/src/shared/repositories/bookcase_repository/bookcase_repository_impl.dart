@@ -18,7 +18,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcases;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar as estantes no database',
       );
     } on LocalDatabaseException {
@@ -38,7 +38,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcases;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar as estantes no database',
       );
     } on LocalDatabaseException {
@@ -58,7 +58,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
 
       return bookcase;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar a estante no database',
       );
     } on LocalDatabaseException {

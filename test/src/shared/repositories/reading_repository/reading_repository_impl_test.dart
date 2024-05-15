@@ -191,7 +191,7 @@ void main() {
           orderColumn: any(named: 'orderColumn'),
           orderBy: any(named: 'orderBy'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await readingRepository.getAll(),
@@ -237,7 +237,7 @@ void main() {
           whereArgs: any(named: 'whereArgs'),
           usingLikeCondition: true,
         ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -268,7 +268,7 @@ void main() {
               table: any(named: 'table'),
               idColumn: any(named: 'idColumn'),
               id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await readingRepository.getById(readingId: 1),
@@ -282,7 +282,7 @@ void main() {
     test('insert -- LocalDatabaseException', () async {
       when(() => localDatabase.insert(
               table: any(named: 'table'), values: any(named: 'values')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await readingRepository.insert(
@@ -300,7 +300,7 @@ void main() {
           values: any(named: 'values'),
           idColumn: any(named: 'idColumn'),
           id: any(named: 'id'))).thenThrow(
-        LocalDatabaseException(
+        const LocalDatabaseException(
           'Error on database',
         ),
       );
@@ -320,7 +320,7 @@ void main() {
               table: any(named: 'table'),
               idColumn: any(named: 'idColumn'),
               id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await readingRepository.delete(readingId: 1),

@@ -62,7 +62,7 @@ void main() {
       build: () => bookDetailBloc,
       setUp: () => when(
         () => bookService.verifyBookIsAlreadyInserted(id: any(named: 'id')),
-      ).thenThrow(LocalDatabaseException('error on database')),
+      ).thenThrow(const LocalDatabaseException('error on database')),
       act: (bloc) => bloc.add(VerifiedBookIsInsertedEvent(bookId: '1')),
       verify: (_) {
         verify(() => bookService.verifyBookIsAlreadyInserted(id: '1'))
@@ -130,7 +130,7 @@ void main() {
       build: () => bookDetailBloc,
       setUp: () => when(
         () => bookService.insertCompleteBook(bookModel: bookModel),
-      ).thenThrow(LocalDatabaseException('error on database')),
+      ).thenThrow(const LocalDatabaseException('error on database')),
       act: (bloc) => bloc.add(BookInsertedEvent(bookModel: bookModel)),
       verify: (_) {
         verify(() => bookService.insertCompleteBook(bookModel: bookModel))
@@ -243,7 +243,7 @@ void main() {
       setUp: () {
         when(
           () => bookService.deleteBook(id: '1'),
-        ).thenThrow(LocalDatabaseException('error on database'));
+        ).thenThrow(const LocalDatabaseException('error on database'));
         when(
           () => bookService.getBookStatus(id: '1'),
         ).thenAnswer((_) async => BookStatus.library);

@@ -4,6 +4,7 @@ class BookifyElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final IconData? suffixIcon;
+  final Color? color;
   final bool isExpanded;
 
   const BookifyElevatedButton({
@@ -12,6 +13,7 @@ class BookifyElevatedButton extends StatelessWidget {
     required this.text,
     this.suffixIcon,
     this.isExpanded = false,
+    this.color,
   });
 
   const BookifyElevatedButton.expanded({
@@ -20,6 +22,7 @@ class BookifyElevatedButton extends StatelessWidget {
     required this.text,
     this.suffixIcon,
     this.isExpanded = true,
+    this.color,
   });
 
   @override
@@ -31,6 +34,13 @@ class BookifyElevatedButton extends StatelessWidget {
         child: (suffixIcon != null)
             ? ElevatedButton.icon(
                 onPressed: onPressed,
+                style: color != null
+                    ? ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          color,
+                        ),
+                      )
+                    : null,
                 icon: Icon(suffixIcon),
                 label: Text(
                   text,
@@ -39,6 +49,13 @@ class BookifyElevatedButton extends StatelessWidget {
               )
             : ElevatedButton(
                 onPressed: onPressed,
+                style: color != null
+                    ? ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          color,
+                        ),
+                      )
+                    : null,
                 child: Text(
                   text,
                   textScaler: TextScaler.noScaling,

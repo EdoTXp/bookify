@@ -196,7 +196,7 @@ void main() {
   group('test normal CRUD of complete book with error ||', () {
     test('getAllBookcases()', () async {
       when(() => bookcaseRepository.getAll())
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.getAllBookcases(),
@@ -208,7 +208,7 @@ void main() {
     test('getBookcasesByName()', () async {
       when(() =>
               bookcaseRepository.getBookcasesByName(name: any(named: 'name')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.getBookcasesByName(name: 'name'),
@@ -220,7 +220,7 @@ void main() {
     test('getAllBookcaseRelationships()', () async {
       when(() => bookOnCaseRepository.getBooksOnCaseRelationship(
               bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -233,7 +233,7 @@ void main() {
     test('getBookIdForImagePreview()', () async {
       when(() => bookOnCaseRepository.getBookIdForImagePreview(
               bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -246,7 +246,7 @@ void main() {
     test('getBookcaseById()', () async {
       when(() =>
               bookcaseRepository.getById(bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.getBookcaseById(bookcaseId: 1),
@@ -258,7 +258,7 @@ void main() {
     test('insertBookcase()', () async {
       when(
         () => bookcaseRepository.insert(bookcaseModel: bookcases[0]),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -272,7 +272,7 @@ void main() {
       when(
         () => bookOnCaseRepository.insert(
             bookcaseId: any(named: 'bookcaseId'), bookId: any(named: 'bookId')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.insertBookcaseRelationship(
@@ -289,7 +289,7 @@ void main() {
             named: 'bookId',
           ),
         ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.countBookcasesByBook(
@@ -303,7 +303,7 @@ void main() {
     test('updateBookcase()', () async {
       when(
         () => bookcaseRepository.update(bookcaseModel: bookcases[0]),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async =>
@@ -316,7 +316,7 @@ void main() {
     test('deleteBookcase()', () async {
       when(
         () => bookcaseRepository.delete(bookcaseId: any(named: 'bookcaseId')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.deleteBookcase(bookcaseId: 1),
@@ -331,7 +331,7 @@ void main() {
           bookcaseId: any(named: 'bookcaseId'),
           bookId: any(named: 'bookId'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookcaseService.deleteBookcaseRelationship(

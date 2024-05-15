@@ -39,7 +39,7 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
       final bookId = bookRelationshipMap['bookId'] as String?;
       return bookId;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }

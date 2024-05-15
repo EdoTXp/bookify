@@ -26,7 +26,7 @@ class ReadingRepositoryImpl implements ReadingRepository {
 
       return readings;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar as leituras no database',
       );
     } on LocalDatabaseException {
@@ -54,7 +54,7 @@ class ReadingRepositoryImpl implements ReadingRepository {
 
       return readings;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar as leituras no database',
       );
     } on LocalDatabaseException {
@@ -75,7 +75,7 @@ class ReadingRepositoryImpl implements ReadingRepository {
 
       return reading;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar a leitura no database',
       );
     } on LocalDatabaseException {

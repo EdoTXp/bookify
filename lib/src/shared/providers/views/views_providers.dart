@@ -1,5 +1,7 @@
 export 'package:bookify/src/shared/providers/views/user_theme_providers.dart';
+export 'package:bookify/src/shared/providers/views/auth_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/home_page_providers.dart';
+export 'package:bookify/src/shared/providers/views/profile_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/book_detail_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/bookcase_page_providers.dart';
 export 'package:bookify/src/shared/providers/views/bookcase_insertion_providers.dart';

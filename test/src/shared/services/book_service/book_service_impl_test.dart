@@ -270,7 +270,7 @@ void main() {
     test('get all book', () async {
       when(
         () => booksRepository.getAll(),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       //for author repository
       when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
@@ -300,7 +300,7 @@ void main() {
     test('get book by name', () async {
       when(
         () => booksRepository.getBooksByTitle(title: any(named: 'title')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       //for author repository
       when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
@@ -341,7 +341,7 @@ void main() {
 
       // for category repository
       when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       // for book authors repository
       when(() => bookAuthorsRepository.getRelationshipsById(
@@ -378,7 +378,7 @@ void main() {
 
       when(
         () => authorsRepository.insert(authorModel: authorModel),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       // for category repository
       when(
@@ -413,7 +413,7 @@ void main() {
     test('verify book is exist', () async {
       when(() => booksRepository.verifyBookIsAlreadyInserted(
             id: any(named: 'id'),
-          )).thenThrow(LocalDatabaseException('Error on database'));
+          )).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.verifyBookIsAlreadyInserted(id: '1'),
@@ -425,7 +425,7 @@ void main() {
     test('get status', () async {
       when(
         () => booksRepository.getBookStatus(id: any(named: 'id')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.getBookStatus(id: '1'),
@@ -438,7 +438,7 @@ void main() {
       when(
         () => booksRepository.updateBookStatus(
             id: any(named: 'id'), status: BookStatus.reading),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.updateStatus(
@@ -454,7 +454,7 @@ void main() {
       when(
         () => booksRepository.updateBookPageCount(
             id: any(named: 'id'), pageCount: any(named: 'pageCount')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.updatePageCount(
@@ -469,7 +469,7 @@ void main() {
     test('get book Image', () async {
       when(
         () => booksRepository.getBookImageById(id: any(named: 'id')),
-      ).thenThrow(LocalDatabaseException('Error on database'));
+      ).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.getBookImage(id: '1'),
@@ -480,7 +480,7 @@ void main() {
 
     test('delete book', () async {
       when(() => booksRepository.deleteBookById(id: any(named: 'id')))
-          .thenThrow(LocalDatabaseException('Error on database'));
+          .thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await bookService.deleteBook(id: '1'),

@@ -1,7 +1,7 @@
 class LocalDatabaseException implements Exception {
   final String message;
 
-  LocalDatabaseException(this.message);
+  const LocalDatabaseException(this.message);
 
   @override
   String toString() => message;

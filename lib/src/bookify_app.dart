@@ -1,13 +1,19 @@
 import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/shared/routes/routes.dart';
 import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class BookifyApp extends StatefulWidget {
-  const BookifyApp({super.key});
+  final FirebaseAuth auth;
+
+  const BookifyApp({
+    super.key,
+    required this.auth,
+  });
 
   @override
   State<BookifyApp> createState() => _BookifyAppState();
@@ -16,15 +22,24 @@ class BookifyApp extends StatefulWidget {
 class _BookifyAppState extends State<BookifyApp> {
   late final UserThemeBloc _userThemeBloc;
   late final NotificationsService _notificationService;
+  bool userIsLogged = false;
   ThemeMode? _themeMode;
 
   @override
   void initState() {
     super.initState();
+    _configureApp();
+  }
+
+  void _configureApp() {
     _userThemeBloc = context.read<UserThemeBloc>()
       ..add(
         GotUserThemeEvent(),
       );
+
+    widget.auth.currentUser == null
+        ? userIsLogged = false
+        : userIsLogged = true;
 
     _notificationService = context.read<NotificationsService>();
     _checkForNotificationsOnInitializeApp();
@@ -52,7 +67,7 @@ class _BookifyAppState extends State<BookifyApp> {
         themeMode: _themeMode,
         navigatorKey: Routes.navigatorKey,
         routes: Routes.routes,
-        initialRoute: Routes.initialRoute,
+        initialRoute: Routes.getInitialRoute(userIsLogged),
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: const [
           Locale('pt', 'BR'),

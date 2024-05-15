@@ -27,7 +27,7 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
           return null;
       }
     } on TypeError {
-      throw StorageException('impossível converter o tema.');
+      throw const StorageException('impossível converter o tema.');
     } on StorageException {
       rethrow;
     }

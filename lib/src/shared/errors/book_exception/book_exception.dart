@@ -1,7 +1,7 @@
 class BookException implements Exception {
   final String message;
 
-  BookException(this.message);
+  const BookException(this.message);
 
   @override
   String toString() {
@@ -10,7 +10,7 @@ class BookException implements Exception {
 }
 
 class BookNotFoundException extends BookException {
-  BookNotFoundException(super.message);
+  const BookNotFoundException(super.message);
 
   @override
   String toString() {

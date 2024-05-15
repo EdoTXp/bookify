@@ -132,7 +132,7 @@ void main() {
       setUp: () {
         when(
           () => bookService.getBookById(id: any(named: 'id')),
-        ).thenThrow(LocalDatabaseException('Error on database'));
+        ).thenThrow(const LocalDatabaseException('Error on database'));
 
         when(() => bookcaseService.getAllBookcaseRelationships(
             bookcaseId: any(named: 'bookcaseId'))).thenAnswer(

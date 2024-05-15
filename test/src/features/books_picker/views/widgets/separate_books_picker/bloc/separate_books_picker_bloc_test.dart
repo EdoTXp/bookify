@@ -126,7 +126,7 @@ void main() {
       build: () => bloc,
       setUp: () => when(
         () => bookService.getAllBook(),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [

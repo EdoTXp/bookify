@@ -144,7 +144,7 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          LocalDatabaseException('Error on database'),
+          const LocalDatabaseException('Error on database'),
         );
       },
       act: (bloc) => bloc.add(
@@ -413,7 +413,7 @@ void main() {
           () => loanService.delete(
             loanId: any(named: 'loanId'),
           ),
-        ).thenThrow(LocalDatabaseException('Error on Database'));
+        ).thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(
         FinishedLoanDetailEvent(

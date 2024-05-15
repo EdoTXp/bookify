@@ -22,7 +22,7 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
       final authorModel = AuthorModel.fromMap(authorsMap);
       return authorModel;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -46,7 +46,7 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
       final actualAuthorId = authorMap.last['id'] as int;
       return actualAuthorId;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }

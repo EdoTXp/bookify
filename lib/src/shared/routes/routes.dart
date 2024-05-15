@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/book_on_bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
@@ -7,6 +8,7 @@ import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
+import 'package:bookify/src/features/on_boarding/views/on_boarding_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
@@ -21,6 +23,8 @@ import 'package:flutter/widgets.dart';
 
 class Routes {
   static Map<String, WidgetBuilder> routes = {
+    OnBoardingPage.routeName: (context) => const OnBoardingPage(),
+    AuthPage.routeName: (context) => const AuthPage(),
     RootPage.routeName: (context) => const RootPage(),
     BookDetailPage.routeName: (context) => BookDetailPage(
           bookModel: ModalRoute.of(context)!.settings.arguments as BookModel,
@@ -65,7 +69,9 @@ class Routes {
     SettingsPage.routeName: (context) => const SettingsPage(),
   };
 
-  static String initialRoute = RootPage.routeName;
+  static String getInitialRoute(bool userIsLogged) {
+    return userIsLogged ? RootPage.routeName : OnBoardingPage.routeName;
+  }
 
   static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 }

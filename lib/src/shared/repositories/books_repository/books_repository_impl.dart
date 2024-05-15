@@ -17,7 +17,7 @@ class BooksRepositoryImpl implements BooksRepository {
       final booksModel = booksMap.map(BookModel.fromMap).toList();
       return booksModel;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -35,7 +35,7 @@ class BooksRepositoryImpl implements BooksRepository {
       final bookModel = BookModel.fromMap(bookMap);
       return bookModel;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -67,7 +67,7 @@ class BooksRepositoryImpl implements BooksRepository {
       final bookImage = imageMap['imageUrl'] as String;
       return bookImage;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -85,7 +85,7 @@ class BooksRepositoryImpl implements BooksRepository {
 
       return books;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar os livros com esse título no database',
       );
     } on LocalDatabaseException {
@@ -120,7 +120,7 @@ class BooksRepositoryImpl implements BooksRepository {
       final bookStatus = BookStatus.fromMap(statusMap['status'] as int);
       return bookStatus!;
     } on TypeError {
-      throw LocalDatabaseException(
+      throw const LocalDatabaseException(
         'Impossível encontrar o status do livro no database',
       );
     } on LocalDatabaseException {

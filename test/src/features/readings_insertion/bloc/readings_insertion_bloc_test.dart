@@ -205,7 +205,7 @@ void main() {
             )).thenAnswer((_) async => 1);
         when(() => readingService.insert(
               readingModel: readingModel,
-            )).thenThrow(LocalDatabaseException('Error on Database'));
+            )).thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {

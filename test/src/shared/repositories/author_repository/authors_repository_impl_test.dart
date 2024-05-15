@@ -85,7 +85,7 @@ void main() {
       when(() => localDatabase.insert(
             table: any(named: 'table'),
             values: any(named: 'values'),
-          )).thenThrow(LocalDatabaseException('Error on database'));
+          )).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await authorsRepository.insert(
@@ -133,7 +133,7 @@ void main() {
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),
             id: any(named: 'id'),
-          )).thenThrow(LocalDatabaseException('Error on database'));
+          )).thenThrow(const LocalDatabaseException('Error on database'));
 
       expect(
         () async => await authorsRepository.deleteAuthorById(

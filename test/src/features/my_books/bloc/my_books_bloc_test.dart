@@ -92,7 +92,7 @@ void main() {
       build: () => bloc,
       setUp: () => when(
         () => bookService.getAllBook(),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(GotAllBooksEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [
@@ -170,7 +170,7 @@ void main() {
         () => bookService.getBooksByTitle(
           title: any(named: 'title'),
         ),
-      ).thenThrow(LocalDatabaseException('Error on Database')),
+      ).thenThrow(const LocalDatabaseException('Error on Database')),
       act: (bloc) => bloc.add(
         SearchedBooksEvent(searchQuery: 'title'),
       ),

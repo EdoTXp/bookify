@@ -10,8 +10,8 @@ import 'package:bookify/src/features/root/views/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
-  /// The Route Name = '/'
-  static const routeName = '/';
+  /// The Route Name = '/root_page'
+  static const routeName = '/root_page';
 
   const RootPage({super.key});
 
@@ -44,7 +44,8 @@ class _RootPageState extends State<RootPage> {
     // Set the status bar with the app theme configuration
     // without having to instantiate the Appbar widget.
     SystemChrome.setSystemUIOverlayStyle(
-        Theme.of(context).appBarTheme.systemOverlayStyle!);
+      Theme.of(context).appBarTheme.systemOverlayStyle!,
+    );
   }
 
   @override

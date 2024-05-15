@@ -21,7 +21,7 @@ class BookCategoriesRepositoryImpl implements BookCategoriesRepository {
       );
 
       if (bookCategoriesRelationships.last.isEmpty) {
-        throw LocalDatabaseException('Impossível buscar os dados');
+        throw const LocalDatabaseException('Impossível buscar os dados');
       }
 
       return bookCategoriesRelationships;

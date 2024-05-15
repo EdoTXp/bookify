@@ -22,7 +22,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
       final categoryModel = CategoryModel.fromMap(categoryMap);
       return categoryModel;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
@@ -46,7 +46,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
       final actualAuthorId = categoryMap.last['id'] as int;
       return actualAuthorId;
     } on TypeError {
-      throw LocalDatabaseException('Impossível converter o dado do database');
+      throw const LocalDatabaseException('Impossível converter o dado do database');
     } on LocalDatabaseException {
       rethrow;
     }
