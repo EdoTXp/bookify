@@ -48,3 +48,4 @@ app.*.map.json
 
 firebase_options.dart
 firebase.json
+ios/Runner/GoogleService-Info.plist
