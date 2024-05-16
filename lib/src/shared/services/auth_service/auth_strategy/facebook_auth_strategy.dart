@@ -22,6 +22,7 @@ class FacebookAuthStrategy implements AuthStrategy {
       final userModel = UserModel(
         name: userCredential.user?.displayName ?? 'Sem nome',
         photo: userCredential.user?.photoURL,
+        signInType: SignInType.facebook,
       );
 
       return userModel;

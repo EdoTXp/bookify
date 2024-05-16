@@ -11,6 +11,7 @@ void main() {
   const userModel = UserModel(
     name: 'userName',
     photo: 'userPhoto',
+    signInType: SignInType.google,
   );
 
   final storage = StorageMock();
@@ -20,20 +21,11 @@ void main() {
     test('Test get UserModel', () async {
       when(
         () => storage.getStorage(
-          key: 'userName',
+          key: 'user',
         ),
       ).thenAnswer(
-        (_) async => 'userName',
+        (_) async => userModel.toJson(),
       );
-
-      when(
-        () => storage.getStorage(
-          key: 'userPhoto',
-        ),
-      ).thenAnswer(
-        (_) async => 'userPhoto',
-      );
-
       final user = await authRepository.getUserModel();
 
       expect(user, equals(userModel));
@@ -42,22 +34,12 @@ void main() {
     test('Test set UserModel', () async {
       when(
         () => storage.insertStorage(
-          key: 'userName',
-          value: 'userName',
+          key: 'user',
+          value: any(named: 'value'),
         ),
       ).thenAnswer(
         (_) async => 1,
       );
-
-      when(
-        () => storage.insertStorage(
-          key: 'userPhoto',
-          value: 'userPhoto',
-        ),
-      ).thenAnswer(
-        (_) async => 1,
-      );
-
       final userModelInserted = await authRepository.setUserModel(
         userModel: userModel,
       );
@@ -70,15 +52,7 @@ void main() {
     test('Test get UserModel with TypeError', () async {
       when(
         () => storage.getStorage(
-          key: 'userName',
-        ),
-      ).thenAnswer(
-        (_) async => 'userName',
-      );
-
-      when(
-        () => storage.getStorage(
-          key: 'userPhoto',
+          key: 'user',
         ),
       ).thenAnswer(
         (_) async => 1,
@@ -95,15 +69,7 @@ void main() {
     test('Test get UserModel with Storage Exception', () async {
       when(
         () => storage.getStorage(
-          key: 'userName',
-        ),
-      ).thenAnswer(
-        (_) async => 'userName',
-      );
-
-      when(
-        () => storage.getStorage(
-          key: 'userPhoto',
+          key: 'user',
         ),
       ).thenThrow(const StorageException('Storage error'));
 
@@ -117,17 +83,8 @@ void main() {
     test('Test set UserModel with Storage Exception', () async {
       when(
         () => storage.insertStorage(
-          key: 'userName',
-          value: 'userName',
-        ),
-      ).thenAnswer(
-        (_) async => 1,
-      );
-
-      when(
-        () => storage.insertStorage(
-          key: 'userPhoto',
-          value: 'userPhoto',
+          key: 'user',
+          value: any(named: 'value'),
         ),
       ).thenThrow(const StorageException('Storage error'));
 

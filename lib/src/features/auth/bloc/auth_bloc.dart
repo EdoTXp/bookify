@@ -1,4 +1,5 @@
 import 'package:bookify/src/shared/errors/auth_exception/auth_exception.dart';
+import 'package:bookify/src/shared/models/user_model.dart';
 import 'package:bookify/src/shared/services/auth_service/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,13 +23,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       int authSignedIn = 0;
 
       if (event.buttonType == 1) {
-        authSignedIn = await _authService.signIn(signInType: SignInType.google);
+        authSignedIn = await _authService.signIn(
+          signInType: SignInType.google,
+        );
       } else if (event.buttonType == 2) {
-        emit(AuthErrorState(errorMessage: 'Apple button not implemented'));
-        return;
+        authSignedIn = await _authService.signIn(
+          signInType: SignInType.apple,
+        );
       } else {
-        authSignedIn =
-            await _authService.signIn(signInType: SignInType.facebook);
+        authSignedIn = await _authService.signIn(
+          signInType: SignInType.facebook,
+        );
       }
 
       if (authSignedIn == 0) {

@@ -25,7 +25,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void initState() {
     super.initState();
 
-     LockScreenOrientationService.lockOrientationScreen(
+    LockScreenOrientationService.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
 
@@ -47,6 +47,26 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _goToPrecedentIlustration() {
+    if (_currentPage > 0) {
+      setState(() {
+        _currentPage--;
+      });
+    }
+    _pageController.jumpToPage(_currentPage);
+  }
+
+  Future<void> _goToFowardOrFinalizeIlustration() async {
+    if (_currentPage < 3) {
+      setState(() {
+        _currentPage++;
+      });
+      _pageController.jumpToPage(_currentPage);
+    } else {
+      await _navigateToConfigurationsPage();
+    }
   }
 
   Future<void> _navigateToConfigurationsPage() async {
@@ -93,23 +113,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 quantity: 4,
                 currentPage: _currentPage,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (_currentPage != 0) ...[
                     Flexible(
                       child: BookifyOutlinedButton.expanded(
-                        onPressed: () {
-                          if (_currentPage > 0) {
-                            setState(() {
-                              _currentPage--;
-                            });
-                          }
-                          _pageController.jumpToPage(_currentPage);
-                        },
+                        onPressed: _goToPrecedentIlustration,
                         color: colorScheme.primary,
                         text: 'Voltar',
                         suffixIcon: Icons.arrow_forward_rounded,
@@ -121,16 +131,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   ],
                   Flexible(
                     child: BookifyElevatedButton.expanded(
-                      onPressed: () async {
-                        if (_currentPage < 3) {
-                          setState(() {
-                            _currentPage++;
-                          });
-                          _pageController.jumpToPage(_currentPage);
-                        } else {
-                          await _navigateToConfigurationsPage();
-                        }
-                      },
+                      onPressed: () async =>
+                          await _goToFowardOrFinalizeIlustration(),
                       color: colorScheme.primary,
                       text: _currentPage < 3 ? 'Avançar' : 'Finalizar',
                       suffixIcon: Icons.arrow_back_rounded,

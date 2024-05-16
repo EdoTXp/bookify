@@ -19,15 +19,11 @@ class AuthServiceImpl implements AuthService {
   Future<int> signIn({required SignInType signInType}) async {
     try {
       final AuthStrategyManager authStrategyManager;
+
       switch (signInType) {
         case SignInType.google:
           authStrategyManager = AuthStrategyManager(
             authStrategy: GoogleAuthStrategy(),
-          );
-          break;
-        case SignInType.facebook:
-          authStrategyManager = AuthStrategyManager(
-            authStrategy: FacebookAuthStrategy(),
           );
           break;
         case SignInType.apple:
@@ -35,15 +31,25 @@ class AuthServiceImpl implements AuthService {
             authStrategy: AppleAuthStrategy(),
           );
           break;
+        case SignInType.facebook:
+          authStrategyManager = AuthStrategyManager(
+            authStrategy: FacebookAuthStrategy(),
+          );
+          break;
       }
 
       final userModel = await authStrategyManager.signIn();
-      final userInserted =
-          await _authRepository.setUserModel(userModel: userModel);
+      final userInserted = await _authRepository.setUserModel(
+        userModel: userModel,
+      );
 
       return userInserted;
     } on AuthException {
       rethrow;
+    } on StorageException catch (e) {
+      throw AuthException(e.message);
+    } on Exception catch (e) {
+      throw AuthException(e.toString());
     }
   }
 
@@ -54,15 +60,17 @@ class AuthServiceImpl implements AuthService {
         SignInType.google => await AuthStrategyManager(
             authStrategy: GoogleAuthStrategy(),
           ).signOut(),
-        SignInType.facebook => await AuthStrategyManager(
-            authStrategy: FacebookAuthStrategy(),
-          ).signOut(),
         SignInType.apple => await AuthStrategyManager(
             authStrategy: AppleAuthStrategy(),
+          ).signOut(),
+        SignInType.facebook => await AuthStrategyManager(
+            authStrategy: FacebookAuthStrategy(),
           ).signOut(),
       };
     } on AuthException {
       rethrow;
+    } on Exception catch (e) {
+      throw AuthException(e.toString());
     }
   }
 
@@ -71,10 +79,10 @@ class AuthServiceImpl implements AuthService {
     try {
       final user = await _authRepository.getUserModel();
       return user;
-    } on AuthException {
-      rethrow;
-    } on StorageException {
-      rethrow;
+    } on StorageException catch (e) {
+      throw AuthException(e.message);
+    } on Exception catch (e) {
+      throw AuthException(e.toString());
     }
   }
 }

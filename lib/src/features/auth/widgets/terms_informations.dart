@@ -22,7 +22,7 @@ class TermsInformations extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextSpan(text: 'da Bookify'),
+          TextSpan(text: 'da Bookify.'),
         ],
         style: TextStyle(
           fontSize: 12,

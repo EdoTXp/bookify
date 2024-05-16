@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
 import 'package:bookify/src/features/profile/views/widgets/profile_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -26,9 +27,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _getWidgetOnProfileState(BuildContext context, ProfileState state) {
     return switch (state) {
-      ProfileLoadingState() => const CenterCircularProgressIndicator(),
+      ProfileLoadingState() ||
+      ProfileLogOutState() =>
+        const CenterCircularProgressIndicator(),
       ProfileLoadedState(:final userModel) => ProfileLoadedStateWidget(
           userModel: userModel,
+          onPressedLogOut: () => _bloc.add(
+            UserLoggedOutEvent(
+              userModel: userModel,
+            ),
+          ),
         ),
       ProfileErrorState(:final errorMessage) =>
         InfoItemStateWidget.withErrorState(
@@ -44,11 +52,27 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void _exitApp(
+    BuildContext context,
+    ProfileState state,
+  ) {
+    if (state is ProfileLogOutState) {
+      Future.delayed(const Duration(seconds: 2)).then(
+        (_) async {
+          await Navigator.of(context).pushReplacementNamed(
+            AuthPage.routeName,
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
         bloc: _bloc,
+        listener: _exitApp,
         builder: _getWidgetOnProfileState,
       ),
     );

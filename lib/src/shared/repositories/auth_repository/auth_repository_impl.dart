@@ -5,8 +5,7 @@ import 'package:bookify/src/shared/storage/storage.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final Storage _storage;
-  final String _userNameKey = 'userName';
-  final String _userPhoto = 'userPhoto';
+  final String _userKey = 'user';
 
   const AuthRepositoryImpl({
     required Storage storage,
@@ -15,17 +14,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserModel?> getUserModel() async {
     try {
-      final userName = await _storage.getStorage(key: _userNameKey) as String?;
-      final userPhoto = await _storage.getStorage(key: _userPhoto) as String?;
+      final userJson = await _storage.getStorage(
+        key: _userKey,
+      ) as String?;
 
-      if (userName == null) {
+      if (userJson == null) {
         return null;
       }
 
-      final userModel = UserModel(
-        name: userName,
-        photo: userPhoto,
-      );
+      final userModel = UserModel.fromJson(userJson);
 
       return userModel;
     } on TypeError {
@@ -38,20 +35,12 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<int> setUserModel({required UserModel userModel}) async {
     try {
-      final userNameInserted = await _storage.insertStorage(
-        key: _userNameKey,
-        value: userModel.name,
-      );
-      final userPhotoInserted = await _storage.insertStorage(
-        key: _userPhoto,
-        value: userModel.photo ?? 'sem foto',
+      final userJsonInserted = await _storage.insertStorage(
+        key: _userKey,
+        value: userModel.toJson(),
       );
 
-      if (userNameInserted == 1 && userPhotoInserted == 1) {
-        return 1;
-      } else {
-        return 0;
-      }
+      return (userJsonInserted == 1) ? 1 : 0;
     } on StorageException {
       rethrow;
     }

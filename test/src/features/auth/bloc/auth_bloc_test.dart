@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/shared/errors/auth_exception/auth_exception.dart';
+import 'package:bookify/src/shared/models/user_model.dart';
 import 'package:bookify/src/shared/services/auth_service/auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -48,6 +49,30 @@ void main() {
     );
 
     blocTest(
+      'Test SignedInAuthEvent work emit error on Apple button',
+      build: () => authBloc,
+      setUp: () => when(
+        () => authService.signIn(
+          signInType: SignInType.apple,
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      ),
+      act: (bloc) => bloc.add(
+        SignedInAuthEvent(buttonType: 2),
+      ),
+      verify: (_) => verify(
+        () => authService.signIn(
+          signInType: SignInType.apple,
+        ),
+      ).called(1),
+      expect: () => [
+        isA<AuthLoadingState>(),
+        isA<AuthSignedState>(),
+      ],
+    );
+
+    blocTest(
       'Test SignedInAuthEvent work when Facebook button',
       build: () => authBloc,
       setUp: () => when(
@@ -68,23 +93,6 @@ void main() {
       expect: () => [
         isA<AuthLoadingState>(),
         isA<AuthSignedState>(),
-      ],
-    );
-
-    blocTest(
-      'Test SignedInAuthEvent work emit error on Apple button',
-      build: () => authBloc,
-      act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 2),
-      ),
-      verify: (_) => verifyNever(
-        () => authService.signIn(
-          signInType: SignInType.apple,
-        ),
-      ),
-      expect: () => [
-        isA<AuthLoadingState>(),
-        isA<AuthErrorState>(),
       ],
     );
 

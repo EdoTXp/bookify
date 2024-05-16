@@ -11,6 +11,8 @@ class Ilustration2Page extends StatelessWidget {
     final mediaQuerySizeOf = MediaQuery.sizeOf(context);
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           height: mediaQuerySizeOf.height * .4,

@@ -49,6 +49,7 @@ class AppleAuthStrategy implements AuthStrategy {
       final userModel = UserModel(
         name: userCredential.user?.displayName ?? 'Sem nome',
         photo: userCredential.user?.photoURL,
+        signInType: SignInType.apple,
       );
 
       return userModel;

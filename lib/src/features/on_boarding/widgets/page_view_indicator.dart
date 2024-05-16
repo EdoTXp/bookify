@@ -28,9 +28,14 @@ class PageViewIndicator extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: colorScheme.primary.withOpacity(
-                currentPage == index ? 0.9 : 0.4,
-              ),
+              border: currentPage != index
+                  ? Border.all(
+                      color: colorScheme.primary,
+                    )
+                  : null,
+              color: currentPage != index
+                  ? Colors.transparent
+                  : colorScheme.primary,
             ),
           );
         },

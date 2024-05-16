@@ -23,6 +23,7 @@ class GoogleAuthStrategy implements AuthStrategy {
       final userModel = UserModel(
         name: userCredential.user?.displayName ?? 'Sem nome',
         photo: userCredential.user?.photoURL,
+        signInType: SignInType.google,
       );
 
       return userModel;
@@ -36,7 +37,7 @@ class GoogleAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await GoogleSignIn().disconnect();
+      await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       return true;
     } on FirebaseException catch (e) {

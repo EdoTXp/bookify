@@ -2,16 +2,19 @@ import 'package:bookify/src/features/profile/views/widgets/user_circle_avatar.da
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/shared/models/user_model.dart';
+import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets.dart';
 
 class ProfileLoadedStateWidget extends StatelessWidget {
   final UserModel userModel;
+  final VoidCallback onPressedLogOut;
 
   const ProfileLoadedStateWidget({
     super.key,
     required this.userModel,
+    required this.onPressedLogOut,
   });
 
   @override
@@ -85,7 +88,18 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           TextIconButton(
             label: 'Sair',
             iconData: Icons.exit_to_app_outlined,
-            onPressed: () {},
+            onPressed: () async {
+              await ShowDialogService.showAlertDialog(
+                context: context,
+                title: 'Fazer o logout',
+                content:
+                    'Clicando em CONFIRMAR, todas as configurações serão apagadas.\nTem certeza?',
+                confirmButtonFunction: onPressedLogOut,
+              );
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            },
           ),
         ],
       ),

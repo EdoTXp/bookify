@@ -37,7 +37,9 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> _handleAuthStateListener(
-      BuildContext context, AuthState state) async {
+    BuildContext context,
+    AuthState state,
+  ) async {
     switch (state) {
       case AuthLoadingState():
         SnackbarService.showSnackBar(
@@ -49,7 +51,7 @@ class _AuthPageState extends State<AuthPage> {
       case AuthSignedState():
         SnackbarService.showSnackBar(
           context,
-          'Login com sucesso',
+          'Autentificado com sucesso',
           SnackBarType.success,
         );
         Future.delayed(const Duration(seconds: 2)).then(
@@ -84,16 +86,14 @@ class _AuthPageState extends State<AuthPage> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Spacer(),
                 Image.asset(
                   BookifyImages.authLogo,
-                  width: mediaQuerySizeOf.width,
                   height: mediaQuerySizeOf.height * .5,
+                  width: mediaQuerySizeOf.width,
                 ),
-                const SizedBox(
-                  height: 90,
-                ),
+                const Spacer(),
                 if (Platform.isAndroid)
                   SocialLoginButton(
                     buttonType: SocialLoginButtonType.google,
