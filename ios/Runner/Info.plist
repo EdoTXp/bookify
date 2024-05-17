@@ -16,9 +16,8 @@
 	<string>bookify</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<!--Disable Impeller for build-->
 	<key>FLTEnableImpeller</key>
-  	<false />
+	<false/>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
@@ -27,18 +26,36 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!--Permission for URL launcher-->
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-  		<string>https</string>
-  		<string>tel</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
-	<!--Permission for Mobile Scanner-->
 	<key>NSCameraUsageDescription</key>
 	<string>Este aplicativo precisa de acesso à câmera para ler códigos ISBN.</string>
-	<!--Permission for Contatcs-->
 	<key>NSContactsUsageDescription</key>
-    <string>Este aplicativo precisa de acesso aos contatos para criar empréstimos.</string>
+	<string>Este aplicativo precisa de acesso aos contatos para criar empréstimos.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb653673550256884</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>653673550256884</string>
+	<key>FacebookClientToken</key>
+	<string>77b55d0db20ca558ad7dc2925e90a0cc</string>
+	<key>FacebookDisplayName</key>
+	<string>Bookify</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<string>TRUE</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<string>TRUE</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

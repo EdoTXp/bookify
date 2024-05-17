@@ -59,8 +59,11 @@ class _ProfilePageState extends State<ProfilePage> {
     if (state is ProfileLogOutState) {
       Future.delayed(const Duration(seconds: 2)).then(
         (_) async {
-          await Navigator.of(context).pushReplacementNamed(
+          await Navigator.of(context).pushNamedAndRemoveUntil(
             AuthPage.routeName,
+            (route) {
+              return true;
+            },
           );
         },
       );
