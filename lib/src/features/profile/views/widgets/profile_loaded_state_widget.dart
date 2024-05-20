@@ -1,8 +1,8 @@
 import 'package:bookify/src/features/profile/views/widgets/user_circle_avatar.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
-import 'package:bookify/src/shared/models/user_model.dart';
-import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/models/user_model.dart';
+import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets.dart';

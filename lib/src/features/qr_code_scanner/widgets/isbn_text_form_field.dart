@@ -1,6 +1,6 @@
-import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
-import 'package:bookify/src/shared/utils/input_formatter/isbn_input_formatter.dart';
-import 'package:bookify/src/shared/utils/verifier/isbn_verifier.dart';
+import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/utils/input_formatter/isbn_input_formatter.dart';
+import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
 import 'package:validatorless/validatorless.dart';
 import 'package:flutter/material.dart';
 

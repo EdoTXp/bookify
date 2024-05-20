@@ -1,9 +1,9 @@
 import 'package:bookify/src/features/readings_timer/views/widgets/header.dart';
-import 'package:bookify/src/shared/dtos/reading_dto.dart';
-import 'package:bookify/src/shared/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
-import 'package:bookify/src/shared/services/app_services/play_alarm_sound_service/play_alarm_sound_service.dart';
-import 'package:bookify/src/shared/services/app_services/time_picker_dialog_service.dart/time_picker_dialog_service.dart';
-import 'package:bookify/src/shared/services/app_services/wake_lock_screen_service/wake_lock_screen_service.dart';
+import 'package:bookify/src/core/dtos/reading_dto.dart';
+import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
+import 'package:bookify/src/core/services/app_services/play_alarm_sound_service/play_alarm_sound_service.dart';
+import 'package:bookify/src/core/services/app_services/time_picker_dialog_service.dart/time_picker_dialog_service.dart';
+import 'package:bookify/src/core/services/app_services/wake_lock_screen_service/wake_lock_screen_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';

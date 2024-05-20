@@ -1,11 +1,11 @@
-import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/models/loan_model.dart';
-import 'package:bookify/src/shared/services/app_services/notifications_service/custom_notification.dart';
-import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
-import 'package:bookify/src/shared/services/book_service/book_service.dart';
-import 'package:bookify/src/shared/services/loan_services/loan_service.dart';
+import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/models/loan_model.dart';
+import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/core/services/book_service/book_service.dart';
+import 'package:bookify/src/core/services/loan_services/loan_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'loan_insertion_event.dart';

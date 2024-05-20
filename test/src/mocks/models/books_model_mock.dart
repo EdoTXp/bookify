@@ -1,6 +1,6 @@
-import 'package:bookify/src/shared/models/author_model.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/models/category_model.dart';
+import 'package:bookify/src/core/models/author_model.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/models/category_model.dart';
 
 final booksModelMock = [
   BookModel(

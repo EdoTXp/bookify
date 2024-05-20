@@ -1,5 +1,5 @@
-import 'package:bookify/src/shared/dtos/conctact_dto.dart';
-import 'package:bookify/src/shared/services/app_services/contacts_service/contacts_service.dart';
+import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'contacts_picker_event.dart';

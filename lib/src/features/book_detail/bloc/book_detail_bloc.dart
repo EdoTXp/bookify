@@ -1,8 +1,8 @@
-import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bookify/src/shared/services/book_service/book_service.dart';
+import 'package:bookify/src/core/services/book_service/book_service.dart';
 
 part 'book_detail_event.dart';
 part 'book_detail_state.dart';

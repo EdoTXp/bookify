@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/views/bookcase_picker_widget.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/separate_books_picker/views/separate_books_picker_widget.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class BooksPickerPage extends StatefulWidget {

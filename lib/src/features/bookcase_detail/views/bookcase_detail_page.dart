@@ -2,9 +2,9 @@ import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_boo
 import 'package:bookify/src/features/bookcase_detail/bloc/bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/bookcase_detail/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
-import 'package:bookify/src/shared/models/bookcase_model.dart';
-import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';

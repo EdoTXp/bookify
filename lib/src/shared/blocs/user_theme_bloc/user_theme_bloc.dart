@@ -1,5 +1,5 @@
-import 'package:bookify/src/shared/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/shared/repositories/user_theme_repository/user_theme_repository.dart';
+import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
+import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

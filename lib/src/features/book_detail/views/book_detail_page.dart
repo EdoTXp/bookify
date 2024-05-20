@@ -1,8 +1,8 @@
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/services/app_services/launcher_service/launcher_service.dart';
-import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';

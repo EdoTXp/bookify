@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
+import 'package:bookify/src/core/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:flutter/material.dart';
 

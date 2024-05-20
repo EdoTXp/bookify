@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/books_picker/views/widgets/book_on_bookcase_picker/views/book_on_bookcase_widget.dart';
-import 'package:bookify/src/shared/dtos/bookcase_dto.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/core/dtos/bookcase_dto.dart';
+import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/shared/widgets/bookcase_widget/bookcase_widget.dart';
 import 'package:flutter/material.dart';
 

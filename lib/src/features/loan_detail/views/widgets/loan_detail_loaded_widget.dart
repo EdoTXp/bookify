@@ -1,9 +1,9 @@
 import 'package:bookify/src/features/loan_detail/views/widgets/book_card.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/contact_card.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_is_late_widget.dart';
-import 'package:bookify/src/shared/dtos/loan_dto.dart';
-import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/shared/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/dtos/loan_dto.dart';
+import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 

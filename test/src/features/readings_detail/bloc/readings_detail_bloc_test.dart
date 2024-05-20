@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
-import 'package:bookify/src/shared/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/models/reading_model.dart';
-import 'package:bookify/src/shared/services/book_service/book_service.dart';
-import 'package:bookify/src/shared/services/reading_services/reading_service.dart';
+import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/models/reading_model.dart';
+import 'package:bookify/src/core/services/book_service/book_service.dart';
+import 'package:bookify/src/core/services/reading_services/reading_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

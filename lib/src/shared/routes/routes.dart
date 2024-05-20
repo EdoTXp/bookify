@@ -15,9 +15,9 @@ import 'package:bookify/src/features/readings_insertion/views/readings_insertion
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
-import 'package:bookify/src/shared/dtos/reading_dto.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/models/bookcase_model.dart';
+import 'package:bookify/src/core/dtos/reading_dto.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

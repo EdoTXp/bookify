@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/models/book_model.dart';
+import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class BookStateWidget extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
-import 'package:bookify/src/shared/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/shared/repositories/user_theme_repository/user_theme_repository.dart';
+import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
+import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

@@ -1,9 +1,9 @@
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
-import 'package:bookify/src/shared/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
-import 'package:bookify/src/shared/models/bookcase_model.dart';
-import 'package:bookify/src/shared/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
-import 'package:bookify/src/shared/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
-import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/core/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
+import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
+import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

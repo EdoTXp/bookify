@@ -1,9 +1,9 @@
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
-import 'package:bookify/src/shared/dtos/reading_dto.dart';
-import 'package:bookify/src/shared/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/shared/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/dtos/reading_dto.dart';
+import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 import 'package:flutter/material.dart';

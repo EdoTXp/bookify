@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_text_form_field_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
-import 'package:bookify/src/shared/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
+import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:flutter/material.dart';
 
 class QrCodeScannerPage extends StatefulWidget {

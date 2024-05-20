@@ -1,6 +1,6 @@
 import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/shared/routes/routes.dart';
-import 'package:bookify/src/shared/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

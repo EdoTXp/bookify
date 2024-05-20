@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
-import 'package:bookify/src/shared/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/shared/models/user_model.dart';
-import 'package:bookify/src/shared/services/auth_service/auth_service.dart';
+import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
+import 'package:bookify/src/core/models/user_model.dart';
+import 'package:bookify/src/core/services/auth_service/auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

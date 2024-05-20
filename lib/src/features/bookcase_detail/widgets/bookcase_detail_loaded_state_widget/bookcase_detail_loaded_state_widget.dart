@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/book_on_bookcase_detail/views/book_on_bookcase_detail_page.dart';
-import 'package:bookify/src/shared/models/book_model.dart';
-import 'package:bookify/src/shared/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.dart';
-import 'package:bookify/src/shared/dtos/conctact_dto.dart';
-import 'package:bookify/src/shared/services/app_services/contacts_service/contacts_service.dart';
+import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
