@@ -27,10 +27,10 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     super.initState();
-    _bloc = context.read<AuthBloc>();
     LockScreenOrientationService.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
+    _bloc = context.read<AuthBloc>();
   }
 
   @override

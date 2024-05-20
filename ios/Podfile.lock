@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.7.5)
   - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - fast_contacts (0.0.1):
     - Flutter
   - FBAEMKit (17.0.1):
@@ -42,12 +44,10 @@ PODS:
   - FirebaseCoreInternal (10.25.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - Flutter (1.0.0)
-  - flutter_facebook_auth (6.2.0):
+  - flutter_facebook_auth (7.0.0):
     - FBSDKLoginKit (~> 17.0.0)
     - Flutter
   - flutter_local_notifications (0.0.1):
-    - Flutter
-  - flutter_ringtone_player (0.0.1):
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
@@ -160,13 +160,13 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - fast_contacts (from `.symlinks/plugins/fast_contacts/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - flutter_ringtone_player (from `.symlinks/plugins/flutter_ringtone_player/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
@@ -209,6 +209,8 @@ SPEC REPOS:
     - RecaptchaInterop
 
 EXTERNAL SOURCES:
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   fast_contacts:
     :path: ".symlinks/plugins/fast_contacts/ios"
   firebase_auth:
@@ -221,8 +223,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  flutter_ringtone_player:
-    :path: ".symlinks/plugins/flutter_ringtone_player/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_timezone:
@@ -250,6 +250,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   fast_contacts: d5f0da976a40f8fd07a9ff730c2e9bee8c3898dd
   FBAEMKit: 97eaf41451b49691447df831f7f425229ae64b66
   FBSDKCoreKit: e34084567d11cfdd4787ace2b1a0255bedf34ade
@@ -263,9 +264,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 7ec4d0484817f12c3373955bc87762d96842d483
   FirebaseCoreInternal: 910a81992c33715fec9263ca7381d59ab3a750b7
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_facebook_auth: 66188df7905bfcaf3d6d2bd6527302c56448f04d
+  flutter_facebook_auth: 03d374669f8a04bd869051ca75c1daf120cb1867
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
-  flutter_ringtone_player: 15eba85187230b87b2512f0e1b92225618bc03e7
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
