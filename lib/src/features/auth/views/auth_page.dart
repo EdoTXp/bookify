@@ -28,6 +28,9 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     super.initState();
     _bloc = context.read<AuthBloc>();
+    LockScreenOrientationService.lockOrientationScreen(
+      orientation: Orientation.portrait,
+    );
   }
 
   @override
@@ -36,10 +39,10 @@ class _AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
-  Future<void> _handleAuthStateListener(
+  void _handleAuthStateListener(
     BuildContext context,
     AuthState state,
-  ) async {
+  ) {
     switch (state) {
       case AuthLoadingState():
         SnackbarService.showSnackBar(
@@ -55,8 +58,8 @@ class _AuthPageState extends State<AuthPage> {
           SnackBarType.success,
         );
         Future.delayed(const Duration(seconds: 2)).then(
-          (_) async {
-            await Navigator.of(context).pushReplacementNamed(
+          (_) {
+            Navigator.of(context).pushReplacementNamed(
               RootPage.routeName,
             );
           },
@@ -79,8 +82,7 @@ class _AuthPageState extends State<AuthPage> {
 
     return BlocListener<AuthBloc, AuthState>(
       bloc: _bloc,
-      listener: (context, state) async =>
-          await _handleAuthStateListener(context, state),
+      listener: _handleAuthStateListener,
       child: Scaffold(
         body: SafeArea(
           child: Padding(

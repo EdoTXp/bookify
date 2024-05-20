@@ -46,6 +46,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void dispose() {
     _pageController.dispose();
+    LockScreenOrientationService.unLockOrientationScreen();
     super.dispose();
   }
 

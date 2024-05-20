@@ -8,15 +8,14 @@ class FacebookAuthStrategy implements AuthStrategy {
   @override
   Future<UserModel> signIn() async {
     try {
-      final LoginResult loginResult = await FacebookAuth.instance.login();
+      final loginResult = await FacebookAuth.instance.login();
 
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(
-        loginResult.accessToken!.token,
+      final facebookOAuthCredential = FacebookAuthProvider.credential(
+        loginResult.accessToken!.tokenString,
       );
 
       final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        facebookAuthCredential,
+        facebookOAuthCredential,
       );
 
       final userModel = UserModel(

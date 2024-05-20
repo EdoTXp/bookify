@@ -110,7 +110,6 @@ class _RootPageState extends State<RootPage> {
           ],
         ),
         bottomNavigationBar: FABBottomAppBar(
-          notchedShape: rectangleRoundedNotchedShape,
           onSelectedItem: _pageController.jumpToPage,
           controller: _bottomBarController,
           items: [
@@ -136,7 +135,7 @@ class _RootPageState extends State<RootPage> {
             ),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: floatingItemAlignedCenterDockerPosition,
         floatingActionButton: RectangleFloatingActionButton(
           tooltip: 'Abrir a página para escanear o código ISBN.',
           onPressed: () async => await _scanAndGetIsbnCode(context),

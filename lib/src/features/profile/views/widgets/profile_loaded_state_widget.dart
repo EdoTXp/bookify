@@ -94,11 +94,11 @@ class ProfileLoadedStateWidget extends StatelessWidget {
                 title: 'Fazer o logout',
                 content:
                     'Clicando em CONFIRMAR, todas as configurações serão apagadas.\nTem certeza?',
-                confirmButtonFunction: onPressedLogOut,
+                confirmButtonFunction: () {
+                  onPressedLogOut();
+                  Navigator.of(context).pop();
+                },
               );
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
             },
           ),
         ],

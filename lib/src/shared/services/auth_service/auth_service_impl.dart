@@ -18,7 +18,7 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<int> signIn({required SignInType signInType}) async {
     try {
-      final AuthStrategyManager authStrategyManager;
+      AuthStrategyManager authStrategyManager;
 
       switch (signInType) {
         case SignInType.google:

@@ -25,6 +25,7 @@ class ReadingsTimerPage extends StatefulWidget {
 
 class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
   late final CountDownController _countDownController;
+  late final PlayAlarmSoundService _alarmService;
   late int _timerDuration;
   late bool _timerIsStarted;
   late bool _timerIsStoped;
@@ -37,6 +38,9 @@ class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
     );
 
     _countDownController = CountDownController();
+    _alarmService = PlayAlarmSoundService(
+      volume: 1.0,
+    );
     _timerIsStarted = false;
     _timerIsStoped = true;
     _timerDuration = 300;
@@ -46,6 +50,7 @@ class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
   void dispose() {
     LockScreenOrientationService.unLockOrientationScreen();
     WakeLockScreenService.unlockWakeScreen();
+    _alarmService.dispose();
     super.dispose();
   }
 
@@ -81,7 +86,7 @@ class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
 
   Future<void> _stopTimer() async {
     _countDownController.reset();
-    await PlayAlarmSoundService.stop();
+    await _alarmService.stop();
 
     setState(() {
       _timerIsStoped = true;
@@ -161,7 +166,7 @@ class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
                     ),
                     onComplete: () async {
                       WakeLockScreenService.unlockWakeScreen();
-                      await PlayAlarmSoundService.playAlarm(1.0);
+                      await _alarmService.playAlarm();
                     },
                   ),
                 ),

@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
 
+class FloatingActionButtonAlignedCenterDockerLocation
+    extends FloatingActionButtonLocation {
+
+
+  const FloatingActionButtonAlignedCenterDockerLocation();
+
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    scaffoldGeometry.contentBottom;
+
+    return Offset(
+      scaffoldGeometry.scaffoldSize.width * .42,
+      scaffoldGeometry.contentBottom,
+    );
+  }
+}
+
+/// Align the floating Action Button on center bottom and align with the items of bottombar. 
+const floatingItemAlignedCenterDockerPosition =
+    FloatingActionButtonAlignedCenterDockerLocation();
+
 class RectangleFloatingActionButton extends StatelessWidget {
-  final void Function() onPressed;
+  final VoidCallback onPressed;
   final Widget child;
   final double? width;
   final double? height;
@@ -27,22 +48,12 @@ class RectangleFloatingActionButton extends StatelessWidget {
 
     return Visibility(
       visible: !keyboardIsOpen,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 40),
-          SizedBox(
-            width: width ?? 60,
-            height: height ?? 60,
-            child: FloatingActionButton(
-              tooltip: tooltip,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              onPressed: onPressed,
-              child: child,
-            ),
-          ),
-        ],
+      child: FloatingActionButton(
+        tooltip: tooltip,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        onPressed: onPressed,
+        child: child,
       ),
     );
   }

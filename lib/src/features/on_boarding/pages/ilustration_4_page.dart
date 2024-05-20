@@ -9,38 +9,43 @@ class Ilustration4Page extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final mediaQuerySizeOf = MediaQuery.sizeOf(context);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          height: mediaQuerySizeOf.height * .4,
-          width: mediaQuerySizeOf.width,
-          BookifyImages.ilustration_4,
-          fit: BoxFit.fill,
+    return SizedBox(
+      height: mediaQuerySizeOf.height,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              height: mediaQuerySizeOf.height * .4,
+              width: mediaQuerySizeOf.width,
+              BookifyImages.ilustration_4,
+              fit: BoxFit.fill,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Controle o tempo e os momentos de leitura',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontSize: 32,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Text(
+              'Saiba quanto tempo você levará para ler aquele livro na sua estante calculando o seu tempo de leitura, e utilize o timer de leitura para definir por quanto tempo você pode ler.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        Text(
-          'Controle o tempo e os momentos de leitura',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: colorScheme.primary,
-            fontSize: 32,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Text(
-          'Saiba quanto tempo você levará para ler aquele livro na sua estante calculando o seu tempo de leitura, e utilize o timer de leitura para definir por quanto tempo você pode ler.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

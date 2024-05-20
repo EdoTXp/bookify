@@ -17,8 +17,9 @@ class GoogleAuthStrategy implements AuthStrategy {
         idToken: googleAuth?.idToken,
       );
 
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
 
       final userModel = UserModel(
         name: userCredential.user?.displayName ?? 'Sem nome',

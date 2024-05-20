@@ -5,6 +5,7 @@ Links:
   - https://github.com/bizz84/bottom_bar_fab_flutter/blob/master/lib/fab_bottom_app_bar.dart
 */
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
+import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_tab_item.dart';
 import 'package:flutter/material.dart';
 
 class FABBottomAppBarItem {
@@ -20,15 +21,21 @@ class FABBottomAppBarItem {
 }
 
 const rectangleRoundedNotchedShape = AutomaticNotchedShape(
-  RoundedRectangleBorder(),
   RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(15)),
+    borderRadius: BorderRadius.all(
+      Radius.circular(15),
+    ),
+  ),
+  RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(15),
+    ),
   ),
 );
 
 class FABBottomAppBar extends StatefulWidget {
   final List<FABBottomAppBarItem> items;
-  final NotchedShape notchedShape;
+  final NotchedShape? notchedShape;
   final ValueChanged<int> onSelectedItem;
   final FabBottomBarController? controller;
   final double? width;
@@ -39,9 +46,9 @@ class FABBottomAppBar extends StatefulWidget {
   const FABBottomAppBar({
     super.key,
     required this.items,
-    required this.notchedShape,
     required this.onSelectedItem,
     this.controller,
+    this.notchedShape = rectangleRoundedNotchedShape,
     this.color,
     this.selectedColor,
     this.backgroundColor,
@@ -58,25 +65,24 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.controller != null) {
-      widget.controller!.addListener(() {
-        int value = widget.controller!.value;
-        int length = widget.items.length;
-
-        assert(
-          (value >= 0) && (value < length),
-          'Selected item: $value. The selected item must be between 0 and ${length - 1}.',
-        );
-        _updateIndex(value);
-      });
-    }
+    widget.controller?.addListener(_updateIndexListener);
   }
 
   @override
   void dispose() {
-    widget.controller?.dispose();
+    widget.controller?.removeListener(_updateIndexListener);
     super.dispose();
+  }
+
+  void _updateIndexListener() {
+    int value = widget.controller!.value;
+    int length = widget.items.length;
+
+    assert(
+      (value >= 0) && (value < length),
+      'Selected item: $value. The selected item must be between 0 and ${length - 1}.',
+    );
+    _updateIndex(value);
   }
 
   void _updateIndex(int index) {
@@ -86,73 +92,17 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     });
   }
 
-  Widget _buildTabItem({
-    required FABBottomAppBarItem item,
-    required int index,
-    required ValueChanged<int> onPressed,
-  }) {
-    final isSelectedItem = _selectedItemIndex == index;
-
-    final theme = Theme.of(context);
-    final colorItem = isSelectedItem
-        ? widget.selectedColor ?? theme.colorScheme.secondary
-        : widget.color ?? theme.colorScheme.primary;
-
-    final iconItem = isSelectedItem ? item.selectedIcon : item.unselectedIcon;
-
-    return Tooltip(
-      message: 'Página: ${item.label}',
-      child: Material(
-        borderRadius: BorderRadius.circular(90),
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(90),
-          splashColor: Colors.transparent,
-          onTap: () => onPressed(index),
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: isSelectedItem
-                // Circle created only when item is selected.
-                ? BoxDecoration(
-                    border: Border.all(color: colorItem),
-                    borderRadius: BorderRadius.circular(90),
-                  )
-                : null,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  iconItem,
-                  color: colorItem,
-                ),
-                Text(
-                  item.label,
-                  textScaler: TextScaler.noScaling,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: colorItem,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+  List<Widget> _getRowItems() {
+    List<Widget> items = List.generate(
+      widget.items.length,
+      ((index) {
+        return FabTabItem(
+          item: widget.items[index],
+          onPressed: () => _updateIndex(index),
+          isSelected: _selectedItemIndex == index,
+        );
+      }),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> items = List.generate(widget.items.length, ((index) {
-      return _buildTabItem(
-        item: widget.items[index],
-        index: index,
-        onPressed: _updateIndex,
-      );
-    }));
 
     // add SizedBox when icons are close to FAB
     items.insert(
@@ -161,18 +111,22 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
         width: 55,
       ),
     );
+    return items;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
       // Avoid onTaps below the bottomBar.
       decoration: const BoxDecoration(),
       child: BottomAppBar(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal:  8.0),
         color: widget.backgroundColor,
         shape: widget.notchedShape,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: items,
+          children: _getRowItems(),
         ),
       ),
     );
