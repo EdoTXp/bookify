@@ -140,6 +140,17 @@ void main() {
       expect(newRelationshipRow, equals(1));
     });
 
+    test('countBookcases()', () async {
+      when(
+        () => bookcaseRepository.countBookcases(),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final bookcasesCount = await bookcaseService.countBookcases();
+      expect(bookcasesCount, equals(10));
+    });
+
     test('countBookcasesByBook()', () async {
       when(
         () => bookOnCaseRepository.countBookcasesByBook(
@@ -277,6 +288,18 @@ void main() {
       expect(
         () async => await bookcaseService.insertBookcaseRelationship(
             bookcaseId: 1, bookId: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('countBookcases()', () async {
+      when(
+        () => bookcaseRepository.countBookcases(),
+      ).thenThrow(const LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookcaseService.countBookcases(),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

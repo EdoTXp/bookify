@@ -114,6 +114,16 @@ class BookcaseServiceImpl implements BookcaseService {
   }
 
   @override
+  Future<int> countBookcases() async {
+    try {
+      final bookcasesCount = await _bookcaseRepository.countBookcases();
+      return bookcasesCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> countBookcasesByBook({required String bookId}) async {
     try {
       final bookcasesCount = await _bookOnCaseRepository.countBookcasesByBook(

@@ -84,6 +84,19 @@ class ReadingRepositoryImpl implements ReadingRepository {
   }
 
   @override
+  Future<int> countReadings() async {
+    try {
+      final countReadings = await _database.countItems(
+        table: _readingTableName,
+      );
+
+      return countReadings;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> insert({required ReadingModel readingModel}) async {
     try {
       final readingId = await _database.insert(

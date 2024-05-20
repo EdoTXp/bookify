@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final loanDetailPageProviders = [
+final loanDetailBlocProviders = [
   BlocProvider<LoanDetailBloc>(
     create: (context) => LoanDetailBloc(
       context.read(),

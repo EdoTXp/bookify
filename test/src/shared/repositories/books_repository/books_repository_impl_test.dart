@@ -205,6 +205,20 @@ void main() {
           await bookRepository.updateBookPageCount(id: '1', pageCount: 100);
       expect(bookUpdated, equals(1));
     });
+
+    test('countBooks', () async {
+      when(
+        () => localDatabase.countItems(
+          table: any(named: 'table'),
+        ),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final booksCount = await bookRepository.countBooks();
+
+      expect(booksCount, equals(10));
+    });
   });
 
   group('Test normal CRUD book with error ||', () {
@@ -452,6 +466,20 @@ void main() {
           id: '1',
           pageCount: 100,
         ),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('countBooks -- LocalDatabaseException', () async {
+      when(
+        () => localDatabase.countItems(
+          table: any(named: 'table'),
+        ),
+      ).thenThrow(const LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookRepository.countBooks(),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

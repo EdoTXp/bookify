@@ -1,6 +1,6 @@
 import 'package:bookify/src/shared/providers/repositories/repositories_providers.dart';
 import 'package:bookify/src/shared/providers/services/services.dart';
-import 'package:bookify/src/shared/providers/views/views_providers.dart';
+import 'package:bookify/src/shared/providers/blocs/blocs_providers.dart';
 import 'package:provider/single_child_widget.dart';
 
 class Providers {
@@ -10,24 +10,25 @@ class Providers {
     ...appServicesProviders,
     ...userSettingsServicesProviders,
     ...servicesProviders,
-    ...userThemeProviders,
-    ...authPageProviders,
-    ...homePageProviders,
-    ...profilePageProviders,
-    ...bookDetailPageProviders,
-    ...bookcasePageProviders,
-    ...bookcaseInsertionPageProviders,
-    ...bookcaseDetailPageProviders,
-    ...bookOnBookcaseDetailPageProviders,
-    ...bookcaseBooksInsertionProviders,
-    ...loanPageProviders,
-    ...loanDetailPageProviders,
-    ...loanInsertionPageProviders,
-    ...readingsPageProviders,
-    ...readingsInsertionPageProviders,
-    ...readingsDetailPageProviders,
-    ...myBooksProviders,
-    ...contactsPickerProviders,
-    ...booksPickerProviders,
+    ...userThemeBlocProviders,
+    ...userInformationBlocProviders,
+    ...authBlocProviders,
+    ...homeBlocProviders,
+    ...profileBlocProviders,
+    ...bookDetailBlocProviders,
+    ...bookcaseBlocProviders,
+    ...bookcaseInsertionBlocProviders,
+    ...bookcaseDetailBlocProviders,
+    ...bookOnBookcaseDetailBlocProviders,
+    ...bookcaseBooksInsertionBlocProviders,
+    ...loanBlocProviders,
+    ...loanDetailBlocProviders,
+    ...loanInsertionBlocProviders,
+    ...readingsBlocProviders,
+    ...readingsInsertionBlocProviders,
+    ...readingsDetailBlocProviders,
+    ...myBooksBlocProviders,
+    ...contactsPickerBlocProviders,
+    ...booksPickerBlocProviders,
   ];
 }

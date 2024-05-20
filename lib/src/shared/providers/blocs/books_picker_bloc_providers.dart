@@ -3,7 +3,7 @@ import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/
 import 'package:bookify/src/features/books_picker/views/widgets/separate_books_picker/bloc/separate_books_picker_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-final booksPickerProviders = [
+final booksPickerBlocProviders = [
   BlocProvider<BookcasePickerBloc>(
     create: (context) => BookcasePickerBloc(
       context.read(),

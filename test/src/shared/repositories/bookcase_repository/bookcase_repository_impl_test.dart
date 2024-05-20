@@ -81,6 +81,20 @@ void main() {
       expect(bookcasesModel.color, Color(Colors.pink.value));
     });
 
+    test('countBookcases()', () async {
+      when(
+        () => localDatabase.countItems(
+          table: any(named: 'table'),
+        ),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final bookcasesCount = await bookcaseRepository.countBookcases();
+
+      expect(bookcasesCount, equals(10));
+    });
+
     test('insert()', () async {
       when(() => localDatabase.insert(
           table: any(named: 'table'),
@@ -200,7 +214,21 @@ void main() {
             e.message == 'Impossível encontrar a estante no database'));
   });
 
-  test('insert()', () async {
+  test('countBookcases() -- LocalDatabaseException', () async {
+    when(
+      () => localDatabase.countItems(
+        table: any(named: 'table'),
+      ),
+    ).thenThrow(const LocalDatabaseException('Error on database'));
+
+    expect(
+      () async => await bookcaseRepository.countBookcases(),
+      throwsA((Exception e) =>
+          e is LocalDatabaseException && e.message == 'Error on database'),
+    );
+  });
+
+  test('insert() -- LocalDatabaseException', () async {
     when(() => localDatabase.insert(
             table: any(named: 'table'), values: any(named: 'values')))
         .thenThrow(const LocalDatabaseException('Error on database'));
@@ -212,7 +240,7 @@ void main() {
             e is LocalDatabaseException && e.message == 'Error on database'));
   });
 
-  test('update()', () async {
+  test('update() -- LocalDatabaseException', () async {
     when(() => localDatabase.update(
             table: any(named: 'table'),
             values: any(named: 'values'),
@@ -227,7 +255,7 @@ void main() {
             e is LocalDatabaseException && e.message == 'Error on database'));
   });
 
-  test('delete()', () async {
+  test('delete() -- LocalDatabaseException', () async {
     when(() => localDatabase.delete(
             table: any(named: 'table'),
             idColumn: any(named: 'idColumn'),

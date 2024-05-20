@@ -98,6 +98,17 @@ void main() {
       expect(readingModel.bookId, equals('bookId'));
     });
 
+    test('countReadings', () async {
+      when(
+        () => readingRepository.countReadings(),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final readingsCount = await readingService.countReadings();
+      expect(readingsCount, equals(10));
+    });
+
     test('insert', () async {
       when(
         () => readingRepository.insert(readingModel: readings[1]),
@@ -169,6 +180,18 @@ void main() {
 
       expect(
         () async => await readingService.getById(readingId: 1),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on Database'),
+      );
+    });
+
+    test('countReadings -- LocalDatabaseException', () async {
+      when(
+        () => readingRepository.countReadings(),
+      ).thenThrow(const LocalDatabaseException('Error on Database'));
+
+      expect(
+        () async => await readingService.countReadings(),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on Database'),
       );

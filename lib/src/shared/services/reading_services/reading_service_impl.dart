@@ -45,6 +45,16 @@ class ReadingServiceImpl implements ReadingService {
   }
 
   @override
+  Future<int> countReadings() async {
+    try {
+      final readingsCount = await _readingRepository.countReadings();
+      return readingsCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> insert({required ReadingModel readingModel}) async {
     try {
       final newReadingId = await _readingRepository.insert(

@@ -258,8 +258,30 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
-  Future<int> countItemsById(
-      {required String table, required String idColumn, required id}) async {
+  Future<int> countItems({required String table}) async {
+    try {
+      final db = await database;
+
+      final query = 'SELECT COUNT(*) FROM $table';
+      final countRowsMap = await db!.rawQuery(query);
+
+      if (countRowsMap.isNotEmpty) {
+        final count = countRowsMap.first.values.first as int;
+        return count;
+      }
+
+      return 0;
+    } on DatabaseException catch (e) {
+      throw LocalDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<int> countItemsById({
+    required String table,
+    required String idColumn,
+    required id,
+  }) async {
     try {
       final db = await database;
 
@@ -270,7 +292,7 @@ class LocalDatabaseImpl implements LocalDatabase {
         final count = countRowsMap.first.values.first as int;
         return count;
       }
-      
+
       return 0;
     } on DatabaseException catch (e) {
       throw LocalDatabaseException(e.toString());

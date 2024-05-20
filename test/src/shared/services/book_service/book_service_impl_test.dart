@@ -154,6 +154,17 @@ void main() {
       expect(completeBookModel.categories, equals([categoryModel]));
     });
 
+    test('countBooks', () async {
+      when(
+        () => booksRepository.countBooks(),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final booksCount = await bookService.countBooks();
+      expect(booksCount, equals(10));
+    });
+
     test('insert complete book', () async {
       // setUp all when
       final completeBookModel = bookModel
@@ -355,6 +366,18 @@ void main() {
 
       expect(
         () async => await bookService.getBookById(id: '1'),
+        throwsA((Exception e) =>
+            e is LocalDatabaseException && e.message == 'Error on database'),
+      );
+    });
+
+    test('countBooks', () async {
+      when(
+        () => booksRepository.countBooks(),
+      ).thenThrow(const LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await bookService.countBooks(),
         throwsA((Exception e) =>
             e is LocalDatabaseException && e.message == 'Error on database'),
       );

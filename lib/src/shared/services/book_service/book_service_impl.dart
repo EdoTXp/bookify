@@ -156,6 +156,16 @@ class BookServiceImpl implements BookService {
   }
 
   @override
+  Future<int> countBooks() async {
+    try {
+      final booksCount = await _booksRepository.countBooks();
+      return booksCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> updateStatus({
     required String id,
     required BookStatus status,

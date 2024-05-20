@@ -137,6 +137,19 @@ void main() {
       expect(loanModel.bookId, equals('bookId'));
     });
 
+    test('countLoans', () async {
+      when(
+        () => localDatabase.countItems(
+          table: any(named: 'table'),
+        ),
+      ).thenAnswer(
+        (_) async => 10,
+      );
+
+      final loansCount = await loanRepository.countLoans();
+      expect(loansCount, equals(10));
+    });
+
     test('insert', () async {
       when(
         () => localDatabase.insert(
@@ -294,6 +307,22 @@ void main() {
 
       expect(
         () async => await loanRepository.getById(loanId: 1),
+        throwsA(
+          (Exception e) =>
+              e is LocalDatabaseException && e.message == 'Error on database',
+        ),
+      );
+    });
+
+    test('countLoans -- LocalDatabaseException', () async {
+      when(
+        () => localDatabase.countItems(
+          table: any(named: 'table'),
+        ),
+      ).thenThrow(const LocalDatabaseException('Error on database'));
+
+      expect(
+        () async => await loanRepository.countLoans(),
         throwsA(
           (Exception e) =>
               e is LocalDatabaseException && e.message == 'Error on database',

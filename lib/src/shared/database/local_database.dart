@@ -135,6 +135,10 @@ abstract interface class LocalDatabase {
     required dynamic columnValue,
   });
 
+  Future<int> countItems({
+    required String table,
+  });
+
   Future<int> countItemsById({
     required String table,
     required String idColumn,

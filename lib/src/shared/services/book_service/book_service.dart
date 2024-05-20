@@ -8,6 +8,7 @@ abstract interface class BookService {
   Future<int> insertCompleteBook({required BookModel bookModel});
   Future<String> getBookImage({required String id});
   Future<BookStatus> getBookStatus({required String id});
+  Future<int> countBooks();
   Future<int> updateStatus({required String id, required BookStatus status});
   Future<int> updatePageCount({required String id, required int pageCount});
   Future<int> deleteBook({required String id});

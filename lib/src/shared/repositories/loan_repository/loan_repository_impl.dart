@@ -77,6 +77,19 @@ class LoanRepositoryImpl implements LoanRepository {
   }
 
   @override
+  Future<int> countLoans() async {
+    try {
+      final loansCount = await _database.countItems(
+        table: _loanTableName,
+      );
+
+      return loansCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> insert({required LoanModel loanModel}) async {
     try {
       final loanId = await _database.insert(

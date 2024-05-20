@@ -67,6 +67,19 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
   }
 
   @override
+  Future<int> countBookcases() async {
+    try {
+      final bookcasesCount = await _database.countItems(
+        table: _bookcaseTableName,
+      );
+
+      return bookcasesCount;
+    } on LocalDatabaseException {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> insert({required BookcaseModel bookcaseModel}) async {
     try {
       final bookcaseId = await _database.insert(
