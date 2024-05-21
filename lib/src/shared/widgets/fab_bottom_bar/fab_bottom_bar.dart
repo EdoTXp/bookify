@@ -22,13 +22,15 @@ class FABBottomAppBarItem {
 
 const rectangleRoundedNotchedShape = AutomaticNotchedShape(
   RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(
-      Radius.circular(15),
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(15),
+      bottomRight: Radius.circular(15),
     ),
   ),
   RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(
-      Radius.circular(15),
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(15),
+      bottomRight: Radius.circular(15),
     ),
   ),
 );
@@ -108,7 +110,8 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     items.insert(
       items.length >> 1,
       const SizedBox(
-        width: 55,
+        height: 60,
+        width: 60,
       ),
     );
     return items;
@@ -120,7 +123,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
       // Avoid onTaps below the bottomBar.
       decoration: const BoxDecoration(),
       child: BottomAppBar(
-        padding: const EdgeInsets.symmetric(horizontal:  8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         color: widget.backgroundColor,
         shape: widget.notchedShape,
         child: Row(

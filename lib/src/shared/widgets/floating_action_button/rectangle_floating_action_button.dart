@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 
-class FloatingActionButtonAlignedCenterDockerLocation
+class _FloatingActionButtonAlignedCenterDockerLocation
     extends FloatingActionButtonLocation {
-
-
-  const FloatingActionButtonAlignedCenterDockerLocation();
+  const _FloatingActionButtonAlignedCenterDockerLocation();
 
   @override
   Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    scaffoldGeometry.contentBottom;
+    final double centerWidth = (scaffoldGeometry.scaffoldSize.width -
+            scaffoldGeometry.floatingActionButtonSize.width) /
+        2.0;
+
+    final double centerHeight = scaffoldGeometry.contentBottom;
 
     return Offset(
-      scaffoldGeometry.scaffoldSize.width * .42,
-      scaffoldGeometry.contentBottom,
+      centerWidth,
+      centerHeight,
     );
   }
 }
 
-/// Align the floating Action Button on center bottom and align with the items of bottombar. 
+/// Align the floating Action Button on center bottom and align with the items of bottombar.
 const floatingItemAlignedCenterDockerPosition =
-    FloatingActionButtonAlignedCenterDockerLocation();
+    _FloatingActionButtonAlignedCenterDockerLocation();
 
 class RectangleFloatingActionButton extends StatelessWidget {
   final VoidCallback onPressed;
