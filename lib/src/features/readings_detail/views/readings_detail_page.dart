@@ -242,7 +242,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                           await ShowDialogService.showSimpleDialog(
                             context: context,
                             title:
-                                'Agora que você leu as páginas. Atualize na slideBar para confirmar as páginas lidas',
+                                'Agora que você leu as páginas, atualize na slideBar para confirmar as páginas lidas.',
                           );
                         }
                       },

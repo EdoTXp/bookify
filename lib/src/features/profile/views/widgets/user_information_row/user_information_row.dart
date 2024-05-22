@@ -38,7 +38,7 @@ class _UserInformationRowState extends State<UserInformationRow> {
         :final readingsCount,
       ) =>
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           textBaseline: TextBaseline.alphabetic,
           children: [

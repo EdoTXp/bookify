@@ -59,16 +59,18 @@ class _LoanPageState extends State<LoanPage> {
           loansDto: loansDto,
           refreshPage: _refreshPage,
         ),
-      LoanEmptyState() => ItemEmptyStateWidget(
-          label: 'Criar um novo empréstimo de um livro',
-          onTap: () async {
-            await Navigator.pushNamed(
-              context,
-              LoanInsertionPage.routeName,
-            );
-            _refreshPage();
-          },
-        ),
+      LoanEmptyState() => Center(
+        child: ItemEmptyStateWidget(
+            label: 'Criar um novo empréstimo de um livro',
+            onTap: () async {
+              await Navigator.pushNamed(
+                context,
+                LoanInsertionPage.routeName,
+              );
+              _refreshPage();
+            },
+          ),
+      ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
           message:
               'Nenhum Empréstimo encontrado com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
