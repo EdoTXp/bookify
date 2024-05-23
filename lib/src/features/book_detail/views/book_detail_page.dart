@@ -217,13 +217,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                       ),
                       const SizedBox(width: 24),
-                      Text(
-                        '9H PARA LER',
-                        textScaler: TextScaler.noScaling,
-                        style: TextStyle(
-                          color: colorScheme.primary,
-                          fontSize: 14,
-                        ),
+                      BookPagesReadingTime(
+                        pagesCount: book.pageCount,
                       ),
                     ],
                   ),

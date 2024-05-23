@@ -25,13 +25,13 @@ class _ThemeSettingsState extends State<ThemeSettings> {
       UserThemeLoadedState(:final themeMode) => Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Tema Claro',
               overflow: TextOverflow.ellipsis,
               textScaler: TextScaler.noScaling,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Radio<ThemeMode>.adaptive(
@@ -39,13 +39,13 @@ class _ThemeSettingsState extends State<ThemeSettings> {
               groupValue: themeMode,
               onChanged: _onChangedRadioButton,
             ),
-            const Text(
+            Text(
               'Tema Escuro',
               overflow: TextOverflow.ellipsis,
               textScaler: TextScaler.noScaling,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Radio<ThemeMode>.adaptive(
@@ -53,13 +53,13 @@ class _ThemeSettingsState extends State<ThemeSettings> {
               groupValue: themeMode,
               onChanged: _onChangedRadioButton,
             ),
-            const Text(
+            Text(
               'Tema Sistema',
               overflow: TextOverflow.ellipsis,
               textScaler: TextScaler.noScaling,
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Radio<ThemeMode>.adaptive(
@@ -91,28 +91,30 @@ class _ThemeSettingsState extends State<ThemeSettings> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: colorScheme.primary.withOpacity(.75),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.grey[100]
+            : Colors.black87,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Tema',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Tema',
+            textScaler: TextScaler.noScaling,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: colorScheme.secondary,
             ),
-            BlocBuilder<UserThemeBloc, UserThemeState>(
-              bloc: _userThemeBloc,
-              builder: _getWidgetOnThemeSetting,
-            ),
-          ],
-        ),
+          ),
+          BlocBuilder<UserThemeBloc, UserThemeState>(
+            bloc: _userThemeBloc,
+            builder: _getWidgetOnThemeSetting,
+          ),
+        ],
       ),
     );
   }

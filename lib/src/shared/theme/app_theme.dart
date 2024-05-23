@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ final appLightTheme = ThemeData(
       statusBarBrightness: Brightness.light, // For iOS (dark icons)
     ),
   ),
+  scrollbarTheme: _scrollbarTheme,
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
@@ -49,6 +51,7 @@ final appDarkTheme = ThemeData(
       statusBarBrightness: Brightness.dark, // For iOS (light icons)
     ),
   ),
+  scrollbarTheme: _scrollbarTheme,
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
   textTheme: _textTheme,
@@ -84,6 +87,21 @@ const _appBarTheme = AppBarTheme(
   surfaceTintColor: Colors.transparent,
   iconTheme: IconThemeData(
     color: AppColor.bookifySecondaryColor,
+  ),
+);
+
+final _scrollbarTheme = ScrollbarThemeData(
+  radius: const Radius.circular(90),
+  thumbVisibility: const WidgetStatePropertyAll(true),
+  trackVisibility: const WidgetStatePropertyAll(true),
+  thumbColor: WidgetStatePropertyAll(
+    AppColor.bookifyPrimaryColor.darken(),
+  ),
+  trackBorderColor: WidgetStatePropertyAll(
+    AppColor.bookifyPrimaryColor.lighten(),
+  ),
+  trackColor: WidgetStatePropertyAll(
+    AppColor.bookifyPrimaryColor.lighten(),
   ),
 );
 

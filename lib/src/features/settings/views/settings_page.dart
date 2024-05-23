@@ -1,4 +1,4 @@
-import 'package:bookify/src/features/settings/views/widgets/theme_settings.dart';
+import 'package:bookify/src/features/settings/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -10,21 +10,29 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'Configurações',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ),
       body: const SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Configurações',
-                style: TextStyle(fontSize: 18),
-              ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               ThemeSettings(),
+              SizedBox(
+                height: 20,
+              ),
+              TimeReadingSettings(),
             ],
           ),
         ),

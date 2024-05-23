@@ -1,5 +1,7 @@
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository_impl.dart';
+import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
+import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository_impl.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository_impl.dart';
 import 'package:bookify/src/core/storage/shared_preference_storage.dart';
@@ -18,6 +20,11 @@ final userSettingsStorageProviders = [
   ),
   RepositoryProvider<AuthRepository>(
     create: (context) => AuthRepositoryImpl(
+      storage: context.read(),
+    ),
+  ),
+  RepositoryProvider<UserPageReadingTimeRepository>(
+    create: (context) => UserPageReadingTimeRepositoryImpl(
       storage: context.read(),
     ),
   ),

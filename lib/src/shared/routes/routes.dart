@@ -10,6 +10,7 @@ import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/features/on_boarding/views/on_boarding_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
+import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
 import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
@@ -25,6 +26,8 @@ class Routes {
   static Map<String, WidgetBuilder> routes = {
     OnBoardingPage.routeName: (context) => const OnBoardingPage(),
     AuthPage.routeName: (context) => const AuthPage(),
+    ReadingPageTimeCalculatorPage.routeName: (context) =>
+        const ReadingPageTimeCalculatorPage(),
     RootPage.routeName: (context) => const RootPage(),
     BookDetailPage.routeName: (context) => BookDetailPage(
           bookModel: ModalRoute.of(context)!.settings.arguments as BookModel,
