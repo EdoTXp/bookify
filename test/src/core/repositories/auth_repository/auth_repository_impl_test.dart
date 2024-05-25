@@ -31,6 +31,23 @@ void main() {
       expect(user, equals(userModel));
     });
 
+    test('Test get UserModel when json is null', () async {
+      when(
+        () => storage.getStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => null,
+      );
+
+      final user = await authRepository.getUserModel();
+
+      expect(
+        user,
+        equals(equals(null)),
+      );
+    });
+
     test('Test set UserModel', () async {
       when(
         () => storage.insertStorage(

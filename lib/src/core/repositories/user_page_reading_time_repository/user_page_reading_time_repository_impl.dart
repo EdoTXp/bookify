@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/core/models/user_page_reading_time.dart';
+import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
 import 'package:bookify/src/core/storage/storage.dart';
 
@@ -13,13 +13,13 @@ class UserPageReadingTimeRepositoryImpl
   }) : _storage = storage;
 
   @override
-  Future<UserPageReadingTime> getUserPageReadingTime() async {
+  Future<UserPageReadingTimeModel> getUserPageReadingTime() async {
     try {
       final pageReading = await _storage.getStorage(
         key: _userPageReadingTimeKey,
       ) as int?;
 
-      final userPageReadingTime = UserPageReadingTime(
+      final userPageReadingTime = UserPageReadingTimeModel(
         pageReadingTimeSeconds: pageReading,
       );
 
@@ -34,7 +34,7 @@ class UserPageReadingTimeRepositoryImpl
 
   @override
   Future<int> setUserPageReadingTime({
-    required UserPageReadingTime userPageReadingTime,
+    required UserPageReadingTimeModel userPageReadingTime,
   }) async {
     final userPageReadingTimeInserted = await _storage.insertStorage(
       key: _userPageReadingTimeKey,

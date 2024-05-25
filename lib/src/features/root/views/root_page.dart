@@ -23,9 +23,6 @@ class _RootPageState extends State<RootPage> {
   /// disable extendBody only bookcaseTabView
   bool _canExtendBody = true;
 
-  // Can Pop the application when pageView is initialPage = HomePage.
-  bool _canPop = true;
-
   late final BookBloc _bookBloc;
   late final PageController _pageController;
   late final FabBottomBarController _bottomBarController;
@@ -69,14 +66,12 @@ class _RootPageState extends State<RootPage> {
   }
 
   void _navigateBackOrClose() {
-    setState(() {
-      if (_pageController.page != _pageController.initialPage) {
-        _canPop = false;
-        _returnToInitialPage();
-      } else {
-        _canPop = true;
-      }
-    });
+    if (_pageController.page != _pageController.initialPage) {
+      _returnToInitialPage();
+      return;
+    }
+
+    SystemNavigator.pop();
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
@@ -94,7 +89,7 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: _canPop,
+      canPop: false,
       onPopInvoked: (_) => _navigateBackOrClose(),
       child: Scaffold(
         extendBody: _canExtendBody,

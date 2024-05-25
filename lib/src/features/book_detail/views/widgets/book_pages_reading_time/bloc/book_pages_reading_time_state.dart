@@ -6,7 +6,7 @@ final class BookPagesReadingTimeLoadingState
     extends BookPagesReadingTimeState {}
 
 final class BookPagesReadingTimeLoadedState extends BookPagesReadingTimeState {
-  final UserPageReadingTime userPageReadingTime;
+  final UserPageReadingTimeModel userPageReadingTime;
 
   BookPagesReadingTimeLoadedState({
     required this.userPageReadingTime,

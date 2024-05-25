@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/core/models/user_page_reading_time.dart';
+import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

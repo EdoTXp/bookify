@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/core/models/user_page_reading_time.dart';
+import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +23,7 @@ class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
     try {
       emit(ReadingPageTimeCalculatorLoadingState());
 
-      final userPageReading = UserPageReadingTime(
+      final userPageReading = UserPageReadingTimeModel(
         pageReadingTimeSeconds: event.readingPageTime,
       );
 
@@ -35,7 +35,7 @@ class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
       if (userPageReadingTimeInserted == 0) {
         emit(
           ReadingPageTimeCalculatorErrorState(
-              errorMessage: 'Erro ao inserir tempo de leitura da página'),
+              errorMessage: 'Erro ao inserir o tempo de leitura da página'),
         );
         return;
       }
@@ -44,7 +44,7 @@ class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
     } on StorageException catch (e) {
       emit(
         ReadingPageTimeCalculatorErrorState(
-          errorMessage: 'Erro ao inserir tempo de leitura da página: $e',
+          errorMessage: 'Erro ao inserir o tempo de leitura da página: $e',
         ),
       );
     } on Exception catch (e) {

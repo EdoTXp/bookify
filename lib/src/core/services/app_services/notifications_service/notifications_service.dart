@@ -1,5 +1,10 @@
 import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
 
+enum RepeatIntervalType {
+  dayly,
+  weekly,
+}
+
 abstract interface class NotificationsService {
   Future<void> cancelNotificationById({required int id});
   Future<void> scheduleNotification(CustomNotification notification);
@@ -7,7 +12,9 @@ abstract interface class NotificationsService {
     required int id,
     required String title,
     required String body,
+    required RepeatIntervalType repeatType,
     required NotificationChannel notificationChannel,
   });
   Future<void> checkForNotifications();
+  Future<List<CustomNotification>> getNotifications();
 }

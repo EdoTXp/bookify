@@ -6,7 +6,7 @@ import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
-import 'package:bookify/src/features/book_detail/widgets/widgets.dart';
+import 'package:bookify/src/features/book_detail/views/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookDetailPage extends StatefulWidget {

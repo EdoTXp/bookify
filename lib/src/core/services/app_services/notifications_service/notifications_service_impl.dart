@@ -138,13 +138,19 @@ class NotificationsServiceImpl implements NotificationsService {
     required int id,
     required String title,
     required String body,
+    required RepeatIntervalType repeatType,
     required NotificationChannel notificationChannel,
   }) async {
+    final repeatInterval = switch (repeatType) {
+      RepeatIntervalType.dayly => RepeatInterval.daily,
+      RepeatIntervalType.weekly => RepeatInterval.weekly,
+    };
+
     await _notifications.periodicallyShow(
       id,
       title,
       body,
-      RepeatInterval.daily,
+      repeatInterval,
       _getNotificationDetails(
         notificationChannel,
         body,
@@ -166,5 +172,27 @@ class NotificationsServiceImpl implements NotificationsService {
         _onTapOnNotification(details.notificationResponse!);
       }
     }
+  }
+
+  @override
+  Future<List<CustomNotification>> getNotifications() async {
+    final pendingNotifications =
+        await _notifications.pendingNotificationRequests();
+
+    final notifications = pendingNotifications
+        .map(
+          (notification) => CustomNotification(
+            id: notification.id,
+            notificationChannel: notification.payload!.isEmpty
+                ? NotificationChannel.readChannel
+                : NotificationChannel.loanChannel,
+            title: notification.title ?? 'sem título',
+            body: notification.body ?? 'sem corpo',
+            scheduledDate: DateTime.now(),
+          ),
+        )
+        .toList();
+
+    return notifications;
   }
 }

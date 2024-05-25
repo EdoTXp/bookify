@@ -1,14 +1,14 @@
-class UserPageReadingTime {
+class UserPageReadingTimeModel {
   final int? pageReadingTimeSeconds;
 
-  const UserPageReadingTime({
+  const UserPageReadingTimeModel({
     this.pageReadingTimeSeconds,
   });
 
-  UserPageReadingTime copyWith({
+  UserPageReadingTimeModel copyWith({
     int? pageReadingTime,
   }) {
-    return UserPageReadingTime(
+    return UserPageReadingTimeModel(
       pageReadingTimeSeconds: pageReadingTime ?? pageReadingTimeSeconds,
     );
   }
@@ -32,7 +32,7 @@ class UserPageReadingTime {
       'UserPageReadingTime(pageReadingTime: $pageReadingTimeSeconds)';
 
   @override
-  bool operator ==(covariant UserPageReadingTime other) {
+  bool operator ==(covariant UserPageReadingTimeModel other) {
     if (identical(this, other)) return true;
 
     return other.pageReadingTimeSeconds == pageReadingTimeSeconds;

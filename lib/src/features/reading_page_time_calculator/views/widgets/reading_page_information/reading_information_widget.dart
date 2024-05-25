@@ -25,7 +25,7 @@ class ReadingInformationWidget extends StatelessWidget {
             'Leia um pequeno trecho extraido de um livro gerado por uma IA, enquanto acompanhamos o seu tempo com um cronômetro. Após o cálculo, você terá informado em qualquer livro no aplicativo, o tempo médio para finalizar a leitura dessa determinada obra, baseado no tempo que você levou para ler o texto.',
             textAlign: TextAlign.justify,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
             ),
           ),
         ],

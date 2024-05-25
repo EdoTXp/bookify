@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -90,14 +91,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Theme.of(context).brightness == Brightness.light
-            ? Colors.grey[100]
-            : Colors.black87,
-      ),
+    return SettingsContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

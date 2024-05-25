@@ -33,6 +33,10 @@ class SettingsPage extends StatelessWidget {
                 height: 20,
               ),
               TimeReadingSettings(),
+              SizedBox(
+                height: 20,
+              ),
+              HourReadingSettings(),
             ],
           ),
         ),

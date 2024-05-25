@@ -15,6 +15,7 @@ final appLightTheme = ThemeData(
       statusBarBrightness: Brightness.light, // For iOS (dark icons)
     ),
   ),
+  dropdownMenuTheme: _dropdownMenuTheme,
   scrollbarTheme: _scrollbarTheme,
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
@@ -51,6 +52,7 @@ final appDarkTheme = ThemeData(
       statusBarBrightness: Brightness.dark, // For iOS (light icons)
     ),
   ),
+  dropdownMenuTheme: _dropdownMenuTheme,
   scrollbarTheme: _scrollbarTheme,
   textSelectionTheme: _textSelectionTheme,
   progressIndicatorTheme: _progressIndicatorTheme,
@@ -87,6 +89,31 @@ const _appBarTheme = AppBarTheme(
   surfaceTintColor: Colors.transparent,
   iconTheme: IconThemeData(
     color: AppColor.bookifySecondaryColor,
+  ),
+);
+
+final _dropdownMenuTheme = DropdownMenuThemeData(
+  inputDecorationTheme: _inputDecorationTheme.copyWith(
+    prefixStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+    ),
+    filled: true,
+    fillColor: AppColor.bookifyPrimaryColor.lighten(),
+    suffixIconColor: Colors.white,
+    helperStyle: const TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+    ),
+  ),
+  textStyle: const TextStyle(
+    color: Colors.white,
+    fontSize: 14,
+  ),
+  menuStyle: MenuStyle(
+    backgroundColor: WidgetStatePropertyAll(
+      AppColor.bookifyPrimaryColor.lighten(),
+    ),
   ),
 );
 

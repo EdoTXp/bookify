@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/notifications/views/notifications_page.dart';
 import 'package:bookify/src/features/profile/views/widgets/user_circle_avatar.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
@@ -80,7 +81,12 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           TextIconButton(
             label: 'Notificações',
             iconData: Icons.notifications_outlined,
-            onPressed: () {},
+            onPressed: () async {
+              await Navigator.pushNamed(
+                context,
+                NotificationsPage.routeName,
+              );
+            },
           ),
           const SizedBox(
             height: 30,

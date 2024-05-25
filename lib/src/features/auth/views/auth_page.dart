@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/features/auth/widgets/terms_informations.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
+import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
@@ -63,6 +64,12 @@ class _AuthPageState extends State<AuthPage> {
             await Navigator.of(context).pushNamed(
               ReadingPageTimeCalculatorPage.routeName,
             );
+
+            if (context.mounted) {
+              await Navigator.of(context).pushNamed(
+                HourTimeCalculatorPage.routeName,
+              );
+            }
 
             if (context.mounted) {
               await Navigator.of(context).pushReplacementNamed(

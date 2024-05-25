@@ -30,11 +30,11 @@ class ReadingPageInformationWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                   width: 5,
+                  width: 5,
                 ),
                 Flexible(
                   child: BookifyElevatedButton.expanded(
-                    text: 'Calcular meu tempo',
+                    text: 'Calcular tempo',
                     onPressed: onPressedCalculated,
                   ),
                 ),
