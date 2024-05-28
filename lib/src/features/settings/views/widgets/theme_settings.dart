@@ -95,6 +95,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SettingsContainer(
+      width: MediaQuery.sizeOf(context).width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -106,6 +107,9 @@ class _ThemeSettingsState extends State<ThemeSettings> {
               fontWeight: FontWeight.bold,
               color: colorScheme.secondary,
             ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           BlocBuilder<UserThemeBloc, UserThemeState>(
             bloc: _userThemeBloc,

@@ -22,15 +22,26 @@ class TimePickerDialogService {
         confirmText: 'CONFIRMAR',
       );
     } else if (Platform.isIOS) {
+      final initialTimerDuration = initialTime != null
+          ? Duration(
+              hours: initialTime.hour,
+              minutes: initialTime.minute,
+            )
+          : Duration.zero;
+
       await showCupertinoModalPopup(
         context: context,
         builder: (context) {
           return CupertinoTimerPicker(
             mode: CupertinoTimerPickerMode.hm,
+            initialTimerDuration: initialTimerDuration,
             onTimerDurationChanged: (duration) {
+              final hours = duration.inMinutes ~/ 60;
+              final minutes = duration.inMinutes % 60;
+
               selectedTime = TimeOfDay(
-                hour: duration.inHours,
-                minute: duration.inMinutes,
+                hour: hours,
+                minute: minutes,
               );
             },
           );

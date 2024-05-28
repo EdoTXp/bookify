@@ -94,11 +94,11 @@ class _AuthPageState extends State<AuthPage> {
     final mediaQuerySizeOf = MediaQuery.sizeOf(context);
     final colorScheme = Theme.of(context).colorScheme;
 
-    return BlocListener<AuthBloc, AuthState>(
-      bloc: _bloc,
-      listener: _handleAuthStateListener,
-      child: Scaffold(
-        body: SafeArea(
+    return Scaffold(
+      body: BlocListener<AuthBloc, AuthState>(
+        bloc: _bloc,
+        listener: _handleAuthStateListener,
+        child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

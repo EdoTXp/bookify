@@ -19,7 +19,9 @@ class TimePickerWidget extends StatelessWidget {
     TimeOfDay initialTime,
   ) async {
     final time = await TimePickerDialogService.showTimePickerDialog(
-        context, initialTime);
+      context,
+      initialTime,
+    );
 
     if (time != null) {
       onTimeSelected(time);

@@ -6,6 +6,8 @@ class SettingsContainer extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
   final Color? lightColor;
   final Color? darkColor;
+  final double? height;
+  final double? width;
 
   const SettingsContainer({
     super.key,
@@ -14,6 +16,8 @@ class SettingsContainer extends StatelessWidget {
     this.borderRadius,
     this.lightColor,
     this.darkColor,
+    this.height,
+    this.width,
   });
 
   @override
@@ -23,6 +27,8 @@ class SettingsContainer extends StatelessWidget {
         vertical: 8.0,
         horizontal: 16.0,
       ),
+      height: height,
+      width: width,
       decoration: BoxDecoration(
         borderRadius: borderRadius ?? BorderRadius.circular(12),
         color: Theme.of(context).brightness == Brightness.light
