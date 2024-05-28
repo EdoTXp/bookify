@@ -26,8 +26,6 @@ const floatingItemAlignedCenterDockerPosition =
 class RectangleFloatingActionButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget child;
-  final double? width;
-  final double? height;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final String? tooltip;
@@ -36,8 +34,6 @@ class RectangleFloatingActionButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.child,
-    this.width,
-    this.height,
     this.backgroundColor,
     this.foregroundColor,
     this.tooltip,

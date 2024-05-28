@@ -44,6 +44,7 @@ class ContactInformationWidget extends StatelessWidget {
                 Text(
                   title,
                   textScaler: TextScaler.noScaling,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -53,6 +54,7 @@ class ContactInformationWidget extends StatelessWidget {
             ),
             Text(
               content,
+              textScaler: TextScaler.noScaling,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 12,

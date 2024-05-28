@@ -23,52 +23,55 @@ class _ThemeSettingsState extends State<ThemeSettings> {
   Widget _getWidgetOnThemeSetting(BuildContext context, UserThemeState state) {
     return switch (state) {
       UserThemeLoadingState() => const CenterCircularProgressIndicator(),
-      UserThemeLoadedState(:final themeMode) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Tema Claro',
-              overflow: TextOverflow.ellipsis,
-              textScaler: TextScaler.noScaling,
-              style: TextStyle(
-                fontSize: 10,
-                color: Theme.of(context).colorScheme.primary,
+      UserThemeLoadedState(:final themeMode) => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Tema Claro',
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
-            ),
-            Radio<ThemeMode>.adaptive(
-              value: ThemeMode.light,
-              groupValue: themeMode,
-              onChanged: _onChangedRadioButton,
-            ),
-            Text(
-              'Tema Escuro',
-              overflow: TextOverflow.ellipsis,
-              textScaler: TextScaler.noScaling,
-              style: TextStyle(
-                fontSize: 10,
-                color: Theme.of(context).colorScheme.primary,
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.light,
+                groupValue: themeMode,
+                onChanged: _onChangedRadioButton,
               ),
-            ),
-            Radio<ThemeMode>.adaptive(
-              value: ThemeMode.dark,
-              groupValue: themeMode,
-              onChanged: _onChangedRadioButton,
-            ),
-            Text(
-              'Tema Sistema',
-              overflow: TextOverflow.ellipsis,
-              textScaler: TextScaler.noScaling,
-              style: TextStyle(
-                fontSize: 10,
-                color: Theme.of(context).colorScheme.primary,
+              Text(
+                'Tema Escuro',
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
-            ),
-            Radio<ThemeMode>.adaptive(
-              value: ThemeMode.system,
-              groupValue: themeMode,
-              onChanged: _onChangedRadioButton,
-            ),
-          ],
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.dark,
+                groupValue: themeMode,
+                onChanged: _onChangedRadioButton,
+              ),
+              Text(
+                'Tema Sistema',
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.system,
+                groupValue: themeMode,
+                onChanged: _onChangedRadioButton,
+              ),
+            ],
+          ),
         ),
       UserThemeErrorState(:final errorMessage) => Text(
           errorMessage,

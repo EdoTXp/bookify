@@ -20,5 +20,6 @@ export 'package:bookify/src/shared/providers/blocs/loan_insertion_bloc_providers
 export 'package:bookify/src/shared/providers/blocs/readings_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/readings_insertion_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/readings_detail_bloc_providers.dart';
+export 'package:bookify/src/shared/providers/blocs/readings_timer_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/contacts_picker_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/books_picker_bloc_providers.dart';

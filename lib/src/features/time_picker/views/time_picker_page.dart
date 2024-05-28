@@ -61,7 +61,7 @@ class _TimePickerPageState extends State<TimePickerPage> {
           horizontal: 30.0,
         ),
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height * .95,
+          height: MediaQuery.sizeOf(context).height,
           child: Column(
             children: [
               const SizedBox(
@@ -69,9 +69,9 @@ class _TimePickerPageState extends State<TimePickerPage> {
               ),
               TimePickerWidget(
                 onTimeSelected: (TimeOfDay time) {
-                 setState(() {
+                  setState(() {
                     startingTime = time;
-                 });
+                  });
                 },
                 hour: startingTime.hour,
                 minute: startingTime.minute,

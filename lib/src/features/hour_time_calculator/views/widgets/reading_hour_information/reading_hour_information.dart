@@ -34,7 +34,7 @@ class ReadingHourInformation extends StatelessWidget {
                 ),
                 Flexible(
                   child: BookifyElevatedButton.expanded(
-                    text: 'Me programar agora',
+                    text: 'Programar agora',
                     onPressed: onPressedProgramming,
                   ),
                 ),

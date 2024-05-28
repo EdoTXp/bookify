@@ -32,9 +32,10 @@ class NotificationWidget extends StatelessWidget {
               notification.title,
               textScaler: TextScaler.noScaling,
               style: TextStyle(
-                  fontSize: 16,
-                  color: colorScheme.primary,
-                  fontWeight: FontWeight.bold),
+                fontSize: 16,
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               height: 10,

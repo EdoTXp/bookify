@@ -21,12 +21,7 @@ class FABBottomAppBarItem {
 }
 
 const rectangleRoundedNotchedShape = AutomaticNotchedShape(
-  RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(15),
-      bottomRight: Radius.circular(15),
-    ),
-  ),
+  RoundedRectangleBorder(),
   RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(15),
@@ -102,6 +97,8 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
           item: widget.items[index],
           onPressed: () => _updateIndex(index),
           isSelected: _selectedItemIndex == index,
+          color: widget.color,
+          selectedColor: widget.selectedColor,
         );
       }),
     );

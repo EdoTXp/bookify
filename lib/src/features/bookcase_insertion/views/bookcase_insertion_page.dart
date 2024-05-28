@@ -232,9 +232,10 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                         labelText: 'Cor',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Container(
                             width: 100,
+                            margin: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: _selectedColor,
                               border: Border.all(color: colorScheme.primary),

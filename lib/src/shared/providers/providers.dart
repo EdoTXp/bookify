@@ -31,6 +31,7 @@ class Providers {
     ...readingsBlocProviders,
     ...readingsInsertionBlocProviders,
     ...readingsDetailBlocProviders,
+    ...readingsTimerBlocProviders,
     ...myBooksBlocProviders,
     ...contactsPickerBlocProviders,
     ...booksPickerBlocProviders,

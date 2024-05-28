@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_text_form_field_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
@@ -20,7 +21,6 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   @override
   void initState() {
     super.initState();
-
     LockScreenOrientationService.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
@@ -57,57 +57,72 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width / 2,
-            child: Text(
-              titleText,
-              textScaler: TextScaler.noScaling,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Expanded(
-            child: (_qrCodeScannerIsVisible)
-                ? QrCodeScannerWidget(
-                    key: const Key('qrCodeScannerWidget'),
-                    onDetect: (qrCodeValue) =>
-                        _searchIsbn(context, qrCodeValue),
-                  )
-                : IsbnManuallyTextFormFieldWidget(
-                    key: const Key('isbnManuallyTextFormFieldWidget'),
-                    onTap: (textFormFieldValue) =>
-                        _searchIsbn(context, textFormFieldValue),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallDevice = constraints.biggest.isSmallDevice();
+
+          return SingleChildScrollView(
+            child: SizedBox(
+              height: isSmallDevice
+                  ? MediaQuery.sizeOf(context).height * .8
+                  : constraints.biggest.height,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      titleText,
+                      textScaler: TextScaler.noScaling,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-          ),
-          SizedBox(
-            height: 64,
-            width: double.infinity,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextButton.icon(
-                key: const Key('changeModeTextButton'),
-                label: Text(
-                  changeModeText,
-                  textScaler: TextScaler.noScaling,
-                ),
-                icon: Icon(changeModeIcon),
-                onPressed: () {
-                  setState(() {
-                    _qrCodeScannerIsVisible = !_qrCodeScannerIsVisible;
-                  });
-                },
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Expanded(
+                    child: (_qrCodeScannerIsVisible)
+                        ? QrCodeScannerWidget(
+                            key: const Key('qrCodeScannerWidget'),
+                            onDetect: (qrCodeValue) => _searchIsbn(
+                              context,
+                              qrCodeValue,
+                            ),
+                          )
+                        : IsbnManuallyTextFormFieldWidget(
+                            key: const Key('isbnManuallyTextFormFieldWidget'),
+                            onTap: (textFormFieldValue) => _searchIsbn(
+                              context,
+                              textFormFieldValue,
+                            ),
+                          ),
+                  ),
+                  SizedBox(
+                    height: 64,
+                    width: double.infinity,
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: TextButton.icon(
+                        key: const Key('changeModeTextButton'),
+                        label: Text(
+                          changeModeText,
+                          textScaler: TextScaler.noScaling,
+                        ),
+                        icon: Icon(changeModeIcon),
+                        onPressed: () => setState(() {
+                          _qrCodeScannerIsVisible = !_qrCodeScannerIsVisible;
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

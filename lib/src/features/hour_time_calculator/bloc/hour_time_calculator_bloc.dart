@@ -10,11 +10,11 @@ part 'hour_time_calculator_state.dart';
 
 class HourTimeCalculatorBloc
     extends Bloc<HourTimeCalculatorEvent, HourTimeCalculatorState> {
-  final UserHourTimeRepository _userReadingTimeRepository;
+  final UserHourTimeRepository _userHourTimeRepository;
   final NotificationsService _notificationsService;
 
   HourTimeCalculatorBloc(
-    this._userReadingTimeRepository,
+    this._userHourTimeRepository,
     this._notificationsService,
   ) : super(HourTimeCalculatorLoadingState()) {
     on<GotHourTimeEvent>(_gotHourTimeEvent);
@@ -29,7 +29,7 @@ class HourTimeCalculatorBloc
       emit(HourTimeCalculatorLoadingState());
 
       final userHourTimeModel =
-          await _userReadingTimeRepository.getUserHourTime();
+          await _userHourTimeRepository.getUserHourTime();
 
       emit(
         HourTimeCalculatorLoadedState(
@@ -61,7 +61,7 @@ class HourTimeCalculatorBloc
       final userHourTime = event.userHourTimeModel;
 
       final userHourTimeInserted =
-          await _userReadingTimeRepository.setUserHourTime(
+          await _userHourTimeRepository.setUserHourTime(
         userHourTime: userHourTime,
       );
 

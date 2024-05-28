@@ -19,7 +19,10 @@ class SettingsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding ?? const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16.0,
+      ),
       decoration: BoxDecoration(
         borderRadius: borderRadius ?? BorderRadius.circular(12),
         color: Theme.of(context).brightness == Brightness.light

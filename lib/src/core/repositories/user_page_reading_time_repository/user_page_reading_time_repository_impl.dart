@@ -6,7 +6,7 @@ import 'package:bookify/src/core/storage/storage.dart';
 class UserPageReadingTimeRepositoryImpl
     implements UserPageReadingTimeRepository {
   final Storage _storage;
-  final String _userPageReadingTimeKey = 'theme';
+  final String _userPageReadingTimeKey = 'userPageReadingTime';
 
   const UserPageReadingTimeRepositoryImpl({
     required Storage storage,

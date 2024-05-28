@@ -11,7 +11,8 @@ final appLightTheme = ThemeData(
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+      statusBarIconBrightness: Brightness.dark,
+      // For Android (dark icons)
       statusBarBrightness: Brightness.light, // For iOS (dark icons)
     ),
   ),
@@ -30,8 +31,12 @@ final appLightTheme = ThemeData(
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
-  floatingActionButtonTheme:
-      _floatingActionButtonTheme.copyWith(backgroundColor: Colors.white),
+  bottomAppBarTheme: _bottomAppBarTheme.copyWith(
+    color: AppColor.bookifyPrimaryColor.lighten(.35),
+  ),
+  floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
+    backgroundColor: AppColor.bookifyPrimaryColor.lighten(.35),
+  ),
   disabledColor: AppColor.bookifyDisabledColor,
   colorScheme: const ColorScheme.light(
     primary: AppColor.bookifyPrimaryColor,
@@ -48,7 +53,8 @@ final appDarkTheme = ThemeData(
       systemNavigationBarColor: AppColor.bookifyDarkBackgroundColor,
       systemNavigationBarIconBrightness: Brightness.light,
       statusBarColor: AppColor.bookifyDarkBackgroundColor,
-      statusBarIconBrightness: Brightness.light, // For Android (light icons)
+      statusBarIconBrightness: Brightness.light,
+      // For Android (light icons)
       statusBarBrightness: Brightness.dark, // For iOS (light icons)
     ),
   ),
@@ -67,8 +73,11 @@ final appDarkTheme = ThemeData(
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
+  bottomAppBarTheme: _bottomAppBarTheme.copyWith(
+    color: AppColor.bookifyPrimaryColor.darken(.6),
+  ),
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
-    backgroundColor: AppColor.bookifyDarkBackgroundColor,
+    backgroundColor: AppColor.bookifyPrimaryColor.darken(.6),
   ),
   disabledColor: AppColor.bookifyDisabledColor,
   colorScheme: const ColorScheme.dark(
@@ -121,8 +130,8 @@ final _scrollbarTheme = ScrollbarThemeData(
   radius: const Radius.circular(90),
   thumbVisibility: const WidgetStatePropertyAll(true),
   trackVisibility: const WidgetStatePropertyAll(true),
-  thumbColor: WidgetStatePropertyAll(
-    AppColor.bookifyPrimaryColor.darken(),
+  thumbColor: const WidgetStatePropertyAll(
+    AppColor.bookifyTertiaryColor,
   ),
   trackBorderColor: WidgetStatePropertyAll(
     AppColor.bookifyPrimaryColor.lighten(),
@@ -403,11 +412,19 @@ final _inputDecorationTheme = InputDecorationTheme(
   ),
 );
 
+const _bottomAppBarTheme = BottomAppBarTheme();
+
 const _floatingActionButtonTheme = FloatingActionButtonThemeData(
   splashColor: Colors.transparent,
   foregroundColor: AppColor.bookifyPrimaryColor,
   shape: RoundedRectangleBorder(
-    side: BorderSide(color: AppColor.bookifyPrimaryColor),
-    borderRadius: BorderRadius.all(Radius.circular(15)),
+    side: BorderSide(
+      color: AppColor.bookifyPrimaryColor,
+    ),
+    borderRadius: BorderRadius.all(
+      Radius.circular(
+        15,
+      ),
+    ),
   ),
 );
