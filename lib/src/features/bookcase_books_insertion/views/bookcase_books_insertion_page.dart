@@ -88,8 +88,9 @@ class _BookcaseBooksInsertionPageState
         SnackBarType.success,
       );
 
-      await Future.delayed(const Duration(seconds: 2))
-          .then((_) => Navigator.of(context).pop(true));
+      await Future.delayed(const Duration(seconds: 2)).then(
+        (_) => Navigator.of(context).pop(true),
+      );
     }
   }
 

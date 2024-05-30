@@ -40,12 +40,15 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
                 child: ReadingWidget(
                   readingDto: readingsDto[index],
                   onTap: () async {
-                    await Navigator.of(context).pushNamed(
+                    final readingIsChanged =
+                        await Navigator.of(context).pushNamed(
                       ReadingsDetailPage.routeName,
                       arguments: readingsDto[index],
-                    );
+                    ) as bool?;
 
-                    onRefreshPage();
+                    if (readingIsChanged != null && readingIsChanged) {
+                      onRefreshPage();
+                    }
                   },
                 ),
               );

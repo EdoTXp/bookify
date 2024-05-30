@@ -90,6 +90,19 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
     });
   }
 
+  Future<void> _onAddNewBookcase(BuildContext context) async {
+    var bookcaseInsertionList = await Navigator.pushNamed(
+      context,
+      BookcaseInsertionPage.routeName,
+    ) as List<Object?>?;
+
+    final isInserted = bookcaseInsertionList?[0] as bool?;
+
+    if (isInserted != null && isInserted) {
+      widget.onRefresh();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -122,13 +135,7 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                 )
               : AddNewItemTextButton(
                   label: 'Adicionar uma nova estante',
-                  onPressed: () async {
-                    await Navigator.pushNamed(
-                      context,
-                      BookcaseInsertionPage.routeName,
-                    );
-                    widget.onRefresh();
-                  },
+                  onPressed: () async => await _onAddNewBookcase(context),
                 ),
         ),
         Expanded(

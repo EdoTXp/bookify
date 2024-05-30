@@ -57,17 +57,11 @@ class _BookcasePageState extends State<BookcasePage> {
     return switch (state) {
       BookcaseLoadingState() => const CenterCircularProgressIndicator(),
       BookcaseEmptyState() => Center(
-        child: ItemEmptyStateWidget(
+          child: ItemEmptyStateWidget(
             label: 'Criar uma nova estante',
-            onTap: () async {
-              await Navigator.pushNamed(
-                context,
-                BookcaseInsertionPage.routeName,
-              );
-              _refreshPage();
-            },
+            onTap: () async => await _onAddNewBookcase(),
           ),
-      ),
+        ),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
         BookcaseLoadedStateWidget(
           bookcasesDto: bookcasesDto,
@@ -89,6 +83,19 @@ class _BookcasePageState extends State<BookcasePage> {
           onPressed: _refreshPage,
         ),
     };
+  }
+
+  Future<void> _onAddNewBookcase() async {
+    var bookcaseInsertionList = await Navigator.pushNamed(
+      context,
+      BookcaseInsertionPage.routeName,
+    ) as List<Object?>?;
+
+    final isInserted = bookcaseInsertionList?[0] as bool?;
+
+    if (isInserted != null && isInserted) {
+      _refreshPage();
+    }
   }
 
   @override

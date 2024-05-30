@@ -60,7 +60,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
         );
 
         await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+            .then((_) => Navigator.of(context).pop(true));
         break;
 
       case ReadingsDetailFinishedState():
@@ -71,7 +71,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
         );
 
         await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+            .then((_) => Navigator.of(context).pop(true));
         break;
 
       case ReadingsDetailErrorState(:final errorMessage):

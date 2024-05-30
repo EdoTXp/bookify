@@ -123,8 +123,12 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
           SnackBarType.success,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop(bookcaseUpdated));
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) => Navigator.of(context).pop([
+            true,
+            bookcaseUpdated,
+          ]),
+        );
         break;
       case BookcaseInsertionErrorState(:final errorMessage):
         SnackbarService.showSnackBar(

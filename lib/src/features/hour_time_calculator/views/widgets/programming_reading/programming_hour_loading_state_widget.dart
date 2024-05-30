@@ -49,7 +49,7 @@ class _ProgrammingHourLoadingStateWidgetState
           return SingleChildScrollView(
             child: SizedBox(
               height: isSmallDevice
-                  ? MediaQuery.sizeOf(context).height * .8
+                  ? MediaQuery.sizeOf(context).height
                   : constraints.biggest.height,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

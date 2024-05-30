@@ -24,11 +24,14 @@ class LoanLoadedStateWidget extends StatelessWidget {
           child: AddNewItemTextButton(
             label: 'Emprestar um livro',
             onPressed: () async {
-              await Navigator.pushNamed(
+              final loanInserted = await Navigator.pushNamed(
                 context,
                 LoanInsertionPage.routeName,
-              );
-              refreshPage();
+              ) as bool?;
+
+              if (loanInserted != null && loanInserted) {
+                refreshPage();
+              }
             },
           ),
         ),
@@ -45,12 +48,15 @@ class LoanLoadedStateWidget extends StatelessWidget {
                 child: LoanWidget(
                   loan: loansDto[index],
                   onTap: () async {
-                    await Navigator.pushNamed(
+                    final loanChanged = await Navigator.pushNamed(
                       context,
                       LoanDetailPage.routeName,
                       arguments: loansDto[index].loanModel.id!,
-                    );
-                    refreshPage();
+                    ) as bool?;
+
+                    if (loanChanged != null && loanChanged) {
+                      refreshPage();
+                    }
                   },
                 ),
               );

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/features/time_picker/views/widgets/time_picker_widget.dart';
@@ -51,70 +52,80 @@ class _TimePickerPageState extends State<TimePickerPage> {
     }
   }
 
+  void _defineTimer() {
+    final endTimesIsGreaterThanStart = compareTimes(
+      startingTime,
+      endingTime,
+    );
+
+    if (endTimesIsGreaterThanStart > -1) {
+      SnackbarService.showSnackBar(
+        context,
+        'O horário do fim precisa ser maior que o horário de início',
+        SnackBarType.error,
+      );
+      return;
+    }
+
+    Navigator.of(context).pop(
+      [startingTime, endingTime],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 30.0,
-        ),
-        child: SizedBox(
-          height: MediaQuery.sizeOf(context).height,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              TimePickerWidget(
-                onTimeSelected: (TimeOfDay time) {
-                  setState(() {
-                    startingTime = time;
-                  });
-                },
-                hour: startingTime.hour,
-                minute: startingTime.minute,
-              ),
-              const Text('|'),
-              const Text('Até'),
-              const Text('|'),
-              TimePickerWidget(
-                onTimeSelected: (TimeOfDay time) {
-                  setState(() {
-                    endingTime = time;
-                  });
-                },
-                hour: endingTime.hour,
-                minute: endingTime.minute,
-              ),
-              const Spacer(),
-              BookifyOutlinedButton.expanded(
-                text: 'Definir e voltar',
-                onPressed: () {
-                  final endTimesIsGreaterThanStart = compareTimes(
-                    startingTime,
-                    endingTime,
-                  );
+      body: LayoutBuilder(builder: (context, constraints) {
+        final isSmallDevice = constraints.biggest.isSmallDevice();
 
-                  if (endTimesIsGreaterThanStart > -1) {
-                    SnackbarService.showSnackBar(
-                      context,
-                      'O horário do fim precisa ser maior que o horário de início',
-                      SnackBarType.error,
-                    );
-                    return;
-                  }
-
-                  Navigator.of(context).pop(
-                    [startingTime, endingTime],
-                  );
-                },
-              )
-            ],
+        return SingleChildScrollView(
+          child: SizedBox(
+            height: isSmallDevice
+                ? MediaQuery.sizeOf(context).height
+                : constraints.biggest.height,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 30.0,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TimePickerWidget(
+                    onTimeSelected: (TimeOfDay time) {
+                      setState(() {
+                        startingTime = time;
+                      });
+                    },
+                    hour: startingTime.hour,
+                    minute: startingTime.minute,
+                  ),
+                  const Text('|'),
+                  const Text('Até'),
+                  const Text('|'),
+                  TimePickerWidget(
+                    onTimeSelected: (TimeOfDay time) {
+                      setState(() {
+                        endingTime = time;
+                      });
+                    },
+                    hour: endingTime.hour,
+                    minute: endingTime.minute,
+                  ),
+                  const Spacer(),
+                  BookifyOutlinedButton.expanded(
+                    text: 'Definir e voltar',
+                    onPressed: _defineTimer,
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -99,7 +99,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
       );
 
       await Future.delayed(const Duration(seconds: 2))
-          .then((_) => Navigator.of(context).pop());
+          .then((_) => Navigator.of(context).pop(true));
     }
   }
 

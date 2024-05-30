@@ -62,7 +62,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
           searchQueryName: _searchController.text,
         ),
       );
-    } else if (currentSearchLength < 3 && _lastSearchLength > 3) {
+    } else if (currentSearchLength < 3 && _lastSearchLength == 3) {
       _refreshPage();
     }
 
