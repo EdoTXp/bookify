@@ -89,9 +89,9 @@ Once you have selected the book, you will be able to read it. To do this, you wi
 
 On the **settings** page you can change the theme, update the reading time per page and the reading time.
 
-    1. **Change Theme:** This option will make you change the theme to light, dark and system.
-    2. **Reading Time:** This option will make you read a text where an average time will be calculated to complete a book.
-    3. **Hour Time:** This option will let you choose the time and when it should repeat and then notify you at that time and the chosen time will be used as default in the reading timer.
+    1. Change Theme: This option will make you change the theme to light, dark and system.
+    2. Reading Time: This option will make you read a text where an average time will be calculated to complete a book.
+    3. Hour Time: This option will let you choose the time and when it should repeat and then notify you at that time and the chosen time will be used as default in the reading timer.
 
 ![Screenshot_23](design/documentation/images/Screenshot_23.png)
 
