@@ -1,17 +1,21 @@
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LauncherService {
-  static Future<void> launchUrl(String url) async {
+  static Future<void> launchUrlOnExternalApplication(String url) async {
     try {
-      final launchUrl = launchUrlString(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      final uri = Uri.parse(url);
 
-      final bool isSuccefullyLaunch = await launchUrl;
+      if (await canLaunchUrl(uri)) {
+        final urlIsLaunched = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
 
-      if (!isSuccefullyLaunch) {
-        throw Exception('Erro ao abrir o link');
+        if (!urlIsLaunched) {
+          throw 'Erro ao abrir o link';
+        }
+      } else {
+        throw 'Não foi possível executar a ação de abrir o link';
       }
     } catch (e) {
       throw Exception('Occoreu um erro inesperado: $e');
@@ -20,16 +24,22 @@ class LauncherService {
 
   static Future<void> launchCall(String phone) async {
     try {
-      final launchCall = launchUrlString('tel:$phone', 
-      mode: LaunchMode.externalApplication,
+      final uri = Uri.parse(
+        'tel:$phone',
       );
 
-      final bool isSuccefullyLaunch = await launchCall;
+      if (await canLaunchUrl(uri)) {
+        final callIsLaunched = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
 
-       if (!isSuccefullyLaunch) {
-        throw Exception('Erro ao efetuar a chamada');
+        if (!callIsLaunched) {
+          throw 'Erro ao efetuar a chamada';
+        }
+      } else {
+        throw 'Não foi possível executar a ação de chamada';
       }
-
     } catch (e) {
       throw Exception('Occoreu um erro inesperado: $e');
     }

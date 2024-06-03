@@ -231,8 +231,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         child: BookifyOutlinedButton(
                           text: 'Ir para loja',
                           suffixIcon: Icons.store,
-                          onPressed: () async =>
-                              await LauncherService.launchUrl(book.buyLink),
+                          onPressed: () async => await LauncherService
+                              .launchUrlOnExternalApplication(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),
