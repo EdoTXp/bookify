@@ -1,21 +1,17 @@
 import 'package:url_launcher/url_launcher.dart';
 
 class LauncherService {
-  static Future<void> launchUrlOnExternalApplication(String url) async {
+  static Future<void> openUrl(String url) async {
     try {
       final uri = Uri.parse(url);
 
-      if (await canLaunchUrl(uri)) {
-        final urlIsLaunched = await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
+      final urlIsLaunched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
 
-        if (!urlIsLaunched) {
-          throw 'Erro ao abrir o link';
-        }
-      } else {
-        throw 'Não foi possível executar a ação de abrir o link';
+      if (!urlIsLaunched) {
+        throw 'Erro ao abrir o link';
       }
     } catch (e) {
       throw Exception('Occoreu um erro inesperado: $e');

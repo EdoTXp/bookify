@@ -232,7 +232,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           text: 'Ir para loja',
                           suffixIcon: Icons.store,
                           onPressed: () async => await LauncherService
-                              .launchUrlOnExternalApplication(book.buyLink),
+                              .openUrl(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),
