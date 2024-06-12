@@ -18,8 +18,8 @@ class BooksGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (context, orientation) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
         return GridView.builder(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           physics: physics,
@@ -27,7 +27,7 @@ class BooksGridView extends StatelessWidget {
           itemCount: books.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: .7,
-            crossAxisCount: orientation == Orientation.portrait ? 3 : 6,
+            crossAxisCount: constraints.maxWidth > 400 ? 6 : 3,
           ),
           itemBuilder: (context, index) {
             return Padding(

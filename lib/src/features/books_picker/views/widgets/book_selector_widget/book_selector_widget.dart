@@ -68,47 +68,52 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
           Expanded(
             child: GestureDetector(
               onTap: () => selectedBook != null ? _clearData() : null,
-              child: GridView.builder(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: widget.books.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: .7,
-                  crossAxisCount: 3,
-                ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Tooltip(
-                      message: widget.books[index].title,
-                      child: Material(
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          onTap: () => _clickOnBook(widget.books[index], index),
-                          child: (selectedBook == widget.books[index])
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.secondary,
-                                    border: Border.all(
-                                      color: Colors.transparent,
+              child: LayoutBuilder(builder: (context, constraints) {
+                return GridView.builder(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  itemCount: widget.books.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: .7,
+                    crossAxisCount: constraints.maxWidth > 400 ? 6 : 3,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tooltip(
+                        message: widget.books[index].title,
+                        child: Material(
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            onTap: () =>
+                                _clickOnBook(widget.books[index], index),
+                            child: (selectedBook == widget.books[index])
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.secondary,
+                                      border: Border.all(
+                                        color: Colors.transparent,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
                                     ),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(15),
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: BookWidget(
+                                      bookImageUrl:
+                                          widget.books[index].imageUrl,
                                     ),
-                                  ),
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: BookWidget(
+                                  )
+                                : BookWidget(
                                     bookImageUrl: widget.books[index].imageUrl,
                                   ),
-                                )
-                              : BookWidget(
-                                  bookImageUrl: widget.books[index].imageUrl,
-                                ),
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                );
+              }),
             ),
           ),
         ],

@@ -70,44 +70,49 @@ class _BookcaseBooksInsertionLoadedStateWidgetState
         Expanded(
           child: GestureDetector(
             onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,
-            child: GridView.builder(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: books.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: .7,
-                crossAxisCount: 3,
-              ),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Tooltip(
-                    message: books[index].title,
-                    child: Material(
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        onTap: () => _onTap(books[index]),
-                        child: (_selectedList.contains(books[index]))
-                            ? Container(
-                                decoration: BoxDecoration(
-                                  color: colorScheme.secondary,
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(4.0),
-                                child: BookWidget(
-                                  bookImageUrl: books[index].imageUrl,
-                                ),
-                              )
-                            : BookWidget(
-                                bookImageUrl: books[index].imageUrl,
-                              ),
-                      ),
-                    ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return GridView.builder(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  itemCount: books.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: .7,
+                    crossAxisCount: constraints.maxWidth > 400 ? 6 : 3,
                   ),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Tooltip(
+                        message: books[index].title,
+                        child: Material(
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            onTap: () => _onTap(books[index]),
+                            child: (_selectedList.contains(books[index]))
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.secondary,
+                                      border: Border.all(
+                                        color: Colors.transparent,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: BookWidget(
+                                      bookImageUrl: books[index].imageUrl,
+                                    ),
+                                  )
+                                : BookWidget(
+                                    bookImageUrl: books[index].imageUrl,
+                                  ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

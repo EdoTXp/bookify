@@ -16,12 +16,16 @@ class Ilustration4Page extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              height: mediaQuerySizeOf.height * .4,
-              width: mediaQuerySizeOf.width,
-              BookifyImages.ilustration_4,
-              fit: BoxFit.fill,
-            ),
+            LayoutBuilder(builder: (context, constraints) {
+              return Image.asset(
+                height: mediaQuerySizeOf.height * .4,
+                width: constraints.maxWidth > 400
+                    ? mediaQuerySizeOf.width * .5
+                    : mediaQuerySizeOf.width,
+                BookifyImages.ilustration_4,
+                fit: BoxFit.fill,
+              );
+            }),
             const SizedBox(
               height: 20,
             ),

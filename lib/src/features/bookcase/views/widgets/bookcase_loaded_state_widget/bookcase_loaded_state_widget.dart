@@ -103,6 +103,47 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
     }
   }
 
+  Widget _buildBookcaseWidget(
+    List<BookcaseDto> bookcasesDto,
+    int index,
+    ColorScheme colorScheme,
+    BuildContext context,
+  ) {
+    return (_selectedList.contains(bookcasesDto[index]))
+        ? Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorScheme.secondary.withOpacity(.2),
+                border: Border.all(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: BookcaseWidget(
+                bookcaseDto: bookcasesDto[index],
+                onTap: () => _onTap(
+                  context: context,
+                  element: bookcasesDto[index],
+                ),
+                onLongPress: () => _onLongPress(
+                  element: bookcasesDto[index],
+                ),
+              ),
+            ),
+          )
+        : BookcaseWidget(
+            bookcaseDto: bookcasesDto[index],
+            onTap: () => _onTap(
+              context: context,
+              element: bookcasesDto[index],
+            ),
+            onLongPress: () => _onLongPress(
+              element: bookcasesDto[index],
+            ),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -142,47 +183,42 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
           child: GestureDetector(
             // Verify that the list is selected before deselecting it if click outside the BookcaseWidget.
             onTap: () => _selectedList.isNotEmpty ? _clearSelection() : null,
-            child: ListView.builder(
+            child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 25.0,
                 horizontal: 5.0,
               ),
-              itemCount: bookcasesDto.length,
-              itemBuilder: (_, index) {
-                return (_selectedList.contains(bookcasesDto[index]))
-                    ? Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: colorScheme.secondary.withOpacity(.2),
-                            border: Border.all(
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return constraints.maxWidth > 500
+                      ? GridView.builder(
+                          itemCount: bookcasesDto.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
                           ),
-                          child: BookcaseWidget(
-                            bookcaseDto: bookcasesDto[index],
-                            onTap: () => _onTap(
-                              context: context,
-                              element: bookcasesDto[index],
-                            ),
-                            onLongPress: () => _onLongPress(
-                              element: bookcasesDto[index],
-                            ),
-                          ),
-                        ),
-                      )
-                    : BookcaseWidget(
-                        bookcaseDto: bookcasesDto[index],
-                        onTap: () => _onTap(
-                          context: context,
-                          element: bookcasesDto[index],
-                        ),
-                        onLongPress: () => _onLongPress(
-                          element: bookcasesDto[index],
-                        ),
-                      );
-              },
+                          itemBuilder: (_, index) {
+                            return _buildBookcaseWidget(
+                              bookcasesDto,
+                              index,
+                              colorScheme,
+                              context,
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          itemCount: bookcasesDto.length,
+                          itemBuilder: (_, index) {
+                            return _buildBookcaseWidget(
+                              bookcasesDto,
+                              index,
+                              colorScheme,
+                              context,
+                            );
+                          },
+                        );
+                },
+              ),
             ),
           ),
         ),

@@ -1,7 +1,6 @@
 import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/on_boarding/pages/pages.dart';
 import 'package:bookify/src/features/on_boarding/widgets/page_view_indicator.dart';
-import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +23,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void initState() {
     super.initState();
-
-    LockScreenOrientationService.lockOrientationScreen(
-      orientation: Orientation.portrait,
-    );
-
     _pageController = PageController();
     _currentPage = 0;
   }
@@ -36,8 +30,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Set the status bar with the app theme configuration
-    // without having to instantiate the Appbar widget.
     SystemChrome.setSystemUIOverlayStyle(
       Theme.of(context).appBarTheme.systemOverlayStyle!,
     );
@@ -46,7 +38,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   void dispose() {
     _pageController.dispose();
-    LockScreenOrientationService.unLockOrientationScreen();
     super.dispose();
   }
 
