@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: calendar_date_picker2
-      sha256: "5fddc1fb78c8f218b2e0dd6bae239f7ac502784c62f34ef96f4b22a8cb5d5608"
+      sha256: a46a9c461e17e58e44bc3b115160fa5a90973a16574045e5c48a788a26273314
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   characters:
     dependency: transitive
     description:
@@ -1025,10 +1025,10 @@ packages:
     dependency: "direct main"
     description:
       name: sign_in_with_apple
-      sha256: b0abd9c0d0407140829b12cd99a250f10b20352573ff08c7e0c5174c64b4973e
+      sha256: "5c34c601d6910d7db0077063001ccd9d9329ee58b9038ee07153ffcdd76e91bd"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   sign_in_with_apple_platform_interface:
     dependency: transitive
     description:

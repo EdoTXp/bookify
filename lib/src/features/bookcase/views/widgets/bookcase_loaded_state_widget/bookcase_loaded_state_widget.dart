@@ -188,35 +188,15 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                 vertical: 25.0,
                 horizontal: 5.0,
               ),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return constraints.maxWidth > 500
-                      ? GridView.builder(
-                          itemCount: bookcasesDto.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
-                          itemBuilder: (_, index) {
-                            return _buildBookcaseWidget(
-                              bookcasesDto,
-                              index,
-                              colorScheme,
-                              context,
-                            );
-                          },
-                        )
-                      : ListView.builder(
-                          itemCount: bookcasesDto.length,
-                          itemBuilder: (_, index) {
-                            return _buildBookcaseWidget(
-                              bookcasesDto,
-                              index,
-                              colorScheme,
-                              context,
-                            );
-                          },
-                        );
+              child: ListView.builder(
+                itemCount: bookcasesDto.length,
+                itemBuilder: (_, index) {
+                  return _buildBookcaseWidget(
+                    bookcasesDto,
+                    index,
+                    colorScheme,
+                    context,
+                  );
                 },
               ),
             ),
