@@ -82,9 +82,9 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverSafeArea(
                 top: false,
+                minimum: const EdgeInsets.only(top: 16.0),
                 sliver: SliverAppBar(
                   floating: true,
-                  pinned: true,
                   forceElevated: innerBoxIsScrolled,
                   title: Offstage(
                     offstage: !_searchBarIsVisible,
