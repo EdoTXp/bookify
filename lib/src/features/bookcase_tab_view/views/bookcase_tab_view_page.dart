@@ -80,97 +80,88 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverOverlapAbsorber(
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverSafeArea(
-                top: false,
-                minimum: const EdgeInsets.only(top: 16.0),
-                sliver: SliverAppBar(
-                  floating: true,
-                  forceElevated: innerBoxIsScrolled,
-                  title: Offstage(
-                    offstage: !_searchBarIsVisible,
-                    child: TextField(
-                      focusNode: _focusNode,
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        alignLabelWithHint: true,
-                        hintText: _searchHintText,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                      style: const TextStyle(fontSize: 14),
-                      onTap: () => (_searchQuery != null)
-                          ? _setSearchQuery(_searchQuery!)
-                          : null,
-                      onTapOutside: (_) => _focusNode.unfocus(),
-                      onChanged: _setSearchQuery,
+              sliver: SliverAppBar(
+                floating: true,
+                title: Offstage(
+                  offstage: !_searchBarIsVisible,
+                  child: TextField(
+                    focusNode: _focusNode,
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      hintText: _searchHintText,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                    style: const TextStyle(fontSize: 14),
+                    onTap: () => (_searchQuery != null)
+                        ? _setSearchQuery(_searchQuery!)
+                        : null,
+                    onTapOutside: (_) => _focusNode.unfocus(),
+                    onChanged: _setSearchQuery,
+                  ),
+                ),
+                actions: [
+                  Visibility(
+                    visible: (_searchBarIsVisible &&
+                        _searchController.text.isNotEmpty),
+                    child: IconButton(
+                      icon: const Icon(Icons.close_rounded),
+                      tooltip: 'Apagar o texto.',
+                      onPressed: _clearText,
                     ),
                   ),
-                  actions: [
-                    Visibility(
-                      visible: (_searchBarIsVisible &&
-                          _searchController.text.isNotEmpty),
-                      child: IconButton(
-                        icon: const Icon(Icons.close_rounded),
-                        tooltip: 'Apagar o texto.',
-                        onPressed: _clearText,
-                      ),
+                  IconButton(
+                    icon: Icon(
+                      (_searchBarIsVisible)
+                          ? Icons.search_off_rounded
+                          : Icons.search_rounded,
                     ),
-                    IconButton(
-                      icon: Icon(
-                        (_searchBarIsVisible)
-                            ? Icons.search_off_rounded
-                            : Icons.search_rounded,
-                      ),
-                      tooltip: (_searchBarIsVisible)
-                          ? 'Desativar a barra de pesquisa.'
-                          : 'Ativar a barra de pesquisa.',
-                      onPressed: () {
-                        if (_searchBarIsVisible) {
-                          _clearText();
-                          _focusNode.unfocus();
-                        } else {
-                          _focusNode.requestFocus();
-                        }
+                    tooltip: (_searchBarIsVisible)
+                        ? 'Desativar a barra de pesquisa.'
+                        : 'Ativar a barra de pesquisa.',
+                    onPressed: () {
+                      if (_searchBarIsVisible) {
+                        _clearText();
+                        _focusNode.unfocus();
+                      } else {
+                        _focusNode.requestFocus();
+                      }
 
-                        _toggleSearchBarVisible();
-                      },
-                    ),
-                  ],
-                  bottom: TabBar(
-                    tabAlignment: TabAlignment.fill,
-                    labelStyle: const TextStyle(),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorColor: colorScheme.primary,
-                    dividerHeight: 2,
-                    dividerColor: colorScheme.primary.withOpacity(.6),
-                    tabs: const [
-                      Tab(text: 'Estantes'),
-                      Tab(text: 'Empréstimos'),
-                      Tab(text: 'Meus Livros'),
-                    ],
-                    onTap: (selectedTab) {
-                      _setSearchHintText(selectedTab);
-                      _disableSearchBar();
+                      _toggleSearchBarVisible();
                     },
                   ),
+                ],
+                bottom: TabBar(
+                  tabAlignment: TabAlignment.fill,
+                  labelStyle: const TextStyle(),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorColor: colorScheme.primary,
+                  dividerHeight: 2,
+                  dividerColor: colorScheme.primary.withOpacity(.6),
+                  tabs: const [
+                    Tab(text: 'Estantes'),
+                    Tab(text: 'Empréstimos'),
+                    Tab(text: 'Meus Livros'),
+                  ],
+                  onTap: (selectedTab) {
+                    _setSearchHintText(selectedTab);
+                    _disableSearchBar();
+                  },
                 ),
               ),
             ),
           ],
-          body: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              BookcasePage(
-                searchQuery: _searchQuery,
-              ),
-              LoanPage(
-                searchQuery: _searchQuery,
-              ),
-              MyBooksPage(
-                searchQuery: _searchQuery,
-              ),
-            ],
+          body: SafeArea(
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                BookcasePage(searchQuery: _searchQuery),
+                LoanPage(searchQuery: _searchQuery),
+                MyBooksPage(searchQuery: _searchQuery),
+              ],
+            ),
           ),
         ),
       ),

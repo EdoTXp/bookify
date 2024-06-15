@@ -55,9 +55,7 @@ class _BookifyAppState extends State<BookifyApp> {
       bloc: _userThemeBloc,
       listener: (context, state) {
         if (state is UserThemeLoadedState) {
-          setState(() {
-            _themeMode = state.themeMode;
-          });
+          setState(() => _themeMode = state.themeMode);
         }
       },
       child: MaterialApp(

@@ -31,7 +31,6 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
           child: ListView.builder(
             itemCount: readingsDto.length,
             padding: const EdgeInsets.symmetric(
-              vertical: 25.0,
               horizontal: 5.0,
             ),
             itemBuilder: (_, index) {

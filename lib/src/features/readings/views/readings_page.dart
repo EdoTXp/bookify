@@ -64,7 +64,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
       );
     } else if (currentSearchLength < 3 && _lastSearchLength == 3) {
       _refreshPage();
-    }
+    } 
 
     _lastSearchLength = currentSearchLength;
   }
@@ -138,70 +138,83 @@ class _ReadingsPageState extends State<ReadingsPage> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Offstage(
-          offstage: !_searchBarIsVisible,
-          child: TextField(
-            focusNode: _focusNode,
-            controller: _searchController,
-            decoration: const InputDecoration(
-              alignLabelWithHint: true,
-              hintText: 'Digite o  título do livro em leitura.',
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            floating: true,
+            title: Offstage(
+              offstage: !_searchBarIsVisible,
+              child: TextField(
+                focusNode: _focusNode,
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  alignLabelWithHint: true,
+                  hintText: 'Digite o  título do livro em leitura.',
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+                style: const TextStyle(fontSize: 14),
+                onTapOutside: (_) => _focusNode.unfocus(),
+              ),
             ),
-            style: const TextStyle(fontSize: 14),
-            onTapOutside: (_) => _focusNode.unfocus(),
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(10),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(
-              color: colorScheme.primary.withOpacity(.75),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(
+                  color: colorScheme.primary.withOpacity(.75),
+                ),
+              ),
             ),
-          ),
-        ),
-        actions: [
-          ValueListenableBuilder(
-            valueListenable: _searchController,
-            builder: (context, value, _) {
-              if (value.text.isNotEmpty) {
-                return IconButton(
-                  icon: const Icon(Icons.close_rounded),
-                  tooltip: 'Apagar o texto.',
-                  onPressed: _searchController.clear,
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              (_searchBarIsVisible)
-                  ? Icons.search_off_rounded
-                  : Icons.search_rounded,
-            ),
-            tooltip: (_searchBarIsVisible)
-                ? 'Desativar a barra de pesquisa.'
-                : 'Ativar a barra de pesquisa.',
-            onPressed: () {
-              if (_searchBarIsVisible) {
-                _searchController.clear();
-                _focusNode.unfocus();
-              } else {
-                _focusNode.requestFocus();
-              }
-              _toggleSearchBarVisible();
-            },
+            actions: [
+              ValueListenableBuilder(
+                valueListenable: _searchController,
+                builder: (context, value, _) {
+                  if (value.text.isNotEmpty) {
+                    return IconButton(
+                      icon: const Icon(Icons.close_rounded),
+                      tooltip: 'Apagar o texto.',
+                      onPressed: () {
+                        _searchController.clear();
+                        _refreshPage();
+                      },
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  (_searchBarIsVisible)
+                      ? Icons.search_off_rounded
+                      : Icons.search_rounded,
+                ),
+                tooltip: (_searchBarIsVisible)
+                    ? 'Desativar a barra de pesquisa.'
+                    : 'Ativar a barra de pesquisa.',
+                onPressed: () {
+                  if (_searchBarIsVisible) {
+                    _searchController.clear();
+                    _focusNode.unfocus();
+                  } else {
+                    _focusNode.requestFocus();
+                  }
+                  _toggleSearchBarVisible();
+                },
+              ),
+            ],
           ),
         ],
-      ),
-      body: BlocBuilder<ReadingsBloc, ReadingsState>(
-        bloc: _bloc,
-        builder: _getWidgetOnReadingsState,
+        body: BlocBuilder<ReadingsBloc, ReadingsState>(
+          bloc: _bloc,
+          builder: (context, state) => SafeArea(
+            child: _getWidgetOnReadingsState(
+              context,
+              state,
+            ),
+          ),
+        ),
       ),
     );
   }

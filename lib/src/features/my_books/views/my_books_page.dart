@@ -91,7 +91,9 @@ class _MyBooksPageState extends State<MyBooksPage> {
       bloc: _bloc,
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
