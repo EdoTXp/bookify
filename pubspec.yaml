@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.5
+version: 2.0.6
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -44,7 +44,7 @@ dependencies:
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
   flex_color_picker: ^3.5.0 # Used to pick the color for bookcase.
-  calendar_date_picker2: ^1.1.0  # Used to pick the date for loan.
+  calendar_date_picker2: ^1.1.2  # Used to pick the date for loan.
   circular_countdown_timer: ^0.2.3 # Used for timer.
   stop_watch_timer: ^3.1.1 # Used to take reading time per page.
   audioplayers: ^6.0.0 # Used for play default alarm ringtone.
