@@ -33,6 +33,8 @@ class TimePickerDialogService {
         context: context,
         builder: (context) {
           return CupertinoTimerPicker(
+            backgroundColor:
+                CupertinoColors.systemBackground.resolveFrom(context),
             mode: CupertinoTimerPickerMode.hm,
             initialTimerDuration: initialTimerDuration,
             onTimerDurationChanged: (duration) {

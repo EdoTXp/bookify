@@ -44,8 +44,8 @@ PODS:
   - FirebaseCoreInternal (10.27.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - Flutter (1.0.0)
-  - flutter_facebook_auth (7.0.0):
-    - FBSDKLoginKit (~> 17.0.0)
+  - flutter_facebook_auth (7.0.1):
+    - FBSDKLoginKit (~> 17.0.2)
     - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
@@ -264,7 +264,7 @@ SPEC CHECKSUMS:
   FirebaseCore: a2b95ae4ce7c83ceecfbbbe3b6f1cddc7415a808
   FirebaseCoreInternal: 4b297a2d56063dbea2c1d0d04222d44a8d058862
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_facebook_auth: 03d374669f8a04bd869051ca75c1daf120cb1867
+  flutter_facebook_auth: 4fa1dc3fa624284a5ddfdf9e4a2b7945b3835949
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
