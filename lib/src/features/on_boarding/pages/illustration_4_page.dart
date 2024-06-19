@@ -1,8 +1,8 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
 
-class Ilustration4Page extends StatelessWidget {
-  const Ilustration4Page({super.key});
+class Illustration4Page extends StatelessWidget {
+  const Illustration4Page({super.key});
 
   @override
   Widget build(BuildContext context) {

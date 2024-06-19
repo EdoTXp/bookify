@@ -154,28 +154,14 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
     }
   }
 
-  String? _validateDevolutionDateisAfterLoanDate() {
+  String? _validateDevolutionDate() {
     if (_loanDateEC.text.isNotEmpty && _devolutionDateEC.text.isNotEmpty) {
       final loanDate = _loanDateEC.text.parseFormattedDate();
       final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
 
       if (devolutionDate.isBefore(loanDate) ||
           devolutionDate.isAtSameMomentAs(loanDate)) {
-        return 'Datas iguais';
-      }
-    }
-
-    return null;
-  }
-
-  String? _validateDevolutionDateisAfterNow() {
-    if (_devolutionDateEC.text.isNotEmpty) {
-      final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
-      final dateNow = DateTime.now();
-
-      if (devolutionDate.isBefore(dateNow) ||
-          devolutionDate.isAtSameMomentAs(dateNow)) {
-        return 'Não pode ser hoje ou antes';
+        return 'Intervalo de datas inválido';
       }
     }
 
@@ -445,8 +431,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                 Validatorless.required(
                                   'Esse campo é obrigatório',
                                 ),
-                                (_) => _validateDevolutionDateisAfterLoanDate(),
-                                (_) => _validateDevolutionDateisAfterNow(),
+                                (_) => _validateDevolutionDate(),
                               ],
                             ),
                             onTap: () async => await _getDate(

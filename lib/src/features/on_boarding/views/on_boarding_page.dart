@@ -41,7 +41,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     super.dispose();
   }
 
-  void _goToPrecedentIlustration() {
+  void _goToPrecedentIllustration() {
     if (_currentPage > 0) {
       setState(() {
         _currentPage--;
@@ -50,7 +50,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     _pageController.jumpToPage(_currentPage);
   }
 
-  Future<void> _goToFowardOrFinalizeIlustration() async {
+  Future<void> _goToForwardOrFinalizeIllustration() async {
     if (_currentPage < 3) {
       setState(() {
         _currentPage++;
@@ -94,10 +94,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     });
                   },
                   children: const [
-                    Ilustration1Page(),
-                    Ilustration2Page(),
-                    Ilustration3Page(),
-                    Ilustration4Page(),
+                    Illustration1Page(),
+                    Illustration2Page(),
+                    Illustration3Page(),
+                    Illustration4Page(),
                   ],
                 ),
               ),
@@ -111,7 +111,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   if (_currentPage != 0) ...[
                     Flexible(
                       child: BookifyOutlinedButton.expanded(
-                        onPressed: _goToPrecedentIlustration,
+                        onPressed: _goToPrecedentIllustration,
                         color: colorScheme.primary,
                         text: 'Voltar',
                         suffixIcon: Icons.arrow_forward_rounded,
@@ -124,7 +124,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   Flexible(
                     child: BookifyElevatedButton.expanded(
                       onPressed: () async =>
-                          await _goToFowardOrFinalizeIlustration(),
+                          await _goToForwardOrFinalizeIllustration(),
                       color: colorScheme.primary,
                       text: _currentPage < 3 ? 'Avançar' : 'Finalizar',
                       suffixIcon: Icons.arrow_back_rounded,
