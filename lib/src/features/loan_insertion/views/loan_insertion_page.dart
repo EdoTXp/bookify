@@ -155,9 +155,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   }
 
   String? _validateDevolutionDate() {
-    if (_loanDateEC.text.isNotEmpty && _devolutionDateEC.text.isNotEmpty) {
+    final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
+    if (!devolutionDate.isAfter(DateTime.now())) {
+      return 'A data de devolução não pode ser hoje';
+    }
+
+    if (_loanDateEC.text.isNotEmpty) {
       final loanDate = _loanDateEC.text.parseFormattedDate();
-      final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
 
       if (devolutionDate.isBefore(loanDate) ||
           devolutionDate.isAtSameMomentAs(loanDate)) {
