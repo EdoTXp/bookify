@@ -75,7 +75,7 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
                   itemCount: widget.books.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: .7,
-                    crossAxisCount: constraints.maxWidth > 400 ? 6 : 3,
+                    crossAxisCount: constraints.maxWidth > 500 ? 6 : 3,
                   ),
                   itemBuilder: (context, index) {
                     return Padding(
