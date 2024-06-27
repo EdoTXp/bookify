@@ -17,6 +17,7 @@ class Providers {
     ...hourTimeCalculatorBlocProviders,
     ...homeBlocProviders,
     ...profileBlocProviders,
+    ...aboutBlocProviders,
     ...notificationsBlocProviders,
     ...bookDetailBlocProviders,
     ...bookPagesReadingTimeBlocProviders,

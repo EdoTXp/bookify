@@ -1,4 +1,5 @@
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
+import 'package:bookify/src/features/about/views/about_page.dart';
 import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/book_on_bookcase_detail_page.dart';
@@ -81,6 +82,7 @@ class Routes {
     ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
     BooksPickerPage.routeName: (context) => const BooksPickerPage(),
     SettingsPage.routeName: (context) => const SettingsPage(),
+    AboutPage.routeName: (context) => const AboutPage(),
   };
 
   static String getInitialRoute(bool userIsLogged) {

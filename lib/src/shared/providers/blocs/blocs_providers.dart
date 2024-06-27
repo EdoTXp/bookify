@@ -1,6 +1,7 @@
 export 'package:bookify/src/shared/providers/blocs/user_theme_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/user_information_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/auth_bloc_providers.dart';
+export 'package:bookify/src/shared/providers/blocs/about_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/reading_page_time_calculator_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/hour_time_calculator_bloc_providers.dart';
 export 'package:bookify/src/shared/providers/blocs/home_bloc_providers.dart';

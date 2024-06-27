@@ -30,4 +30,7 @@ class BookifyImages {
 
   /// Auth Logo ![](bookify/assets/images/auth_logo.png)
   static const authLogo = 'assets/images/auth_logo.png';
+
+  /// Logo Mini ![](bookify/assets/images/logo_mini.png)
+  static const logoMini = 'assets/images/logo_mini.png';
 }

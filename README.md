@@ -106,6 +106,10 @@ On the **settings** page you can change the theme, update the reading time per p
 ![Screenshot_27](design/documentation/images/Screenshot_27.png)
 ![Screenshot_28](design/documentation/images/Screenshot_28.png)
 
+## 📱iOS
+
+[iOS Screenshots](design/documentation/images/ios/)
+
 ## 👥 Team
 
 1. [Fredson - Designer](https://www.linkedin.com/in/fredsoncosta/)

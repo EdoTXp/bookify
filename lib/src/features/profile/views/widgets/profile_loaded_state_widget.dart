@@ -1,3 +1,4 @@
+import 'package:bookify/src/features/about/views/about_page.dart';
 import 'package:bookify/src/features/notifications/views/notifications_page.dart';
 import 'package:bookify/src/features/profile/views/widgets/user_circle_avatar.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
@@ -85,6 +86,16 @@ class ProfileLoadedStateWidget extends StatelessWidget {
               await Navigator.pushNamed(
                 context,
                 NotificationsPage.routeName,
+              );
+            },
+          ),
+          TextIconButton(
+            label: 'Sobre',
+            iconData: Icons.info_outline_rounded,
+            onPressed: () async {
+              await Navigator.pushNamed(
+                context,
+                AboutPage.routeName,
               );
             },
           ),
