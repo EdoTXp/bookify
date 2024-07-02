@@ -30,7 +30,7 @@ Tapping on the **Plus** icon will open the page to scan the ISBN. Yes you will h
 
 ### 🗄️ Bookcase
 
-Clicking on **Bookcases**, you will be redirected to the page for viewing your bookcasase. When you don't have any, you can add them by clicking on the **+ Add a new shelf button**.
+Clicking on **Bookcases**, you will be redirected to the page for viewing your bookcase. When you don't have any, you can add them by clicking on the **+ Add a new shelf button**.
 
 ![Screenshot_5](design/documentation/images/Screenshot_5.png)
 
