@@ -48,7 +48,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
@@ -69,7 +69,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
@@ -92,7 +92,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
@@ -115,7 +115,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
@@ -138,7 +138,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }
@@ -167,7 +167,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));
-    } catch (e) {
+    } on Exception catch (e) {
       emit(BookErrorSate(errorMessage: e.toString()));
     }
   }

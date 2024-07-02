@@ -4,13 +4,13 @@ sealed class UserInformationState {}
 
 final class UserInformationLoadingState extends UserInformationState {}
 
-final class UserInformationLoadeadState extends UserInformationState {
+final class UserInformationLoadedState extends UserInformationState {
   final int bookcasesCount;
   final int bookCount;
   final int loansCount;
   final int readingsCount;
 
-  UserInformationLoadeadState({
+  UserInformationLoadedState({
     required this.bookcasesCount,
     required this.bookCount,
     required this.loansCount,

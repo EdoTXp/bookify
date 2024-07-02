@@ -14,10 +14,10 @@ void main() {
     pageReadingTimeSeconds: 600,
   );
   final userPageReadingTimeRepository = UserPageReadingTimeRepositoryMock();
-  late ReadingPageTimeCalculatorBloc readingPageTimeCalculatorbloc;
+  late ReadingPageTimeCalculatorBloc readingPageTimeCalculatorBloc;
 
   setUp(() {
-    readingPageTimeCalculatorbloc = ReadingPageTimeCalculatorBloc(
+    readingPageTimeCalculatorBloc = ReadingPageTimeCalculatorBloc(
       userPageReadingTimeRepository,
     );
   });
@@ -25,14 +25,14 @@ void main() {
   group('Test ReadingPageTimeCalculator Bloc', () {
     blocTest(
       'Initial state is empty',
-      build: () => readingPageTimeCalculatorbloc,
+      build: () => readingPageTimeCalculatorBloc,
       verify: (bloc) async => await bloc.close(),
       expect: () => [],
     );
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work',
-      build: () => readingPageTimeCalculatorbloc,
+      build: () => readingPageTimeCalculatorBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -58,7 +58,7 @@ void main() {
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when userPageReadingTimeInserted == 0',
-      build: () => readingPageTimeCalculatorbloc,
+      build: () => readingPageTimeCalculatorBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -84,7 +84,7 @@ void main() {
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when throw StorageException',
-      build: () => readingPageTimeCalculatorbloc,
+      build: () => readingPageTimeCalculatorBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -110,7 +110,7 @@ void main() {
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when throw Generic Exception',
-      build: () => readingPageTimeCalculatorbloc,
+      build: () => readingPageTimeCalculatorBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,

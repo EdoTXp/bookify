@@ -17,6 +17,7 @@ class BooksLoadedStateWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
           top: 8.0, right: 16.0, left: 16.0, bottom: 16.0),
       child: BooksGridView(
+        key: const Key('BooksGridView'),
         books: books,
         onTap: (book) => Navigator.pushNamed(
           context,

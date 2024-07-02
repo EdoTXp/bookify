@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
-import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/dtos/contact_dto.dart';
 import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -239,11 +239,11 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         break;
 
       case LoanInsertionInsertedState(
-          loanInsertionMessage: final succesMessage,
+          loanInsertionMessage: final successMessage,
         ):
         SnackbarService.showSnackBar(
           context,
-          succesMessage,
+          successMessage,
           SnackBarType.success,
         );
 

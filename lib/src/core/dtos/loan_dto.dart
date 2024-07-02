@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/dtos/contact_dto.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 
 class LoanDto {

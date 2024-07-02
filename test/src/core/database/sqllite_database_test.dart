@@ -185,13 +185,13 @@ void main() {
       expect(newAuthor.name, equals('Carlos'));
 
       //TEST Delete the book with id '2' and expect its relations to be deleted.
-      final deleteBookRowAfected = await _deleteRowWhenId(
+      final deleteBookRowAffected = await _deleteRowWhenId(
         database,
         bookTableName,
         'id',
         [booksModel[1].id],
       );
-      expect(deleteBookRowAfected, equals(1));
+      expect(deleteBookRowAffected, equals(1));
 
       final bookAuthorsMap = await _queryOnDatabaseWhenId(
         database,
@@ -323,7 +323,7 @@ void main() {
         'observation': 'Amigo da Jú',
         'loanDate': DateTime(2023, 05, 23).millisecondsSinceEpoch,
         'devolutionDate': DateTime(2023, 06, 10).millisecondsSinceEpoch,
-        'idContact': '1dsadsa',
+        'idContact': 'idContact',
         'bookId': booksModel[0].id,
       };
 
@@ -352,7 +352,7 @@ void main() {
             newLoanMap.first['devolutionDate'] as int),
         equals(DateTime(2023, 06, 20)),
       );
-      expect(newLoanMap.first['idContact'], equals('1dsadsa'));
+      expect(newLoanMap.first['idContact'], equals('idContact'));
       expect(newLoanMap.first['bookId'], equals(booksModel[0].id));
 
       //TEST DELETE book and expect its relations to be deleted.
@@ -451,13 +451,13 @@ void main() {
       expect(bookOnCaseIsEmpty, isEmpty);
 
       //TEST if it has not deleted the book that they referenced before.
-      final bookisNotEmpty = await _queryOnDatabaseWhenId(
+      final bookIsNotEmpty = await _queryOnDatabaseWhenId(
         database,
         bookTableName,
         'id',
         [booksModel[0].id],
       );
-      expect(bookisNotEmpty, isNotEmpty);
+      expect(bookIsNotEmpty, isNotEmpty);
     });
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Unfocuses the current focus scope in the given [BuildContext].
+/// Unfocussed the current focus scope in the given [BuildContext].
 ///
 /// This function is a utility to remove focus from the currently focused
 /// widget within the specified context. It's useful for dismissing the keyboard
@@ -14,7 +14,7 @@ void unfocus(BuildContext context) => FocusScope.of(context).unfocus();
 /// calling `FocusScope.of(context).unfocus()`, making it easier to read
 /// and maintain in the codebase.
 extension TextFieldUnFocusExtension on BuildContext {
-  /// Unfocuses the current focus scope associated with this [BuildContext].
+  /// Unfocussed the current focus scope associated with this [BuildContext].
   ///
   /// This method is equivalent to calling `FocusScope.of(this).unfocus()`.
   /// It's a convenient way to remove focus from the currently focused

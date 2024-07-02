@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
 
 enum RepeatIntervalType {
-  dayly,
+  daily,
   weekly,
 }
 

@@ -7,14 +7,14 @@ import 'package:bookify/src/core/models/book_model.dart';
 
 import 'google_books_repository.dart';
 
-/// Parameters used to return an optimised and filtered JSON with the data needed to instantiate the [BookModel] class.
+/// Parameters used to return an optimized and filtered JSON with the data needed to instantiate the [BookModel] class.
 const _urlParams =
     '&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
-class GoogleBookRepositoryImpl implements GoogleBooksRepository {
+class GoogleBooksRepositoryImpl implements GoogleBooksRepository {
   final RestClient _httpSource;
 
-  GoogleBookRepositoryImpl(this._httpSource);
+  GoogleBooksRepositoryImpl(this._httpSource);
 
   @override
   Future<List<BookModel>> findBooksByAuthor({required String author}) async {

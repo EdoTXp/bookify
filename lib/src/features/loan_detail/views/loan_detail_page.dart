@@ -94,7 +94,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
 
       SnackbarService.showSnackBar(
         context,
-        'Emprestímo Finalizado com sucesso!\nAguarde até voltar à página anterior',
+        'Empréstimo Finalizado com sucesso!\nAguarde até voltar à página anterior',
         SnackBarType.success,
       );
 

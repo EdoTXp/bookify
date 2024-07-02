@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/loan/bloc/loan_bloc.dart';
-import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/dtos/contact_dto.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -212,7 +212,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedLoanByBookTitleEvent work',
+      'Test FoundLoanByBookTitleEvent work',
       build: () => loanBloc,
       setUp: () {
         when(
@@ -258,7 +258,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(
@@ -277,7 +277,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedLoanByBookTitleEvent work when loans are empty',
+      'Test FoundLoanByBookTitleEvent work when loans are empty',
       build: () => loanBloc,
       setUp: () => when(
         () => loanService.getLoansByBookTitle(
@@ -287,7 +287,7 @@ void main() {
         (_) async => [],
       ),
       act: (bloc) => bloc
-          .add(FindedLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
+          .add(FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
       verify: (_) {
         verify(
           () => loanService.getLoansByBookTitle(
@@ -304,7 +304,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedLoanByBookTitleEvent work when loan id is empty',
+      'Test FoundLoanByBookTitleEvent work when loan id is empty',
       build: () => loanBloc,
       setUp: () {
         when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
@@ -321,7 +321,7 @@ void main() {
         );
       },
       act: (bloc) => bloc
-          .add(FindedLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
+          .add(FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
       verify: (_) {
         verify(
           () => loanService.getLoansByBookTitle(
@@ -338,7 +338,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedLoanByBookTitleEvent work when throw LocalDatabaseException',
+      'Test FoundLoanByBookTitleEvent work when throw LocalDatabaseException',
       build: () => loanBloc,
       setUp: () {
         when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
@@ -363,7 +363,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(() =>
@@ -379,7 +379,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedLoanByBookTitleEvent work when throw Generic Exception',
+      'Test FoundLoanByBookTitleEvent work when throw Generic Exception',
       build: () => loanBloc,
       setUp: () {
         when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
@@ -404,7 +404,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(

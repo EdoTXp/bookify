@@ -40,17 +40,22 @@ class _HomePageState extends State<HomePage>
 
   Widget _getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
-      BooksLoadingState() => const CenterCircularProgressIndicator(),
+      BooksLoadingState() => const CenterCircularProgressIndicator(
+          key: Key('BooksLoadingStateWidget'),
+        ),
       BookEmptyState() => Center(
+          key: const Key('BookEmptyStateWidget'),
           child: InfoItemStateWidget.withNotFoundState(
             message: 'Não foi encontrado nenhum livro com esses termos.',
             onPressed: _refreshPage,
           ),
         ),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(
+          key: const Key('BooksLoadedStateWidget'),
           books: books,
         ),
       BookErrorSate(errorMessage: final message) => Center(
+          key: const Key('BookErrorSateWidget'),
           child: InfoItemStateWidget.withErrorState(
             message: message,
             onPressed: _refreshPage,
@@ -103,6 +108,7 @@ class _HomePageState extends State<HomePage>
                       left: 16.0,
                     ),
                     child: AnimatedSearchBar(
+                      key: const Key('AnimatedSearchBar'),
                       searchEC: _searchEC,
                       onSubmitted: _onSubmittedSearch,
                     ),

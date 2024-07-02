@@ -19,7 +19,7 @@ class AboutBloc extends Bloc<AboutEvent, AboutState> {
     try {
       emit(AboutLoadingState());
       final appVersion = await _appVersionService.getAppVersion();
-      emit(AboutLoadeadState(appVersion: appVersion));
+      emit(AboutLoadedState(appVersion: appVersion));
     } catch (e) {
       emit(
         AboutErrorState(

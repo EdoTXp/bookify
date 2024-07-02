@@ -46,13 +46,13 @@ void main() {
         (_) async => 1,
       );
 
-      final userPageReaingInserted =
+      final userPageReadingInserted =
           await userPageReadingTimeRepository.setUserPageReadingTime(
         userPageReadingTime: userPageReadingTime,
       );
 
       expect(
-        userPageReaingInserted,
+        userPageReadingInserted,
         equals(1),
       );
     });

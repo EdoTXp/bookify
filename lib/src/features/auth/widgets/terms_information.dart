@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TermsInformations extends StatelessWidget {
-  const TermsInformations({super.key});
+class TermsInformation extends StatelessWidget {
+  const TermsInformation({super.key});
 
   @override
   Widget build(BuildContext context) {

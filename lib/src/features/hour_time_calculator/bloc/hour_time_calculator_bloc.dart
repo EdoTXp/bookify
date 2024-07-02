@@ -75,7 +75,7 @@ class HourTimeCalculatorBloc
       }
 
       final repeatType = switch (userHourTime.repeatHourTimeType) {
-        RepeatHourTimeType.dayly => RepeatIntervalType.dayly,
+        RepeatHourTimeType.daily => RepeatIntervalType.daily,
         RepeatHourTimeType.weekly => RepeatIntervalType.weekly,
       };
 

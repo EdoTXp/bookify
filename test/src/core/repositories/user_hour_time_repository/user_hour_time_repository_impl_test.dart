@@ -9,7 +9,7 @@ class StorageMock extends Mock implements Storage {}
 
 void main() {
   const userHourTime = UserHourTimeModel(
-    repeatHourTimeType: RepeatHourTimeType.dayly,
+    repeatHourTimeType: RepeatHourTimeType.daily,
     startingHour: 10,
     startingMinute: 30,
     endingHour: 11,

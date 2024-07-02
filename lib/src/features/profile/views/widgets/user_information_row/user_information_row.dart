@@ -31,7 +31,7 @@ class _UserInformationRowState extends State<UserInformationRow> {
   ) {
     return switch (state) {
       UserInformationLoadingState() => const CenterCircularProgressIndicator(),
-      UserInformationLoadeadState(
+      UserInformationLoadedState(
         :final bookCount,
         :final bookcasesCount,
         :final loansCount,

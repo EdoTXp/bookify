@@ -2,7 +2,7 @@ import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const qrcodeScannerWidgetKey = Key('qrCodeScannerWidget');
+const qrCodeScannerWidgetKey = Key('qrCodeScannerWidget');
 const changeModeTextButtonKey = Key('changeModeTextButton');
 const isbnManuallyTextFormFieldWidgetKey =
     Key('isbnManuallyTextFormFieldWidget');
@@ -13,7 +13,7 @@ void main() {
   group('Test QR_CodeScanner Widget ||', () {
     testWidgets('MobileScanner is ready', (tester) async {
       await _pumpWidget(tester);
-      expect(find.byKey(qrcodeScannerWidgetKey), findsOneWidget);
+      expect(find.byKey(qrCodeScannerWidgetKey), findsOneWidget);
       expect(find.byKey(const Key('MobileScanner')), findsOneWidget);
       expect(find.byKey(changeModeTextButtonKey), findsOneWidget);
     });
@@ -50,8 +50,8 @@ Future<void> _testIsbn(
   const notEmptyField = 'Esse campo não pode estar vazio';
   const isbnInvalid = 'Formato do ISBN inválido';
 
-  // Expect that qrcodeScannerWidget is constructed
-  expect(find.byKey(qrcodeScannerWidgetKey), findsOneWidget);
+  // Expect that qrCodeScannerWidget is constructed
+  expect(find.byKey(qrCodeScannerWidgetKey), findsOneWidget);
 
   // Change to IsbnManuallyTextFormFieldWidget
   await tester.tap(find.byKey(changeModeTextButtonKey));
@@ -91,7 +91,7 @@ Future<void> _testIsbn(
   await tester.pumpAndSettle();
 
   // Expect the page to be disposed
-  expect(find.byKey(qrcodeScannerWidgetKey), findsNothing);
+  expect(find.byKey(qrCodeScannerWidgetKey), findsNothing);
   expect(find.byKey(isbnManuallyTextFormFieldWidgetKey), findsNothing);
   expect(find.byKey(changeModeTextButtonKey), findsNothing);
   expect(find.byKey(isbnManuallyTextFormFieldKey), findsNothing);

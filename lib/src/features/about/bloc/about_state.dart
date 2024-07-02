@@ -4,10 +4,10 @@ sealed class AboutState {}
 
 final class AboutLoadingState extends AboutState {}
 
-final class AboutLoadeadState extends AboutState {
+final class AboutLoadedState extends AboutState {
   final AppVersion appVersion;
 
-  AboutLoadeadState({
+  AboutLoadedState({
     required this.appVersion,
   });
 }

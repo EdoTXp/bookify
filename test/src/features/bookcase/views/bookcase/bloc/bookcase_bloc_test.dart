@@ -171,7 +171,7 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work',
+      'test if FoundBookcaseByNameEvent work',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -191,7 +191,7 @@ void main() {
             .thenAnswer((_) async => 'bookImg');
       },
       act: (bloc) =>
-          bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
+          bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
         verify(() =>
                 bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -209,14 +209,14 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work hen is empty List',
+      'test if FoundBookcaseByNameEvent work hen is empty List',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
             .thenAnswer((_) async => []);
       },
       act: (bloc) =>
-          bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
+          bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
         verify(() =>
                 bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -239,7 +239,7 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work when bookcaseId is null',
+      'test if FoundBookcaseByNameEvent work when bookcaseId is null',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -252,7 +252,7 @@ void main() {
                 ]);
       },
       act: (bloc) =>
-          bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
+          bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
         verify(() =>
                 bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -270,14 +270,14 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work when throw LocalDatabaseException',
+      'test if FoundBookcaseByNameEvent work when throw LocalDatabaseException',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
             .thenThrow(const LocalDatabaseException('Error on Database'));
       },
       act: (bloc) =>
-          bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
+          bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
         verify(() =>
                 bookcaseService.getBookcasesByName(name: any(named: 'name')))
@@ -295,14 +295,14 @@ void main() {
     );
 
     blocTest(
-      'test if FindedBookcaseByNameEvent work when throw Generic Exception',
+      'test if FoundBookcaseByNameEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
         when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
             .thenThrow(Exception('Generic Error'));
       },
       act: (bloc) =>
-          bloc.add(FindedBookcaseByNameEvent(searchQueryName: 'Fantasia')),
+          bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
         verify(() =>
                 bookcaseService.getBookcasesByName(name: any(named: 'name')))

@@ -51,7 +51,7 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
     // start IsbnManuallyTextFormFieldWidget
     else {
       titleText = 'Digite os números do código de barra';
-      changeModeText = 'Scanear código';
+      changeModeText = 'Escanear código';
       changeModeIcon = BookifyIcons.qr_code;
     }
 

@@ -14,7 +14,7 @@ class LauncherService {
         throw 'Erro ao abrir o link';
       }
     } catch (e) {
-      throw Exception('Occoreu um erro inesperado: $e');
+      throw Exception('Ocorreu um erro inesperado: $e');
     }
   }
 
@@ -37,7 +37,7 @@ class LauncherService {
         throw 'Não foi possível executar a ação de chamada';
       }
     } catch (e) {
-      throw Exception('Occoreu um erro inesperado: $e');
+      throw Exception('Ocorreu um erro inesperado: $e');
     }
   }
 }

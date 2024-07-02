@@ -16,17 +16,17 @@ class BookifyImages {
   static const profileHeaderBackground =
       'assets/images/profile_header_background.png';
 
-  /// Ilustration 1 ![](bookify/assets/images/ilustration_1.png)
-  static const ilustration_1 = 'assets/images/ilustration_1.png';
+  /// Illustration 1 ![](bookify/assets/images/illustration_1.png)
+  static const illustration_1 = 'assets/images/illustration_1.png';
 
-  /// Ilustration 1 ![](bookify/assets/images/ilustration_2.png)
-  static const ilustration_2 = 'assets/images/ilustration_2.png';
+  /// Illustration 1 ![](bookify/assets/images/illustration__2.png)
+  static const illustration_2 = 'assets/images/illustration_2.png';
 
-  /// Ilustration 3 ![](bookify/assets/images/ilustration_3.png)
-  static const ilustration_3 = 'assets/images/ilustration_3.png';
+  /// Illustration 3 ![](bookify/assets/images/illustration_3.png)
+  static const illustration_3 = 'assets/images/illustration_3.png';
 
-  /// Ilustration 4 ![](bookify/assets/images/ilustration_4.png)
-  static const ilustration_4 = 'assets/images/ilustration_4.png';
+  /// Illustration 4 ![](bookify/assets/images/illustration_4.png)
+  static const illustration_4 = 'assets/images/illustration_4.png';
 
   /// Auth Logo ![](bookify/assets/images/auth_logo.png)
   static const authLogo = 'assets/images/auth_logo.png';

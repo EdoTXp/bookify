@@ -17,7 +17,7 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
     this._readingServices,
   ) : super(ReadingsLoadingState()) {
     on<GotAllReadingsEvent>(_gotAllReadingsEvent);
-    on<FindedReadingByBookTitleEvent>(_findedReadingByBookTitleEvent);
+    on<FoundReadingByBookTitleEvent>(_foundReadingByBookTitleEvent);
   }
 
   Future<void> _gotAllReadingsEvent(
@@ -42,8 +42,8 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
     }
   }
 
-  Future<void> _findedReadingByBookTitleEvent(
-    FindedReadingByBookTitleEvent event,
+  Future<void> _foundReadingByBookTitleEvent(
+    FoundReadingByBookTitleEvent event,
     Emitter<ReadingsState> emit,
   ) async {
     try {

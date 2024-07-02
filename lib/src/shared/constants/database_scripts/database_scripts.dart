@@ -30,11 +30,11 @@ class DatabaseScripts {
   String get bookCategoriesScript => _bookCategoriesScript;
 
   /// Create a table for relationship [BookModel] and [ReadingModel]
-  /// [lastReadingDate] is a millisSinceEpoch
+  /// [lastReadingDate] is a millisecondsSinceEpoch
   String get bookReadingScript => _bookReadingScript;
 
   /// Create a table for [LoanModel].
-  /// [loanDate] and [devolutionDate] is a millisSinceEpoch
+  /// [loanDate] and [devolutionDate] is a millisecondsSinceEpoch
   /// [idContact] used to get the native contact on device.
   /// A separate table has not been created for the contact.
   /// This way you can take advantage of the contact changes without having to update them in this table.

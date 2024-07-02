@@ -29,7 +29,7 @@ class _ProgrammingHourLoadingStateWidgetState
     super.initState();
     userHourTimeModel = UserHourTimeModel(
       repeatHourTimeType: widget.initialUserHourTimeModel?.repeatHourTimeType ??
-          RepeatHourTimeType.dayly,
+          RepeatHourTimeType.daily,
       startingHour: widget.initialUserHourTimeModel?.startingHour ?? 7,
       startingMinute: widget.initialUserHourTimeModel?.startingMinute ?? 0,
       endingHour: widget.initialUserHourTimeModel?.endingHour ?? 8,

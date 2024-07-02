@@ -37,7 +37,7 @@ class UserInformationBloc
       final int readingsCount = await _readingService.countReadings();
 
       emit(
-        UserInformationLoadeadState(
+        UserInformationLoadedState(
           bookcasesCount: bookcasesCount,
           bookCount: bookCount,
           loansCount: loansCount,

@@ -15,7 +15,7 @@ class NotificationsServiceMock extends Mock implements NotificationsService {}
 
 void main() {
   const userHourTime = UserHourTimeModel(
-    repeatHourTimeType: RepeatHourTimeType.dayly,
+    repeatHourTimeType: RepeatHourTimeType.daily,
     startingHour: 10,
     startingMinute: 30,
     endingHour: 11,
@@ -29,7 +29,7 @@ void main() {
   setUp(
     () {
       registerFallbackValue(NotificationChannel.readChannel);
-      registerFallbackValue(RepeatIntervalType.dayly);
+      registerFallbackValue(RepeatIntervalType.daily);
 
       hourTimeCalculatorBloc = HourTimeCalculatorBloc(
         userHourTimeRepository,

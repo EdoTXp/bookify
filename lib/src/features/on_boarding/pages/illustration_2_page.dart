@@ -20,7 +20,7 @@ class Illustration2Page extends StatelessWidget {
             Image.asset(
               height: mediaQuerySizeOf.height * .4,
               width: mediaQuerySizeOf.width,
-              BookifyImages.ilustration_2,
+              BookifyImages.illustration_2,
               fit: BoxFit.scaleDown,
             ),
             const SizedBox(

@@ -58,13 +58,13 @@ class _ReadingsPageState extends State<ReadingsPage> {
 
     if (currentSearchLength >= 3) {
       _bloc.add(
-        FindedReadingByBookTitleEvent(
+        FoundReadingByBookTitleEvent(
           searchQueryName: _searchController.text,
         ),
       );
     } else if (currentSearchLength < 3 && _lastSearchLength == 3) {
       _refreshPage();
-    } 
+    }
 
     _lastSearchLength = currentSearchLength;
   }

@@ -14,11 +14,11 @@ class RepeatTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final mediaQuerysizeOf = MediaQuery.sizeOf(context);
+    final mediaQuerySizeOf = MediaQuery.sizeOf(context);
 
     return Container(
       padding: const EdgeInsets.all(16.0),
-      width: mediaQuerysizeOf.width,
+      width: mediaQuerySizeOf.width,
       decoration: BoxDecoration(
         color: colorScheme.primary.darken(),
         borderRadius: BorderRadius.circular(12),

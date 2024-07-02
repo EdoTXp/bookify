@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 enum RepeatHourTimeType {
-  dayly,
+  daily,
   weekly;
 
   static RepeatHourTimeType toType(int value) {
     return switch (value) {
-      1 => RepeatHourTimeType.dayly,
+      1 => RepeatHourTimeType.daily,
       2 => RepeatHourTimeType.weekly,
       _ => throw Exception('Error type'),
     };
@@ -14,7 +14,7 @@ enum RepeatHourTimeType {
 
   int toIntValue() {
     return switch (this) {
-      RepeatHourTimeType.dayly => 1,
+      RepeatHourTimeType.daily => 1,
       RepeatHourTimeType.weekly => 2,
     };
   }

@@ -143,7 +143,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
     _bloc.add(GotBookcaseBooksEvent(bookcaseId: _actualBookcase.id!));
   }
 
-  Future<void> _popupMenuOnSeleceted(String value, BuildContext context) async {
+  Future<void> _popupMenuOnSelected(String value, BuildContext context) async {
     if (value == _popupMenuItemsSet.first) {
       var bookcaseList = await Navigator.pushNamed(
         context,
@@ -190,7 +190,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
               PopupMenuButton<String>(
                 icon: const Icon(Icons.more_vert_rounded),
                 onSelected: (value) async =>
-                    await _popupMenuOnSeleceted(value, context),
+                    await _popupMenuOnSelected(value, context),
                 itemBuilder: (context) {
                   return _popupMenuItemsSet.map(
                     (String choice) {

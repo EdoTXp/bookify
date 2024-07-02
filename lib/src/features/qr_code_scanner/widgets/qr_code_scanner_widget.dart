@@ -69,7 +69,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
               errorBuilder: (context, _, __) {
                 return Center(
                   child: InfoItemStateWidget.withErrorState(
-                    message: 'Occoreu algum erro com a câmera',
+                    message: 'Ocorreu algum erro com a câmera',
                     onPressed: () async {
                       await _scannerController.stop().then(
                         (_) async => await _scannerController.start(),

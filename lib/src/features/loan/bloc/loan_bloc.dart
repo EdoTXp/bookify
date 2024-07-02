@@ -20,7 +20,7 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     this._contactsService,
   ) : super(LoanLoadingState()) {
     on<GotAllLoansEvent>(_gotAllLoansEvent);
-    on<FindedLoanByBookTitleEvent>(_findedLoanByBookNameEvent);
+    on<FoundLoanByBookTitleEvent>(_foundLoanByBookNameEvent);
   }
 
   Future<void> _gotAllLoansEvent(
@@ -45,8 +45,8 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     }
   }
 
-  Future<void> _findedLoanByBookNameEvent(
-    FindedLoanByBookTitleEvent event,
+  Future<void> _foundLoanByBookNameEvent(
+    FoundLoanByBookTitleEvent event,
     Emitter<LoanState> emit,
   ) async {
     try {

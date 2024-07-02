@@ -28,7 +28,7 @@ class BookSelectedRow extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onClearPressed,
-            tooltip: 'Deselecionar Livro',
+            tooltip: 'Desselecionar Livro',
             icon: const Icon(Icons.close_rounded),
           ),
           const SizedBox(

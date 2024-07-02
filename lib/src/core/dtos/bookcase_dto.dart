@@ -1,11 +1,9 @@
-
-
 import 'package:bookify/src/core/models/bookcase_model.dart';
 
 class BookcaseDto {
   final BookcaseModel bookcase;
   final String? bookImagePreview;
-  
+
   const BookcaseDto({
     required this.bookcase,
     this.bookImagePreview,
@@ -21,17 +19,16 @@ class BookcaseDto {
     );
   }
 
-  
   @override
-  String toString() => 'BookcaseDto(bookcase: $bookcase, bookImagePreview: $bookImagePreview)';
+  String toString() =>
+      'BookcaseDto(bookcase: $bookcase, bookImagePreview: $bookImagePreview)';
 
   @override
   bool operator ==(covariant BookcaseDto other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.bookcase == bookcase &&
-      other.bookImagePreview == bookImagePreview;
+
+    return other.bookcase == bookcase &&
+        other.bookImagePreview == bookImagePreview;
   }
 
   @override

@@ -41,7 +41,7 @@ class _LoanPageState extends State<LoanPage> {
 
     if (actualSearchQuery != null) {
       _bloc.add(
-        FindedLoanByBookTitleEvent(
+        FoundLoanByBookTitleEvent(
           searchQueryName: actualSearchQuery,
         ),
       );

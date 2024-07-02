@@ -88,7 +88,7 @@ void main() {
       },
       expect: () => [
         isA<UserInformationLoadingState>(),
-        isA<UserInformationLoadeadState>(),
+        isA<UserInformationLoadedState>(),
       ],
     );
 

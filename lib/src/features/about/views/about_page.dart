@@ -27,7 +27,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget _getWidgetOnAboutState(BuildContext context, AboutState state) {
     return switch (state) {
       AboutLoadingState() => const CenterCircularProgressIndicator(),
-      AboutLoadeadState(:final appVersion) =>
+      AboutLoadedState(:final appVersion) =>
         AboutLoadedStateWidget(appVersion: appVersion),
       AboutErrorState(:final errorMessage) =>
         InfoItemStateWidget.withErrorState(

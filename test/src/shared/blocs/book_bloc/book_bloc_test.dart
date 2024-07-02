@@ -1,14 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/repositories/google_book_repository/google_books_repository.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
-import 'package:bookify/src/core/repositories/google_book_repository/google_books_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks/models/books_model_mock.dart';
 
-class GoogleBookRepositoryMock extends Mock
-    implements GoogleBookRepositoryImpl {}
+class GoogleBookRepositoryMock extends Mock implements GoogleBooksRepository {}
 
 void main() {
   group('Test every event of Book Bloc: ', () {
@@ -80,8 +79,7 @@ void main() {
           when((() => repository.findBooksByIsbn(isbn: '9788573076103')))
               .thenAnswer((_) async => booksMock),
       build: () => bookBloc,
-      act: (bloc) =>
-          bloc.add(FoundBooksByIsbnEvent(isbn: '978-85-7307-610-3')),
+      act: (bloc) => bloc.add(FoundBooksByIsbnEvent(isbn: '978-85-7307-610-3')),
       verify: (_) {
         verify(() => repository.findBooksByIsbn(isbn: '9788573076103'))
             .called(1);

@@ -183,7 +183,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedReadingByBookTitleEvent work',
+      'Test FoundReadingByBookTitleEvent work',
       build: () => readingsBloc,
       setUp: () {
         when(
@@ -217,7 +217,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(
@@ -234,7 +234,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedReadingByBookTitleEvent work when readings are empty',
+      'Test FoundReadingByBookTitleEvent work when readings are empty',
       build: () => readingsBloc,
       setUp: () => when(
         () => readingService.getReadingsByBookTitle(
@@ -244,7 +244,7 @@ void main() {
         (_) async => [],
       ),
       act: (bloc) => bloc.add(
-        FindedReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(
@@ -261,7 +261,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedReadingByBookTitleEvent work when reading id is empty',
+      'Test FoundReadingByBookTitleEvent work when reading id is empty',
       build: () => readingsBloc,
       setUp: () => when(
         () => readingService.getReadingsByBookTitle(
@@ -277,7 +277,7 @@ void main() {
         ],
       ),
       act: (bloc) => bloc.add(
-        FindedReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(
@@ -294,7 +294,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedReadingByBookTitleEvent work when throw LocalDatabaseException',
+      'Test FoundReadingByBookTitleEvent work when throw LocalDatabaseException',
       build: () => readingsBloc,
       setUp: () {
         when(() => readingService.getReadingsByBookTitle(
@@ -317,7 +317,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(() => readingService.getReadingsByBookTitle(
@@ -331,7 +331,7 @@ void main() {
     );
 
     blocTest(
-      'Test FindedReadingByBookTitleEvent work when throw Generic Exception',
+      'Test FoundReadingByBookTitleEvent work when throw Generic Exception',
       build: () => readingsBloc,
       setUp: () {
         when(() => readingService.getReadingsByBookTitle(
@@ -354,7 +354,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(
-        FindedReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
+        FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
         verify(() => readingService.getReadingsByBookTitle(

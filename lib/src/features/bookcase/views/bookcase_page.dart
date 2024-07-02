@@ -42,7 +42,7 @@ class _BookcasePageState extends State<BookcasePage> {
 
     if (actualSearchQuery != null) {
       _bloc.add(
-        FindedBookcaseByNameEvent(
+        FoundBookcaseByNameEvent(
           searchQueryName: actualSearchQuery,
         ),
       );

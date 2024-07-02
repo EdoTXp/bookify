@@ -128,7 +128,7 @@ void main() {
           signInType: SignInType.google,
         ),
       ).thenThrow(
-        const AuthException('Error on authentification'),
+        const AuthException('Error on authentication'),
       ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(buttonType: 1),

@@ -37,7 +37,7 @@ void main() {
       verify: (_) => verify(() => appVersionService.getAppVersion()).called(1),
       expect: () => [
         isA<AboutLoadingState>(),
-        isA<AboutLoadeadState>(),
+        isA<AboutLoadedState>(),
       ],
     );
 

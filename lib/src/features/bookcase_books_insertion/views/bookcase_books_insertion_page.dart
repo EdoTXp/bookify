@@ -73,7 +73,7 @@ class _BookcaseBooksInsertionPageState
     };
   }
 
-  void _handleBoookcaseInsertionState(
+  void _handleBookcaseInsertionState(
     BuildContext context,
     BookcaseBooksInsertionState state,
   ) async {
@@ -109,7 +109,7 @@ class _BookcaseBooksInsertionPageState
       child:
           BlocConsumer<BookcaseBooksInsertionBloc, BookcaseBooksInsertionState>(
               bloc: _bloc,
-              listener: _handleBoookcaseInsertionState,
+              listener: _handleBookcaseInsertionState,
               builder: (context, state) {
                 return Scaffold(
                   appBar: AppBar(

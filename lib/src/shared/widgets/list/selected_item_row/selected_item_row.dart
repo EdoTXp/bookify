@@ -29,7 +29,7 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
   ) _getAllIconButtonProperties() {
     return switch (_isSelectedAll) {
       true => (
-          'Deselecionar Tudo',
+          'Desselecionar Tudo',
           Icons.deselect_rounded,
         ),
       false => (

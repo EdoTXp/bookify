@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/dtos/conctact_dto.dart';
+import 'package:bookify/src/core/dtos/contact_dto.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fast_contacts/fast_contacts.dart';

@@ -18,7 +18,7 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     this._bookcaseService,
   ) : super(BookcaseLoadingState()) {
     on<GotAllBookcasesEvent>(_gotAllBookcasesEvent);
-    on<FindedBookcaseByNameEvent>(_findedBookcaseByNameEvent);
+    on<FoundBookcaseByNameEvent>(_foundBookcaseByNameEvent);
     on<DeletedBookcasesEvent>(_deletedBookcasesEvent);
   }
 
@@ -37,8 +37,8 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     }
   }
 
-  Future<void> _findedBookcaseByNameEvent(
-    FindedBookcaseByNameEvent event,
+  Future<void> _foundBookcaseByNameEvent(
+    FoundBookcaseByNameEvent event,
     Emitter<BookcaseState> emit,
   ) async {
     try {

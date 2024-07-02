@@ -39,7 +39,7 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final mediaQuerysizeOf = MediaQuery.sizeOf(context);
+    final mediaQuerySizeOf = MediaQuery.sizeOf(context);
 
     return Material(
       child: InkWell(
@@ -66,7 +66,7 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
             vertical: 16.0,
             horizontal: 30.0,
           ),
-          width: mediaQuerysizeOf.width,
+          width: mediaQuerySizeOf.width,
           decoration: BoxDecoration(
             color: colorScheme.primary.darken(),
             borderRadius: BorderRadius.circular(12),
@@ -86,7 +86,7 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
                 height: 20,
               ),
               Container(
-                width: mediaQuerysizeOf.width,
+                width: mediaQuerySizeOf.width,
                 padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   color: colorScheme.secondary,

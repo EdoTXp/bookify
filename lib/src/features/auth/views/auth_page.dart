@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
-import 'package:bookify/src/features/auth/widgets/terms_informations.dart';
+import 'package:bookify/src/features/auth/widgets/terms_information.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
 import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
@@ -160,7 +160,7 @@ class _AuthPageState extends State<AuthPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const TermsInformations(),
+                const TermsInformation(),
               ],
             ),
           ),

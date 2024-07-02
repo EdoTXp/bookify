@@ -101,7 +101,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
     }
   }
 
-  Future<void> _handleBoookcaseInsertionState(
+  Future<void> _handleBookcaseInsertionState(
     BuildContext context,
     BookcaseInsertionState state,
   ) async {
@@ -115,11 +115,11 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
         break;
       case BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: final succesMessage,
+          bookcaseInsertionMessage: final successMessage,
         ):
         SnackbarService.showSnackBar(
           context,
-          succesMessage,
+          successMessage,
           SnackBarType.success,
         );
 
@@ -154,7 +154,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     return BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
       bloc: _bloc,
-      listener: _handleBoookcaseInsertionState,
+      listener: _handleBookcaseInsertionState,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(

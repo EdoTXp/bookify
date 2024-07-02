@@ -4,10 +4,10 @@ sealed class BookcaseEvent {}
 
 final class GotAllBookcasesEvent extends BookcaseEvent {}
 
-final class FindedBookcaseByNameEvent extends BookcaseEvent {
+final class FoundBookcaseByNameEvent extends BookcaseEvent {
   final String searchQueryName;
 
-  FindedBookcaseByNameEvent({
+  FoundBookcaseByNameEvent({
     required this.searchQueryName,
   });
 }

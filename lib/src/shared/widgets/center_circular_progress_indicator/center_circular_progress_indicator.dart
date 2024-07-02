@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CenterCircularProgressIndicator extends StatelessWidget {
-  final bool withAdpative;
+  final bool withAdaptive;
 
   const CenterCircularProgressIndicator({
     super.key,
-    this.withAdpative = true,
+    this.withAdaptive = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: withAdpative
+      child: withAdaptive
           ? const CircularProgressIndicator.adaptive()
           : const CircularProgressIndicator(),
     );

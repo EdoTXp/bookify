@@ -3,22 +3,22 @@ import 'dart:io';
 import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/repositories/google_book_repository/google_books_repository_impl.dart';
-import 'package:bookify/src/core/rest_client/dio_rest_client_impl.dart';
+import 'package:bookify/src/core/rest_client/rest_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../mocks/json/books_json_mock.dart';
 
-class DioRestClientMock extends Mock implements DioRestClientImpl {}
+class RestClientMock extends Mock implements RestClient {}
 
 void main() {
-  final dio = DioRestClientMock();
-  final bookRepository = GoogleBookRepositoryImpl(dio);
+  final restClient = RestClientMock();
+  final bookRepository = GoogleBooksRepositoryImpl(restClient);
 
   group('Test all methods of GoogleBookRepository:', () {
     test('Get a List of books by author', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
                 data: authorJsonBooksMock, // books of file books_json_mock.dart
                 requestOptions: RequestOptions(path: ""))
@@ -36,7 +36,7 @@ void main() {
     });
 
     test('Get a book by ISBN', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: isbnJsonBookMock, //  book of file books_json_mock.dart
           requestOptions: RequestOptions(path: ""),
@@ -48,7 +48,7 @@ void main() {
     });
 
     test('Get a List of books by publisher', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: publisherJsonBooksMock, // books of file books_json_mock.dart
           requestOptions: RequestOptions(path: ""),
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('Get a list of books', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: allBooksMock, // books of file books_json_mock.dart
 
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('Get a list of books by title', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: titleBooksMock, // books of file books_json_mock.dart
           requestOptions: RequestOptions(path: ""),
@@ -98,7 +98,7 @@ void main() {
     });
 
     test('Get a list of books by category', () async {
-      when(() => dio.get(any())).thenAnswer((_) async {
+      when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
                 data: categoryBooksMock, //  books of file books_json_mock.dart
                 requestOptions: RequestOptions(path: ""))
@@ -114,29 +114,29 @@ void main() {
     });
 
     test('test a BookException', () async {
-      when(() => dio.get(any())).thenThrow(const BookException(''));
+      when(() => restClient.get(any())).thenThrow(const BookException(''));
       expect(bookRepository.getAllBooks(), throwsA(isA<BookException>()));
     });
 
     test('test a BookNotFoundException', () async {
-      when(() => dio.get(any()))
+      when(() => restClient.get(any()))
           .thenThrow(const BookNotFoundException('BookNotFoundException'));
       expect(
           bookRepository.getAllBooks(), throwsA(isA<BookNotFoundException>()));
     });
 
     test('test a SocketException', () async {
-      when(() => dio.get(any())).thenThrow(const SocketException('message'));
+      when(() => restClient.get(any())).thenThrow(const SocketException('message'));
       expect(bookRepository.getAllBooks(), throwsA(isA<SocketException>()));
     });
 
     test('test a TypeError expecting an empty list of books', () async {
-      when(() => dio.get(any())).thenThrow(TypeError());
+      when(() => restClient.get(any())).thenThrow(TypeError());
       expect(await bookRepository.getAllBooks(), <BookModel>[]);
     });
 
     test('test a generic Exception', () async {
-      when(() => dio.get(any())).thenThrow(Exception());
+      when(() => restClient.get(any())).thenThrow(Exception());
       expect(bookRepository.getAllBooks(), throwsA(isA<Exception>()));
     });
   });

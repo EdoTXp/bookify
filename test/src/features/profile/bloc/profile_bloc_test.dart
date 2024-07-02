@@ -81,7 +81,7 @@ void main() {
       setUp: () => when(
         () => authService.getUserModel(),
       ).thenThrow(
-        const AuthException('Error on authentification'),
+        const AuthException('Error on authentication'),
       ),
       act: (bloc) => bloc.add(
         GotUserProfileEvent(),
@@ -247,7 +247,7 @@ void main() {
           signInType: SignInType.google,
         ),
       ).thenThrow(
-        const AuthException('Error on authentification'),
+        const AuthException('Error on authentication'),
       ),
       act: (bloc) => bloc.add(
         UserLoggedOutEvent(

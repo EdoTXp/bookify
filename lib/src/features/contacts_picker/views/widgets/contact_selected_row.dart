@@ -28,7 +28,7 @@ class ContactSelectedRow extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onClearPressed,
-            tooltip: 'Deselecionar Contato',
+            tooltip: 'Desselecionar Contato',
             icon: const Icon(Icons.close_rounded),
           ),
           const SizedBox(

@@ -142,7 +142,7 @@ class NotificationsServiceImpl implements NotificationsService {
     required NotificationChannel notificationChannel,
   }) async {
     final repeatInterval = switch (repeatType) {
-      RepeatIntervalType.dayly => RepeatInterval.daily,
+      RepeatIntervalType.daily => RepeatInterval.daily,
       RepeatIntervalType.weekly => RepeatInterval.weekly,
     };
 

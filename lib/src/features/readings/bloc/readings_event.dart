@@ -4,10 +4,10 @@ sealed class ReadingsEvent {}
 
 final class GotAllReadingsEvent extends ReadingsEvent {}
 
-final class FindedReadingByBookTitleEvent extends ReadingsEvent {
+final class FoundReadingByBookTitleEvent extends ReadingsEvent {
   final String searchQueryName;
 
-  FindedReadingByBookTitleEvent({
+  FoundReadingByBookTitleEvent({
     required this.searchQueryName,
   });
 }

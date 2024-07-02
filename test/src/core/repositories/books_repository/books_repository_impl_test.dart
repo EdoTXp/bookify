@@ -301,7 +301,7 @@ void main() {
 
       expect(
           () async => await bookRepository.getBooksByTitle(
-              title: 'Memórias Postumas de Bras Cubas'),
+              title: 'Memórias Póstumas de Bras Cubas'),
           throwsA((Exception e) =>
               e is LocalDatabaseException &&
               e.message ==
@@ -317,7 +317,7 @@ void main() {
 
       expect(
           () async => await bookRepository.getBooksByTitle(
-              title: 'Memórias Postumas de Bras Cubas'),
+              title: 'Memórias Póstumas de Bras Cubas'),
           throwsA((Exception e) =>
               e is LocalDatabaseException && e.message == 'Error on database'));
     });

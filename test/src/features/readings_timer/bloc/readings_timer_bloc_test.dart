@@ -11,7 +11,7 @@ class UserHourTimeRepositoryMock extends Mock
 
 void main() {
   const userHourTimeModel = UserHourTimeModel(
-    repeatHourTimeType: RepeatHourTimeType.dayly,
+    repeatHourTimeType: RepeatHourTimeType.daily,
     startingHour: 8,
     startingMinute: 0,
     endingHour: 8,
