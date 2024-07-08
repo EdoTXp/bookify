@@ -17,6 +17,7 @@ class Illustration4Page extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
+              key: const Key('Illustration4'),
               height: mediaQuerySizeOf.height * .4,
               width: mediaQuerySizeOf.width,
               BookifyImages.illustration_4,

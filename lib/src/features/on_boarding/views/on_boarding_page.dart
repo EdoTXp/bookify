@@ -122,6 +122,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     ),
                   ],
                   Flexible(
+                    key: const Key('NextButton'),
                     child: BookifyElevatedButton.expanded(
                       onPressed: () async =>
                           await _goToForwardOrFinalizeIllustration(),

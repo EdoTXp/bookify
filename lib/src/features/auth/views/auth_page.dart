@@ -112,6 +112,7 @@ class _AuthPageState extends State<AuthPage> {
                 const Spacer(),
                 if (Platform.isAndroid)
                   SocialLoginButton(
+                    key: const Key('Google Button'),
                     buttonType: SocialLoginButtonType.google,
                     text: 'Entrar com o Google',
                     borderRadius: 44,
@@ -127,6 +128,7 @@ class _AuthPageState extends State<AuthPage> {
                   )
                 else if (Platform.isIOS)
                   SocialLoginButton(
+                    key: const Key('Apple Button'),
                     buttonType: SocialLoginButtonType.apple,
                     text: 'Entrar com a Apple',
                     borderRadius: 44,
@@ -144,6 +146,7 @@ class _AuthPageState extends State<AuthPage> {
                   height: 20,
                 ),
                 SocialLoginButton(
+                  key: const Key('Facebook Button'),
                   buttonType: SocialLoginButtonType.facebook,
                   text: 'Entrar com o Facebook',
                   borderRadius: 44,
