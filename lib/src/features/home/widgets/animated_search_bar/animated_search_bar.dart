@@ -86,6 +86,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               },
             ),
             IconButton(
+              key: const Key('Search Type Button'),
               tooltip: 'Altere o tipo de busca.',
               onPressed: () {
                 setState(
@@ -135,27 +136,42 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.title,
                     tooltip: 'Busca por título.',
-                    icon: Icon(Icons.menu_book_rounded),
+                    icon: Icon(
+                      key: Key('Title Search Type Button'),
+                      Icons.menu_book_rounded,
+                    ),
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.author,
                     tooltip: 'Busca por autor.',
-                    icon: Icon(Icons.person_rounded),
+                    icon: Icon(
+                      key: Key('Author Search Type Button'),
+                      Icons.person_rounded,
+                    ),
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.category,
                     tooltip: 'Busca por gênero.',
-                    icon: Icon(Icons.category_rounded),
+                    icon: Icon(
+                      key: Key('Category Search Type Button'),
+                      Icons.category_rounded,
+                    ),
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.publisher,
                     tooltip: 'Busca por editora.',
-                    icon: Icon(Icons.publish_rounded),
+                    icon: Icon(
+                      key: Key('Publisher Search Type Button'),
+                      Icons.publish_rounded,
+                    ),
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.isbn,
                     tooltip: 'Busca por ISBN.',
-                    icon: Icon(BookifyIcons.isbn),
+                    icon: Icon(
+                      key: Key('ISBN Search Type Button'),
+                      BookifyIcons.isbn,
+                    ),
                   ),
                 ],
                 selected: <SearchType>{_searchType},

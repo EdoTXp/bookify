@@ -37,7 +37,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   @override
   void initState() {
     super.initState();
-  /*/  LockScreenOrientationService.lockOrientationScreen(
+    /*/  LockScreenOrientationService.lockOrientationScreen(
       orientation: Orientation.portrait,
     );*/
     _canPopPage = true;
@@ -51,7 +51,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
   @override
   void dispose() {
- //   LockScreenOrientationService.unLockOrientationScreen();
+    //   LockScreenOrientationService.unLockOrientationScreen();
     _bookcaseNameEC.dispose();
     _bookcaseDescriptionEC.dispose();
     super.dispose();
@@ -183,6 +183,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       height: 10,
                     ),
                     TextFormField(
+                      key: const Key('Bookcase name TextFormField'),
                       controller: _bookcaseNameEC,
                       cursorColor: colorScheme.secondary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -206,6 +207,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      key: const Key('Bookcase description TextFormField'),
                       controller: _bookcaseDescriptionEC,
                       cursorColor: colorScheme.secondary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -221,6 +223,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      key: const Key('Bookcase color TextFormField'),
                       style: const TextStyle(fontSize: 16),
                       readOnly: true,
                       keyboardType: TextInputType.none,
@@ -256,6 +259,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       height: 20,
                     ),
                     BookifyOutlinedButton.expanded(
+                      key: const Key('Confirm Bookcase insertion Button'),
                       text: 'Confirmar',
                       onPressed: () => _onPressedButton(bookcaseModel),
                     ),

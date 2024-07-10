@@ -24,6 +24,7 @@ class ReadingHourInformation extends StatelessWidget {
             Row(
               children: [
                 Flexible(
+                  key: const Key('Late Calculate Hour Button'),
                   child: BookifyOutlinedButton.expanded(
                     text: 'Escolher depois',
                     onPressed: () => Navigator.pop(context),

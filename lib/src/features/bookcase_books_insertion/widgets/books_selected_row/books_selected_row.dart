@@ -37,6 +37,7 @@ class BooksSelectedRow extends StatelessWidget {
             width: 5,
           ),
           IconButton(
+            key: const Key('Confirm book IconButton'),
             onPressed: onConfirmPressed,
             tooltip: 'Confirmar a seleção',
             icon: const Icon(Icons.check_rounded),

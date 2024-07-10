@@ -24,6 +24,7 @@ class ReadingPageInformationWidget extends StatelessWidget {
             Row(
               children: [
                 Flexible(
+                  key: const Key('Late Calculate Reading Button'),
                   child: BookifyOutlinedButton.expanded(
                     text: 'Calcular depois',
                     onPressed: () => Navigator.pop(context),

@@ -231,13 +231,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         child: BookifyOutlinedButton(
                           text: 'Ir para loja',
                           suffixIcon: Icons.store,
-                          onPressed: () async => await LauncherService
-                              .openUrl(book.buyLink),
+                          onPressed: () async =>
+                              await LauncherService.openUrl(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: BookifyElevatedButton(
+                          key: const Key('Insert Or Remove Book Button'),
                           // Update the icon
                           suffixIcon:
                               (_bookIsInserted) ? Icons.remove : Icons.add,
