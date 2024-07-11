@@ -55,12 +55,9 @@ class _LoanPageState extends State<LoanPage> {
   Widget _getWidgetOnLoanState(BuildContext context, LoanState state) {
     return switch (state) {
       LoanLoadingState() => const CenterCircularProgressIndicator(),
-      LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
-          loansDto: loansDto,
-          refreshPage: _refreshPage,
-        ),
       LoanEmptyState() => Center(
           child: ItemEmptyStateWidget(
+            key: const Key('Loan Empty State'),
             label: 'Criar um novo empréstimo de um livro',
             onTap: () async {
               final loanInserted = await Navigator.pushNamed(
@@ -73,6 +70,11 @@ class _LoanPageState extends State<LoanPage> {
               }
             },
           ),
+        ),
+      LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
+          key: const Key('Loan Loaded State'),
+          loansDto: loansDto,
+          refreshPage: _refreshPage,
         ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
           message:

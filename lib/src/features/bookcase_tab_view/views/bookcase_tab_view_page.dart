@@ -141,9 +141,18 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                   dividerHeight: 2,
                   dividerColor: colorScheme.primary.withOpacity(.6),
                   tabs: const [
-                    Tab(text: 'Estantes'),
-                    Tab(text: 'Empréstimos'),
-                    Tab(text: 'Meus Livros'),
+                    Tab(
+                      key: Key('Bookcases TabView'),
+                      text: 'Estantes',
+                    ),
+                    Tab(
+                      key: Key('Loan TabView'),
+                      text: 'Empréstimos',
+                    ),
+                    Tab(
+                      key: Key('My Books TabView'),
+                      text: 'Meus Livros',
+                    ),
                   ],
                   onTap: (selectedTab) {
                     _setSearchHintText(selectedTab);

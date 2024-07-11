@@ -305,6 +305,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                         children: [
                           (_bookModel == null)
                               ? EmptyBookButtonWidget(
+                                  key: const Key('Empty Book Button Widget'),
                                   onTap: () async => await _getBook(context),
                                   height: 250,
                                   width: 170,
@@ -314,6 +315,9 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                   child: InkWell(
                                     onTap: () async => await _getBook(context),
                                     child: BookWidget.normalSize(
+                                      key: const Key(
+                                        'Selected Book Button Widget',
+                                      ),
                                       bookImageUrl: _bookModel!.imageUrl,
                                     ),
                                   ),
@@ -323,6 +327,9 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             top: -20,
                             child: _contact == null
                                 ? EmptyContactButtonWidget(
+                                    key: const Key(
+                                      'Empty Contact Button Widget',
+                                    ),
                                     onTap: () async =>
                                         await _getContact(context),
                                     height: 80,
@@ -330,6 +337,9 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                     contactIsValid: _contactIsValid,
                                   )
                                 : ContactCircleAvatar(
+                                    key: const Key(
+                                      'Contact Circle Avatar',
+                                    ),
                                     name: _contact!.name,
                                     photo: _contact!.photo,
                                     onTap: () async =>
@@ -381,6 +391,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       height: 10,
                     ),
                     TextFormField(
+                      key: const Key('Observation TextFormField'),
                       controller: _observationEC,
                       cursorColor: colorScheme.secondary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -401,6 +412,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       children: [
                         Flexible(
                           child: TextFormField(
+                            key: const Key('Loan Date TextFormField'),
                             controller: _loanDateEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -425,6 +437,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                         ),
                         Flexible(
                           child: TextFormField(
+                            key: const Key('Devolution Date TextFormField'),
                             controller: _devolutionDateEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -455,6 +468,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       height: 20,
                     ),
                     BookifyElevatedButton.expanded(
+                      key: const Key('Confirm Loan Button'),
                       text: 'Enviar',
                       onPressed: () => _onPressedButton(context),
                     ),

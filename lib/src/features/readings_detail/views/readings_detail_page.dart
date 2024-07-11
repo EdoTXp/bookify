@@ -215,6 +215,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 40,
                     ),
                     Slider.adaptive(
+                      key: const Key('Reading Slider'),
                       min: 0.0,
                       max: book.pageCount.toDouble(),
                       value: _readedPages,
@@ -230,6 +231,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 40,
                     ),
                     BookifyOutlinedButton.expanded(
+                      key: const Key('Continue Reading Button'),
                       text: 'Continuar leitura',
                       suffixIcon: Icons.menu_book_rounded,
                       onPressed: () async {
@@ -251,6 +253,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 10,
                     ),
                     BookifyElevatedButton.expanded(
+                      key: const Key('Update / Finish Reading Button'),
                       text: (_readedPages == book.pageCount)
                           ? 'Finalizar leitura'
                           : 'Atualizar leitura',

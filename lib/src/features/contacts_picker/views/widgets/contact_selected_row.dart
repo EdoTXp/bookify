@@ -35,6 +35,7 @@ class ContactSelectedRow extends StatelessWidget {
             width: 5,
           ),
           IconButton(
+            key: const Key('Confirm Button'),
             onPressed: onConfirmPressed,
             tooltip: 'Enviar Contato',
             icon: const Icon(Icons.check_rounded),

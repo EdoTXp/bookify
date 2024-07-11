@@ -177,6 +177,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                       ),
                     ],
                     BookifyOutlinedButton.expanded(
+                      key: const Key('Add Reading Button'),
                       text: 'Adicionar Leitura',
                       suffixIcon: Icons.auto_stories_rounded,
                       onPressed: () {

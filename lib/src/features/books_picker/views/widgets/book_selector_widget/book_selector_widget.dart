@@ -100,11 +100,13 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
                                     ),
                                     padding: const EdgeInsets.all(4.0),
                                     child: BookWidget(
+                                      key: const Key('Selected Book Widget'),
                                       bookImageUrl:
                                           widget.books[index].imageUrl,
                                     ),
                                   )
                                 : BookWidget(
+                                    key: const Key('Book Widget'),
                                     bookImageUrl: widget.books[index].imageUrl,
                                   ),
                           ),

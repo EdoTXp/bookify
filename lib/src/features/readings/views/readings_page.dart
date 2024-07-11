@@ -73,6 +73,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
     return switch (state) {
       ReadingsLoadingState() => const CenterCircularProgressIndicator(),
       ReadingsEmptyState() => Center(
+          key: const Key('Readings EmptyState'),
           child: ItemEmptyStateWidget(
             label: 'Iniciar uma nova leitura',
             onTap: () => _insertNewReading(context),
@@ -90,6 +91,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
           ),
         ),
       ReadingsLoadedState(:final readingsDto) => ReadingsLoadedStateWidget(
+        key: const Key('Readings LoadedState'),
           readingsDto: readingsDto,
           onNewReading: () => _insertNewReading(context),
           onRefreshPage: _refreshPage,

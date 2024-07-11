@@ -96,6 +96,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
               ),
             ],
             BookifyElevatedButton.expanded(
+              key: const Key('Finish loan Button'),
               onPressed: onPressedButton,
               text: 'Finalizar Empréstimo',
               suffixIcon: Icons.arrow_circle_down_rounded,

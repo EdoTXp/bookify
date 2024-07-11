@@ -37,6 +37,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ReadingWidget(
+                  key: const Key('Reading Widget'),
                   readingDto: readingsDto[index],
                   onTap: () async {
                     final readingIsChanged =
