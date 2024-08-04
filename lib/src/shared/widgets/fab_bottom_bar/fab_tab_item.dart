@@ -25,15 +25,15 @@ class FabTabItem extends StatelessWidget {
   /// Constructs a new instance of FabTabItem.
   ///
   /// [key] The unique key for this widget.
-  /// 
+  ///
   /// [item] The data model for the tab item.
-  /// 
+  ///
   /// [onPressed] The callback function executed when the tab item is tapped.
-  /// 
+  ///
   /// [isSelected] Indicates whether the tab item is currently selected.
-  /// 
+  ///
   /// [selectedColor] The color to use for the selected state of the tab item.
-  /// 
+  ///
   /// [color] The color to use for the unselected state of the tab item.
 
   const FabTabItem({
@@ -68,9 +68,9 @@ class FabTabItem extends StatelessWidget {
                   curve: Curves.easeInOutCirc,
                   builder: (context, value, child) {
                     return CustomPaint(
-                      painter: _BorderPainter(
-                        currentState: value,
-                        color: selectedColor ?? colorScheme.secondary,
+                      painter: AnimatedCircleBorderPainter(
+                        currentAnimationPaintState: value,
+                        borderColor: selectedColor ?? colorScheme.secondary,
                       ),
                       child: Container(
                         width: 60,
@@ -128,34 +128,41 @@ class FabTabItem extends StatelessWidget {
   }
 }
 
-/// Custom painter for drawing the animated border around the selected tab item.
-class _BorderPainter extends CustomPainter {
-  final double currentState;
-  final Color color;
+/// Custom painter for drawing the animated circle border
+/// around the selected tab item.
+class AnimatedCircleBorderPainter extends CustomPainter {
+  final double currentAnimationPaintState;
+  final Color borderColor;
+  final double borderSize;
 
-  const _BorderPainter({
-    required this.currentState,
-    required this.color,
+  const AnimatedCircleBorderPainter({
+    required this.currentAnimationPaintState,
+    required this.borderColor,
+    this.borderSize = 1.0,
   });
 
   @override
-  void paint(Canvas canvas, Size size) {
-    double strokeWidth = 1;
-    Rect rect = const Offset(0, 0) & Size(size.width, size.height);
-
-    var paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-
-    double startAngle = pi / 2;
-    double circle = currentState * pi;
-
-    canvas.drawArc(rect, startAngle, circle * 2, false, paint);
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  void paint(Canvas canvas, Size size) {
+    final rect = const Offset(0, 0) & Size(size.width, size.height);
+
+    final paint = Paint()
+      ..color = borderColor
+      ..strokeWidth = borderSize
+      ..style = PaintingStyle.stroke;
+
+    const centerBottomCircleStartAngle = pi / 2;
+    final halfCircle = currentAnimationPaintState * pi;
+    final circle = halfCircle * 2;
+
+    canvas.drawArc(
+      rect,
+      centerBottomCircleStartAngle,
+      circle,
+      false,
+      paint,
+    );
   }
 }
