@@ -124,10 +124,14 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         );
 
         await Future.delayed(const Duration(seconds: 2)).then(
-          (_) => Navigator.of(context).pop([
-            true,
-            bookcaseUpdated,
-          ]),
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop([
+                true,
+                bookcaseUpdated,
+              ]);
+            }
+          },
         );
         break;
       case BookcaseInsertionErrorState(:final errorMessage):
@@ -137,8 +141,13 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
           SnackBarType.error,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
         break;
     }
   }

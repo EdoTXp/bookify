@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.1.12
+version: 2.1.13
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -50,7 +50,7 @@ dependencies:
   audioplayers: ^6.0.0 # Used for play default alarm ringtone.
   wakelock_plus: ^1.2.7 # Used for keep the screen awake when timer is started.
   permission_handler: ^11.3.1 # Used to get permission for contacts.
-  fast_contacts: ^3.1.4 # Used to get Phone Contacts.
+  fast_contacts: ^3.1.5 # Used to get Phone Contacts.
   flutter_local_notifications: ^17.2.1+2 # Used for send notifications.
   flutter_timezone: ^2.1.0 # Used for get local timezone.
   timezone: ^0.9.4 # Used for get timezone for schedule notification.

@@ -90,7 +90,11 @@ class _BookcaseBooksInsertionPageState
       );
 
       await Future.delayed(const Duration(seconds: 2)).then(
-        (_) => Navigator.of(context).pop(true),
+        (_) {
+          if (context.mounted) {
+            Navigator.of(context).pop(true);
+          }
+        },
       );
     }
   }

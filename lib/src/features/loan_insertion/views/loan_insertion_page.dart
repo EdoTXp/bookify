@@ -247,8 +247,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           SnackBarType.success,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop(true));
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop(true);
+            }
+          },
+        );
         break;
       case LoanInsertionErrorState(:final errorMessage):
         SnackbarService.showSnackBar(
@@ -257,8 +262,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           SnackBarType.error,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
         break;
     }
   }

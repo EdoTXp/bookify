@@ -62,7 +62,11 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
       );
 
       await Future.delayed(const Duration(seconds: 2)).then(
-        (_) => Navigator.of(context).pop(true),
+        (_) {
+          if (context.mounted) {
+            Navigator.of(context).pop(true);
+          }
+        },
       );
     } else if (state is BookOnBookcaseDetailErrorState) {
       setState(() {
@@ -77,8 +81,13 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
         SnackBarType.error,
       );
 
-      await Future.delayed(const Duration(seconds: 2))
-          .then((_) => Navigator.of(context).pop());
+      await Future.delayed(const Duration(seconds: 2)).then(
+        (_) {
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        },
+      );
     }
   }
 
@@ -138,7 +147,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                             ),
                           BookOnBookcaseDetailErrorState() =>
                             const BookcasesCountWidget(
-                              message: 'Acounteceu um erro.',
+                              message: 'Aconteceu um erro.',
                               statusType: StatusType.error,
                             ),
                         },

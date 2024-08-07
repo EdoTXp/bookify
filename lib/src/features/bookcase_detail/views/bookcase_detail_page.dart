@@ -135,8 +135,13 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
         SnackBarType.success,
       );
 
-      await Future.delayed(const Duration(seconds: 2))
-          .then((_) => Navigator.of(context).pop());
+      await Future.delayed(const Duration(seconds: 2)).then(
+        (_) {
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        },
+      );
     }
   }
 

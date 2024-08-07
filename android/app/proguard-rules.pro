@@ -8,6 +8,8 @@
 
 # Gson specific classes
 -dontwarn sun.misc.**
+-dontwarn com.google.j2objc.annotations.ReflectionSupport
+-dontwarn com.google.j2objc.annotations.ReflectionSupport$Level
 #-keep class com.google.gson.stream.** { *; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,

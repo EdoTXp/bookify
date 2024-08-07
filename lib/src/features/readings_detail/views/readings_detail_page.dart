@@ -59,8 +59,13 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
           SnackBarType.success,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop(true));
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop(true);
+            }
+          },
+        );
         break;
 
       case ReadingsDetailFinishedState():
@@ -70,8 +75,13 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
           SnackBarType.success,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop(true));
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop(true);
+            }
+          },
+        );
         break;
 
       case ReadingsDetailErrorState(:final errorMessage):
@@ -82,7 +92,11 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
         );
 
         await Future.delayed(const Duration(seconds: 2)).then(
-          (_) => Navigator.of(context).pop(),
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
         );
         break;
     }

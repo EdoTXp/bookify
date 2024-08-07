@@ -61,9 +61,11 @@ class _AuthPageState extends State<AuthPage> {
         );
         Future.delayed(const Duration(seconds: 2)).then(
           (_) async {
-            await Navigator.of(context).pushNamed(
-              ReadingPageTimeCalculatorPage.routeName,
-            );
+            if (context.mounted) {
+              await Navigator.of(context).pushNamed(
+                ReadingPageTimeCalculatorPage.routeName,
+              );
+            }
 
             if (context.mounted) {
               await Navigator.of(context).pushNamed(

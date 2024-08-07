@@ -99,8 +99,13 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
         SnackBarType.success,
       );
 
-      await Future.delayed(const Duration(seconds: 2))
-          .then((_) => Navigator.of(context).pop(true));
+      await Future.delayed(const Duration(seconds: 2)).then(
+        (_) {
+          if (context.mounted) {
+            Navigator.of(context).pop(true);
+          }
+        },
+      );
     }
   }
 

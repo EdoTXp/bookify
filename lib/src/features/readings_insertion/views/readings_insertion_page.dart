@@ -73,8 +73,13 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
           SnackBarType.success,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
         break;
       case ReadingsInsertionErrorState(:final errorMessage):
         SnackbarService.showSnackBar(
@@ -83,8 +88,13 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
           SnackBarType.error,
         );
 
-        await Future.delayed(const Duration(seconds: 2))
-            .then((_) => Navigator.of(context).pop());
+        await Future.delayed(const Duration(seconds: 2)).then(
+          (_) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
         break;
     }
   }
