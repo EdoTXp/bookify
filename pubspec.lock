@@ -274,10 +274,10 @@ packages:
     dependency: "direct main"
     description:
       name: fast_contacts
-      sha256: dceb2941c8ada313f7503c758731f31dce0af502ff2aea5a82845ed81221551a
+      sha256: "69b7c2208f9da3666c1577191b3d8f6193c90567eb0a9dfead8e59607caebe87"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.5"
+    version: "4.0.0"
   ffi:
     dependency: transitive
     description:
@@ -428,10 +428,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: dd6676d8c2926537eccdf9f72128bbb2a9d0814689527b17f92c248ff192eaf3
+      sha256: c500d5d9e7e553f06b61877ca6b9c8b92c570a4c8db371038702e8ce57f8a50f
       url: "https://pub.dev"
     source: hosted
-    version: "17.2.1+2"
+    version: "17.2.2"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -1290,10 +1290,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_linux
-      sha256: ab360eb661f8879369acac07b6bb3ff09d9471155357da8443fd5d3cf7363811
+      sha256: e2b9622b4007f97f504cd64c0128309dfb978ae66adbe944125ed9e1750f06af
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.2.0"
   url_launcher_macos:
     dependency: transitive
     description:
@@ -1456,4 +1456,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.4.4 <4.0.0"
-  flutter: ">=3.22.0"
+  flutter: ">=3.24.0"
