@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.1.14
+version: 2.1.15
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -48,7 +48,7 @@ dependencies:
   circular_countdown_timer: ^0.2.4 # Used for timer.
   stop_watch_timer: ^3.2.0 # Used to take reading time per page.
   audioplayers: ^6.0.0 # Used for play default alarm ringtone.
-  wakelock_plus: ^1.2.7 # Used for keep the screen awake when timer is started.
+  wakelock_plus: ^1.2.8 # Used for keep the screen awake when timer is started.
   permission_handler: ^11.3.1 # Used to get permission for contacts.
   fast_contacts: ^4.0.0 # Used to get Phone Contacts.
   flutter_local_notifications: ^17.2.2 # Used for send notifications.
@@ -65,7 +65,7 @@ dependencies:
   flutter_facebook_auth: ^7.0.1 # Used for login with Facebook.
   sign_in_with_apple: ^6.1.1 # Used for login with Apple.
   crypto: ^3.0.3 # Used for create sha256 code for Apple and Facebook login.
-  package_info_plus: ^8.0.1 # Used to get a app version.
+  package_info_plus: ^8.0.2 # Used to get a app version.
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
