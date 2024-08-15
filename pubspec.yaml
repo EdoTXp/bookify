@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.1.15
+version: 2.1.16
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -33,7 +33,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  dio: ^5.5.0+1 # Used to receive books through the Google Books API.
+  dio: ^5.6.0 # Used to receive books through the Google Books API.
   provider: ^6.1.2 # Used for DI.
   flutter_bloc: ^8.1.6 # Used for state management.
   cached_network_image: ^3.4.0 # Used to show the cover of the cached book.
@@ -57,14 +57,14 @@ dependencies:
   intl: ^0.19.0 # Used for set a format to DateTime.
   sqflite: ^2.3.3+1 # Used for local database.
   path: ^1.9.0 # Used to find the default path of the database.
-  shared_preferences: ^2.3.1 # Used for storage the user setting.
+  shared_preferences: ^2.3.2 # Used for storage the user setting.
   social_login_buttons: ^1.0.7 # Used for show login button on auth page.
   firebase_auth: ^5.1.4 # Used for authenticate user on Firebase.
   firebase_core: ^3.3.0 # Used for initialize the Firebase.
   google_sign_in: ^6.2.1 # Used for login with Google.
   flutter_facebook_auth: ^7.0.1 # Used for login with Facebook.
   sign_in_with_apple: ^6.1.1 # Used for login with Apple.
-  crypto: ^3.0.3 # Used for create sha256 code for Apple and Facebook login.
+  crypto: ^3.0.5 # Used for create sha256 code for Apple and Facebook login.
   package_info_plus: ^8.0.2 # Used to get a app version.
 
   # The following adds the Cupertino Icons font to your application.
