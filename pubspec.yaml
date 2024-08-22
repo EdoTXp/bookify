@@ -34,7 +34,7 @@ dependencies:
   permission_handler: ^11.3.1 # Used to get permission for contacts.
   fast_contacts: ^4.0.0 # Used to get Phone Contacts.
   flutter_local_notifications: ^17.2.2 # Used for send notifications.
-  flutter_timezone: ^2.1.0 # Used for get local timezone.
+  flutter_timezone: ^3.0.0 # Used for get local timezone.
   timezone: ^0.9.4 # Used for get timezone for schedule notification.
   intl: ^0.19.0 # Used for set a format to DateTime.
   sqflite: ^2.3.3+1 # Used for local database.
