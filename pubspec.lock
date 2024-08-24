@@ -258,10 +258,10 @@ packages:
     dependency: transitive
     description:
       name: facebook_auth_desktop
-      sha256: "0e4f147a57de8fdb8eaaee4836e6b9859482921143af0c350ffbf2a9bbd531a0"
+      sha256: "223e04414e078271682dadd2a694da1f4d329634137414b30217b2f478457fdb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -396,26 +396,26 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_facebook_auth
-      sha256: "48aab06f3b1d3494a33b0c10c11ecbc226fdcf0bf37b478e91d9de57cce840f5"
+      sha256: faa92fb7626c230837f30d02de7d92b6af334b77ba744867c63545d4ad7e171f
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.1.0"
   flutter_facebook_auth_platform_interface:
     dependency: transitive
     description:
       name: flutter_facebook_auth_platform_interface
-      sha256: dc9d621dd45c4f0b341173a16e94f4b77155fa9c0f4326743f1251f2f445ba38
+      sha256: a416f89de881ba98188942060aecf17b434b06677d4557731f19e859343df54c
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.1.0"
   flutter_facebook_auth_web:
     dependency: transitive
     description:
       name: flutter_facebook_auth_web
-      sha256: "947d93fc5a7cc5db1ce0274505254bb3b619cdd98176954f125f742964696804"
+      sha256: "8a6890a98522604169ca9f958d7189c9f579dbf05ba4d3d7adf26eca4c4c4c93"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.1.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1178,10 +1178,10 @@ packages:
     dependency: "direct main"
     description:
       name: stop_watch_timer
-      sha256: "5542df39147a997e90e310fec58f733b0313f8f019711ff0b2421343bb0307f7"
+      sha256: "86482d05a58bba03909781cd97683b91def80273e071a8cde6f9f423f59e291d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   stream_channel:
     dependency: transitive
     description:
