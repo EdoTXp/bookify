@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.1.19
+version: 2.1.20
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -26,26 +26,26 @@ dependencies:
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.3 # Used to validate the form.
   flex_color_picker: ^3.5.1 # Used to pick the color for bookcase.
-  calendar_date_picker2: ^1.1.5 # Used to pick the date for loan.
+  calendar_date_picker2: ^1.1.6 # Used to pick the date for loan.
   circular_countdown_timer: ^0.2.4 # Used for timer.
   stop_watch_timer: ^3.2.1 # Used to take reading time per page.
-  audioplayers: ^6.0.0 # Used for play default alarm ringtone.
+  audioplayers: ^6.1.0 # Used for play default alarm ringtone.
   wakelock_plus: ^1.2.8 # Used for keep the screen awake when timer is started.
   permission_handler: ^11.3.1 # Used to get permission for contacts.
   fast_contacts: ^4.0.0 # Used to get Phone Contacts.
   flutter_local_notifications: ^17.2.2 # Used for send notifications.
-  flutter_timezone: ^3.0.0 # Used for get local timezone.
+  flutter_timezone: ^3.0.1 # Used for get local timezone.
   timezone: ^0.9.4 # Used for get timezone for schedule notification.
   intl: ^0.19.0 # Used for set a format to DateTime.
   sqflite: ^2.3.3+1 # Used for local database.
   path: ^1.9.0 # Used to find the default path of the database.
   shared_preferences: ^2.3.2 # Used for storage the user setting.
   social_login_buttons: ^1.0.7 # Used for show login button on auth page.
-  firebase_auth: ^5.1.4 # Used for authenticate user on Firebase.
-  firebase_core: ^3.3.0 # Used for initialize the Firebase.
+  firebase_auth: ^5.2.0 # Used for authenticate user on Firebase.
+  firebase_core: ^3.4.0 # Used for initialize the Firebase.
   google_sign_in: ^6.2.1 # Used for login with Google.
   flutter_facebook_auth: ^7.1.0 # Used for login with Facebook.
-  sign_in_with_apple: ^6.1.1 # Used for login with Apple.
+  sign_in_with_apple: ^6.1.2 # Used for login with Apple.
   crypto: ^3.0.5 # Used for create sha256 code for Apple and Facebook login.
   package_info_plus: ^8.0.2 # Used to get a app version.
 
