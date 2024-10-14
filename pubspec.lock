@@ -749,10 +749,10 @@ packages:
     dependency: "direct main"
     description:
       name: mobile_scanner
-      sha256: "145500ef1cdaa569c26d626336048fd0b0a9d00014e69af67baf632295fd8b40"
+      sha256: e93461298494a3e5475dd2b41068012823b8fe2caf8d47ba545faca2aa3767d6
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   mocktail:
     dependency: "direct dev"
     description:
@@ -797,10 +797,10 @@ packages:
     dependency: "direct main"
     description:
       name: package_info_plus
-      sha256: a75164ade98cb7d24cfd0a13c6408927c6b217fa60dee5a7ff5c116a58f28918
+      sha256: "894f37107424311bdae3e476552229476777b8752c5a2a2369c0cb9a2d5442ef"
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.2"
+    version: "8.0.3"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
