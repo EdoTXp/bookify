@@ -239,9 +239,13 @@ const _iconTheme = IconThemeData(color: AppColor.bookifyPrimaryColor);
 final _sliderTheme = SliderThemeData(
   trackHeight: 2.0,
   activeTrackColor: AppColor.bookifyPrimaryColor,
-  inactiveTrackColor: AppColor.bookifyPrimaryColor.withOpacity(.10),
+  inactiveTrackColor: AppColor.bookifyPrimaryColor.withValues(
+    alpha: .10,
+  ),
   disabledActiveTrackColor: AppColor.bookifyPrimaryColor,
-  disabledInactiveTrackColor: AppColor.bookifyPrimaryColor.withOpacity(.10),
+  disabledInactiveTrackColor: AppColor.bookifyPrimaryColor.withValues(
+    alpha: .10,
+  ),
   trackShape: const RoundedRectSliderTrackShape(),
   tickMarkShape: SliderTickMarkShape.noTickMark,
   overlayShape: SliderComponentShape.noOverlay,

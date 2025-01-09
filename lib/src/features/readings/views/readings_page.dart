@@ -91,7 +91,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
           ),
         ),
       ReadingsLoadedState(:final readingsDto) => ReadingsLoadedStateWidget(
-        key: const Key('Readings LoadedState'),
+          key: const Key('Readings LoadedState'),
           readingsDto: readingsDto,
           onNewReading: () => _insertNewReading(context),
           onRefreshPage: _refreshPage,
@@ -165,7 +165,9 @@ class _ReadingsPageState extends State<ReadingsPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Divider(
-                  color: colorScheme.primary.withOpacity(.75),
+                  color: colorScheme.primary.withValues(
+                    alpha: .75,
+                  ),
                 ),
               ),
             ),

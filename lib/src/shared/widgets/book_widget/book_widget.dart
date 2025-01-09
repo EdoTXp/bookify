@@ -44,7 +44,9 @@ class BookWidget extends StatelessWidget {
             boxShadow: (withShadow)
                 ? [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(.5),
+                      color: Colors.grey.withValues(
+                        alpha: .5,
+                      ),
                       spreadRadius: 2,
                       blurRadius: 2,
                     ),

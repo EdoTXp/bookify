@@ -10,28 +10,28 @@ class GoogleAuthStrategy implements AuthStrategy {
     try {
       final googleUser = await GoogleSignIn().signIn();
 
-      if (googleUser != null) {
-        final googleAuth = await googleUser.authentication;
-
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(
-          credential,
-        );
-
-        final userModel = UserModel(
-          name: userCredential.user?.displayName ?? 'Sem nome',
-          photo: userCredential.user?.photoURL,
-          signInType: SignInType.google,
-        );
-
-        return userModel;
+      if (googleUser == null) {
+        throw const AuthException('O usuário não autorizou a autentificação');
       }
 
-      throw const AuthException('O usuário não autorizou a autentificação');
+      final googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+
+      final userModel = UserModel(
+        name: userCredential.user?.displayName ?? 'Sem nome',
+        photo: userCredential.user?.photoURL,
+        signInType: SignInType.google,
+      );
+
+      return userModel;
     } on FirebaseException catch (e) {
       throw AuthException(e.message ?? 'With no message');
     } on Exception catch (e) {

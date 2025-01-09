@@ -8,7 +8,9 @@ class LoanIsLateWidget extends StatelessWidget {
     return Container(
       width: MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
-        color: Colors.amber.withOpacity(.5),
+        color: Colors.amber.withValues(
+          alpha: .5,
+        ),
         borderRadius: BorderRadius.circular(22),
       ),
       padding: const EdgeInsets.all(8.0),

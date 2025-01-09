@@ -30,7 +30,7 @@ class LoanWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         child: Container(
           decoration: BoxDecoration(
-            color: colorScheme.primary.withOpacity(.2),
+            color: colorScheme.primary.withValues(alpha: .2),
             border: Border.all(
               color: Colors.transparent,
             ),
@@ -122,7 +122,11 @@ class LoanWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Divider(color: colorScheme.primary.withOpacity(.5)),
+                          Divider(
+                            color: colorScheme.primary.withValues(
+                              alpha: .5,
+                            ),
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +145,11 @@ class LoanWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Divider(color: colorScheme.primary.withOpacity(.5)),
+                          Divider(
+                            color: colorScheme.primary.withValues(
+                              alpha: .5,
+                            ),
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
 import 'package:flutter/material.dart';
 
 class BookcaseModel {
@@ -13,7 +14,7 @@ class BookcaseModel {
     required this.color,
   });
 
-  int get colorValue => color.value;
+  int get colorValue => color.colorToInt();
 
   BookcaseModel copyWith({
     int? id,

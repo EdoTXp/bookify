@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/repositories/bookcase_repository/bookcase_repository_impl.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,13 @@ void main() {
       'id': 1,
       'name': 'Fantasia',
       'description': 'Meus Livros de Fantasia',
-      'color': Colors.pink.value,
+      'color': Colors.pink.colorToInt(),
     },
     {
       'id': 2,
       'name': 'Terror',
       'description': 'Meus Livros de Terror',
-      'color': Colors.black.value,
+      'color': Colors.black.colorToInt(),
     },
   ];
 
@@ -43,12 +44,22 @@ void main() {
       expect(bookcasesModel[0].id, equals(1));
       expect(bookcasesModel[0].name, 'Fantasia');
       expect(bookcasesModel[0].description, 'Meus Livros de Fantasia');
-      expect(bookcasesModel[0].color, Color(Colors.pink.value));
+      expect(
+        bookcasesModel[0].color,
+        Color(
+          Colors.pink.colorToInt(),
+        ),
+      );
 
       expect(bookcasesModel[1].id, equals(2));
       expect(bookcasesModel[1].name, 'Terror');
       expect(bookcasesModel[1].description, 'Meus Livros de Terror');
-      expect(bookcasesModel[1].color, Color(Colors.black.value));
+      expect(
+        bookcasesModel[1].color,
+        Color(
+          Colors.black.colorToInt(),
+        ),
+      );
     });
 
     test('get by name()', () async {
@@ -64,7 +75,12 @@ void main() {
       expect(bookcaseModelByName[0].id, equals(1));
       expect(bookcaseModelByName[0].name, 'Fantasia');
       expect(bookcaseModelByName[0].description, 'Meus Livros de Fantasia');
-      expect(bookcaseModelByName[0].color, Color(Colors.pink.value));
+      expect(
+        bookcaseModelByName[0].color,
+        Color(
+          Colors.pink.colorToInt(),
+        ),
+      );
     });
 
     test('getById()', () async {
@@ -78,7 +94,12 @@ void main() {
       expect(bookcasesModel.id, equals(1));
       expect(bookcasesModel.name, 'Fantasia');
       expect(bookcasesModel.description, 'Meus Livros de Fantasia');
-      expect(bookcasesModel.color, Color(Colors.pink.value));
+      expect(
+        bookcasesModel.color,
+        Color(
+          Colors.pink.colorToInt(),
+        ),
+      );
     });
 
     test('countBookcases()', () async {

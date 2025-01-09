@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
    // compileSdkVersion flutter.compileSdkVersion
-    compileSdkVersion 34
+    compileSdkVersion 35
     ndkVersion "27.0.12077973"
 
     compileOptions {
@@ -58,7 +58,7 @@ android {
     }
 
     dependencies {
-        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     }
 
     signingConfigs {

@@ -114,7 +114,9 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
             padding: const EdgeInsets.all(2.0),
             child: Container(
               decoration: BoxDecoration(
-                color: colorScheme.secondary.withOpacity(.2),
+                color: colorScheme.secondary.withValues(
+                  alpha: .2,
+                ),
                 border: Border.all(
                   color: Colors.transparent,
                 ),

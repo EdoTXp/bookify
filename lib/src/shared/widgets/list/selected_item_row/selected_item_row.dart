@@ -49,7 +49,9 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
     final (selectedAllText, selectedAllIcon) = _getAllIconButtonProperties();
 
     return Container(
-      color: colorScheme.primary.withOpacity(.1),
+      color: colorScheme.primary.withValues(
+        alpha: .1,
+      ),
       padding: const EdgeInsets.all(8),
       child: Row(
         children: [

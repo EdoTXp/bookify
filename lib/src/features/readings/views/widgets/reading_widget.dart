@@ -25,7 +25,9 @@ class ReadingWidget extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: colorScheme.primary.withOpacity(.2),
+            color: colorScheme.primary.withValues(
+              alpha: .2,
+            ),
             border: Border.all(
               color: Colors.transparent,
             ),

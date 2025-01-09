@@ -151,7 +151,9 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                   width: MediaQuery.sizeOf(context).width * .85,
                   fillColor: colorScheme.secondary,
                   ringColor: Colors.grey[50]!,
-                  backgroundColor: colorScheme.primary.withOpacity(.7),
+                  backgroundColor: colorScheme.primary.withValues(
+                    alpha: .7,
+                  ),
                   strokeWidth: 20.0,
                   isReverse: true,
                   isReverseAnimation: true,

@@ -58,7 +58,9 @@ class _BooksPickerPageState extends State<BooksPickerPage> {
               },
               activeColor: colorScheme.secondary,
               inactiveThumbColor: colorScheme.primary,
-              inactiveTrackColor: colorScheme.primary.withOpacity(.5),
+              inactiveTrackColor: colorScheme.primary.withValues(
+                alpha: .5,
+              ),
               thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
                 (Set<WidgetState> states) {
                   if (states.contains(WidgetState.selected)) {

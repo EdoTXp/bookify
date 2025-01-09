@@ -317,25 +317,7 @@ Future<void> _testLoanPage(WidgetTester tester) async {
   await tester.pumpAndSettle();
 
   // Insert dates for loan
-  final actualDay = DateTime.now().day;
-
-  await tester.tap(find.byKey(const Key('Loan Date TextFormField')));
-  await tester.pumpAndSettle();
-
-  await tester.tap(find.text('${actualDay - 2}'));
-  await tester.pumpAndSettle();
-
-  await tester.tap(find.text('OK'));
-  await tester.pumpAndSettle();
-
-  await tester.tap(find.byKey(const Key('Devolution Date TextFormField')));
-  await tester.pumpAndSettle();
-
-  await tester.tap(find.text('${actualDay + 1}'));
-  await tester.pumpAndSettle();
-
-  await tester.tap(find.text('OK'));
-  await tester.pumpAndSettle();
+  await setDurationOfLoan(tester);
 
   // Confirm loan
   await tester.tap(find.byKey(const Key('Confirm Loan Button')));
@@ -359,6 +341,42 @@ Future<void> _testLoanPage(WidgetTester tester) async {
 
   expect(find.byKey(const Key('Loan Loaded State')), findsNothing);
   expect(find.byKey(const Key('Loan Empty State')), findsOneWidget);
+}
+
+Future<void> setDurationOfLoan(WidgetTester tester) async {
+  final int todayInicialLoan = DateTime.now().day;
+
+// Set loan date and devolution date
+  await tester.tap(find.byKey(const Key('Loan Date TextFormField')));
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.text('$todayInicialLoan'));
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.text('OK'));
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.byKey(const Key('Devolution Date TextFormField')));
+  await tester.pumpAndSettle();
+
+  final int devolutionLoanDay;
+
+  /* If today is the last day of the month,
+   the devolution date will be the first day of the next month
+  */
+  if (todayInicialLoan >= 29) {
+    await tester.tap(find.byTooltip('Próximo mês'));
+    await tester.pumpAndSettle();
+    devolutionLoanDay = 1;
+  } else {
+    devolutionLoanDay = todayInicialLoan + 1;
+  }
+
+  await tester.tap(find.text('$devolutionLoanDay'));
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.text('OK'));
+  await tester.pumpAndSettle();
 }
 
 Future<void> _testReadingsPage(WidgetTester tester) async {

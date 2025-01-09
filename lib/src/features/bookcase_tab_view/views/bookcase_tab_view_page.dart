@@ -139,7 +139,9 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorColor: colorScheme.primary,
                   dividerHeight: 2,
-                  dividerColor: colorScheme.primary.withOpacity(.6),
+                  dividerColor: colorScheme.primary.withValues(
+                    alpha: .6,
+                  ),
                   tabs: const [
                     Tab(
                       key: Key('Bookcases TabView'),

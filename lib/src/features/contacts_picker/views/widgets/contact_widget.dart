@@ -45,7 +45,9 @@ class ContactWidget extends StatelessWidget {
           ),
           onTap: onTap,
           selected: isSelected,
-          selectedTileColor: colorScheme.secondary.withOpacity(.7),
+          selectedTileColor: colorScheme.secondary.withValues(
+            alpha: .7,
+          ),
           selectedColor: Colors.white,
           shape: RoundedRectangleBorder(
             side: const BorderSide(

@@ -21,7 +21,9 @@ class IsbnTextFormField extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      color: colorScheme.primary.withOpacity(.5),
+      color: colorScheme.primary.withValues(
+        alpha: .5,
+      ),
       height: 120,
       child: Form(
         key: formKey,

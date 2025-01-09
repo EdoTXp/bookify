@@ -172,8 +172,8 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                           decoration: InputDecoration(
                             hintText: 'Informe o número de páginas do livro',
                             hintStyle: TextStyle(
-                              color: Colors.grey.withOpacity(
-                                .75,
+                              color: Colors.grey.withValues(
+                                alpha: .75,
                               ),
                             ),
                             label: const Text(

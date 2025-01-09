@@ -25,7 +25,9 @@ class ContactCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: colorScheme.primary.withOpacity(.3),
+        color: colorScheme.primary.withValues(
+          alpha: .3,
+        ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

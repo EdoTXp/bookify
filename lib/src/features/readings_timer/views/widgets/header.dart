@@ -20,7 +20,9 @@ class Header extends StatelessWidget {
 
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      color: colorScheme.primary.withOpacity(.1),
+      color: colorScheme.primary.withValues(
+        alpha: .1,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

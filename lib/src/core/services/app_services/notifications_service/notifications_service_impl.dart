@@ -53,10 +53,7 @@ class NotificationsServiceImpl implements NotificationsService {
       '@drawable/ic_stat_ic_notification',
     );
 
-    final iosSettings = DarwinInitializationSettings(
-      onDidReceiveLocalNotification: (id, _, __, payload) =>
-          _navigateToNotificationPage(payload, id),
-    );
+    final iosSettings = DarwinInitializationSettings();
 
     final initializationSettings = InitializationSettings(
       android: androidSettings,

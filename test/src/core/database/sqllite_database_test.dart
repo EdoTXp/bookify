@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -382,7 +383,7 @@ void main() {
       final bookcaseMap = {
         'name': 'Fantasia',
         'description': 'Meus livros de fantasia',
-        'color': Colors.pink.value,
+        'color': Colors.pink.colorToInt(),
       };
       final bookcaseId = await _insertOnDatabase(
         database,
