@@ -12,6 +12,8 @@ The design was created with [Figma](https://www.figma.com/file/EGg9eFK0Hi8LaVQcP
 
 **⚠️ APPLICATION STILL UNDER DEVELOPMENT. More features will be added in the future.**
 
+For technical documentation (build and architecture), read [build_and_architecture](design/documentation/build_and_architecture.md).
+
 ### 📙 Search Books
 
 This page you can search for books by title, author, category, publisher, and ISBN.
