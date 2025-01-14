@@ -60,24 +60,28 @@ jobs:
           echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > firebase.json
           echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase_options.dart
 
-      #8 Analyze and Test
+      #8 Install SQLite Package to linux
+      - name: Install SQLite Package
+        run: sudo apt-get -y install libsqlite3-0 libsqlite3-dev
+
+      #9 Analyze and Test
       - name: Analyze and Test
         run: |
           flutter analyze
           flutter test
 
-      #9 Building APK
+      #10 Building APK
       - name: Build APK
         run: flutter build apk --release
 
-      #10 Extract Version
+      #11 Extract Version
       - name: Extract version from pubspec.yaml
         id: extract_version
         run: |
           version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
           echo "VERSION=$version" >> $GITHUB_ENV
 
-      #11 Check if Tag Exists
+      #12 Check if Tag Exists
       - name: Check if Tag Exists
         id: check_tag
         run: |
@@ -87,7 +91,7 @@ jobs:
             echo "TAG_EXISTS=false" >> $GITHUB_ENV
           fi
 
-      #12 Modify Tag if it Exists
+      #13 Modify Tag if it Exists
       - name: Modify Tag
         if: env.TAG_EXISTS == 'true'
         id: modify_tag
@@ -95,7 +99,7 @@ jobs:
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
-      #13 Create Release
+      #14 Create Release
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -103,6 +107,6 @@ jobs:
           tag: v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
 
-      #14 Cleanup Completo
+      #15 Cleanup Completo
       - name: Cleanup Entire Project
         run: rm -rf $GITHUB_WORKSPACE
