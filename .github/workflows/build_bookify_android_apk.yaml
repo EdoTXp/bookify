@@ -38,7 +38,7 @@ jobs:
       #5 Setup Keystore
       - name: Setup Keystore and Properties
         run: |
-          echo "${{ secrets.ANDROID_UPLOAD_KEYSTORE }}" | base64 -decode > android/app/upload-keystore.jks
+          echo "${{ secrets.ANDROID_UPLOAD_KEYSTORE }}" | base64 -decode > android/app/keystore.jks
 
       - name: Create key.properties
         run: |
