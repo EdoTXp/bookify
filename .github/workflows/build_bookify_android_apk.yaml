@@ -28,8 +28,8 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
-          flutter-version: '3.27.2'
+          channel: "stable"
+          flutter-version: "3.27.2"
 
       #4 Install Dependencies
       - name: Install dependencies
@@ -50,8 +50,7 @@ jobs:
       #6 Setup Facebook Config
       - name: Setup Facebook Config
         run: |
-          mkdir -p android/app/src/main/res/values/
-          echo "${{ secrets.FACEBOOK_CONFIG_XML }}" > android/app/src/main/res/values/facebook_config.xml
+          echo "${{ secrets.FACEBOOK_CONFIG_XML }}" | base64 --decode > android/app/src/main/res/values/facebook_config.xml
 
       #7 Setup Firebase Config
       - name: Setup Firebase Config
