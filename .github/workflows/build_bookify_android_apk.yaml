@@ -57,7 +57,8 @@ jobs:
       - name: Setup Firebase Config
         run: |
           echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
-          echo "${{ secrets.FIREBASE_OPTIONS_DART }}" > lib/firebase_options.dart
+          echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > firebase.json
+          echo "${{ secrets.FIREBASE_OPTIONS_DART }}" >> lib/firebase_options.dart
 
       #8 Analyze and Test
       - name: Analyze and Test
