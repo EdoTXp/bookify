@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.3.2
+version: 2.3.3
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -22,7 +22,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
   google_fonts: ^6.2.1 # Used for App Font.
   url_launcher: ^6.3.1 # Used to launch at the book store.
-  mobile_scanner: ^6.0.2 # Used to access the camera and scan the ISBN code.
+  mobile_scanner: ^6.0.3 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   validatorless: ^1.2.4 # Used to validate the form.
   flex_color_picker: ^3.7.0 # Used to pick the color for bookcase.
