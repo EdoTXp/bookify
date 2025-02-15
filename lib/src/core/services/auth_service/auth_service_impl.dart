@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
 import 'package:bookify/src/core/services/auth_service/auth_strategy/apple_auth_strategy.dart';

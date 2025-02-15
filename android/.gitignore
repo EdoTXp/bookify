@@ -12,3 +12,4 @@ facebook_config.xml
 key.properties
 **/*.keystore
 **/*.jks
+.cxx/

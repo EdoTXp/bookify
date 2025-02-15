@@ -5,6 +5,7 @@
       "name": "bookify - debug",
       "request": "launch",
       "type": "dart",
+      "flutterMode": "debug",
       "program": "lib/main.dart"
     },
     {

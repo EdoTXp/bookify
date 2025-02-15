@@ -1,6 +1,6 @@
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_event.dart';
@@ -20,21 +20,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoadingState());
 
-      int authSignedIn = 0;
-
-      if (event.buttonType == 1) {
-        authSignedIn = await _authService.signIn(
-          signInType: SignInType.google,
-        );
-      } else if (event.buttonType == 2) {
-        authSignedIn = await _authService.signIn(
-          signInType: SignInType.apple,
-        );
-      } else {
-        authSignedIn = await _authService.signIn(
-          signInType: SignInType.facebook,
-        );
-      }
+      final int authSignedIn = await _authService.signIn(
+        signInType: event.signInTypeButton,
+      );
 
       if (authSignedIn == 0) {
         emit(

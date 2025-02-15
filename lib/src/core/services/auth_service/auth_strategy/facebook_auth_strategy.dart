@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:bookify/src/core/services/auth_service/auth_strategy/auth_strategy.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';

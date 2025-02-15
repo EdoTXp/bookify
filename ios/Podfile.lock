@@ -17,36 +17,36 @@ PODS:
   - FBSDKCoreKit_Basics (17.1.0)
   - FBSDKLoginKit (17.1.0):
     - FBSDKCoreKit (= 17.1.0)
-  - Firebase/Auth (11.6.0):
+  - Firebase/Auth (11.7.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 11.6.0)
-  - Firebase/CoreOnly (11.6.0):
-    - FirebaseCore (~> 11.6.0)
-  - firebase_auth (5.4.0):
-    - Firebase/Auth (= 11.6.0)
+    - FirebaseAuth (~> 11.7.0)
+  - Firebase/CoreOnly (11.7.0):
+    - FirebaseCore (~> 11.7.0)
+  - firebase_auth (5.4.2):
+    - Firebase/Auth (= 11.7.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.10.0):
-    - Firebase/CoreOnly (= 11.6.0)
+  - firebase_core (3.11.0):
+    - Firebase/CoreOnly (= 11.7.0)
     - Flutter
-  - FirebaseAppCheckInterop (11.6.0)
-  - FirebaseAuth (11.6.0):
+  - FirebaseAppCheckInterop (11.8.0)
+  - FirebaseAuth (11.7.0):
     - FirebaseAppCheckInterop (~> 11.0)
     - FirebaseAuthInterop (~> 11.0)
-    - FirebaseCore (~> 11.6.0)
-    - FirebaseCoreExtension (~> 11.6.0)
+    - FirebaseCore (~> 11.7.0)
+    - FirebaseCoreExtension (~> 11.7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GTMSessionFetcher/Core (< 5.0, >= 3.4)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseAuthInterop (11.6.0)
-  - FirebaseCore (11.6.0):
-    - FirebaseCoreInternal (~> 11.6.0)
+  - FirebaseAuthInterop (11.8.0)
+  - FirebaseCore (11.7.0):
+    - FirebaseCoreInternal (~> 11.7.0)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreExtension (11.6.0):
-    - FirebaseCore (~> 11.6.0)
-  - FirebaseCoreInternal (11.6.0):
+  - FirebaseCoreExtension (11.7.0):
+    - FirebaseCore (~> 11.7.0)
+  - FirebaseCoreInternal (11.7.0):
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
   - Flutter (1.0.0)
   - flutter_facebook_auth (7.1.1):
@@ -263,21 +263,21 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: ecdb980a24633ccb012700299ceb16d0235e14d2
   FBSDKCoreKit_Basics: 045101c4a9ef10c845347424d73a29aae02c3e43
   FBSDKLoginKit: 69eb59b2f839aba635616df6e422acd0ca88030a
-  Firebase: 374a441a91ead896215703a674d58cdb3e9d772b
-  firebase_auth: ecd44c57a46c4942b58f13615e0bbb178ccff47a
-  firebase_core: 2337982fb78ee4d8d91e608b0a3d4f44346a93c8
-  FirebaseAppCheckInterop: 347aa09a805219a31249b58fc956888e9fcb314b
-  FirebaseAuth: 0304982cfe00df8d49bf533bc4becd3de36c7122
-  FirebaseAuthInterop: a919d415797d23b7bfe195a04f322b86c65020ef
-  FirebaseCore: 48b0dd707581cf9c1a1220da68223fb0a562afaa
-  FirebaseCoreExtension: 2d77d6430c16cf43ca2b04608302ed02b3598361
-  FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
+  Firebase: a64bf6a8546e6eab54f1c715cd6151f39d2329f4
+  firebase_auth: a1aa0a20e8de111be5b9a5a2ba73201877f9f53d
+  firebase_core: 3d36094af9b47c46bfb965943413a39eebaca4db
+  FirebaseAppCheckInterop: 7bf86d55a2b7e9bd91464120eba3e52e4b63b2e2
+  FirebaseAuth: 77e25aa24f3e1c626c5babd3338551fc1669ee0e
+  FirebaseAuthInterop: 651756e70d9a0b9160db39ead71fd5507dbb6c84
+  FirebaseCore: 3227e35f4197a924206fbcdc0349325baf4f5de4
+  FirebaseCoreExtension: 206c1b399f0d103055207c16f299b28e3dbd1949
+  FirebaseCoreInternal: d6c17dafc8dc33614733a8b52df78fcb4394c881
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_facebook_auth: 8a9ad5fbfc25b77e7a53ea8986866950b27edcae
   flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
-  flutter_timezone: ee50ce7786b5fde27e2fe5375bbc8c9661ffc13f
-  google_sign_in_ios: 0ab078e60da6dfe23cbc55c83502b52bba1aad63
+  flutter_timezone: 7c838e17ffd4645d261e87037e5bebf6d38fe544
+  google_sign_in_ios: 19297361f2c51d7d8ac0201b866ef1fa5d1f94a8
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMLKit: eff9e23ec1d90ea4157a1ee2e32a4f610c5b3318
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db

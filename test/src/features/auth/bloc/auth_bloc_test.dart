@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -35,7 +35,7 @@ void main() {
         (_) async => 1,
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 1),
+        SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
       verify: (_) => verify(
         () => authService.signIn(
@@ -59,7 +59,7 @@ void main() {
         (_) async => 1,
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 2),
+        SignedInAuthEvent(signInTypeButton: SignInType.apple),
       ),
       verify: (_) => verify(
         () => authService.signIn(
@@ -83,7 +83,7 @@ void main() {
         (_) async => 1,
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 3),
+        SignedInAuthEvent(signInTypeButton: SignInType.facebook),
       ),
       verify: (_) => verify(
         () => authService.signIn(
@@ -107,7 +107,7 @@ void main() {
         (_) async => 0,
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 1),
+        SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
       verify: (_) => verify(
         () => authService.signIn(
@@ -131,7 +131,7 @@ void main() {
         const AuthException('Error on authentication'),
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 1),
+        SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
       verify: (_) => verify(
         () => authService.signIn(
@@ -155,7 +155,7 @@ void main() {
         Exception('Generic Error'),
       ),
       act: (bloc) => bloc.add(
-        SignedInAuthEvent(buttonType: 1),
+        SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
       verify: (_) => verify(
         () => authService.signIn(

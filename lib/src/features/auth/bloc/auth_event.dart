@@ -2,10 +2,10 @@ part of 'auth_bloc.dart';
 
 sealed class AuthEvent {}
 
-final class SignedInAuthEvent extends AuthEvent{
-  final int buttonType;
+final class SignedInAuthEvent extends AuthEvent {
+  final SignInType signInTypeButton;
 
-   SignedInAuthEvent({
-    required this.buttonType,
+  SignedInAuthEvent({
+    required this.signInTypeButton,
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:authentication_buttons/authentication_buttons.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/features/auth/widgets/terms_information.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
@@ -8,10 +9,9 @@ import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:social_login_buttons/social_login_buttons.dart';
 
 class AuthPage extends StatefulWidget {
   /// The Route Name = '/auth'
@@ -25,6 +25,7 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   late final AuthBloc _bloc;
+  bool showLoader = false;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _AuthPageState extends State<AuthPage> {
   ) {
     switch (state) {
       case AuthLoadingState():
+        showLoader = true;
         SnackbarService.showSnackBar(
           context,
           'Aguarde um istante...',
@@ -54,6 +56,7 @@ class _AuthPageState extends State<AuthPage> {
         );
         break;
       case AuthSignedState():
+        showLoader = false;
         SnackbarService.showSnackBar(
           context,
           'Autentificado com sucesso.',
@@ -82,6 +85,7 @@ class _AuthPageState extends State<AuthPage> {
         );
         break;
       case AuthErrorState():
+        showLoader = false;
         SnackbarService.showSnackBar(
           context,
           state.errorMessage,
@@ -94,7 +98,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuerySizeOf = MediaQuery.sizeOf(context);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
@@ -113,33 +116,27 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 const Spacer(),
                 if (Platform.isAndroid)
-                  SocialLoginButton(
+                  AuthenticationButton(
                     key: const Key('Google Button'),
-                    buttonType: SocialLoginButtonType.google,
-                    text: 'Entrar com o Google',
-                    borderRadius: 44,
-                    textColor: Colors.white,
-                    backgroundColor: colorScheme.primary,
+                    authenticationMethod: AuthenticationMethod.google,
+                    showLoader: showLoader,
                     onPressed: () {
                       _bloc.add(
                         SignedInAuthEvent(
-                          buttonType: 1,
+                          signInTypeButton: SignInType.google,
                         ),
                       );
                     },
                   )
                 else if (Platform.isIOS)
-                  SocialLoginButton(
+                  AuthenticationButton(
                     key: const Key('Apple Button'),
-                    buttonType: SocialLoginButtonType.apple,
-                    text: 'Entrar com a Apple',
-                    borderRadius: 44,
-                    textColor: Colors.white,
-                    backgroundColor: colorScheme.primary,
+                    authenticationMethod: AuthenticationMethod.apple,
+                    showLoader: showLoader,
                     onPressed: () {
                       _bloc.add(
                         SignedInAuthEvent(
-                          buttonType: 2,
+                          signInTypeButton: SignInType.apple,
                         ),
                       );
                     },
@@ -147,17 +144,14 @@ class _AuthPageState extends State<AuthPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                SocialLoginButton(
+                AuthenticationButton(
                   key: const Key('Facebook Button'),
-                  buttonType: SocialLoginButtonType.facebook,
-                  text: 'Entrar com o Facebook',
-                  borderRadius: 44,
-                  textColor: Colors.white,
-                  backgroundColor: colorScheme.primary,
+                  authenticationMethod: AuthenticationMethod.facebook,
+                  showLoader: showLoader,
                   onPressed: () {
                     _bloc.add(
                       SignedInAuthEvent(
-                        buttonType: 3,
+                        signInTypeButton: SignInType.facebook,
                       ),
                     );
                   },
