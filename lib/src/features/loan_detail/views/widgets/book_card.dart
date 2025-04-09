@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class BookCard extends StatelessWidget {
   final String bookUrl;
   final String bookTitle;
-  final String observation;
+  final String? observation;
   final String loanDate;
   final String devolutionDate;
 
@@ -13,7 +13,7 @@ class BookCard extends StatelessWidget {
     super.key,
     required this.bookUrl,
     required this.bookTitle,
-    required this.observation,
+    this.observation,
     required this.loanDate,
     required this.devolutionDate,
   });
@@ -60,7 +60,7 @@ class BookCard extends StatelessWidget {
                     ContactInformationWidget(
                       iconData: Icons.description_rounded,
                       title: 'Observação',
-                      content: observation,
+                      content: observation ?? '...',
                       width: mediaQueryWidth,
                     ),
                     const SizedBox(

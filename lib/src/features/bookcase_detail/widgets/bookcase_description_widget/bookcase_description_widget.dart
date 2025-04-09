@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 class BookcaseDescriptionWidget extends StatelessWidget {
   final String name;
-  final String description;
+  final String? description;
   final Color color;
   final int booksQuantity;
 
   const BookcaseDescriptionWidget({
     super.key,
     required this.name,
-    required this.description,
+    this.description,
     required this.color,
     this.booksQuantity = 0,
   });
@@ -50,7 +50,7 @@ class BookcaseDescriptionWidget extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          description,
+          description ?? '...',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(

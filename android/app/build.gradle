@@ -30,18 +30,20 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-   // compileSdkVersion flutter.compileSdkVersion
+    // compileSdkVersion flutter.compileSdkVersion
+    namespace 'com.bookifysoftware.bookify'
+    buildToolsVersion '36.0.0'
     compileSdkVersion 35
-    ndkVersion '28.0.13004108'
+    ndkVersion '29.0.13113456 rc1'
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -58,7 +60,7 @@ android {
     }
 
     dependencies {
-        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
     }
 
     signingConfigs {
@@ -76,7 +78,6 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    namespace 'com.bookifysoftware.bookify'
 }
 
 flutter {

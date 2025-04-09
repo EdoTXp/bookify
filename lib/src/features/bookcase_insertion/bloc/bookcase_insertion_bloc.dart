@@ -65,8 +65,9 @@ class BookcaseInsertionBloc
         color: event.color,
       );
 
-      final bookcaseRowUpdated =
-          await _bookcaseService.updateBookcase(bookcaseModel: bookcaseModel);
+      final bookcaseRowUpdated = await _bookcaseService.updateBookcase(
+        bookcaseModel: bookcaseModel,
+      );
 
       if (bookcaseRowUpdated < 1) {
         emit(

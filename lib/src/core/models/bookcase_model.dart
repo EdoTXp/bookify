@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class BookcaseModel {
   final int? id;
   final String name;
-  final String description;
+  final String? description;
   final Color color;
 
   const BookcaseModel({
     this.id,
     required this.name,
-    required this.description,
+    this.description,
     required this.color,
   });
 
@@ -30,6 +30,19 @@ class BookcaseModel {
     );
   }
 
+  BookcaseModel copyWithDescriptionNull({
+    int? id,
+    String? name,
+    Color? color,
+  }) {
+    return BookcaseModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: null,
+      color: color ?? this.color,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -43,7 +56,7 @@ class BookcaseModel {
     return BookcaseModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      description: map['description'] as String,
+      description: map['description'] as String?,
       color: Color(map['color'] as int),
     );
   }

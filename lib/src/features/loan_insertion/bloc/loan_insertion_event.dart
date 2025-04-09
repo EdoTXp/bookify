@@ -3,7 +3,7 @@ part of 'loan_insertion_bloc.dart';
 sealed class LoanInsertionEvent {}
 
 final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
-  final String observation;
+  final String? observation;
   final DateTime loanDate;
   final DateTime devolutionDate;
   final String idContact;
@@ -12,7 +12,7 @@ final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
   final String bookTitle;
 
   InsertedLoanInsertionEvent({
-    required this.observation,
+    this.observation,
     required this.loanDate,
     required this.devolutionDate,
     required this.contactName,
@@ -21,4 +21,3 @@ final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
     required this.bookTitle,
   });
 }
-

@@ -1,6 +1,6 @@
 class LoanModel {
   final int? id;
-  final String observation;
+  final String? observation;
   final DateTime loanDate;
   final DateTime devolutionDate;
   final String idContact;
@@ -8,7 +8,7 @@ class LoanModel {
 
  const LoanModel({
     this.id,
-    required this.observation,
+    this.observation,
     required this.loanDate,
     required this.devolutionDate,
     required this.idContact,
@@ -29,7 +29,7 @@ class LoanModel {
   factory LoanModel.fromMap(Map<String, dynamic> map) {
     return LoanModel(
       id: map['id'] as int,
-      observation: map['observation'] as String,
+      observation: map['observation'] as String?,
       loanDate: DateTime.fromMillisecondsSinceEpoch(
         map['loanDate'] as int,
       ),

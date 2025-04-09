@@ -6,8 +6,8 @@ import 'package:bookify/src/core/services/app_services/notifications_service/not
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationsServiceImpl implements NotificationsService {
   late final FlutterLocalNotificationsPlugin _notifications;
@@ -125,8 +125,6 @@ class NotificationsServiceImpl implements NotificationsService {
       ),
       payload: notification.payload,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

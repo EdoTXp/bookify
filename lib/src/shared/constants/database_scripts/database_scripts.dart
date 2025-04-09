@@ -120,7 +120,7 @@ class DatabaseScripts {
   static const String _loanScript = '''
      CREATE TABLE $_loanTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      observation TEXT NOT NULL,
+      observation TEXT,
       loanDate INTEGER NOT NULL,  
       devolutionDate INTEGER NOT NULL,
       idContact TEXT NOT NULL,
@@ -133,7 +133,7 @@ class DatabaseScripts {
      CREATE TABLE $_bookcaseTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE NOT NULL,
-      description TEXT NOT NULL,
+      description TEXT,
       color INTEGER NOT NULL
       )
     ''';

@@ -157,7 +157,7 @@ class LoanWidget extends StatelessWidget {
                               ContactInformationWidget(
                                 iconData: Icons.description_outlined,
                                 title: 'Observação',
-                                content: loan.loanModel.observation,
+                                content: loan.loanModel.observation ?? '...',
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.book_outlined,

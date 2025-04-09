@@ -2,7 +2,6 @@ import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
-//import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +36,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   @override
   void initState() {
     super.initState();
-    /*/  LockScreenOrientationService.lockOrientationScreen(
-      orientation: Orientation.portrait,
-    );*/
+
     _canPopPage = true;
 
     _bloc = context.read<BookcaseInsertionBloc>();
@@ -51,7 +48,6 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
   @override
   void dispose() {
-    //   LockScreenOrientationService.unLockOrientationScreen();
     _bookcaseNameEC.dispose();
     _bookcaseDescriptionEC.dispose();
     super.dispose();
@@ -75,7 +71,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         _bloc.add(
           InsertedBookcaseEvent(
             name: _bookcaseNameEC.value.text,
-            description: _bookcaseDescriptionEC.value.text,
+            description: _bookcaseDescriptionEC.value.text.isEmpty
+                ? null
+                : _bookcaseDescriptionEC.value.text,
             color: _selectedColor,
           ),
         );
@@ -84,15 +82,23 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
           UpdatedBookcaseEvent(
             id: bookcaseModel.id!,
             name: _bookcaseNameEC.value.text,
-            description: _bookcaseDescriptionEC.value.text,
+            description: _bookcaseDescriptionEC.value.text.isEmpty
+                ? null
+                : _bookcaseDescriptionEC.value.text,
             color: _selectedColor,
           ),
         );
 
-        bookcaseUpdated = bookcaseModel.copyWith(
-            name: _bookcaseNameEC.value.text,
-            description: _bookcaseDescriptionEC.value.text,
-            color: _selectedColor);
+        bookcaseUpdated = _bookcaseDescriptionEC.text.isEmpty
+            ? bookcaseModel.copyWithDescriptionNull(
+                name: _bookcaseNameEC.value.text,
+                color: _selectedColor,
+              )
+            : bookcaseModel.copyWith(
+                name: _bookcaseNameEC.value.text,
+                description: _bookcaseDescriptionEC.value.text,
+                color: _selectedColor,
+              );
       }
 
       setState(() {
@@ -187,10 +193,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                 key: _formKey,
                 canPop: _canPopPage,
                 child: Column(
+                  spacing: 20,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
                     TextFormField(
                       key: const Key('Bookcase name TextFormField'),
                       controller: _bookcaseNameEC,
@@ -210,27 +215,21 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 16),
                       decoration: const InputDecoration(
-                        labelText: 'Nome',
+                        labelText: 'Nome *',
                       ),
                       textInputAction: TextInputAction.next,
                     ),
-                    const SizedBox(height: 20),
                     TextFormField(
                       key: const Key('Bookcase description TextFormField'),
                       controller: _bookcaseDescriptionEC,
                       cursorColor: colorScheme.secondary,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: Validatorless.required(
-                        'Esse campo não pode estar vazio',
-                      ),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 16),
                       decoration: const InputDecoration(
-                        labelText: 'Descrição',
+                        labelText: 'Descrição (opcional)',
                       ),
                       textInputAction: TextInputAction.done,
                     ),
-                    const SizedBox(height: 20),
                     TextFormField(
                       key: const Key('Bookcase color TextFormField'),
                       style: const TextStyle(fontSize: 16),
@@ -264,8 +263,11 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    Text(
+                      '* Campos obrigatórios',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                     BookifyOutlinedButton.expanded(
                       key: const Key('Confirm Bookcase insertion Button'),

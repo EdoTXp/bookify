@@ -21,7 +21,7 @@ class BookcaseWidget extends StatelessWidget {
 
     final bookcaseColor = bookcaseDto.bookcase.color;
     final bookcaseTitle = bookcaseDto.bookcase.name;
-    final bookcaseDescription = bookcaseDto.bookcase.description;
+    final bookcaseDescription = bookcaseDto.bookcase.description ?? '...';
     final imagePreview = bookcaseDto.bookImagePreview;
 
     return Padding(

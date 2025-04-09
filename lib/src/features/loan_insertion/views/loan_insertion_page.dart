@@ -190,7 +190,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           bookId: _bookModel!.id,
           bookTitle: _bookModel!.title,
           contactName: _contactNameEC.text,
-          observation: _observationEC.text,
+          observation: _observationEC.text.isEmpty ? null : _observationEC.text,
           loanDate: _loanDateEC.text.parseFormattedDate(),
           devolutionDate: devolutionDateWithHours,
         ),
@@ -305,6 +305,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                 key: _formKey,
                 canPop: _canPopPage,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 10,
@@ -376,7 +377,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
-                        label: Text('Nome'),
+                        label: Text('Nome *'),
                       ),
                     ),
                     const SizedBox(
@@ -394,7 +395,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
-                        label: Text('Contato'),
+                        label: Text('Contato *'),
                       ),
                     ),
                     const SizedBox(
@@ -404,14 +405,10 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       key: const Key('Observation TextFormField'),
                       controller: _observationEC,
                       cursorColor: colorScheme.secondary,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: Validatorless.required(
-                        'Esse campo é obrigatório',
-                      ),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
                       decoration: const InputDecoration(
-                        label: Text('Observação'),
+                        label: Text('Observação (opcional)'),
                       ),
                     ),
                     const SizedBox(
@@ -438,7 +435,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             onTapOutside: (_) => context.unfocus(),
                             style: const TextStyle(fontSize: 14),
                             decoration: const InputDecoration(
-                              label: Text('Data do empréstimo'),
+                              label: Text('Data do empréstimo *'),
                             ),
                           ),
                         ),
@@ -468,11 +465,20 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             onTapOutside: (_) => context.unfocus(),
                             style: const TextStyle(fontSize: 14),
                             decoration: const InputDecoration(
-                              label: Text('Data para devolução'),
+                              label: Text('Data para devolução *'),
                             ),
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '* Campos obrigatórios',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(
                       height: 20,

@@ -42,14 +42,15 @@ class ShowDialogService {
       ),
     );
 
-    if (_isAndroidPlatform) {
-      await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: titleWidget,
-            content: contentWidget,
-            actions: [
+    //  if (_isAndroidPlatform) {
+    await showAdaptiveDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog.adaptive(
+          title: titleWidget,
+          content: contentWidget,
+          actions: [
+            if (_isAndroidPlatform) ...[
               TextButton(
                 onPressed:
                     cancelButtonFunction ?? () => Navigator.of(context).pop(),
@@ -59,19 +60,8 @@ class ShowDialogService {
                 key: const Key('Confirm Dialog Button'),
                 onPressed: confirmButtonFunction,
                 child: confirmButtonWidget,
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: titleWidget,
-            content: contentWidget,
-            actions: [
+              )
+            ] else ...[
               CupertinoDialogAction(
                 onPressed:
                     cancelButtonFunction ?? () => Navigator.of(context).pop(),
@@ -84,10 +74,10 @@ class ShowDialogService {
                 child: confirmButtonWidget,
               ),
             ],
-          );
-        },
-      );
-    }
+          ],
+        );
+      },
+    );
   }
 
   static Future<void> showSimpleDialog({
@@ -112,10 +102,10 @@ class ShowDialogService {
       ),
     );
 
-    if (_isAndroidPlatform) {
-      await showDialog(
-        context: context,
-        builder: (context) {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        if (_isAndroidPlatform) {
           return SimpleDialog(
             title: titleWidget,
             children: [
@@ -126,25 +116,19 @@ class ShowDialogService {
               ),
             ],
           );
-        },
-      );
-    } else {
-      await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: titleWidget,
-            actions: [
-              CupertinoDialogAction(
-                key: const Key('Ok Dialog Button'),
-                isDefaultAction: true,
-                onPressed: () => Navigator.pop(context),
-                child: okButtonWidget,
-              ),
-            ],
-          );
-        },
-      );
-    }
+        }
+        return CupertinoAlertDialog(
+          title: titleWidget,
+          actions: [
+            CupertinoDialogAction(
+              key: const Key('Ok Dialog Button'),
+              isDefaultAction: true,
+              onPressed: () => Navigator.pop(context),
+              child: okButtonWidget,
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -5,12 +5,12 @@ sealed class BookcaseInsertionEvent {}
 
 final class InsertedBookcaseEvent extends BookcaseInsertionEvent {
   final String name;
-  final String description;
+  final String? description;
   final Color color;
 
   InsertedBookcaseEvent({
     required this.name,
-    required this.description,
+    this.description,
     required this.color,
   });
 }
@@ -18,14 +18,13 @@ final class InsertedBookcaseEvent extends BookcaseInsertionEvent {
 final class UpdatedBookcaseEvent extends BookcaseInsertionEvent {
   final int id;
   final String name;
-  final String description;
+  final String? description;
   final Color color;
 
   UpdatedBookcaseEvent({
     required this.id,
     required this.name,
-    required this.description,
+    this.description,
     required this.color,
   });
 }
-
