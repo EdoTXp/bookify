@@ -66,19 +66,22 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
               key: const Key('MobileScanner'),
               controller: _scannerController,
               onDetect: _onDetectCaptures,
-              errorBuilder: (context, _, __) {
+              errorBuilder: (context, error) {
+                final errorDetails =
+                    error.errorDetails?.message ?? 'erro desconhecido';
+
                 return Center(
                   child: InfoItemStateWidget.withErrorState(
-                    message: 'Ocorreu algum erro com a câmera',
+                    message: 'Ocorreu algum erro com a câmera: $errorDetails',
                     onPressed: () async {
                       await _scannerController.stop().then(
-                        (_) async => await _scannerController.start(),
-                      );
+                            (_) async => await _scannerController.start(),
+                          );
                     },
                   ),
                 );
               },
-              placeholderBuilder: (_, __) =>
+              placeholderBuilder: (_) =>
                   const CenterCircularProgressIndicator(),
               scanWindow: Rect.fromCenter(
                 center: centerOverlay,
