@@ -498,6 +498,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				FACEBOOK_APP_ID = "$(FACEBOOK_APP_ID)";
+				FACEBOOK_CLIENT_TOKEN = "$(FACEBOOK_CLIENT_TOKEN)";
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bookify;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -692,6 +694,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				FACEBOOK_APP_ID = "$(FACEBOOK_APP_ID)";
+				FACEBOOK_CLIENT_TOKEN = "$(FACEBOOK_CLIENT_TOKEN)";
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bookify;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -724,6 +728,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				FACEBOOK_APP_ID = "$(FACEBOOK_APP_ID)";
+				FACEBOOK_CLIENT_TOKEN = "$(FACEBOOK_CLIENT_TOKEN)";
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bookify;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";

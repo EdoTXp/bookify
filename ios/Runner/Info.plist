@@ -27,7 +27,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb653673550256884</string>
+				<string>fb$(FACEBOOK_APP_ID)</string>
 			</array>
 		</dict>
 	</array>
@@ -36,11 +36,11 @@
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<string>TRUE</string>
 	<key>FacebookAppID</key>
-	<string>653673550256884</string>
+	<string>$(FACEBOOK_APP_ID)</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<string>TRUE</string>
 	<key>FacebookClientToken</key>
-	<string>77b55d0db20ca558ad7dc2925e90a0cc</string>
+	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
 	<key>FacebookDisplayName</key>
 	<string>Bookify</string>
 	<key>LSApplicationQueriesSchemes</key>
