@@ -1,4 +1,4 @@
-import 'package:bookify/src/features/hour_time_calculator/views/widgets/programming_reading/programming_hour.dart';
+import 'package:bookify/src/features/hour_time_calculator/views/widgets/programming_reading/programming_reading_hour.dart';
 import 'package:bookify/src/features/hour_time_calculator/views/widgets/reading_hour_information/reading_hour_information.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,7 @@ class _HourTimeCalculatorPageState extends State<HourTimeCalculatorPage> {
                   });
                 },
               )
-            : const ProgrammingReading(),
+            : const ProgrammingReadingHour(),
       ),
     );
   }

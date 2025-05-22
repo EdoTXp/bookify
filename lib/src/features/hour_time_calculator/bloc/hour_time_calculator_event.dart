@@ -11,3 +11,5 @@ final class InsertedHourTimeEvent extends HourTimeCalculatorEvent {
     required this.userHourTimeModel,
   });
 }
+
+final class RemovedNotificationHourTimeEvent extends HourTimeCalculatorEvent {}

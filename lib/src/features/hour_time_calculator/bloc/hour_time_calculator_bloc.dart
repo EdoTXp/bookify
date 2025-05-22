@@ -12,6 +12,7 @@ class HourTimeCalculatorBloc
     extends Bloc<HourTimeCalculatorEvent, HourTimeCalculatorState> {
   final UserHourTimeRepository _userHourTimeRepository;
   final NotificationsService _notificationsService;
+  final int _readingNotificationId = 9999;
 
   HourTimeCalculatorBloc(
     this._userHourTimeRepository,
@@ -19,6 +20,7 @@ class HourTimeCalculatorBloc
   ) : super(HourTimeCalculatorLoadingState()) {
     on<GotHourTimeEvent>(_gotHourTimeEvent);
     on<InsertedHourTimeEvent>(_insertedHourTimeEvent);
+    on<RemovedNotificationHourTimeEvent>(_removedNotificationHourTimeEvent);
   }
 
   Future<void> _gotHourTimeEvent(
@@ -28,8 +30,7 @@ class HourTimeCalculatorBloc
     try {
       emit(HourTimeCalculatorLoadingState());
 
-      final userHourTimeModel =
-          await _userHourTimeRepository.getUserHourTime();
+      final userHourTimeModel = await _userHourTimeRepository.getUserHourTime();
 
       emit(
         HourTimeCalculatorLoadedState(
@@ -80,7 +81,7 @@ class HourTimeCalculatorBloc
       };
 
       await _notificationsService.periodicallyShowNotification(
-        id: 9999,
+        id: _readingNotificationId,
         title: 'A hora da leitura chegou!',
         body: 'A história está esperando a gente!',
         repeatType: repeatType,
@@ -94,6 +95,27 @@ class HourTimeCalculatorBloc
           errorMessage: 'Erro ao inserir a hora de leitura: $e',
         ),
       );
+    } on Exception catch (e) {
+      emit(
+        HourTimeCalculatorErrorState(
+          errorMessage: 'Erro inesperado: $e',
+        ),
+      );
+    }
+  }
+
+  Future<void> _removedNotificationHourTimeEvent(
+    RemovedNotificationHourTimeEvent event,
+    Emitter<HourTimeCalculatorState> emit,
+  ) async {
+    try {
+      emit(HourTimeCalculatorLoadingState());
+
+      await _notificationsService.cancelNotificationById(
+        id: _readingNotificationId,
+      );
+
+      emit(HourTimeCalculatorRemovedNotificationState());
     } on Exception catch (e) {
       emit(
         HourTimeCalculatorErrorState(

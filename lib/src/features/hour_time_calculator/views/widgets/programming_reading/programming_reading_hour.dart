@@ -7,23 +7,20 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProgrammingReading extends StatefulWidget {
-  const ProgrammingReading({super.key});
+class ProgrammingReadingHour extends StatefulWidget {
+  const ProgrammingReadingHour({super.key});
 
   @override
-  State<ProgrammingReading> createState() => _ProgrammingHourState();
+  State<ProgrammingReadingHour> createState() => _ProgrammingHourState();
 }
 
-class _ProgrammingHourState extends State<ProgrammingReading> {
+class _ProgrammingHourState extends State<ProgrammingReadingHour> {
   late HourTimeCalculatorBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.read<HourTimeCalculatorBloc>()
-      ..add(
-        GotHourTimeEvent(),
-      );
+    _bloc = context.read<HourTimeCalculatorBloc>()..add(GotHourTimeEvent());
   }
 
   Widget _getWidgetOnHourTimeCalculatorState(
@@ -32,7 +29,8 @@ class _ProgrammingHourState extends State<ProgrammingReading> {
   ) {
     return switch (state) {
       HourTimeCalculatorLoadingState() ||
-      HourTimeCalculatorInsertedState() =>
+      HourTimeCalculatorInsertedState() ||
+      HourTimeCalculatorRemovedNotificationState() =>
         const CenterCircularProgressIndicator(),
       HourTimeCalculatorLoadedState(:final userHourTimeModel) =>
         ProgrammingHourLoadingStateWidget(
@@ -44,6 +42,9 @@ class _ProgrammingHourState extends State<ProgrammingReading> {
               ),
             );
           },
+          onRemoveReadingNotification: () => _bloc.add(
+            RemovedNotificationHourTimeEvent(),
+          ),
         ),
       HourTimeCalculatorErrorState(:final errorMessage) => Center(
           child: InfoItemStateWidget.withErrorState(
@@ -55,9 +56,7 @@ class _ProgrammingHourState extends State<ProgrammingReading> {
   }
 
   void _onRefreshPage() {
-    _bloc.add(
-      GotHourTimeEvent(),
-    );
+    _bloc.add(GotHourTimeEvent());
   }
 
   @override
@@ -65,10 +64,18 @@ class _ProgrammingHourState extends State<ProgrammingReading> {
     return BlocConsumer<HourTimeCalculatorBloc, HourTimeCalculatorState>(
       bloc: _bloc,
       listener: (context, state) {
-        if (state is HourTimeCalculatorInsertedState) {
+        final snackBarText = switch (state) {
+          HourTimeCalculatorInsertedState() =>
+            'Hora de leitura calculado com sucesso.',
+          HourTimeCalculatorRemovedNotificationState() =>
+            'Notificação removida com sucesso.',
+          _ => null,
+        };
+
+        if (snackBarText != null) {
           SnackbarService.showSnackBar(
             context,
-            'Hora de leitura calculado com sucesso.',
+            snackBarText,
             SnackBarType.success,
           );
 

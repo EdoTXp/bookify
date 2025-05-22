@@ -266,4 +266,52 @@ void main() {
       ],
     );
   });
+
+  blocTest(
+    'Test RemovedNotificationHourTimeEvent work',
+    build: () => hourTimeCalculatorBloc,
+    setUp: () => when(
+      () => notificationsService.cancelNotificationById(
+        id: any(named: 'id'),
+      ),
+    ).thenAnswer(
+      (_) async {},
+    ),
+    act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
+    verify: (_) {
+      verify(
+        () => notificationsService.cancelNotificationById(
+          id: any(named: 'id'),
+        ),
+      ).called(1);
+    },
+    expect: () => [
+      isA<HourTimeCalculatorLoadingState>(),
+      isA<HourTimeCalculatorRemovedNotificationState>(),
+    ],
+  );
+
+  blocTest(
+    "Test RemovedNotificationHourTimeEvent  work when throw Generic Exception",
+    build: () => hourTimeCalculatorBloc,
+    setUp: () => when(
+      () => notificationsService.cancelNotificationById(
+        id: any(named: 'id'),
+      ),
+    ).thenThrow(
+      Exception('Generic Error'),
+    ),
+    act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
+    verify: (_) {
+      verify(
+        () => notificationsService.cancelNotificationById(
+          id: any(named: 'id'),
+        ),
+      ).called(1);
+    },
+    expect: () => [
+      isA<HourTimeCalculatorLoadingState>(),
+      isA<HourTimeCalculatorErrorState>(),
+    ],
+  );
 }
