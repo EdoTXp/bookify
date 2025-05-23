@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.6.1
+version: 2.6.2
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
