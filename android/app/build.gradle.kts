@@ -15,8 +15,8 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.bookifysoftware.bookify"
-    compileSdk = 35
-    ndkVersion = "28.1.13356709"
+    compileSdk = 36
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

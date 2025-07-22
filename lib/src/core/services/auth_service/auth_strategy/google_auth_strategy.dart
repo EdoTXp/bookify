@@ -6,20 +6,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuthStrategy implements AuthStrategy {
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
   @override
   Future<UserModel> signIn() async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
+      await _googleSignIn.initialize().onError(
+            (error, _) => throw AuthException(error.toString()),
+          );
 
-      if (googleUser == null) {
-        throw const AuthException('O usuário não autorizou a autentificação');
-      }
+      const scopes = ['https://www.googleapis.com/auth/contacts.readonly'];
 
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = await _googleSignIn.authenticate();
+      final authorization =
+          await googleAuth.authorizationClient.authorizationForScopes(scopes);
 
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+        accessToken: authorization?.accessToken,
+        idToken: googleAuth.authentication.idToken,
       );
 
       final userCredential = await FirebaseAuth.instance.signInWithCredential(
@@ -43,7 +47,7 @@ class GoogleAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await GoogleSignIn().signOut();
+      await _googleSignIn.signOut();
       await FirebaseAuth.instance.signOut();
       return true;
     } on FirebaseException catch (e) {
