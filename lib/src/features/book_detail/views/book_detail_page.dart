@@ -82,7 +82,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
     );
   }
 
-  void _handleBookDetailsStateListener(context, state) {
+  void _handleBookDetailsStateListener(
+    BuildContext context,
+    BookDetailState state,
+  ) {
     switch (state) {
       case BookDetailLoadingState():
         // Avoid the click on ElevatedButton.
