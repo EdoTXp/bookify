@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:localization/localization.dart';
 
 class ColorPickerDialogService {
   static Future<Color> showColorPickerDialog(
@@ -11,9 +12,7 @@ class ColorPickerDialogService {
 
     await ColorPicker(
       color: pickerColor,
-      heading: const Text(
-        'Selecione uma cor',
-      ),
+      heading: Text('select-color-title'.i18n()),
       showColorCode: true,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,

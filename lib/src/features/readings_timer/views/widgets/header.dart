@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class Header extends StatelessWidget {
   final String bookTitle;
@@ -42,8 +43,8 @@ class Header extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              'Você está na página',
+            Text(
+              'you-are-on-page-title'.i18n(),
               style: TextStyle(
                 fontSize: 12,
               ),

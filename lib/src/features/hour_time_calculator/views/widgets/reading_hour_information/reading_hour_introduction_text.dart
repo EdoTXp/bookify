@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
-class ReadingHourText extends StatelessWidget {
-  const ReadingHourText({super.key});
+class ReadingHourIntroductionText extends StatelessWidget {
+  const ReadingHourIntroductionText({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ReadingHourText extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hora da leitura!',
+            'reading-time-title'.i18n(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: colorScheme.primary,
@@ -23,9 +24,8 @@ class ReadingHourText extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text(
-            '''A programação para um momento de leitura é o primeiro passo para criar o hábito.
-            \nDefina quais dias e o melhor horário para as suas leituras, e a gente te lembrará aqui nas notificações!''',
+          Text(
+            'reading-time-description'.i18n(),
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 14,

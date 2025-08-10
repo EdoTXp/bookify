@@ -4,6 +4,7 @@ import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/ce
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ContactsPickerPage extends StatefulWidget {
   /// The Route Name = '/contacts_picker'
@@ -36,8 +37,7 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
       ContactsPickerLoadingState() => const CenterCircularProgressIndicator(),
       ContactsPickerEmptyState() => Center(
           child: InfoItemStateWidget.withNotFoundState(
-            message:
-                'Não foi encontrado nenhum contato.\nTente adicionar na sua lista do celular.',
+            message: 'no-contacts-found'.i18n(),
             onPressed: _onRefresh,
           ),
         ),
@@ -65,8 +65,8 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
-            title: const Text(
-              'Contatos',
+            title: Text(
+              'contacts-label'.i18n(),
               style: TextStyle(fontSize: 16),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class SelectedItemRow extends StatefulWidget {
   final int itemQuantity;
@@ -29,11 +30,11 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
   ) _getAllIconButtonProperties() {
     return switch (_isSelectedAll) {
       true => (
-          'Desselecionar Tudo',
+          'deselect-all-button'.i18n(),
           Icons.deselect_rounded,
         ),
       false => (
-          'Selecionar Tudo',
+          'select-all-button'.i18n(),
           Icons.select_all_rounded,
         ),
     };
@@ -78,7 +79,8 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
           ),
           IconButton(
             onPressed: widget.onPressedDeleteButton,
-            tooltip: 'Deletar ${itemText.toLowerCase()}',
+            tooltip:
+                'delete-item-button-tooltip'.i18n([itemText.toLowerCase()]),
             icon: const Icon(Icons.delete_rounded),
           ),
         ],

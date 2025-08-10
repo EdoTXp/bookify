@@ -4,6 +4,7 @@ import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_wid
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class QrCodeScannerPage extends StatefulWidget {
   /// The Route Name = '/qr_code_scanner'
@@ -44,14 +45,14 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
 
     // start QrCodeScannerWidget
     if (_qrCodeScannerIsVisible) {
-      titleText = 'Aponte a câmera para o código de barras do livro';
-      changeModeText = 'Digitar o código manualmente';
+      titleText = 'point-the-camera-label'.i18n();
+      changeModeText = 'enter-code-manually-label'.i18n();
       changeModeIcon = Icons.keyboard;
     }
     // start IsbnManuallyTextFormFieldWidget
     else {
-      titleText = 'Digite os números do código de barra';
-      changeModeText = 'Escanear código';
+      titleText = 'enter-barcode-label'.i18n();
+      changeModeText = 'scan-code-label'.i18n();
       changeModeIcon = BookifyIcons.qr_code;
     }
 

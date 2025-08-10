@@ -10,6 +10,7 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ReadingsPage extends StatefulWidget {
   const ReadingsPage({super.key});
@@ -75,14 +76,13 @@ class _ReadingsPageState extends State<ReadingsPage> {
       ReadingsEmptyState() => Center(
           key: const Key('Readings EmptyState'),
           child: ItemEmptyStateWidget(
-            label: 'Iniciar uma nova leitura',
+            label: 'start-new-reading-title'.i18n(),
             onTap: () => _insertNewReading(context),
           ),
         ),
       ReadingsNotFoundState() => Center(
           child: InfoItemStateWidget.withNotFoundState(
-            message:
-                'Nenhuma Leitura encontrada com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
+            message: 'no-readings-found-with-terms'.i18n(),
             onPressed: () {
               _searchController.clear();
               _toggleSearchBarVisible();
@@ -149,9 +149,9 @@ class _ReadingsPageState extends State<ReadingsPage> {
               child: TextField(
                 focusNode: _focusNode,
                 controller: _searchController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   alignLabelWithHint: true,
-                  hintText: 'Digite o  título do livro em leitura.',
+                  hintText: 'enter-book-title-are-reading-label'.i18n(),
                   enabledBorder: InputBorder.none,
                   errorBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -178,7 +178,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
                   if (value.text.isNotEmpty) {
                     return IconButton(
                       icon: const Icon(Icons.close_rounded),
-                      tooltip: 'Apagar o texto.',
+                      tooltip: 'delete-text-typed-tooltip'.i18n(),
                       onPressed: () {
                         _searchController.clear();
                         _refreshPage();
@@ -195,8 +195,8 @@ class _ReadingsPageState extends State<ReadingsPage> {
                       : Icons.search_rounded,
                 ),
                 tooltip: (_searchBarIsVisible)
-                    ? 'Desativar a barra de pesquisa.'
-                    : 'Ativar a barra de pesquisa.',
+                    ? 'disable-search-bar-tooltip'.i18n()
+                    : 'enable-search-bar-tooltip'.i18n(),
                 onPressed: () {
                   if (_searchBarIsVisible) {
                     _searchController.clear();

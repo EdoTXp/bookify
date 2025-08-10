@@ -47,7 +47,7 @@ void main() {
       );
 
       expect(
-        find.text("Não foi encontrado nenhum livro com esses termos."),
+        find.text("no-books-found-with-terms"),
         findsOne,
       );
 

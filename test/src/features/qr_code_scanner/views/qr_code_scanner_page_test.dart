@@ -47,8 +47,8 @@ Future<void> _testIsbn(
   WidgetTester tester, {
   required String isbnVersion,
 }) async {
-  const notEmptyField = 'Esse campo não pode estar vazio';
-  const isbnInvalid = 'Formato do ISBN inválido';
+  const notEmptyField = 'field-cannot-be-empty-error';
+  const isbnInvalid = 'invalid-ISBN-format-error';
 
   // Expect that qrCodeScannerWidget is constructed
   expect(find.byKey(qrCodeScannerWidgetKey), findsOneWidget);

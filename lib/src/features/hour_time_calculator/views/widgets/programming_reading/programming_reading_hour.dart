@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/ce
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ProgrammingReadingHour extends StatefulWidget {
   const ProgrammingReadingHour({super.key});
@@ -66,9 +67,9 @@ class _ProgrammingHourState extends State<ProgrammingReadingHour> {
       listener: (context, state) {
         final snackBarText = switch (state) {
           HourTimeCalculatorInsertedState() =>
-            'Hora de leitura calculado com sucesso.',
+            'reading-time-calculate-success-snackbar'.i18n(),
           HourTimeCalculatorRemovedNotificationState() =>
-            'Notificação removida com sucesso.',
+            'reading-time-notification-removed-success-snackbar'.i18n(),
           _ => null,
         };
 

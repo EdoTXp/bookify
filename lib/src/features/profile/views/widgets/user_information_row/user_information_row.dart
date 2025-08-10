@@ -3,6 +3,7 @@ import 'package:bookify/src/features/profile/views/widgets/user_information_row/
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class UserInformationRow extends StatefulWidget {
   const UserInformationRow({
@@ -44,34 +45,40 @@ class _UserInformationRowState extends State<UserInformationRow> {
           children: [
             ItemStatusColumn(
               quantity: bookcasesCount,
-              label: bookcasesCount == 1 ? 'Estante' : 'Estantes',
+              label: bookcasesCount == 1
+                  ? 'bookcase-label'.i18n()
+                  : 'bookcases-label'.i18n(),
             ),
             const SizedBox(
               width: 5,
             ),
             ItemStatusColumn(
               quantity: bookCount,
-              label: bookCount == 1 ? 'Livro' : 'Livros',
+              label:
+                  bookCount == 1 ? 'book-label'.i18n() : 'books-label'.i18n(),
             ),
             const SizedBox(
               width: 5,
             ),
             ItemStatusColumn(
               quantity: loansCount,
-              label: loansCount == 1 ? 'Empréstimo' : 'Empréstimos',
+              label:
+                  loansCount == 1 ? 'loan-label'.i18n() : 'loans-label'.i18n(),
             ),
             const SizedBox(
               width: 5,
             ),
             ItemStatusColumn(
               quantity: readingsCount,
-              label: readingsCount == 1 ? 'Leitura' : 'Leituras',
+              label: readingsCount == 1
+                  ? 'reading-label'.i18n()
+                  : 'readings-label'.i18n(),
             ),
           ],
         ),
-      UserInformationErrorState() => const Center(
+      UserInformationErrorState() => Center(
           child: Text(
-            'Erro ao carregar os dados',
+            'error-on-loading-data'.i18n(),
             style: TextStyle(
               fontSize: 10,
             ),

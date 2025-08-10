@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/ce
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class LoanDetailPage extends StatefulWidget {
   /// The Route Name = '/loan_detail'
@@ -53,9 +54,8 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
           onPressedButton: () async {
             await ShowDialogService.showAlertDialog(
               context: context,
-              title: 'Finalizar o empréstimo',
-              content:
-                  'Clicando em "CONFIRMAR" você finalizará este empréstimo.\nVerifique se o livro está em seu possesso antes de finalizar.',
+              title: 'finish-loan-title'.i18n(),
+              content: 'finish-loan-description'.i18n(),
               confirmButtonFunction: () {
                 _bloc.add(
                   FinishedLoanDetailEvent(
@@ -95,7 +95,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
 
       SnackbarService.showSnackBar(
         context,
-        'Empréstimo Finalizado com sucesso!\nAguarde até voltar à página anterior',
+        'loan-finalized-success-snackbar'.i18n(),
         SnackBarType.success,
       );
 
@@ -116,8 +116,8 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
-            'Detalhe do empréstimo',
+          title: Text(
+            'loan-details-title'.i18n(),
             style: TextStyle(
               fontSize: 16,
             ),

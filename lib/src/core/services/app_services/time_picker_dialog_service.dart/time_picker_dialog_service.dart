@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class TimePickerDialogService {
   static Future<TimeOfDay?> showTimePickerDialog(
@@ -14,12 +15,12 @@ class TimePickerDialogService {
       selectedTime = await showTimePicker(
         context: context,
         initialTime: initialTime ?? const TimeOfDay(hour: 0, minute: 0),
-        helpText: 'Selecione Horas e Minutos',
-        hourLabelText: 'Horas',
-        minuteLabelText: 'Minutos',
-        errorInvalidText: 'Impossível recuperar o tempo',
-        cancelText: 'CANCELAR',
-        confirmText: 'CONFIRMAR',
+        helpText: 'select-hours-and-minutes-title'.i18n(),
+        hourLabelText: 'hours-label'.i18n(),
+        minuteLabelText: 'minutes-label'.i18n(),
+        errorInvalidText: 'error-get-time'.i18n(),
+        cancelText: 'cancel-button'.i18n(),
+        confirmText: 'confirm-button'.i18n(),
       );
     } else if (Platform.isIOS) {
       final initialTimerDuration = initialTime != null

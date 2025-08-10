@@ -5,6 +5,7 @@ import 'package:bookify/src/shared/widgets/list/grid_view/books_grid_view.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class MyBooksPage extends StatefulWidget {
   final String? searchQuery;
@@ -50,11 +51,9 @@ class _MyBooksPageState extends State<MyBooksPage> {
   Widget _getWidgetOnMyBooksState(BuildContext context, MyBooksState state) {
     return switch (state) {
       MyBooksLoadingState() => const CenterCircularProgressIndicator(),
-      MyBooksEmptyState() => const Center(
+      MyBooksEmptyState() => Center(
           child: SizedBox(
-            child: Text(
-              'Não foram encontrados livros salvos. Adicione-os na Página: Início',
-            ),
+            child: Text('no-books-saved-message'.i18n()),
           ),
         ),
       MyBooksLoadedState(:final books) => BooksGridView(
@@ -69,8 +68,7 @@ class _MyBooksPageState extends State<MyBooksPage> {
           },
         ),
       MyBooksNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message:
-              'Nenhum livro foi encontrado com esses termos.\nVerifique se foi digitada corretamente.',
+          message: 'no-books-found-with-terms'.i18n(),
           onPressed: _refreshPage,
         ),
       MyBooksErrorState(:final errorMessage) =>
@@ -99,7 +97,7 @@ class _MyBooksPageState extends State<MyBooksPage> {
             children: [
               if (state is MyBooksLoadedState) ...[
                 Text(
-                  '${state.books.length} ${(state.books.length == 1) ? 'livro' : 'livros'}',
+                  '${state.books.length} ${(state.books.length == 1) ? 'book-label'.i18n() : 'books-label'.i18n()}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

@@ -2,6 +2,7 @@ import 'package:bookify/src/features/book_detail/views/widgets/book_pages_readin
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class BookPagesReadingTime extends StatefulWidget {
   final int pagesCount;
@@ -35,7 +36,11 @@ class _BookPagesReadingTimeState extends State<BookPagesReadingTime> {
       BookPagesReadingTimeLoadingState() =>
         const CenterCircularProgressIndicator(),
       BookPagesReadingTimeLoadedState(:final userPageReadingTime) => Text(
-          '${userPageReadingTime.readingTimeForTotalBookPage(widget.pagesCount)}H PARA LER',
+          'hours-to-read-label'.i18n([
+            userPageReadingTime
+                .readingTimeForTotalBookPage(widget.pagesCount)
+                .toString()
+          ]),
           textScaler: TextScaler.noScaling,
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,

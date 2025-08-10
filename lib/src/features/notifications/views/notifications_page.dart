@@ -4,6 +4,7 @@ import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/ce
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class NotificationsPage extends StatefulWidget {
   /// The Route Name = '/notifications'
@@ -33,11 +34,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
   ) {
     return switch (state) {
       NotificationsLoadingState() => const CenterCircularProgressIndicator(),
-      NotificationEmptyState() => const Center(
+      NotificationEmptyState() => Center(
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Não foi encontrada nenhuma notificação',
+              'no-notifications-found'.i18n(),
               textAlign: TextAlign.center,
             ),
           ),
@@ -65,8 +66,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Notificações',
+        title: Text(
+          'notifications-label'.i18n(),
           style: TextStyle(
             fontSize: 18,
           ),

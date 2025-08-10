@@ -6,6 +6,7 @@ import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
 
 class BookcaseInsertionPage extends StatefulWidget {
@@ -115,7 +116,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
       case BookcaseInsertionLoadingState():
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um instante...',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
 
@@ -162,8 +163,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   Widget build(BuildContext context) {
     final bookcaseModel = widget.bookcaseModel;
 
-    final String titlePage =
-        (bookcaseModel == null) ? 'Criar estante' : 'Editar estante';
+    final String titlePage = (bookcaseModel == null)
+        ? 'create-bookcase-title'.i18n()
+        : 'edit-bookcase-title'.i18n();
 
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -181,7 +183,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
             actions: [
               IconButton(
                 onPressed: _clearAllTextField,
-                tooltip: 'Limpar todos os campos',
+                tooltip: 'clear-all-fields-button'.i18n(),
                 icon: const Icon(Icons.delete_forever_outlined),
               ),
             ],
@@ -204,18 +206,18 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       validator: Validatorless.multiple(
                         [
                           Validatorless.required(
-                            'Esse campo não pode estar vazio',
+                            'field-cannot-be-empty-error'.i18n(),
                           ),
                           Validatorless.min(
                             3,
-                            'Esse campo precisa ter no mínimo 3 caracteres',
+                            'field-need-3-characters-error'.i18n(),
                           ),
                         ],
                       ),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 16),
-                      decoration: const InputDecoration(
-                        labelText: 'Nome *',
+                      decoration: InputDecoration(
+                        labelText: 'name-required-field'.i18n(),
                       ),
                       textInputAction: TextInputAction.next,
                     ),
@@ -225,8 +227,8 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       cursorColor: colorScheme.secondary,
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 16),
-                      decoration: const InputDecoration(
-                        labelText: 'Descrição (opcional)',
+                      decoration: InputDecoration(
+                        labelText: 'description-optional-field'.i18n(),
                       ),
                       textInputAction: TextInputAction.done,
                     ),
@@ -244,7 +246,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       },
                       onTapOutside: (_) => context.unfocus(),
                       decoration: InputDecoration(
-                        labelText: 'Cor',
+                        labelText: 'color-field'.i18n(),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -264,14 +266,14 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       ),
                     ),
                     Text(
-                      '* Campos obrigatórios',
+                      'fields-required-label'.i18n(),
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     BookifyOutlinedButton.expanded(
                       key: const Key('Confirm Bookcase insertion Button'),
-                      text: 'Confirmar',
+                      text: 'confirm-button-normal'.i18n(),
                       onPressed: () => _onPressedButton(bookcaseModel),
                     ),
                   ],

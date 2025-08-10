@@ -35,7 +35,8 @@ class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
       if (userPageReadingTimeInserted == 0) {
         emit(
           ReadingPageTimeCalculatorErrorState(
-              errorMessage: 'Erro ao inserir o tempo de leitura da página'),
+            errorMessage: 'Erro ao inserir o tempo de leitura da página',
+          ),
         );
         return;
       }

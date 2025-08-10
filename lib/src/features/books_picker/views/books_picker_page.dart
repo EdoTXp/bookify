@@ -3,6 +3,7 @@ import 'package:bookify/src/features/books_picker/views/widgets/separate_books_p
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BooksPickerPage extends StatefulWidget {
   /// The Route Name = '/books_picker'
@@ -25,7 +26,9 @@ class _BooksPickerPageState extends State<BooksPickerPage> {
   }
 
   void _setTitle(bool value) {
-    title = value ? 'Selecione o Livro separado' : 'Selecione a Estante';
+    title = value
+        ? 'select-book-separately-title'.i18n()
+        : 'select-bookcase-title'.i18n();
   }
 
   void _onSelectBook(BookModel book) {

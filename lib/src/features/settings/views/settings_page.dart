@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/settings/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class SettingsPage extends StatelessWidget {
   /// The Route Name = '/settings'
@@ -12,8 +13,8 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Configurações',
+        title: Text(
+          'settings-label'.i18n(),
           style: TextStyle(
             fontSize: 18,
           ),

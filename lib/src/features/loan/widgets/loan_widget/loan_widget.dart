@@ -7,6 +7,7 @@ import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class LoanWidget extends StatelessWidget {
   final LoanDto loan;
@@ -77,18 +78,19 @@ class LoanWidget extends StatelessWidget {
                           top: -3,
                           right: -3,
                           child: ContactCircleAvatar(
-                            name: loan.contactDto?.name ?? 'Sem nome',
+                            name:
+                                loan.contactDto?.name ?? 'no-name-label'.i18n(),
                             photo: loan.contactDto?.photo,
                           ),
                         ),
                         if (isLateDevolutionDate)
-                          const Positioned(
+                          Positioned(
                             left: 0,
                             top: 0,
                             bottom: 0,
                             right: 0,
                             child: Tooltip(
-                              message: 'Empréstimo atrasado',
+                              message: 'late-loan-label'.i18n(),
                               child: Icon(
                                 Icons.warning_amber_rounded,
                                 size: 62,
@@ -111,14 +113,15 @@ class LoanWidget extends StatelessWidget {
                             children: [
                               ContactInformationWidget(
                                 iconData: Icons.person_outlined,
-                                title: 'Nome',
-                                content: loan.contactDto?.name ?? 'Sem nome',
+                                title: 'name-label'.i18n(),
+                                content: loan.contactDto?.name ??
+                                    'no-name-label'.i18n(),
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.smartphone_outlined,
-                                title: 'Contato',
+                                title: 'contact-label'.i18n(),
                                 content: loan.contactDto?.phoneNumber ??
-                                    'Sem número',
+                                    'no-contact-number-label'.i18n(),
                               ),
                             ],
                           ),
@@ -133,13 +136,13 @@ class LoanWidget extends StatelessWidget {
                             children: [
                               ContactInformationWidget(
                                 iconData: Icons.calendar_month_outlined,
-                                title: 'Empréstimo',
+                                title: 'loan-label'.i18n(),
                                 content:
                                     loan.loanModel.loanDate.toFormattedDate(),
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.calendar_month_outlined,
-                                title: 'Devolução',
+                                title: 'devolution-date-label'.i18n(),
                                 content: loan.loanModel.devolutionDate
                                     .toFormattedDate(),
                               ),
@@ -156,12 +159,12 @@ class LoanWidget extends StatelessWidget {
                             children: [
                               ContactInformationWidget(
                                 iconData: Icons.description_outlined,
-                                title: 'Observação',
+                                title: 'observation-label'.i18n(),
                                 content: loan.loanModel.observation ?? '...',
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.book_outlined,
-                                title: 'Livro',
+                                title: 'book-label'.i18n(),
                                 content: loan.bookTitlePreview,
                               ),
                             ],

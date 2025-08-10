@@ -3,6 +3,7 @@ import 'package:bookify/src/features/reading_page_time_calculator/bloc/reading_p
 import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/reading_page_timer_loaded_state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ReadingPageTimerWidget extends StatefulWidget {
   const ReadingPageTimerWidget({super.key});
@@ -28,14 +29,14 @@ class _ReadingPageTimerWidgetState extends State<ReadingPageTimerWidget> {
       case ReadingPageTimeCalculatorLoadingState():
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um instante.',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
         break;
       case ReadingPageTimeCalculatorInsertedState():
         SnackbarService.showSnackBar(
           context,
-          'Tempo de leitura calculado com sucesso.',
+          'reading-time-success-snackbar'.i18n(),
           SnackBarType.success,
         );
 

@@ -8,6 +8,7 @@ import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/features/book_detail/views/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class BookDetailPage extends StatefulWidget {
   /// The Route Name = '/book_detail'
@@ -101,8 +102,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
         if (!_isCallVerifyBookEvent) {
           final message = (_bookIsInserted)
-              ? 'Livro inserido com sucesso.'
-              : 'Livro removido com sucesso.';
+              ? 'book-successfully-added-snackbar'.i18n()
+              : 'book-successfully-removed-snackbar'.i18n();
 
           SnackbarService.showSnackBar(
             context,
@@ -132,9 +133,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
     if (_bookIsInserted) {
       await ShowDialogService.showAlertDialog(
         context: context,
-        title: 'Remover o livro "${book.title}"',
-        content:
-            'Clicando em "CONFIRMAR" você removerá este livro da sua livraria.\nTem Certeza?',
+        title: 'remove-book-title'.i18n([book.title]),
+        content: 'remove-book-description'.i18n(),
         confirmButtonFunction: () {
           _bloc.add(BookRemovedEvent(bookId: book.id));
           Navigator.of(context).pop();
@@ -212,7 +212,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${book.pageCount} PÁGINAS',
+                        'pages-label'.i18n([book.pageCount.toString()]),
                         textScaler: TextScaler.noScaling,
                         style: TextStyle(
                           color: colorScheme.primary,
@@ -232,7 +232,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     children: [
                       Expanded(
                         child: BookifyOutlinedButton(
-                          text: 'Ir para loja',
+                          text: 'go-to-store-button'.i18n(),
                           suffixIcon: Icons.store,
                           onPressed: () async =>
                               await LauncherService.openUrl(book.buyLink),
@@ -246,7 +246,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           suffixIcon:
                               (_bookIsInserted) ? Icons.remove : Icons.add,
                           // Update the text
-                          text: (_bookIsInserted) ? 'Remover' : 'Adicionar',
+                          text: (_bookIsInserted)
+                              ? 'remove-button'.i18n()
+                              : 'add-button'.i18n(),
                           // When is [BookDetailLoadingState] disable the click
                           onPressed: () => (_canClickToInsertOrRemoveButton)
                               ? _insertOrRemoveBook(book)
@@ -256,8 +258,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    'Sinopse',
+                  Text(
+                    'synopsis-title'.i18n(),
                     textScaler: TextScaler.noScaling,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -289,8 +291,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     children: [
                       Column(
                         children: [
-                          const Text(
-                            'Avaliações',
+                          Text(
+                            'ratings-title'.i18n(),
                             textScaler: TextScaler.noScaling,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -310,8 +312,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Informações do Livro',
+                            Text(
+                              'book-information-title'.i18n(),
                               textScaler: TextScaler.noScaling,
                               style: TextStyle(
                                 fontSize: 20,
@@ -320,11 +322,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             ),
                             const SizedBox(height: 30),
                             BookDescriptionWidget(
-                              title: 'Editora: ',
+                              title: 'publisher-title'.i18n(),
                               content: book.publisher,
                             ),
                             BookDescriptionWidget(
-                              title: 'Gêneros: ',
+                              title: 'categories-title'.i18n(),
                               content: categories,
                             ),
                           ],

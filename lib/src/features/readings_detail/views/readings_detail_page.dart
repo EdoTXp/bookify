@@ -8,6 +8,7 @@ import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ReadingsDetailPage extends StatefulWidget {
   /// The Route Name = '/readings_detail'
@@ -46,16 +47,15 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
       case ReadingsDetailLoadingState():
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um instante...',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
-
         break;
 
       case ReadingsDetailUpdatedState():
         SnackbarService.showSnackBar(
           context,
-          'Leitura atualizada com sucesso.',
+          'reading-successfully-updated-snackbar'.i18n(),
           SnackBarType.success,
         );
 
@@ -71,7 +71,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
       case ReadingsDetailFinishedState():
         SnackbarService.showSnackBar(
           context,
-          'Leitura finalizada com sucesso.',
+          'reading-successfully-finished-snackbar'.i18n(),
           SnackBarType.success,
         );
 
@@ -106,8 +106,10 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
     final bookPages = widget.readingDto.book.pageCount;
 
     final contentMessage = (_readedPages == bookPages)
-        ? 'Você terminou de ler o livro. Clicando em CONFIRMAR removerá o livro da leitura.\nTem Certeza de finalizar?'
-        : 'Clicando em CONFIRMAR, você atualizará a leitura com um total de ${_readedPages.round()} páginas lidas.Tem Certeza de atualizar';
+        ? 'finish-reading-message'.i18n()
+        : 'update-reading-message'.i18n([
+            _readedPages.round().toString(),
+          ]);
 
     final updatedReading = widget.readingDto.reading.copyWith(
       pagesReaded: _readedPages.round(),
@@ -117,8 +119,8 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
     await ShowDialogService.showAlertDialog(
       context: context,
       title: (_readedPages == bookPages)
-          ? 'Finalizar a leitura'
-          : 'Atualizar a leitura',
+          ? 'finish-reading-title'.i18n()
+          : 'update-reading-title'.i18n(),
       content: contentMessage,
       confirmButtonFunction: () {
         setState(() {
@@ -185,7 +187,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       ),
                       Text.rich(
                         TextSpan(
-                          text: 'Última leitura: ',
+                          text: 'last-reading-time-at-title'.i18n(),
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -209,7 +211,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     ),
                     Text.rich(
                       TextSpan(
-                        text: 'Página lidas: ',
+                        text: 'pages-read-title'.i18n(),
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -246,7 +248,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     ),
                     BookifyOutlinedButton.expanded(
                       key: const Key('Continue Reading Button'),
-                      text: 'Continuar leitura',
+                      text: 'continue-reading-button'.i18n(),
                       suffixIcon: Icons.menu_book_rounded,
                       onPressed: () async {
                         await Navigator.of(context).pushNamed(
@@ -257,8 +259,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                         if (context.mounted) {
                           await ShowDialogService.showSimpleDialog(
                             context: context,
-                            title:
-                                'Agora que você leu as páginas, atualize na slideBar para confirmar as páginas lidas.',
+                            title: 'update-slider-message'.i18n(),
                           );
                         }
                       },
@@ -269,8 +270,8 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     BookifyElevatedButton.expanded(
                       key: const Key('Update / Finish Reading Button'),
                       text: (_readedPages == book.pageCount)
-                          ? 'Finalizar leitura'
-                          : 'Atualizar leitura',
+                          ? 'finish-reading-button'.i18n()
+                          : 'update-reading-button'.i18n(),
                       suffixIcon: Icons.check_circle_outline_outlined,
                       onPressed: () async {
                         if (_readedPages.toInt() != reading.pagesReaded) {

@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/utils/input_formatter/isbn_input_formatter.dart';
 import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
+import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
 import 'package:flutter/material.dart';
 
@@ -35,10 +36,10 @@ class IsbnTextFormField extends StatelessWidget {
             controller: isbnManuallyEC,
             inputFormatters: [isbnMaskFormatter],
             validator: Validatorless.multiple([
-              Validatorless.required('Esse campo não pode estar vazio'),
+              Validatorless.required('field-cannot-be-empty-error'.i18n()),
               Validatorless.regex(
                 isbnRegExpVerifier,
-                'Formato do ISBN inválido',
+                'invalid-ISBN-format-error'.i18n(),
               ),
             ]),
             style: const TextStyle(

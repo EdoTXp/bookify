@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BooksSelectedRow extends StatelessWidget {
   final int booksQuantity;
@@ -21,7 +22,7 @@ class BooksSelectedRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Livros selecionados: $booksQuantity',
+            'selected-books-quantity-label'.i18n([booksQuantity.toString()]),
             style: TextStyle(
               fontSize: 16,
               color: colorScheme.primary,
@@ -30,7 +31,7 @@ class BooksSelectedRow extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onClearPressed,
-            tooltip: 'Apagar seleção',
+            tooltip: 'clear-selection-button'.i18n(),
             icon: const Icon(Icons.close_rounded),
           ),
           const SizedBox(
@@ -39,7 +40,7 @@ class BooksSelectedRow extends StatelessWidget {
           IconButton(
             key: const Key('Confirm book IconButton'),
             onPressed: onConfirmPressed,
-            tooltip: 'Confirmar a seleção',
+            tooltip: 'confirm-selection-button'.i18n(),
             icon: const Icon(Icons.check_rounded),
           ),
         ],

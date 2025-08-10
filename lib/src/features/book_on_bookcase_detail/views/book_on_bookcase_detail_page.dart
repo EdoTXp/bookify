@@ -2,6 +2,7 @@ import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/widgets/widgets.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
+import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
@@ -9,8 +10,7 @@ import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_det
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
+import 'package:localization/localization.dart';
 
 class BookOnBookcaseDetailPage extends StatefulWidget {
   /// The Route Name = '/bookcase_detail'
@@ -57,7 +57,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
 
       SnackbarService.showSnackBar(
         context,
-        'livro removido da estante com sucesso.\nAguarde até voltar à página anterior',
+        'book-removed-from-bookcase-snackbar'.i18n(),
         SnackBarType.success,
       );
 
@@ -77,7 +77,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
 
       SnackbarService.showSnackBar(
         context,
-        'Erro $errorMessage',
+        'error-snackbar'.i18n([errorMessage]),
         SnackBarType.error,
       );
 
@@ -146,8 +146,8 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                               statusType: StatusType.loaded,
                             ),
                           BookOnBookcaseDetailErrorState() =>
-                            const BookcasesCountWidget(
-                              message: 'Aconteceu um erro.',
+                            BookcasesCountWidget(
+                              message: 'error-occurred'.i18n(),
                               statusType: StatusType.error,
                             ),
                         },
@@ -163,7 +163,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                       height: 60,
                     ),
                     BookifyOutlinedButton.expanded(
-                      text: 'Ir para os detalhes',
+                      text: 'go-to-detail-button'.i18n(),
                       suffixIcon: Icons.description,
                       onPressed: () async {
                         await Navigator.pushNamed(
@@ -177,22 +177,24 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                       height: 10,
                     ),
                     BookifyElevatedButton.expanded(
-                      text: 'Remover livro da estante',
+                      text: 'remove-book-from-bookcase-title'.i18n(),
                       suffixIcon: BookifyIcons.bookcase,
                       onPressed: () async {
                         String complementMessage = '';
 
                         if (book.status == BookStatus.loaned ||
                             book.status == BookStatus.reading) {
-                          complementMessage =
-                              'Lembrando que o livro está ${book.status} e não será removido dessa categoria.';
+                          complementMessage = 'book-complement-message'.i18n(
+                            [book.status.toString()],
+                          );
                         }
 
                         await ShowDialogService.showAlertDialog(
                           context: context,
-                          title: 'Remover o livro da estante',
-                          content:
-                              'Clicando em CONFIRMAR, removerá esse livro da estante.\n$complementMessage\nTem Certeza?',
+                          title: 'remove-book-from-bookcase-title'.i18n(),
+                          content: 'remove-book-from-bookcase-description'.i18n(
+                            [complementMessage],
+                          ),
                           confirmButtonFunction: () {
                             _bloc.add(
                               DeletedBookOnBookcaseEvent(

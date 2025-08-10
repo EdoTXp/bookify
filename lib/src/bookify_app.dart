@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookifyApp extends StatefulWidget {
   final FirebaseAuth auth;
@@ -51,6 +52,8 @@ class _BookifyAppState extends State<BookifyApp> {
 
   @override
   Widget build(BuildContext context) {
+    LocalJsonLocalization.delegate.directories = ['assets/lang'];
+
     return BlocListener<UserThemeBloc, UserThemeState>(
       bloc: _userThemeBloc,
       listener: (context, state) {
@@ -66,9 +69,27 @@ class _BookifyAppState extends State<BookifyApp> {
         navigatorKey: Routes.navigatorKey,
         routes: Routes.routes,
         initialRoute: Routes.getInitialRoute(userIsLogged),
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        localeResolutionCallback: (locale, supportedLocales) {
+          if (supportedLocales.contains(locale)) {
+            return locale;
+          }
+
+          if (locale?.languageCode == 'pt') {
+            return Locale('pt', 'BR');
+          }
+
+          return Locale('en', 'US');
+        },
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          LocalJsonLocalization.delegate,
+        ],
         supportedLocales: const [
           Locale('pt', 'BR'),
+          Locale('en', 'US'),
+          Locale('it', 'IT'),
         ],
       ),
     );

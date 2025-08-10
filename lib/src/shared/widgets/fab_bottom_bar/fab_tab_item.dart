@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 /// Represents a single tab item in the FAB bottom bar.
 /// This widget displays an icon and label for each tab,
@@ -52,7 +53,7 @@ class FabTabItem extends StatelessWidget {
 
     // Creates a tooltip for accessibility purposes.
     return Tooltip(
-      message: 'Page: ${item.label}',
+      message: 'page-tooltip'.i18n([item.label]),
       child: Material(
         borderRadius: BorderRadius.circular(90),
         color: Colors.transparent,

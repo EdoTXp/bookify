@@ -8,6 +8,7 @@ import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/shared/widgets/floating_action_button/rectangle_floating_action_button.dart';
 import 'package:bookify/src/features/root/views/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class RootPage extends StatefulWidget {
   /// The Route Name = '/root_page'
@@ -111,28 +112,28 @@ class _RootPageState extends State<RootPage> {
             FABBottomAppBarItem(
               unselectedIcon: Icons.home_outlined,
               selectedIcon: Icons.home_rounded,
-              label: 'Início',
+              label: 'home-label'.i18n(),
             ),
             FABBottomAppBarItem(
               unselectedIcon: BookifyIcons.bookcase_outlined,
               selectedIcon: BookifyIcons.bookcase,
-              label: 'Estantes',
+              label: 'bookcases-label'.i18n(),
             ),
             FABBottomAppBarItem(
               unselectedIcon: Icons.auto_stories_outlined,
               selectedIcon: Icons.auto_stories_rounded,
-              label: 'Leituras',
+              label: 'readings-label'.i18n(),
             ),
             FABBottomAppBarItem(
               unselectedIcon: Icons.person_outline,
               selectedIcon: Icons.person_rounded,
-              label: 'Perfil',
+              label: 'profile-label'.i18n(),
             ),
           ],
         ),
         floatingActionButtonLocation: floatingItemAlignedCenterDockerPosition,
         floatingActionButton: RectangleFloatingActionButton(
-          tooltip: 'Abrir a página para escanear o código ISBN.',
+          tooltip: 'FAB-tooltip'.i18n(),
           onPressed: () async => await _scanAndGetIsbnCode(context),
           child: const Icon(
             Icons.add_rounded,

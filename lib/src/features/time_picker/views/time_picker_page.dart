@@ -4,6 +4,7 @@ import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar
 import 'package:bookify/src/features/time_picker/views/widgets/time_picker_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class TimePickerPage extends StatefulWidget {
   /// The Route Name = '/time_picker'
@@ -61,14 +62,17 @@ class _TimePickerPageState extends State<TimePickerPage> {
     if (endTimesIsGreaterThanStart > -1) {
       SnackbarService.showSnackBar(
         context,
-        'O horário do fim precisa ser maior que o horário de início',
+        'end-times-is-greater-than-start'.i18n(),
         SnackBarType.error,
       );
       return;
     }
 
     Navigator.of(context).pop(
-      [startingTime, endingTime],
+      [
+        startingTime,
+        endingTime,
+      ],
     );
   }
 
@@ -104,7 +108,7 @@ class _TimePickerPageState extends State<TimePickerPage> {
                     minute: startingTime.minute,
                   ),
                   const Text('|'),
-                  const Text('Até'),
+                  Text('to-time'.i18n()),
                   const Text('|'),
                   TimePickerWidget(
                     onTimeSelected: (TimeOfDay time) {
@@ -117,7 +121,7 @@ class _TimePickerPageState extends State<TimePickerPage> {
                   ),
                   const Spacer(),
                   BookifyOutlinedButton.expanded(
-                    text: 'Definir e voltar',
+                    text: 'define-return-button'.i18n(),
                     onPressed: _defineTimer,
                   )
                 ],

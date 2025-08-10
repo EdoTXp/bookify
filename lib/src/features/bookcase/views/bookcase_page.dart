@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcasePage extends StatefulWidget {
   final String? searchQuery;
@@ -59,7 +60,7 @@ class _BookcasePageState extends State<BookcasePage> {
       BookcaseEmptyState() => Center(
           child: ItemEmptyStateWidget(
             key: const Key('Bookcase Empty State'),
-            label: 'Criar uma nova estante',
+            label: 'create-new-bookcase-button'.i18n(),
             onTap: () async => await _onAddNewBookcase(),
           ),
         ),
@@ -75,8 +76,7 @@ class _BookcasePageState extends State<BookcasePage> {
           ),
         ),
       BookcaseNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message:
-              'Nenhuma Estante encontrada com esses termos.\nVerifique se foi digitada corretamente.',
+          message: 'bookcase-not-found-whit-this-terms'.i18n(),
           onPressed: _refreshPage,
         ),
       BookcaseErrorState(errorMessage: final message) =>

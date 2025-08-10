@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ShowDialogService {
   static final bool _isAndroidPlatform = Platform.isAndroid;
@@ -26,16 +27,16 @@ class ShowDialogService {
       style: const TextStyle(fontSize: 14),
     );
 
-    const Widget cancelButtonWidget = Text(
-      'NÃO',
+    final Widget cancelButtonWidget = Text(
+      'no-button'.i18n(),
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
       ),
     );
 
-    const Widget confirmButtonWidget = Text(
-      'CONFIRMAR',
+    final Widget confirmButtonWidget = Text(
+      'confirm-button'.i18n(),
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
@@ -95,7 +96,7 @@ class ShowDialogService {
     );
 
     final Widget okButtonWidget = Text(
-      'OK',
+      'ok-button'.i18n(),
       style: TextStyle(
         fontSize: 16,
         color: colorScheme.primary,

@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QrCodeScannerWidget extends StatefulWidget {
@@ -68,11 +69,11 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
               onDetect: _onDetectCaptures,
               errorBuilder: (context, error) {
                 final errorDetails =
-                    error.errorDetails?.message ?? 'erro desconhecido';
+                    error.errorDetails?.message ?? 'unknown-error'.i18n();
 
                 return Center(
                   child: InfoItemStateWidget.withErrorState(
-                    message: 'Ocorreu algum erro com a câmera: $errorDetails',
+                    message: 'camera-error'.i18n([errorDetails]),
                     onPressed: () async {
                       await _scannerController.stop().then(
                             (_) async => await _scannerController.start(),

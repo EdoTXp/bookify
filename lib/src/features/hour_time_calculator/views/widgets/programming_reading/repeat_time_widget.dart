@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class RepeatTimeWidget extends StatelessWidget {
   final void Function(int selectedTime) onSelectedRepeatTime;
@@ -26,8 +27,8 @@ class RepeatTimeWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Defina a repetição para ser notificado para a suas leituras:',
+          Text(
+            'repeat-time-title'.i18n(),
             textAlign: TextAlign.center,
             textScaler: TextScaler.noScaling,
             style: TextStyle(
@@ -40,9 +41,9 @@ class RepeatTimeWidget extends StatelessWidget {
           ),
           DropdownMenu<int>(
             initialSelection: initialRepeatTimeSelected,
-            dropdownMenuEntries: const [
+            dropdownMenuEntries: [
               DropdownMenuEntry(
-                label: 'Diariamente',
+                label: 'daily-dropdown-menu-entry'.i18n(),
                 value: 1,
                 style: ButtonStyle(
                   foregroundColor: WidgetStatePropertyAll(Colors.white),
@@ -50,7 +51,7 @@ class RepeatTimeWidget extends StatelessWidget {
                 ),
               ),
               DropdownMenuEntry(
-                label: 'Semanalmente',
+                label: 'weekly-dropdown-menu-entry'.i18n(),
                 value: 2,
                 style: ButtonStyle(
                   foregroundColor: WidgetStatePropertyAll(Colors.white),

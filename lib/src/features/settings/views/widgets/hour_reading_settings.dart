@@ -1,6 +1,7 @@
 import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class HourReadingSettings extends StatelessWidget {
   const HourReadingSettings({super.key});
@@ -14,7 +15,7 @@ class HourReadingSettings extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Hora da leitura',
+            'schedules-label'.i18n(),
             textScaler: TextScaler.noScaling,
             style: TextStyle(
               fontSize: 14,
@@ -24,7 +25,7 @@ class HourReadingSettings extends StatelessWidget {
           ),
           TextButton(
             child: Text(
-              'Ver meus horários',
+              'see-my-schedules-button'.i18n(),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ContactSelectedRow extends StatelessWidget {
   final VoidCallback onClearPressed;
@@ -19,7 +20,7 @@ class ContactSelectedRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Contato selecionado',
+            'contact-selected-label'.i18n(),
             style: TextStyle(
               fontSize: 16,
               color: colorScheme.primary,
@@ -28,7 +29,7 @@ class ContactSelectedRow extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onClearPressed,
-            tooltip: 'Desselecionar Contato',
+            tooltip: 'deselect-contact-button'.i18n(),
             icon: const Icon(Icons.close_rounded),
           ),
           const SizedBox(
@@ -37,7 +38,7 @@ class ContactSelectedRow extends StatelessWidget {
           IconButton(
             key: const Key('Confirm Button'),
             onPressed: onConfirmPressed,
-            tooltip: 'Enviar Contato',
+            tooltip: 'send-contact-button'.i18n(),
             icon: const Icon(Icons.check_rounded),
           ),
         ],

@@ -12,6 +12,7 @@ import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar
 import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class AuthPage extends StatefulWidget {
   /// The Route Name = '/auth'
@@ -51,7 +52,7 @@ class _AuthPageState extends State<AuthPage> {
         showLoader = true;
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um istante...',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
         break;
@@ -59,7 +60,7 @@ class _AuthPageState extends State<AuthPage> {
         showLoader = false;
         SnackbarService.showSnackBar(
           context,
-          'Autentificado com sucesso.',
+          'auth-success-snackbar'.i18n(),
           SnackBarType.success,
         );
         Future.delayed(const Duration(seconds: 2)).then(

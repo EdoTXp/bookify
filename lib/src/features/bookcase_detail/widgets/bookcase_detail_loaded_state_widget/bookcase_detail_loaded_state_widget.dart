@@ -5,6 +5,7 @@ import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcaseDetailLoadedStateWidget extends StatefulWidget {
   final List<BookModel> books;
@@ -112,17 +113,16 @@ class _BookcaseDetailLoadedStateWidgetState
           child: (_isSelectionMode)
               ? SelectedItemRow(
                   itemQuantity: _selectedList.length,
-                  itemLabelSingular: 'Livro',
-                  itemLabelPlural: 'Livros',
+                  itemLabelSingular: 'book-label'.i18n(),
+                  itemLabelPlural: 'books-label'.i18n(),
                   onSelectedAll: (isSelectedAll) => (isSelectedAll)
                       ? _selectAllItems(books)
                       : _clearSelection(),
                   onPressedDeleteButton: () {
                     ShowDialogService.showAlertDialog(
                       context: context,
-                      title: 'Deletar Livros',
-                      content:
-                          'Clicando em "CONFIRMAR" você removerá os livros.\nTem Certeza?',
+                      title: 'delete-books-title'.i18n(),
+                      content: 'delete-books-description'.i18n(),
                       confirmButtonFunction: () {
                         Navigator.of(context).pop();
                         widget.onDeletedBooksPressed(_selectedList);
@@ -131,7 +131,7 @@ class _BookcaseDetailLoadedStateWidgetState
                   },
                 )
               : AddNewItemTextButton(
-                  label: 'Adicionar novos livros',
+                  label: 'add-new-books-button'.i18n(),
                   onPressed: widget.onAddBooksPressed,
                 ),
         ),

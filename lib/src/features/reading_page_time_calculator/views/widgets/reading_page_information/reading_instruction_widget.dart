@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
-class ReadingInformationWidget extends StatelessWidget {
-  const ReadingInformationWidget({super.key});
+class ReadingInstructionWidget extends StatelessWidget {
+  const ReadingInstructionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,19 +11,17 @@ class ReadingInformationWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        spacing: 10,
         children: [
           Text(
-            'Vamos calcular a sua velocidade de leitura?',
+            'reading-instruction-title'.i18n(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: colorScheme.primary,
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Text(
-            'Leia um pequeno trecho extraído de um livro gerado por uma IA, enquanto acompanhamos o seu tempo com um cronômetro. Após o cálculo, você terá informado em qualquer livro no aplicativo, o tempo médio para finalizar a leitura dessa determinada obra, baseado no tempo que você levou para ler o texto.',
+          Text(
+            'reading-instruction-description'.i18n(),
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 14,

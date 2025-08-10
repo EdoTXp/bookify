@@ -13,6 +13,7 @@ import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_
 import 'package:flutter/material.dart';
 import 'package:bookify/src/features/loan_insertion/views/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
 
 /// The LoanInsertionPage widget is responsible for handling the loan insertion process.
@@ -109,7 +110,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         _contact = contactDto;
       });
       _contactNameEC.text = contactDto.name;
-      _contactPhoneNumberEC.text = contactDto.phoneNumber ?? 'sem número';
+      _contactPhoneNumberEC.text =
+          contactDto.phoneNumber ?? 'no-contact-number-label'.i18n();
     }
   }
 
@@ -157,7 +159,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   String? _validateDevolutionDate() {
     final devolutionDate = _devolutionDateEC.text.parseFormattedDate();
     if (!devolutionDate.isAfter(DateTime.now())) {
-      return 'A data de devolução não pode ser hoje';
+      return 'error-cannot-be-today'.i18n();
     }
 
     if (_loanDateEC.text.isNotEmpty) {
@@ -165,7 +167,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
       if (devolutionDate.isBefore(loanDate) ||
           devolutionDate.isAtSameMomentAs(loanDate)) {
-        return 'Intervalo de datas inválido';
+        return 'error-invalid-date-range'.i18n();
       }
     }
 
@@ -205,7 +207,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
       // this way, cannot complete insert.
       SnackbarService.showSnackBar(
         context,
-        'Tem algum campo vazio.\nVerifique se adicionou o livro, o contato, a observação, e as datas.',
+        'loan-some-empty-field-snackbar'.i18n(),
         SnackBarType.error,
       );
 
@@ -232,7 +234,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
       case LoanInsertionLoadingState():
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um instante...',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
 
@@ -284,13 +286,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: const Text(
-              'Criar empréstimo de um livro',
+            title: Text(
+              'create-loan-title'.i18n(),
               style: TextStyle(fontSize: 14),
             ),
             actions: [
               IconButton(
-                tooltip: 'Limpar todos os campos',
+                tooltip: 'clear-all-fields-button'.i18n(),
                 icon: const Icon(
                   Icons.delete_forever_outlined,
                 ),
@@ -371,13 +373,15 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       keyboardType: TextInputType.none,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: Validatorless.required(
-                        'Esse campo é obrigatório.',
+                        'this-field-is-required'.i18n(),
                       ),
                       onTap: () async => await _getContact(context),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
-                      decoration: const InputDecoration(
-                        label: Text('Nome *'),
+                      decoration: InputDecoration(
+                        label: Text(
+                          'name-required-field'.i18n(),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -389,13 +393,15 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       keyboardType: TextInputType.none,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: Validatorless.required(
-                        'Esse campo é obrigatório.',
+                        'this-field-is-required'.i18n(),
                       ),
                       onTap: () async => await _getContact(context),
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
-                      decoration: const InputDecoration(
-                        label: Text('Contato *'),
+                      decoration: InputDecoration(
+                        label: Text(
+                          'contact-required-field'.i18n(),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -407,8 +413,10 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       cursorColor: colorScheme.secondary,
                       onTapOutside: (_) => context.unfocus(),
                       style: const TextStyle(fontSize: 14),
-                      decoration: const InputDecoration(
-                        label: Text('Observação (opcional)'),
+                      decoration: InputDecoration(
+                        label: Text(
+                          'observation-optional-field'.i18n(),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -426,7 +434,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             readOnly: true,
                             keyboardType: TextInputType.none,
                             validator: Validatorless.required(
-                              'Esse campo é obrigatório',
+                              'this-field-is-required'.i18n(),
                             ),
                             onTap: () async => await _getDate(
                               context,
@@ -434,8 +442,10 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             ),
                             onTapOutside: (_) => context.unfocus(),
                             style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(
-                              label: Text('Data do empréstimo *'),
+                            decoration: InputDecoration(
+                              label: Text(
+                                'loan-date-required-field'.i18n(),
+                              ),
                             ),
                           ),
                         ),
@@ -453,7 +463,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             validator: Validatorless.multiple(
                               [
                                 Validatorless.required(
-                                  'Esse campo é obrigatório',
+                                  'this-field-is-required'.i18n(),
                                 ),
                                 (_) => _validateDevolutionDate(),
                               ],
@@ -464,8 +474,10 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             ),
                             onTapOutside: (_) => context.unfocus(),
                             style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(
-                              label: Text('Data para devolução *'),
+                            decoration: InputDecoration(
+                              label: Text(
+                                'devolution-date-required-field'.i18n(),
+                              ),
                             ),
                           ),
                         ),
@@ -475,7 +487,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       height: 10,
                     ),
                     Text(
-                      '* Campos obrigatórios',
+                      'fields-required-label'.i18n(),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -485,7 +497,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                     ),
                     BookifyElevatedButton.expanded(
                       key: const Key('Confirm Loan Button'),
-                      text: 'Enviar',
+                      text: 'send-button'.i18n(),
                       onPressed: () => _onPressedButton(context),
                     ),
                   ],

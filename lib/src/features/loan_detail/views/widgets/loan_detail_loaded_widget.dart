@@ -8,6 +8,7 @@ import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart'
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class LoanDetailLoadedWidget extends StatelessWidget {
   final LoanDto loanDto;
@@ -36,8 +37,8 @@ class LoanDetailLoadedWidget extends StatelessWidget {
                 height: 20,
               ),
             ],
-            const Text(
-              'Livro',
+            Text(
+              'book-label'.i18n(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -57,8 +58,8 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text(
-              'Contato',
+            Text(
+              'contact-label'.i18n(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -88,7 +89,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
                     loanDto.contactDto!.phoneNumber!,
                   );
                 },
-                text: 'Ligar para o contato',
+                text: 'call-the-contact-button'.i18n(),
                 suffixIcon: Icons.call_rounded,
               ),
               const SizedBox(
@@ -98,7 +99,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             BookifyElevatedButton.expanded(
               key: const Key('Finish loan Button'),
               onPressed: onPressedButton,
-              text: 'Finalizar Empréstimo',
+              text: 'finish-loan-button'.i18n(),
               suffixIcon: Icons.arrow_circle_down_rounded,
             ),
           ],

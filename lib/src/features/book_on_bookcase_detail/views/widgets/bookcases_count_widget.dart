@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 enum StatusType { loaded, error }
 
@@ -28,7 +29,7 @@ class BookcasesCountWidget extends StatelessWidget {
       ),
       child: Text(
         statusType == StatusType.loaded
-            ? 'Estantes com esse livro: $message'
+            ? 'bookcases-with-this-book-quantity'.i18n([message])
             : message,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,

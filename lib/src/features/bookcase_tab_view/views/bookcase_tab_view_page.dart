@@ -1,5 +1,6 @@
 import 'package:bookify/src/features/bookcase_tab_view/views/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcaseTabViewPage extends StatefulWidget {
   const BookcaseTabViewPage({super.key});
@@ -35,9 +36,9 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
   void _setSearchHintText(int selectedTab) {
     setState(() {
       _searchHintText = switch (selectedTab) {
-        1 => 'Digite o título do livro emprestado.',
-        2 => 'Digite o título dos seus livros.',
-        0 || _ => 'Digite o nome da estante.',
+        1 => 'enter-loaned-title-label'.i18n(),
+        2 => 'enter-title-your-book-label'.i18n(),
+        0 || _ => 'enter-bookcase-name-label'.i18n(),
       };
     });
   }
@@ -108,7 +109,7 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                         _searchController.text.isNotEmpty),
                     child: IconButton(
                       icon: const Icon(Icons.close_rounded),
-                      tooltip: 'Apagar o texto.',
+                      tooltip: 'delete-text-typed-tooltip'.i18n(),
                       onPressed: _clearText,
                     ),
                   ),
@@ -119,8 +120,8 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                           : Icons.search_rounded,
                     ),
                     tooltip: (_searchBarIsVisible)
-                        ? 'Desativar a barra de pesquisa.'
-                        : 'Ativar a barra de pesquisa.',
+                        ? 'disable-search-bar-tooltip'.i18n()
+                        : 'enable-search-bar-tooltip'.i18n(),
                     onPressed: () {
                       if (_searchBarIsVisible) {
                         _clearText();
@@ -142,18 +143,18 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                   dividerColor: colorScheme.primary.withValues(
                     alpha: .6,
                   ),
-                  tabs: const [
+                  tabs: [
                     Tab(
                       key: Key('Bookcases TabView'),
-                      text: 'Estantes',
+                      text: 'bookcases-label'.i18n(),
                     ),
                     Tab(
                       key: Key('Loan TabView'),
-                      text: 'Empréstimos',
+                      text: 'loans-label'.i18n(),
                     ),
                     Tab(
                       key: Key('My Books TabView'),
-                      text: 'Meus Livros',
+                      text: 'my-books-label'.i18n(),
                     ),
                   ],
                   onTap: (selectedTab) {

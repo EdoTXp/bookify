@@ -2,6 +2,7 @@ import 'package:bookify/src/core/helpers/color_brightness/color_brightness_exten
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class HourTimeSelectedWidget extends StatefulWidget {
   final void Function(TimeOfDay startingTime, TimeOfDay endingTime)
@@ -73,8 +74,8 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
           ),
           child: Column(
             children: [
-              const Text(
-                'Defina a melhor hora para as suas leituras:',
+              Text(
+                'hour-time-selected-title'.i18n(),
                 textAlign: TextAlign.center,
                 textScaler: TextScaler.noScaling,
                 style: TextStyle(
@@ -93,7 +94,11 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  '${_startingTime.format(context)} até ${_endingTime.format(context)}',
+                  'select-time'.i18n([
+                    _startingTime.format(context),
+                    _endingTime.format(context),
+                  ]),
+                  //  '${_startingTime.format(context)} até ${_endingTime.format(context)}',
                   textScaler: TextScaler.noScaling,
                   textAlign: TextAlign.center,
                   style: const TextStyle(

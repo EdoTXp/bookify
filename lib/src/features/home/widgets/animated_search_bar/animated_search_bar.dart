@@ -1,5 +1,6 @@
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 enum SearchType {
   title,
@@ -33,11 +34,15 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 
   (String hintText, IconData searchIcon) _updateSearchBar() {
     final searchMap = switch (_searchType) {
-      SearchType.title => {'Digite o Título': Icons.menu_book_rounded},
-      SearchType.author => {'Digite o Autor': Icons.person_rounded},
-      SearchType.category => {'Digite o Gênero': Icons.category_rounded},
-      SearchType.publisher => {'Digite a Editora': Icons.publish_rounded},
-      SearchType.isbn => {'Digite o ISBN': BookifyIcons.isbn},
+      SearchType.title => {'enter-title-label'.i18n(): Icons.menu_book_rounded},
+      SearchType.author => {'enter-author-label'.i18n(): Icons.person_rounded},
+      SearchType.category => {
+          'enter-category-label'.i18n(): Icons.category_rounded
+        },
+      SearchType.publisher => {
+          'enter-publisher-label'.i18n(): Icons.publish_rounded
+        },
+      SearchType.isbn => {'enter-isbn-label'.i18n(): BookifyIcons.isbn},
     };
 
     return (searchMap.keys.first, searchMap.values.first);
@@ -74,7 +79,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               builder: (context, value, _) {
                 if (value.text.isNotEmpty) {
                   return IconButton(
-                    tooltip: 'Apagar o texto digitado.',
+                    tooltip: 'delete-text-typed-tooltip'.i18n(),
                     icon: Icon(
                       Icons.close_rounded,
                       color: selectedColor,
@@ -87,7 +92,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
             ),
             IconButton(
               key: const Key('Search Type Button'),
-              tooltip: 'Altere o tipo de busca.',
+              tooltip: 'change-search-type-tooltip'.i18n(),
               onPressed: () {
                 setState(
                   () =>
@@ -132,10 +137,10 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                         : selectedColor,
                   ),
                 ),
-                segments: const [
+                segments: [
                   ButtonSegment<SearchType>(
                     value: SearchType.title,
-                    tooltip: 'Busca por título.',
+                    tooltip: 'search-by-title-tooltip'.i18n(),
                     icon: Icon(
                       key: Key('Title Search Type Button'),
                       Icons.menu_book_rounded,
@@ -143,7 +148,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.author,
-                    tooltip: 'Busca por autor.',
+                    tooltip: 'search-by-author-tooltip'.i18n(),
                     icon: Icon(
                       key: Key('Author Search Type Button'),
                       Icons.person_rounded,
@@ -151,7 +156,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.category,
-                    tooltip: 'Busca por gênero.',
+                    tooltip: 'search-by-category-tooltip'.i18n(),
                     icon: Icon(
                       key: Key('Category Search Type Button'),
                       Icons.category_rounded,
@@ -159,7 +164,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.publisher,
-                    tooltip: 'Busca por editora.',
+                    tooltip: 'search-by-publisher-tooltip'.i18n(),
                     icon: Icon(
                       key: Key('Publisher Search Type Button'),
                       Icons.publish_rounded,
@@ -167,7 +172,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ),
                   ButtonSegment<SearchType>(
                     value: SearchType.isbn,
-                    tooltip: 'Busca por ISBN.',
+                    tooltip: 'search-by-isbn-tooltip'.i18n(),
                     icon: Icon(
                       key: Key('ISBN Search Type Button'),
                       BookifyIcons.isbn,

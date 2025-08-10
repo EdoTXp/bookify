@@ -1,6 +1,7 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_text_form_field.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class IsbnManuallyTextFormFieldWidget extends StatefulWidget {
   final ValueChanged<String> onTap;
@@ -47,7 +48,7 @@ class _IsbnManuallyTextFormFieldWidgetState
           child: BookifyOutlinedButton.expanded(
             key: const Key('isbnManuallyOutlinedButton'),
             onPressed: _onPressedButton,
-            text: 'Ir para o livro',
+            text: 'go-to-book-label'.i18n(),
             suffixIcon: Icons.arrow_back,
           ),
         ),

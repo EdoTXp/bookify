@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcaseDescriptionWidget extends StatelessWidget {
   final String name;
@@ -18,7 +19,8 @@ class BookcaseDescriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final bookTextQuantity = (booksQuantity == 1) ? 'livro' : 'livros';
+    final bookTextQuantity =
+        (booksQuantity == 1) ? 'book-label'.i18n() : 'books-label'.i18n();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

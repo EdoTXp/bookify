@@ -1,6 +1,7 @@
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class TimeReadingSettings extends StatelessWidget {
   const TimeReadingSettings({super.key});
@@ -17,7 +18,7 @@ class TimeReadingSettings extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'Tempo de leitura',
+            'reading-time-label'.i18n(),
             textScaler: TextScaler.noScaling,
             style: TextStyle(
               fontSize: 14,
@@ -29,7 +30,7 @@ class TimeReadingSettings extends StatelessWidget {
             height: 20,
           ),
           Text(
-            'Faça a leitura de uma página enquanto fazemos o cálculo para descobrir quanto tempo você leva para ler qualquer livro.',
+            'time-to-read-description'.i18n(),
             textScaler: TextScaler.noScaling,
             style: TextStyle(
               fontSize: 12,
@@ -43,7 +44,7 @@ class TimeReadingSettings extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: TextButton(
               child: Text(
-                'Fazer uma nova contagem',
+                'do-recount-button'.i18n(),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,

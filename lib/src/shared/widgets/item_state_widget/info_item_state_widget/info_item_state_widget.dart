@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class InfoItemStateWidget extends StatelessWidget {
   final String message;
@@ -39,7 +40,9 @@ class InfoItemStateWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(imageAssetPath,),
+              Image.asset(
+                imageAssetPath,
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -65,7 +68,7 @@ class InfoItemStateWidget extends StatelessWidget {
               BookifyElevatedButton.expanded(
                 onPressed: onPressed,
                 suffixIcon: Icons.replay_outlined,
-                text: 'Tentar novamente',
+                text: 'try-again-button'.i18n(),
               ),
             ],
           ),

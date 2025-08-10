@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/dtos/contact_dto.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ContactWidget extends StatelessWidget {
   final ContactDto contactDto;
@@ -36,7 +37,7 @@ class ContactWidget extends StatelessWidget {
             ),
           ),
           trailing: Text(
-            contactDto.phoneNumber ?? 'sem número',
+            contactDto.phoneNumber ?? 'no-contact-number-label'.i18n(),
             textScaler: TextScaler.noScaling,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(

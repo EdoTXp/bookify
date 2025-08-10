@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookSelectedRow extends StatelessWidget {
   final VoidCallback onClearPressed;
@@ -19,7 +20,7 @@ class BookSelectedRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Livro selecionado',
+            'book-selected-title'.i18n(),
             style: TextStyle(
               fontSize: 16,
               color: colorScheme.primary,
@@ -28,7 +29,7 @@ class BookSelectedRow extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: onClearPressed,
-            tooltip: 'Desselecionar Livro',
+            tooltip: 'deselect-book-button'.i18n(),
             icon: const Icon(Icons.close_rounded),
           ),
           const SizedBox(
@@ -37,7 +38,7 @@ class BookSelectedRow extends StatelessWidget {
           IconButton(
             key: const Key('Confirm IconButton'),
             onPressed: onConfirmPressed,
-            tooltip: 'Enviar Livro',
+            tooltip: 'send-book-button'.i18n(),
             icon: const Icon(Icons.check_rounded),
           ),
         ],

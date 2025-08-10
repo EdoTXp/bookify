@@ -69,7 +69,6 @@ class SnackbarService {
             ),
             Text(
               message,
-              //overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

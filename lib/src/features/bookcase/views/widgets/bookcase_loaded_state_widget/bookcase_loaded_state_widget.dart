@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/widgets/bookcase_widget/bookcase_widget.dart'
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcaseLoadedStateWidget extends StatefulWidget {
   final List<BookcaseDto> bookcasesDto;
@@ -160,17 +161,16 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
           child: (_isSelectionMode)
               ? SelectedItemRow(
                   itemQuantity: _selectedList.length,
-                  itemLabelSingular: 'Estante',
-                  itemLabelPlural: 'Estantes',
+                  itemLabelSingular: 'bookcase-label'.i18n(),
+                  itemLabelPlural: 'bookcases-label'.i18n(),
                   onSelectedAll: (isSelectedAll) => (isSelectedAll)
                       ? _selectAllItems(bookcasesDto)
                       : _clearSelection(),
                   onPressedDeleteButton: () {
                     ShowDialogService.showAlertDialog(
                       context: context,
-                      title: 'Deletar estantes',
-                      content:
-                          'Clicando em "CONFIRMAR" você removerá as estantes.\nTem Certeza?',
+                      title: 'delete-bookcases-title'.i18n(),
+                      content: 'delete-bookcases-description'.i18n(),
                       confirmButtonFunction: () {
                         Navigator.of(context).pop();
                         widget.onPressedDeleteButton(_selectedList);
@@ -179,7 +179,7 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                   },
                 )
               : AddNewItemTextButton(
-                  label: 'Adicionar uma nova estante',
+                  label: 'create-new-bookcase-button'.i18n(),
                   onPressed: () async => await _onAddNewBookcase(context),
                 ),
         ),

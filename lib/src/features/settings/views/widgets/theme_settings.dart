@@ -3,6 +3,7 @@ import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class ThemeSettings extends StatefulWidget {
   const ThemeSettings({super.key});
@@ -29,7 +30,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Tema Claro',
+                'light-theme-label'.i18n(),
                 overflow: TextOverflow.ellipsis,
                 textScaler: TextScaler.noScaling,
                 style: TextStyle(
@@ -43,7 +44,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
                 onChanged: _onChangedRadioButton,
               ),
               Text(
-                'Tema Escuro',
+                'dark-theme-label'.i18n(),
                 overflow: TextOverflow.ellipsis,
                 textScaler: TextScaler.noScaling,
                 style: TextStyle(
@@ -57,7 +58,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
                 onChanged: _onChangedRadioButton,
               ),
               Text(
-                'Tema Sistema',
+                'system-theme-label'.i18n(),
                 overflow: TextOverflow.ellipsis,
                 textScaler: TextScaler.noScaling,
                 style: TextStyle(
@@ -100,7 +101,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Tema',
+            'theme-label'.i18n(),
             textScaler: TextScaler.noScaling,
             style: TextStyle(
               fontSize: 14,

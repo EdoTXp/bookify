@@ -1,5 +1,6 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class Illustration4Page extends StatelessWidget {
   const Illustration4Page({super.key});
@@ -27,7 +28,7 @@ class Illustration4Page extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Controle o tempo e os momentos de leitura',
+              'onboarding-title4'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: colorScheme.primary,
@@ -37,8 +38,8 @@ class Illustration4Page extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Saiba quanto tempo você levará para ler aquele livro na sua estante calculando o seu tempo de leitura, e utilize o timer de leitura para definir por quanto tempo você pode ler.',
+            Text(
+              'onboarding-description4'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,

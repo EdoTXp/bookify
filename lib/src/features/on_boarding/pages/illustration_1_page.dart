@@ -1,5 +1,6 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class Illustration1Page extends StatelessWidget {
   const Illustration1Page({super.key});
@@ -27,7 +28,7 @@ class Illustration1Page extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Biblioteca com milhares de livros',
+              'onboarding-title1'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: colorScheme.primary,
@@ -37,8 +38,8 @@ class Illustration1Page extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Crie estantes virtuais no app, catalogue e organize seus livros com uma biblioteca com milhares de obras.',
+            Text(
+              'onboarding-description1'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,

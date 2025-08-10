@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ReadingWidget extends StatelessWidget {
   final ReadingDto readingDto;
@@ -135,8 +136,8 @@ class ReadingWidget extends StatelessWidget {
                                 ),
                                 child: Text(
                                   (readingDto.reading.pagesReaded > 0)
-                                      ? 'Continue lendo'
-                                      : 'Iniciar Leitura',
+                                      ? 'continue-reading-label'.i18n()
+                                      : 'start-reading-label'.i18n(),
                                   textScaler: TextScaler.noScaling,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,

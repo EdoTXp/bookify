@@ -10,6 +10,7 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 ///Page where you can show the details of the [BookcaseModel] and the books that are part of it.
 ///
@@ -42,8 +43,8 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
 
   /// Set of menu items that appear in the popup menu for bookcase options.
   final _popupMenuItemsSet = {
-    'Editar Estante',
-    'Apagar Estante',
+    'edit-bookcase-title'.i18n(),
+    'remove-bookcase-title'.i18n(),
   };
 
   @override
@@ -68,7 +69,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
         const CenterCircularProgressIndicator(),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
           key: const Key('Bookcase Detail Books Empty State'),
-          label: 'Adicionar novos Livros',
+          label: 'add-new-books-button'.i18n(),
           onTap: () async => await _addNewBooksBottomSheet(),
         ),
       BookcaseDetailBooksLoadedState(:final books) =>
@@ -131,7 +132,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
 
       SnackbarService.showSnackBar(
         context,
-        'Estante removida com sucesso.\nAguarde até voltar à página anterior',
+        'bookcase-successfully-removed-snackbar'.i18n(),
         SnackBarType.success,
       );
 
@@ -168,9 +169,8 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       // Ask the user for confirmation before deleting the bookcase
       await ShowDialogService.showAlertDialog(
         context: context,
-        title: 'Deletar a estante',
-        content:
-            'Clicando em "CONFIRMAR" você removerá a estante ${_actualBookcase.name}.\nTem Certeza?',
+        title: 'delete-bookcase-title'.i18n(),
+        content: 'delete-bookcase-description'.i18n([_actualBookcase.name]),
         confirmButtonFunction: () {
           _bloc.add(
             DeletedBookcaseEvent(bookcaseId: _actualBookcase.id!),

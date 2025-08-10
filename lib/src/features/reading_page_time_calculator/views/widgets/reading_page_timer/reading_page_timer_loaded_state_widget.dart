@@ -1,7 +1,8 @@
-import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/reading_page_text_widget.dart';
+import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/book_ia_text_widget.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/timer_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class ReadingPageTimerLoadedStateWidget extends StatefulWidget {
@@ -64,7 +65,7 @@ class _ReadingPageTimerLoadedStateWidgetState
                 ),
                 if (!_stopWatchIsRunning)
                   IconButton(
-                    tooltip: 'Fechar a página',
+                    tooltip: 'close-page-button-tooltip'.i18n(),
                     onPressed: Navigator.of(context).pop,
                     icon: Icon(
                       Icons.close_rounded,
@@ -73,7 +74,7 @@ class _ReadingPageTimerLoadedStateWidgetState
                   )
                 else
                   IconButton(
-                    tooltip: 'Resetar o cronômetro',
+                    tooltip: 'reset-timer-button-tooltip'.i18n(),
                     onPressed: () {
                       _stopWatchTimer.onResetTimer();
                       setState(() {
@@ -91,7 +92,7 @@ class _ReadingPageTimerLoadedStateWidgetState
               height: 10,
             ),
             const Expanded(
-              child: ReadingPageTextWidget(),
+              child: BookIATextWidget(),
             ),
             const SizedBox(
               height: 10,
@@ -100,7 +101,9 @@ class _ReadingPageTimerLoadedStateWidgetState
               children: [
                 Flexible(
                   child: BookifyOutlinedButton.expanded(
-                    text: _stopWatchIsRunning ? 'Parar' : 'Iniciar',
+                    text: _stopWatchIsRunning
+                        ? 'stop-timer-button'.i18n()
+                        : 'start-timer-button'.i18n(),
                     suffixIcon: _stopWatchTimer.isRunning
                         ? Icons.pause_rounded
                         : Icons.play_arrow_rounded,
@@ -129,7 +132,7 @@ class _ReadingPageTimerLoadedStateWidgetState
                     if (seconds.data! > 0) {
                       return Flexible(
                         child: BookifyElevatedButton.expanded(
-                          text: 'terminei',
+                          text: 'finish-timer-button'.i18n(),
                           suffixIcon: Icons.check_rounded,
                           onPressed: () {
                             _stopWatchTimer.onStopTimer();

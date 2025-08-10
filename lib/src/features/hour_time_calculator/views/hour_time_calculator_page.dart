@@ -26,15 +26,15 @@ class _HourTimeCalculatorPageState extends State<HourTimeCalculatorPage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        body: !_canProgrammingHour
-            ? ReadingHourInformation(
+        body: _canProgrammingHour
+            ? const ProgrammingReadingHour()
+            : ReadingHourInformation(
                 onPressedProgramming: () {
                   setState(() {
                     _canProgrammingHour = true;
                   });
                 },
-              )
-            : const ProgrammingReadingHour(),
+              ),
       ),
     );
   }

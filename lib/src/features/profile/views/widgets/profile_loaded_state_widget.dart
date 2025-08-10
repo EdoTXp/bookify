@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 import 'widgets.dart';
 
@@ -70,7 +71,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             height: 40,
           ),
           TextIconButton(
-            label: 'Configurações',
+            label: 'settings-label'.i18n(),
             iconData: Icons.settings,
             onPressed: () async {
               await Navigator.pushNamed(
@@ -80,7 +81,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             },
           ),
           TextIconButton(
-            label: 'Notificações',
+            label: 'notifications-label'.i18n(),
             iconData: Icons.notifications_outlined,
             onPressed: () async {
               await Navigator.pushNamed(
@@ -90,7 +91,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             },
           ),
           TextIconButton(
-            label: 'Sobre',
+            label: 'about-label'.i18n(),
             iconData: Icons.info_outline_rounded,
             onPressed: () async {
               await Navigator.pushNamed(
@@ -103,14 +104,13 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             height: 30,
           ),
           TextIconButton(
-            label: 'Sair',
+            label: 'exit-label'.i18n(),
             iconData: Icons.exit_to_app_outlined,
             onPressed: () async {
               await ShowDialogService.showAlertDialog(
                 context: context,
-                title: 'Fazer o logout',
-                content:
-                    'Clicando em CONFIRMAR, todas as configurações serão apagadas.\nTem certeza?',
+                title: 'logout-title'.i18n(),
+                content: 'logout-description'.i18n(),
                 confirmButtonFunction: () {
                   onPressedLogOut();
                   Navigator.of(context).pop();

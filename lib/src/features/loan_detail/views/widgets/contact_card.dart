@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:bookify/src/shared/widgets/contact_information_widget/contact_information_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ContactCard extends StatelessWidget {
   final String? name;
@@ -11,7 +12,7 @@ class ContactCard extends StatelessWidget {
 
   const ContactCard({
     super.key,
-    this.name = 'sem Nome',
+    this.name,
     this.photo,
     this.phone,
   });
@@ -19,7 +20,7 @@ class ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final contactName = name ?? 'sem Nome';
+    final contactName = name ?? 'no-name-label'.i18n();
     final mediaQueryWidth = MediaQuery.sizeOf(context).width;
 
     return Container(
@@ -50,7 +51,7 @@ class ContactCard extends StatelessWidget {
                   children: [
                     ContactInformationWidget(
                       iconData: Icons.person,
-                      title: 'Nome',
+                      title: 'name-label'.i18n(),
                       content: contactName,
                       width: mediaQueryWidth,
                     ),
@@ -59,8 +60,8 @@ class ContactCard extends StatelessWidget {
                     ),
                     ContactInformationWidget(
                       iconData: Icons.phone_android_rounded,
-                      title: 'Número',
-                      content: phone ?? 'Sem número',
+                      title: 'contact-number-label'.i18n(),
+                      content: phone ?? 'no-contact-number-label'.i18n(),
                       width: mediaQueryWidth,
                     ),
                   ],

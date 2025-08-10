@@ -5,6 +5,7 @@ import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart'
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:localization/localization.dart';
 
 class OnBoardingPage extends StatefulWidget {
   /// The Route Name = '/on_boarding'
@@ -79,7 +80,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 alignment: Alignment.topRight,
                 child: TextButton(
                   child: Text(
-                    'Pular',
+                    'skip-button'.i18n(),
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   onPressed: () async => await _navigateToConfigurationsPage(),
@@ -113,7 +114,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       child: BookifyOutlinedButton.expanded(
                         onPressed: _goToPrecedentIllustration,
                         color: colorScheme.primary,
-                        text: 'Voltar',
+                        text: 'back-button'.i18n(),
                         suffixIcon: Icons.arrow_forward_rounded,
                       ),
                     ),
@@ -127,7 +128,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       onPressed: () async =>
                           await _goToForwardOrFinalizeIllustration(),
                       color: colorScheme.primary,
-                      text: _currentPage < 3 ? 'Avançar' : 'Finalizar',
+                      text: _currentPage < 3
+                          ? 'next-button'.i18n()
+                          : 'finish-button'.i18n(),
                       suffixIcon: Icons.arrow_back_rounded,
                     ),
                   ),

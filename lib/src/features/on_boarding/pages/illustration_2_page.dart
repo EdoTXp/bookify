@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 import '../../../shared/constants/images/bookify_images.dart';
 
@@ -28,7 +29,7 @@ class Illustration2Page extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Escaneie seus livros com facilidade',
+              'onboarding-title2'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: colorScheme.primary,
@@ -38,8 +39,8 @@ class Illustration2Page extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Use a câmera para escanear o código de barras, QR Code ou o número do ISBN dos seus livros e os adicione na sua estante.',
+            Text(
+              'onboarding-description2'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,

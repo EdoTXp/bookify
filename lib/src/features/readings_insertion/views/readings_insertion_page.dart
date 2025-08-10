@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
 
 class ReadingsInsertionPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
       case ReadingsInsertionLoadingState():
         SnackbarService.showSnackBar(
           context,
-          'Aguarde um instante...',
+          'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
 
@@ -69,7 +70,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
       case ReadingsInsertionInsertedState():
         SnackbarService.showSnackBar(
           context,
-          'Leitura adicionada com sucesso',
+          'reading-successfully-added-snackbar'.i18n(),
           SnackBarType.success,
         );
 
@@ -137,8 +138,10 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                     ),
                     Text(
                       (book.pageCount > 0)
-                          ? 'Páginas para ler: ${book.pageCount}'
-                          : 'Este livro não foram informadas as páginas.\nInforme-as no campo abaixo.',
+                          ? 'pages-to-read-label'.i18n([
+                              book.pageCount.toString(),
+                            ])
+                          : 'no-pages-count-found'.i18n(),
                       style: const TextStyle(fontSize: 14),
                     ),
                     const SizedBox(
@@ -158,26 +161,26 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                           validator: Validatorless.multiple(
                             [
                               Validatorless.required(
-                                'Esse campo é obrigatório',
+                                'this-field-is-required'.i18n(),
                               ),
                               Validatorless.numbersBetweenInterval(
                                 1,
                                 2000,
-                                'Informe um números de páginas entre 1 a 2000',
+                                'enter-pages-between-1-and-2000'.i18n(),
                               )
                             ],
                           ),
                           onTapOutside: (_) => context.unfocus(),
                           style: const TextStyle(fontSize: 14),
                           decoration: InputDecoration(
-                            hintText: 'Informe o número de páginas do livro',
+                            hintText: 'indicate-number-of-pages-label'.i18n(),
                             hintStyle: TextStyle(
                               color: Colors.grey.withValues(
                                 alpha: .75,
                               ),
                             ),
-                            label: const Text(
-                              'Páginas',
+                            label: Text(
+                              'pages-title'.i18n(),
                             ),
                           ),
                         ),
@@ -188,7 +191,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                     ],
                     BookifyOutlinedButton.expanded(
                       key: const Key('Add Reading Button'),
-                      text: 'Adicionar Leitura',
+                      text: 'add-reading-button'.i18n(),
                       suffixIcon: Icons.auto_stories_rounded,
                       onPressed: () {
                         if (_formKey != null &&

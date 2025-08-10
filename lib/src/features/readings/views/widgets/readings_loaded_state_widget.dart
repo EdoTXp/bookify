@@ -3,6 +3,7 @@ import 'package:bookify/src/features/readings_detail/views/readings_detail_page.
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ReadingsLoadedStateWidget extends StatelessWidget {
   final List<ReadingDto> readingsDto;
@@ -23,7 +24,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: AddNewItemTextButton(
-            label: 'Iniciar uma leitura',
+            label: 'start-new-reading-title'.i18n(),
             onPressed: onNewReading,
           ),
         ),

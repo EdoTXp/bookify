@@ -1,5 +1,6 @@
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class Illustration3Page extends StatelessWidget {
   const Illustration3Page({super.key});
@@ -27,7 +28,7 @@ class Illustration3Page extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Gerencie os seus livros emprestados ',
+              'onboarding-title3'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: colorScheme.primary,
@@ -37,8 +38,8 @@ class Illustration3Page extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Empreste seus livros com segurança criando o contato, data para devolução e receba lembretes sobre o empréstimo.',
+            Text(
+              'onboarding-description3'.i18n(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,

@@ -5,6 +5,7 @@ import 'package:bookify/src/features/hour_time_calculator/views/widgets/programm
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ProgrammingHourLoadingStateWidget extends StatefulWidget {
   final void Function(UserHourTimeModel userHourTimeModel) onSelectedUserModel;
@@ -105,12 +106,12 @@ class _ProgrammingHourLoadingStateWidgetState
                     ),
                     const Spacer(),
                     BookifyOutlinedButton.expanded(
-                      text: "Remover notificação atual de leitura",
+                      text: 'remove-reading-time-notification-button'.i18n(),
                       suffixIcon: Icons.notifications_off_rounded,
                       onPressed: widget.onRemoveReadingNotification,
                     ),
                     BookifyElevatedButton.expanded(
-                      text: 'Finalizar',
+                      text: 'finish-button'.i18n(),
                       suffixIcon: Icons.check_rounded,
                       onPressed: () {
                         widget.onSelectedUserModel(userHourTimeModel);

@@ -4,6 +4,7 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage>
       BookEmptyState() => Center(
           key: const Key('BookEmptyStateWidget'),
           child: InfoItemStateWidget.withNotFoundState(
-            message: 'Não foi encontrado nenhum livro com esses termos.',
+            message: 'no-books-found-with-terms'.i18n(),
             onPressed: _refreshPage,
           ),
         ),

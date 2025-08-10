@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/helpers/local_decimal_format/local_decimal_format_extension.dart';
 import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookRating extends StatelessWidget {
   final double averageRating;
@@ -31,7 +32,7 @@ class BookRating extends StatelessWidget {
           averageRating: averageRating,
         ),
         Text(
-          'Total: $ratingsCount',
+          'total-ratings'.i18n([ratingsCount.toString()]),
           textScaler: TextScaler.noScaling,
           style: TextStyle(
             color: colorScheme.primary,

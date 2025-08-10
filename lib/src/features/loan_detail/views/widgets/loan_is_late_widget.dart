@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class LoanIsLateWidget extends StatelessWidget {
   const LoanIsLateWidget({super.key});
@@ -14,18 +15,18 @@ class LoanIsLateWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(22),
       ),
       padding: const EdgeInsets.all(8.0),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.warning_amber_outlined,
             color: Colors.amber,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Text(
-            'Empréstimo atrasado!',
+            'late-loan-label'.i18n(),
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,

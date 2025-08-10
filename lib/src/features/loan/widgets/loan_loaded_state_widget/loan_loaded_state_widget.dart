@@ -4,6 +4,7 @@ import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.da
 import 'package:bookify/src/core/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class LoanLoadedStateWidget extends StatelessWidget {
   final List<LoanDto> loansDto;
@@ -22,7 +23,7 @@ class LoanLoadedStateWidget extends StatelessWidget {
         SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: AddNewItemTextButton(
-            label: 'Emprestar um livro',
+            label: 'loan-book-label'.i18n(),
             onPressed: () async {
               final loanInserted = await Navigator.pushNamed(
                 context,

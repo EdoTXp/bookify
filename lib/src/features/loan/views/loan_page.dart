@@ -6,6 +6,7 @@ import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_wid
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localization/localization.dart';
 
 class LoanPage extends StatefulWidget {
   final String? searchQuery;
@@ -58,7 +59,7 @@ class _LoanPageState extends State<LoanPage> {
       LoanEmptyState() => Center(
           child: ItemEmptyStateWidget(
             key: const Key('Loan Empty State'),
-            label: 'Criar um novo empréstimo de um livro',
+            label: 'create-new-loan-button'.i18n(),
             onTap: () async {
               final loanInserted = await Navigator.pushNamed(
                 context,
@@ -77,8 +78,7 @@ class _LoanPageState extends State<LoanPage> {
           refreshPage: _refreshPage,
         ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message:
-              'Nenhum Empréstimo encontrado com esses termos.\nVerifique se foi digitado o título do livro corretamente.',
+          message: 'no-loans-found-with-terms'.i18n(),
           onPressed: _refreshPage,
         ),
       LoanErrorState(:final errorMessage) => Center(

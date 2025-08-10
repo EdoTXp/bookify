@@ -8,6 +8,7 @@ import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart'
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class ReadingsTimerWidget extends StatefulWidget {
   final ReadingDto readingDto;
@@ -131,7 +132,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
               ),
               TextButton(
                 child: Text(
-                  'Editar timer',
+                  'edit-timer-button'.i18n(),
                   style: TextStyle(
                     color: colorScheme.secondary,
                     decoration: TextDecoration.underline,
@@ -178,7 +179,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: _timerIsEnded
                     ? BookifyElevatedButton.expanded(
-                        text: 'Começar o timer',
+                        text: 'start-timer-label'.i18n(),
                         suffixIcon: Icons.timer_rounded,
                         onPressed: _startTimer,
                       )
@@ -186,7 +187,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                         children: [
                           Flexible(
                             child: BookifyOutlinedButton.expanded(
-                              text: 'Parar',
+                              text: 'stop-timer-button'.i18n(),
                               suffixIcon: Icons.stop_rounded,
                               onPressed: () async => await _stopTimer(),
                             ),
@@ -196,7 +197,9 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                           ),
                           Flexible(
                             child: BookifyElevatedButton.expanded(
-                              text: _timerIsStarted ? 'Pausar' : 'Continuar',
+                              text: _timerIsStarted
+                                  ? 'pause-button'.i18n()
+                                  : 'continue-button'.i18n(),
                               suffixIcon: _timerIsStarted
                                   ? Icons.pause_rounded
                                   : Icons.play_arrow_rounded,
@@ -212,7 +215,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: BookifyOutlinedButton.expanded(
                     key: const Key('End Timer Button'),
-                    text: 'Concluir e voltar',
+                    text: 'finish-and-return-button'.i18n(),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),

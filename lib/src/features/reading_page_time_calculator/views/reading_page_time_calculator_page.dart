@@ -28,15 +28,15 @@ class _ReadingPageTimeCalculatorPageState
     return PopScope(
       canPop: false,
       child: Scaffold(
-        body: !_canCalculateReadingPage
-            ? ReadingPageInformationWidget(
+        body: _canCalculateReadingPage
+            ? const ReadingPageTimerWidget()
+            : ReadingPageInformationWidget(
                 onPressedCalculated: () {
                   setState(() {
                     _canCalculateReadingPage = true;
                   });
                 },
-              )
-            : const ReadingPageTimerWidget(),
+              ),
       ),
     );
   }

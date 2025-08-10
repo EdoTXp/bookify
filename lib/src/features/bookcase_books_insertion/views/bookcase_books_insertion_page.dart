@@ -6,6 +6,7 @@ import 'package:bookify/src/features/bookcase_books_insertion/bloc/bookcase_book
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/widgets.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookcaseBooksInsertionPage extends StatefulWidget {
   static const routeName = '/bookcase_book_insertion';
@@ -85,7 +86,7 @@ class _BookcaseBooksInsertionPageState
 
       SnackbarService.showSnackBar(
         context,
-        'Livro adicionado. Aguarde até voltar à página anterior.',
+        'books-added-successfully-snackbar'.i18n(),
         SnackBarType.success,
       );
 
@@ -119,8 +120,8 @@ class _BookcaseBooksInsertionPageState
                 return Scaffold(
                   appBar: AppBar(
                     centerTitle: true,
-                    title: const Text(
-                      'Selecione os livros',
+                    title: Text(
+                      'select-books-title'.i18n(),
                       style: TextStyle(fontSize: 16),
                     ),
                   ),

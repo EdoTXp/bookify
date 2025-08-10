@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/contact_information_widget/contact_information_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookCard extends StatelessWidget {
   final String bookUrl;
@@ -50,7 +51,7 @@ class BookCard extends StatelessWidget {
                   children: [
                     ContactInformationWidget(
                       iconData: Icons.book_rounded,
-                      title: 'Título',
+                      title: 'title-label'.i18n(),
                       content: bookTitle,
                       width: mediaQueryWidth,
                     ),
@@ -59,7 +60,7 @@ class BookCard extends StatelessWidget {
                     ),
                     ContactInformationWidget(
                       iconData: Icons.description_rounded,
-                      title: 'Observação',
+                      title: 'observation-label'.i18n(),
                       content: observation ?? '...',
                       width: mediaQueryWidth,
                     ),
@@ -71,12 +72,12 @@ class BookCard extends StatelessWidget {
                       children: [
                         ContactInformationWidget(
                           iconData: Icons.calendar_month_rounded,
-                          title: 'Empréstimo',
+                          title: 'loan-label'.i18n(),
                           content: loanDate,
                         ),
                         ContactInformationWidget(
                           iconData: Icons.calendar_month_rounded,
-                          title: 'Devolução',
+                          title: 'devolution-date-label'.i18n(),
                           content: devolutionDate,
                         ),
                       ],
