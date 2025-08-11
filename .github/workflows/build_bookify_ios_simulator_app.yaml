@@ -11,24 +11,30 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
+    
       #1 Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      #2 Setup Flutter
+      #2 Setup Xcode
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15'
+
+      #3 Setup Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
           flutter-version: "3.32.8" 
 
-      #3 Install Dependencies
+      #4 Install Dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      #4 Setup Firebase Config per iOS
+      #5 Setup Firebase Config per iOS
       - name: Setup Firebase Config
         run: |
           echo "${{ secrets.IOS_GOOGLE_SERVICES_PLIST }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
@@ -37,31 +43,31 @@ jobs:
           echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase_options.dart
 
 
-      #5 Analyze and Test
+      #6 Analyze and Test
       - name: Analyze and Test
         run: |
           flutter analyze
           flutter test
 
-      #6 Building iOS App for Simulator
+      #7 Building iOS App for Simulator
       - name: Build iOS App (Simulator)
         run: flutter build ios --release --no-codesign
 
-      #7 Compress the .app file
+      #8 Compress the .app file
       - name: Compress .app file
         run: |
           cd build/ios/iphonesimulator
           zip -r ../../../Bookify-iOS-Simulator.zip Runner.app
           cd ../../../
       
-      #8 Extract Version
+      #9 Extract Version
       - name: Extract version from pubspec.yaml
         id: extract_version
         run: |
           version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
           echo "VERSION=$version" >> $GITHUB_ENV
 
-      #9 Check if Tag Exists
+      #10 Check if Tag Exists
       - name: Check if Tag Exists
         id: check_tag
         run: |
@@ -71,7 +77,7 @@ jobs:
             echo "TAG_EXISTS=false" >> $GITHUB_ENV
           fi
 
-      #10 Modify Tag if it Exists
+      #11 Modify Tag if it Exists
       - name: Modify Tag
         if: env.TAG_EXISTS == 'true'
         id: modify_tag
@@ -79,7 +85,7 @@ jobs:
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
-      #11 Create or Update Release
+      #12 Create or Update Release
       - name: Create or Update Release
         uses: ncipollo/release-action@v1
         with:
