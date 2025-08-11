@@ -1,0 +1,89 @@
+name: Build Bookify iOS Simulator App
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      #1 Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      #2 Setup Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: "3.32.8" 
+
+      #3 Install Dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      #4 Setup Firebase Config per iOS
+      - name: Setup Firebase Config
+        run: |
+          echo "${{ secrets.IOS_GOOGLE_SERVICES_PLIST }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
+          echo "${{ secrets.SECRETS_XCCONFIG }}" | base64 --decode > ios/Flutter/Secrets.xcconfig
+          echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > firebase.json
+          echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase_options.dart
+
+
+      #5 Analyze and Test
+      - name: Analyze and Test
+        run: |
+          flutter analyze
+          flutter test
+
+      #6 Building iOS App for Simulator
+      - name: Build iOS App (Simulator)
+        run: flutter build ios --release --no-codesign
+
+      #7 Compress the .app file
+      - name: Compress .app file
+        run: |
+          cd build/ios/iphonesimulator
+          zip -r ../../../Bookify-iOS-Simulator.zip Runner.app
+          cd ../../../
+      
+      #8 Extract Version
+      - name: Extract version from pubspec.yaml
+        id: extract_version
+        run: |
+          version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "VERSION=$version" >> $GITHUB_ENV
+
+      #9 Check if Tag Exists
+      - name: Check if Tag Exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "TAG_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "TAG_EXISTS=false" >> $GITHUB_ENV
+          fi
+
+      #10 Modify Tag if it Exists
+      - name: Modify Tag
+        if: env.TAG_EXISTS == 'true'
+        id: modify_tag
+        run: |
+          new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
+          echo "VERSION=$new_version" >> $GITHUB_ENV
+
+      #11 Create or Update Release
+      - name: Create or Update Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "Bookify-iOS-Simulator.zip"
+          tag: v${{ env.VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
