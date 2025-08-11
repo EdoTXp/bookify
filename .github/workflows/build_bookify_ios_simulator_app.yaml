@@ -51,7 +51,7 @@ jobs:
 
       #7 Building iOS App for Simulator
       - name: Build iOS App (Simulator)
-        run: flutter build ios --simulator --profile --no-codesign
+        run: flutter build ios --simulator --no-codesign
 
       #8 Compress the .app file
       - name: Compress .app file
