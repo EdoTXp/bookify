@@ -59,7 +59,7 @@ class _BooksPickerPageState extends State<BooksPickerPage> {
                   _setTitle(value);
                 });
               },
-              activeColor: colorScheme.secondary,
+              activeThumbColor: colorScheme.secondary,
               inactiveThumbColor: colorScheme.primary,
               inactiveTrackColor: colorScheme.primary.withValues(
                 alpha: .5,

@@ -292,7 +292,7 @@ void main() {
   );
 
   blocTest(
-    "Test RemovedNotificationHourTimeEvent  work when throw Generic Exception",
+    'Test RemovedNotificationHourTimeEvent  work when throw Generic Exception',
     build: () => hourTimeCalculatorBloc,
     setUp: () => when(
       () => notificationsService.cancelNotificationById(

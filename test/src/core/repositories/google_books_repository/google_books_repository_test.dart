@@ -21,7 +21,7 @@ void main() {
       when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
                 data: authorJsonBooksMock, // books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ""))
+                requestOptions: RequestOptions(path: ''))
             .data;
       });
 
@@ -39,7 +39,7 @@ void main() {
       when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: isbnJsonBookMock, //  book of file books_json_mock.dart
-          requestOptions: RequestOptions(path: ""),
+          requestOptions: RequestOptions(path: ''),
         ).data;
       });
 
@@ -51,7 +51,7 @@ void main() {
       when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: publisherJsonBooksMock, // books of file books_json_mock.dart
-          requestOptions: RequestOptions(path: ""),
+          requestOptions: RequestOptions(path: ''),
         ).data;
       });
 
@@ -68,7 +68,7 @@ void main() {
         return Response(
           data: allBooksMock, // books of file books_json_mock.dart
 
-          requestOptions: RequestOptions(path: ""),
+          requestOptions: RequestOptions(path: ''),
         ).data;
       });
 
@@ -86,7 +86,7 @@ void main() {
       when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
           data: titleBooksMock, // books of file books_json_mock.dart
-          requestOptions: RequestOptions(path: ""),
+          requestOptions: RequestOptions(path: ''),
         ).data;
       });
 
@@ -101,7 +101,7 @@ void main() {
       when(() => restClient.get(any())).thenAnswer((_) async {
         return Response(
                 data: categoryBooksMock, //  books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ""))
+                requestOptions: RequestOptions(path: ''))
             .data;
       });
 

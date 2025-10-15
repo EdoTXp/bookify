@@ -55,7 +55,7 @@ class GoogleBooksRepositoryImpl implements GoogleBooksRepository {
 
   @override
   Future<List<BookModel>> getAllBooks() async {
-    const url = '*$_urlParams';
+    const url = '_$_urlParams';
     final books = await _fetch(url);
     return books;
   }

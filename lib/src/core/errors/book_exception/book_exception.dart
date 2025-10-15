@@ -5,7 +5,7 @@ class BookException implements Exception {
 
   @override
   String toString() {
-    return "Book Exception: $message";
+    return 'Book Exception: $message';
   }
 }
 
@@ -14,6 +14,6 @@ class BookNotFoundException extends BookException {
 
   @override
   String toString() {
-    return "BookNotFoundException: $message";
+    return 'BookNotFoundException: $message';
   }
 }

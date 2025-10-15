@@ -45,7 +45,7 @@ class NotificationsServiceImpl implements NotificationsService {
   Future<void> _setupTimezone() async {
     tz.initializeTimeZones();
     final timezoneName = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timezoneName));
+    tz.setLocalLocation(tz.getLocation(timezoneName.identifier));
   }
 
   Future<void> _initializeNotifications() async {

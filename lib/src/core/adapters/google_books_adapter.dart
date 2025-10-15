@@ -12,13 +12,14 @@ class GoogleBooksAdapter {
       id: map['id'],
       title: map['volumeInfo']['title'],
       authors:
-          List<String>.from(map['volumeInfo']['authors'] ?? ['Nenhum Autor'])
+          List<String>.from(map['volumeInfo']['authors'] ?? ['Unknown Author'])
               .map((author) => AuthorModel(name: author))
               .toList(),
-      publisher: map['volumeInfo']['publisher'] ?? 'Nenhuma Editora',
-      description: map['volumeInfo']['description'] ?? 'Não contém descrição.',
+      publisher: map['volumeInfo']['publisher'] ?? 'Unknown Publisher',
+      description:
+          map['volumeInfo']['description'] ?? 'No description available',
       categories: List<String>.from(
-              map['volumeInfo']['categories'] ?? ['Nenhum Gênero'])
+              map['volumeInfo']['categories'] ?? ['Unknown category'])
           .map((category) => CategoryModel(name: category))
           .toList(),
       pageCount: map['volumeInfo']['pageCount'] ?? 0,

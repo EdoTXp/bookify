@@ -38,7 +38,7 @@ class AppleAuthStrategy implements AuthStrategy {
         nonce: nonce,
       );
 
-      final oauthCredential = OAuthProvider("apple.com").credential(
+      final oauthCredential = OAuthProvider('apple.com').credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );

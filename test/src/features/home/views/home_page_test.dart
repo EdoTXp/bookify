@@ -32,7 +32,7 @@ void main() {
 
       expect(
         find.byKey(const Key('AnimatedSearchBar')),
-        findsNothing,
+        findsOneWidget,
       );
     });
 
@@ -47,13 +47,13 @@ void main() {
       );
 
       expect(
-        find.text("no-books-found-with-terms"),
+        find.text('no-books-found-with-terms'),
         findsOne,
       );
 
       expect(
         find.byKey(const Key('AnimatedSearchBar')),
-        findsNothing,
+        findsOneWidget,
       );
     });
 
@@ -108,11 +108,11 @@ void main() {
         findsOneWidget,
       );
 
-      expect(find.text("errorMessage"), findsOne);
+      expect(find.text('errorMessage'), findsOne);
 
       expect(
         find.byKey(const Key('AnimatedSearchBar')),
-        findsNothing,
+        findsOneWidget,
       );
     });
   });

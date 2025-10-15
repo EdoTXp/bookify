@@ -8,7 +8,7 @@ class TimerWidget extends StatelessWidget {
   String _formatTimeStringMinutesSeconds(int seconds) {
     // Handle zero or negative seconds
     if (seconds <= 0) {
-      return "00m:00s";
+      return '00m:00s';
     }
 
     // Convert seconds into minutes and remaining seconds

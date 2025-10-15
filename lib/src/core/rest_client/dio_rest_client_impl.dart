@@ -27,9 +27,8 @@ class DioRestClientImpl implements RestClient {
       } else {
         throw BookException(response.statusMessage!);
       }
-    } on DioException {
-      throw const SocketException(
-          "Impossível se conectar com o servidor.\nVerifique se está conectado a rede WI-FI ou aos Dados Móveis.");
+    } on DioException catch (e) {
+      throw SocketException(e.message ?? e.toString());
     } catch (e) {
       throw Exception(e.toString());
     }

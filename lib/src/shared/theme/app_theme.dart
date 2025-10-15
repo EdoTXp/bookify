@@ -31,7 +31,7 @@ final appLightTheme = ThemeData(
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
-  bottomAppBarTheme: _bottomAppBarTheme.copyWith(
+  bottomAppBarTheme: _bottomAppBarThemeData.copyWith(
     color: AppColor.bookifyPrimaryColor.lighten(.35),
   ),
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
@@ -73,7 +73,7 @@ final appDarkTheme = ThemeData(
   elevatedButtonTheme: _elevatedButtonTheme,
   outlinedButtonTheme: _outlinedButtonTheme,
   inputDecorationTheme: _inputDecorationTheme,
-  bottomAppBarTheme: _bottomAppBarTheme.copyWith(
+  bottomAppBarTheme: _bottomAppBarThemeData.copyWith(
     color: AppColor.bookifyPrimaryColor.darken(.6),
   ),
   floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
@@ -416,7 +416,7 @@ final _inputDecorationTheme = InputDecorationTheme(
   ),
 );
 
-const _bottomAppBarTheme = BottomAppBarTheme();
+const _bottomAppBarThemeData = BottomAppBarThemeData();
 
 const _floatingActionButtonTheme = FloatingActionButtonThemeData(
   splashColor: Colors.transparent,

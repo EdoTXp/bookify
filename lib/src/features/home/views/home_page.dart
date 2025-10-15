@@ -13,16 +13,21 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin<HomePage> {
+class _HomePageState extends State<HomePage> {
   late final BookBloc _bookBloc;
   late final TextEditingController _searchEC;
+  late bool _isSearchBarVisible;
 
   @override
   void initState() {
     super.initState();
     _searchEC = TextEditingController();
-    _bookBloc = context.read<BookBloc>()..add(GotAllBooksEvent());
+    _isSearchBarVisible = false;
+    _bookBloc = context.read<BookBloc>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _bookBloc.add(GotAllBooksEvent());
+    });
   }
 
   @override
@@ -30,9 +35,6 @@ class _HomePageState extends State<HomePage>
     _searchEC.dispose();
     super.dispose();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   void _refreshPage() {
     _bookBloc.add(GotAllBooksEvent());
@@ -89,38 +91,40 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-    return RefreshIndicator.adaptive(
-      onRefresh: () async => _refreshPage(),
-      color: Theme.of(context).colorScheme.secondary,
-      child: BlocBuilder<BookBloc, BookState>(
-        bloc: _bookBloc,
-        builder: (BuildContext context, state) {
-          return Column(
-            children: [
-              if (state is BooksLoadedState)
-                SafeArea(
-                  bottom: false,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 16.0,
-                      right: 16.0,
-                      left: 16.0,
-                    ),
-                    child: AnimatedSearchBar(
-                      key: const Key('AnimatedSearchBar'),
-                      searchEC: _searchEC,
-                      onSubmitted: _onSubmittedSearch,
-                    ),
-                  ),
+    return SafeArea(
+      bottom: false,
+      child: RefreshIndicator.adaptive(
+        onRefresh: () async => _refreshPage(),
+        color: Theme.of(context).colorScheme.secondary,
+        child: Column(
+          children: [
+            AnimatedOpacity(
+              opacity: _isSearchBarVisible ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 16.0,
+                  right: 16.0,
+                  left: 16.0,
                 ),
-              Expanded(
-                child: _getBookStateWidget(context, state),
+                child: AnimatedSearchBar(
+                  key: const Key('AnimatedSearchBar'),
+                  searchEC: _searchEC,
+                  onSubmitted: _onSubmittedSearch,
+                ),
               ),
-            ],
-          );
-        },
+            ),
+            Expanded(
+              child: BlocConsumer<BookBloc, BookState>(
+                bloc: _bookBloc,
+                listener: (_, state) => setState(() {
+                  _isSearchBarVisible = state is BooksLoadedState;
+                }),
+                builder: _getBookStateWidget,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

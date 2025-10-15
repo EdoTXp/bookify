@@ -21,7 +21,7 @@ void main() {
     });
 
     test('test if a 88-515-2159-X is a valid isbn', () {
-      String str2 = "88-515-2159-X";
+      String str2 = '88-515-2159-X';
 
       String? isbn = verifier.verifyIsbn(str2);
 
@@ -29,7 +29,7 @@ void main() {
     });
 
     test('test if a 9788576086475 is a valid isbn', () {
-      String str3 = "9788576086475";
+      String str3 = '9788576086475';
 
       String? isbn = verifier.verifyIsbn(str3);
 
@@ -39,7 +39,7 @@ void main() {
 
   group('invalid ISBN ||', () {
     test('test if a 978-1-12345-909-4 2 is a invalid isbn', () {
-      String str4 = "978-1-12345-909-4 2";
+      String str4 = '978-1-12345-909-4 2';
 
       String? isbn = verifier.verifyIsbn(str4);
 
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('test if a ISBN446877428FCI 2 is a invalid isbn', () {
-      String str5 = "ISBN446877428FCI";
+      String str5 = 'ISBN446877428FCI';
 
       String? isbn = verifier.verifyIsbn(str5);
 

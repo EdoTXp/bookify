@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class BookStateWidget extends StatelessWidget {
   final BookStatus bookStatus;
@@ -17,20 +18,24 @@ class BookStateWidget extends StatelessWidget {
     };
   }
 
+  String _getBookStatusToString() {
+    return switch (bookStatus) {
+      BookStatus.library => 'book-on-the-bookcase-label'.i18n(),
+      BookStatus.reading => 'book-on-loan-label'.i18n(),
+      BookStatus.loaned => 'book-on-reading-label'.i18n(),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    final color = _getColor();
-
     return Container(
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(
-          22,
-        ),
+        color: _getColor(),
+        borderRadius: BorderRadius.circular(22),
       ),
       child: Text(
-        bookStatus.toString(),
+        _getBookStatusToString(),
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         textScaler: TextScaler.noScaling,

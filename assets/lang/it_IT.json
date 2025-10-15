@@ -238,5 +238,8 @@
   "start-timer-label": "Iniziare timer",
   "pause-button": "Pausare",
   "continue-button": "Continuare",
-  "finish-and-return-button": "Concludere e tornare"
+  "finish-and-return-button": "Concludere e tornare",
+  "book-on-the-bookcase-label": "nello scaffale",
+  "book-on-loan-label": "in prestito",
+  "book-on-reading-label": "in lettura"
 }
