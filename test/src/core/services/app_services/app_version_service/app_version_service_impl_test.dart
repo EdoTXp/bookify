@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/services/app_services/app_version_service/app_version.dart';
+import 'package:bookify/src/core/models/app_version_model.dart';
 import 'package:bookify/src/core/services/app_services/app_version_service/app_version_service_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -12,7 +12,7 @@ void main() {
     'Test get App Version',
     () async {
       when(() => appVersionService.getAppVersion()).thenAnswer(
-        (_) async => const AppVersion(
+        (_) async => const AppVersionModel(
           appName: 'BookifyTest',
           version: '123',
           buildNumber: '123',

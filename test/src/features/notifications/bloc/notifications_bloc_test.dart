@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/features/notifications/bloc/notifications_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,7 +34,7 @@ void main() {
         () => notificationsService.getNotifications(),
       ).thenAnswer(
         (_) async => [
-          CustomNotification(
+          CustomNotificationModel(
             id: 1,
             notificationChannel: NotificationChannel.loanChannel,
             title: 'title',

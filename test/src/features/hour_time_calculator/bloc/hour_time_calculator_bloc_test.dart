@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/features/hour_time_calculator/bloc/hour_time_calculator_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

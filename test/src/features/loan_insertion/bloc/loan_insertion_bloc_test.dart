@@ -3,7 +3,7 @@ import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dar
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
@@ -16,7 +16,7 @@ class BookServiceMock extends Mock implements BookService {}
 
 class NotificationsServiceMock extends Mock implements NotificationsService {}
 
-class CustomNotificationFake extends Fake implements CustomNotification {}
+class CustomNotificationFake extends Fake implements CustomNotificationModel {}
 
 void main() {
   final bookService = BookServiceMock();

@@ -1,11 +1,11 @@
 import 'package:bookify/src/features/contacts_picker/views/widgets/widgets.dart';
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ContactsPickerLoadedStateWidget extends StatefulWidget {
-  final List<ContactDto> contacts;
-  final void Function(ContactDto contactDto) onSelectedContact;
+  final List<ContactModel> contacts;
+  final void Function(ContactModel contactDto) onSelectedContact;
 
   const ContactsPickerLoadedStateWidget({
     super.key,
@@ -20,7 +20,7 @@ class ContactsPickerLoadedStateWidget extends StatefulWidget {
 
 class _ContactsPickerLoadedStateWidgetState
     extends State<ContactsPickerLoadedStateWidget> {
-  ContactDto? selectedContactDto;
+  ContactModel? selectedContactDto;
   int selectedIndex = -1;
   bool isSelectedMode = false;
 
@@ -32,7 +32,7 @@ class _ContactsPickerLoadedStateWidgetState
     });
   }
 
-  void _clickOnContact(ContactDto contactDto, int index) {
+  void _clickOnContact(ContactModel contactDto, int index) {
     if (selectedContactDto != null && selectedContactDto!.name.isNotEmpty) {
       setState(() {
         selectedContactDto = contactDto;

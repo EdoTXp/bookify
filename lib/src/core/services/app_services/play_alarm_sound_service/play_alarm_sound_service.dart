@@ -4,10 +4,10 @@ import 'package:bookify/src/shared/constants/audios/bookify_audios.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class PlayAlarmSoundService {
-  final AudioPlayer player = AudioPlayer();
   final String assetSound;
   final double volume;
   final bool loopingAlarm;
+  late final AudioPlayer player;
 
   PlayAlarmSoundService({
     this.assetSound = BookifyAudios.timerAudio,
@@ -18,6 +18,8 @@ class PlayAlarmSoundService {
       volume >= 0.0 && volume <= 1.0,
       'The volume value must be between [0.0 and 1.0].',
     );
+
+    player = AudioPlayer(playerId: 'AlarmSoundPlayer');
 
     if (loopingAlarm) {
       player.onPlayerStateChanged.listen(
@@ -39,8 +41,8 @@ class PlayAlarmSoundService {
     await player.stop();
   }
 
-  void dispose() {
-    player.dispose();
+  Future<void> dispose() async {
+    await player.dispose();
   }
 
   Future<void> _playSound(double volume) async {

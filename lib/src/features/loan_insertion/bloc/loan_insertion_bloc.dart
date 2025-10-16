@@ -2,7 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
@@ -94,7 +94,7 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     DateTime loanDate,
     DateTime devolutionDate,
   ) async {
-    final customNotification = CustomNotification(
+    final customNotification = CustomNotificationModel(
       id: loanId,
       title: 'Ei, seu livro tá voltando!',
       body:

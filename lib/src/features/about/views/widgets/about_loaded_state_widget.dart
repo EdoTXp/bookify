@@ -1,15 +1,15 @@
-import 'package:bookify/src/core/services/app_services/app_version_service/app_version.dart';
+import 'package:bookify/src/core/models/app_version_model.dart';
 import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
 class AboutLoadedStateWidget extends StatelessWidget {
-  final AppVersion appVersion;
+  final AppVersionModel appVersionModel;
 
   const AboutLoadedStateWidget({
     super.key,
-    required this.appVersion,
+    required this.appVersionModel,
   });
 
   @override
@@ -21,7 +21,7 @@ class AboutLoadedStateWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              appVersion.appName,
+              appVersionModel.appName,
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class AboutLoadedStateWidget extends StatelessWidget {
               height: 5,
             ),
             Text(
-              'version-label'.i18n([appVersion.version]),
+              'version-label'.i18n([appVersionModel.version]),
               style: const TextStyle(
                 fontSize: 15,
               ),

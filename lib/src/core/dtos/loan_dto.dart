@@ -1,15 +1,15 @@
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 
 class LoanDto {
   final LoanModel loanModel;
-  final ContactDto? contactDto;
+  final ContactModel? contactModel;
   final String bookImagePreview;
   final String bookTitlePreview;
 
   const LoanDto({
     required this.loanModel,
-    this.contactDto,
+    this.contactModel,
     required this.bookImagePreview,
     required this.bookTitlePreview,
   });
@@ -18,13 +18,13 @@ class LoanDto {
 
   LoanDto copyWith({
     LoanModel? loanModel,
-    ContactDto? contactDto,
+    ContactModel? contactModel,
     String? bookImagePreview,
     String? bookTitlePreview,
   }) {
     return LoanDto(
       loanModel: loanModel ?? this.loanModel,
-      contactDto: contactDto ?? this.contactDto,
+      contactModel: contactModel ?? this.contactModel,
       bookImagePreview: bookImagePreview ?? this.bookImagePreview,
       bookTitlePreview: bookTitlePreview ?? this.bookTitlePreview,
     );
@@ -32,7 +32,7 @@ class LoanDto {
 
   @override
   String toString() {
-    return 'LoanDto(loanModel: $loanModel, bookImagePreview: $bookImagePreview, bookTitlePreview: $bookTitlePreview, contactDto: $contactDto)';
+    return 'LoanDto(loanModel: $loanModel, bookImagePreview: $bookImagePreview, bookTitlePreview: $bookTitlePreview, contactModel: $contactModel)';
   }
 
   @override
@@ -42,7 +42,7 @@ class LoanDto {
     return other.loanModel == loanModel &&
         other.bookImagePreview == bookImagePreview &&
         other.bookTitlePreview == bookTitlePreview &&
-        other.contactDto == contactDto;
+        other.contactModel == contactModel;
   }
 
   @override
@@ -50,7 +50,7 @@ class LoanDto {
     return loanModel.hashCode ^
         bookImagePreview.hashCode ^
         bookTitlePreview.hashCode ^
-        contactDto.hashCode;
+        contactModel.hashCode;
   }
 
   bool _isLateDevolutionDate() {

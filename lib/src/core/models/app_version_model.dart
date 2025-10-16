@@ -1,23 +1,23 @@
-class AppVersion {
+class AppVersionModel {
   final String appName;
   final String version;
   final String buildNumber;
   final String? appPackageName;
-  
-  const AppVersion({
+
+  const AppVersionModel({
     required this.appName,
     required this.version,
     required this.buildNumber,
     this.appPackageName,
   });
 
-  AppVersion copyWith({
+  AppVersionModel copyWith({
     String? appName,
     String? version,
     String? buildNumber,
     String? appPackageName,
   }) {
-    return AppVersion(
+    return AppVersionModel(
       appName: appName ?? this.appName,
       version: version ?? this.version,
       buildNumber: buildNumber ?? this.buildNumber,
@@ -27,25 +27,24 @@ class AppVersion {
 
   @override
   String toString() {
-    return 'AppVersion(appName: $appName, version: $version, buildNumber: $buildNumber, appPackageName: $appPackageName)';
+    return 'AppVersionModel(appName: $appName, version: $version, buildNumber: $buildNumber, appPackageName: $appPackageName)';
   }
 
   @override
-  bool operator ==(covariant AppVersion other) {
+  bool operator ==(covariant AppVersionModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.appName == appName &&
-      other.version == version &&
-      other.buildNumber == buildNumber &&
-      other.appPackageName == appPackageName;
+
+    return other.appName == appName &&
+        other.version == version &&
+        other.buildNumber == buildNumber &&
+        other.appPackageName == appPackageName;
   }
 
   @override
   int get hashCode {
     return appName.hashCode ^
-      version.hashCode ^
-      buildNumber.hashCode ^
-      appPackageName.hashCode;
+        version.hashCode ^
+        buildNumber.hashCode ^
+        appPackageName.hashCode;
   }
 }

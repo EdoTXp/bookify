@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.dart';
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -11,9 +11,9 @@ void main() {
   final contactsService = ContactsServiceMock();
   late ContactsPickerBloc contactsPickerBloc;
 
-  final List<ContactDto> contacts = [
-    const ContactDto(id: 'id', name: 'name'),
-    const ContactDto(id: 'id2', name: 'name2'),
+  final List<ContactModel> contacts = [
+    const ContactModel(id: 'id', name: 'name'),
+    const ContactModel(id: 'id2', name: 'name2'),
   ];
 
   setUp(() {

@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -42,7 +42,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   late bool _bookIsValid;
   late bool _contactIsValid;
 
-  ContactDto? _contact;
+  ContactModel? _contact;
   BookModel? _bookModel;
 
   @override
@@ -92,7 +92,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
   /// Opens a modal bottom sheet to select a contact.
   Future<void> _getContact(BuildContext context) async {
-    final contactDto = await showModalBottomSheet<ContactDto?>(
+    final contactDto = await showModalBottomSheet<ContactModel?>(
       context: context,
       constraints: BoxConstraints.loose(
         Size(

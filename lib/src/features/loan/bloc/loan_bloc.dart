@@ -95,7 +95,7 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
         loanModel: loan,
         bookImagePreview: book.imageUrl,
         bookTitlePreview: book.title,
-        contactDto: contact,
+        contactModel: contact,
       );
 
       loansDto.add(loanDto);

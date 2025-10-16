@@ -1,10 +1,10 @@
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
 class ContactWidget extends StatelessWidget {
-  final ContactDto contactDto;
+  final ContactModel contactDto;
   final VoidCallback onTap;
 
   final bool isSelected;

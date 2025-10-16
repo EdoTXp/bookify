@@ -69,9 +69,9 @@ class LoanDetailLoadedWidget extends StatelessWidget {
               height: 5,
             ),
             ContactCard(
-              name: loanDto.contactDto?.name,
-              photo: loanDto.contactDto?.photo,
-              phone: loanDto.contactDto?.phoneNumber,
+              name: loanDto.contactModel?.name,
+              photo: loanDto.contactModel?.photo,
+              phone: loanDto.contactModel?.phoneNumber,
             ),
             const SizedBox(
               height: 20,
@@ -82,11 +82,11 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            if (loanDto.contactDto?.phoneNumber != null) ...[
+            if (loanDto.contactModel?.phoneNumber != null) ...[
               BookifyOutlinedButton.expanded(
                 onPressed: () async {
                   await LauncherService.launchCall(
-                    loanDto.contactDto!.phoneNumber!,
+                    loanDto.contactModel!.phoneNumber!,
                   );
                 },
                 text: 'call-the-contact-button'.i18n(),

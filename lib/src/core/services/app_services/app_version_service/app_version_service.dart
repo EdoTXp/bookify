@@ -1,5 +1,5 @@
-import 'package:bookify/src/core/services/app_services/app_version_service/app_version.dart';
+import 'package:bookify/src/core/models/app_version_model.dart';
 
 abstract interface class AppVersionService {
-  Future<AppVersion> getAppVersion();
+  Future<AppVersionModel> getAppVersion();
 }

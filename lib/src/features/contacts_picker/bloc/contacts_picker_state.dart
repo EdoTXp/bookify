@@ -7,7 +7,7 @@ final class ContactsPickerLoadingState extends ContactsPickerState {}
 final class ContactsPickerEmptyState extends ContactsPickerState {}
 
 final class ContactsPickerLoadedState extends ContactsPickerState {
-  final List<ContactDto> contacts;
+  final List<ContactModel> contacts;
 
   ContactsPickerLoadedState({
     required this.contacts,

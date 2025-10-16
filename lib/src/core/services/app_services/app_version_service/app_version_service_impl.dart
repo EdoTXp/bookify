@@ -1,19 +1,19 @@
-import 'package:bookify/src/core/services/app_services/app_version_service/app_version.dart';
+import 'package:bookify/src/core/models/app_version_model.dart';
 import 'package:bookify/src/core/services/app_services/app_version_service/app_version_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class AppVersionServiceImpl implements AppVersionService {
-  late PackageInfo _packageInfo;
+  const AppVersionServiceImpl();
 
   @override
-  Future<AppVersion> getAppVersion() async {
-    _packageInfo = await PackageInfo.fromPlatform();
+  Future<AppVersionModel> getAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
 
-    final appVersion = AppVersion(
-      appName: _packageInfo.appName,
-      appPackageName: _packageInfo.packageName,
-      version: _packageInfo.version,
-      buildNumber: _packageInfo.buildNumber,
+    final appVersion = AppVersionModel(
+      appName: packageInfo.appName,
+      appPackageName: packageInfo.packageName,
+      version: packageInfo.version,
+      buildNumber: packageInfo.buildNumber,
     );
 
     return appVersion;

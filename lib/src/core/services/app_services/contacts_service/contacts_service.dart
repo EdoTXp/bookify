@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 
 abstract interface class ContactsService {
-  Future<ContactDto?> getContactById({required String id});
-  Future<List<ContactDto>?> getContacts();
+  Future<ContactModel?> getContactById({required String id});
+  Future<List<ContactModel>?> getContacts();
 }

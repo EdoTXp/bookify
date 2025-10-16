@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -51,7 +51,7 @@ void main() {
     ratingsCount: 120,
   );
 
-  const contactDto = ContactDto(
+  const contactDto = ContactModel(
     id: 'ContactId',
     name: 'Alice',
   );

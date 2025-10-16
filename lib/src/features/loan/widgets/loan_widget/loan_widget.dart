@@ -78,9 +78,9 @@ class LoanWidget extends StatelessWidget {
                           top: -3,
                           right: -3,
                           child: ContactCircleAvatar(
-                            name:
-                                loan.contactDto?.name ?? 'no-name-label'.i18n(),
-                            photo: loan.contactDto?.photo,
+                            name: loan.contactModel?.name ??
+                                'no-name-label'.i18n(),
+                            photo: loan.contactModel?.photo,
                           ),
                         ),
                         if (isLateDevolutionDate)
@@ -114,13 +114,13 @@ class LoanWidget extends StatelessWidget {
                               ContactInformationWidget(
                                 iconData: Icons.person_outlined,
                                 title: 'name-label'.i18n(),
-                                content: loan.contactDto?.name ??
+                                content: loan.contactModel?.name ??
                                     'no-name-label'.i18n(),
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.smartphone_outlined,
                                 title: 'contact-label'.i18n(),
-                                content: loan.contactDto?.phoneNumber ??
+                                content: loan.contactModel?.phoneNumber ??
                                     'no-contact-number-label'.i18n(),
                               ),
                             ],

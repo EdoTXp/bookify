@@ -34,7 +34,7 @@ enum NotificationChannel {
   }
 }
 
-class CustomNotification {
+class CustomNotificationModel {
   final int id;
   final NotificationChannel notificationChannel;
   final String title;
@@ -42,7 +42,7 @@ class CustomNotification {
   final DateTime scheduledDate;
   final String? payload;
 
-  CustomNotification({
+  CustomNotificationModel({
     required this.id,
     required this.notificationChannel,
     required this.title,
@@ -51,7 +51,7 @@ class CustomNotification {
     this.payload,
   });
 
-  CustomNotification copyWith({
+  CustomNotificationModel copyWith({
     int? id,
     NotificationChannel? notificationChannel,
     String? title,
@@ -59,7 +59,7 @@ class CustomNotification {
     DateTime? scheduledDate,
     String? payload,
   }) {
-    return CustomNotification(
+    return CustomNotificationModel(
       id: id ?? this.id,
       notificationChannel: notificationChannel ?? this.notificationChannel,
       title: title ?? this.title,
@@ -71,11 +71,11 @@ class CustomNotification {
 
   @override
   String toString() {
-    return 'CustomNotification(id: $id, notificationChannel: $notificationChannel, title: $title, body: $body, scheduledDate: $scheduledDate, payload: $payload)';
+    return 'CustomNotificationModel(id: $id, notificationChannel: $notificationChannel, title: $title, body: $body, scheduledDate: $scheduledDate, payload: $payload)';
   }
 
   @override
-  bool operator ==(covariant CustomNotification other) {
+  bool operator ==(covariant CustomNotificationModel other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&

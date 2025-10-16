@@ -1,11 +1,11 @@
-import 'package:bookify/src/core/dtos/contact_dto.dart';
+import 'package:bookify/src/core/models/contact_model.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fast_contacts/fast_contacts.dart';
 
 class ContactsServiceImpl implements ContactsService {
   @override
-  Future<ContactDto?> getContactById({required String id}) async {
+  Future<ContactModel?> getContactById({required String id}) async {
     final permissionStatus = await Permission.contacts.request();
 
     if (permissionStatus.isGranted) {
@@ -19,7 +19,7 @@ class ContactsServiceImpl implements ContactsService {
       final photo = await FastContacts.getContactImage(id);
 
       if (contact != null) {
-        return ContactDto(
+        return ContactModel(
           id: contact.id,
           name: contact.displayName,
           phoneNumber:
@@ -34,7 +34,7 @@ class ContactsServiceImpl implements ContactsService {
   }
 
   @override
-  Future<List<ContactDto>?> getContacts() async {
+  Future<List<ContactModel>?> getContacts() async {
     final permissionStatus = await Permission.contacts.request();
 
     if (permissionStatus.isGranted) {
@@ -45,11 +45,11 @@ class ContactsServiceImpl implements ContactsService {
         ],
       );
 
-      final List<ContactDto> contactsDto = [];
+      final List<ContactModel> contactsDto = [];
       for (Contact contact in contacts) {
         final photo = await FastContacts.getContactImage(contact.id);
 
-        final contactDto = ContactDto(
+        final contactDto = ContactModel(
           id: contact.id,
           name: contact.displayName,
           phoneNumber:

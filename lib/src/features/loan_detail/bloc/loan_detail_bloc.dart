@@ -39,7 +39,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
 
       final loanDto = LoanDto(
         loanModel: loan,
-        contactDto: contact,
+        contactModel: contact,
         bookImagePreview: book.imageUrl,
         bookTitlePreview: book.title,
       );
@@ -79,8 +79,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
         return;
       }
 
-      final loanRemovedRow =
-          await _loanService.delete(loanId: event.loanId);
+      final loanRemovedRow = await _loanService.delete(loanId: event.loanId);
 
       if (loanRemovedRow != 1) {
         emit(

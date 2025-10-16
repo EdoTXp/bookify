@@ -7,7 +7,7 @@ final class NotificationsLoadingState extends NotificationsState {}
 final class NotificationEmptyState extends NotificationsState {}
 
 final class NotificationsLoadedState extends NotificationsState {
-  final List<CustomNotification> notifications;
+  final List<CustomNotificationModel> notifications;
 
   NotificationsLoadedState({
     required this.notifications,

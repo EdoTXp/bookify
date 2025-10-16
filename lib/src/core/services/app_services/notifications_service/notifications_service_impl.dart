@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bookify/src/core/services/app_services/notifications_service/custom_notification.dart';
+import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
@@ -109,7 +109,7 @@ class NotificationsServiceImpl implements NotificationsService {
 
   @override
   Future<void> scheduleNotification(
-    CustomNotification notification,
+    CustomNotificationModel notification,
   ) async {
     await _notifications.zonedSchedule(
       notification.id,
@@ -170,13 +170,13 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   @override
-  Future<List<CustomNotification>> getNotifications() async {
+  Future<List<CustomNotificationModel>> getNotifications() async {
     final pendingNotifications =
         await _notifications.pendingNotificationRequests();
 
     final notifications = pendingNotifications
         .map(
-          (notification) => CustomNotification(
+          (notification) => CustomNotificationModel(
             id: notification.id,
             notificationChannel: notification.payload!.isEmpty
                 ? NotificationChannel.readChannel

@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/services/app_services/app_version_service/app_version.dart';
+import 'package:bookify/src/core/models/app_version_model.dart';
 import 'package:bookify/src/core/services/app_services/app_version_service/app_version_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class AboutBloc extends Bloc<AboutEvent, AboutState> {
     try {
       emit(AboutLoadingState());
       final appVersion = await _appVersionService.getAppVersion();
-      emit(AboutLoadedState(appVersion: appVersion));
+      emit(AboutLoadedState(appVersionModel: appVersion));
     } catch (e) {
       emit(
         AboutErrorState(
