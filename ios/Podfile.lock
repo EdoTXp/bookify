@@ -14,44 +14,44 @@ PODS:
     - FlutterMacOS
   - fast_contacts (0.0.1):
     - Flutter
-  - FBAEMKit (18.0.0):
-    - FBSDKCoreKit_Basics (= 18.0.0)
-  - FBSDKCoreKit (18.0.0):
-    - FBAEMKit (= 18.0.0)
-    - FBSDKCoreKit_Basics (= 18.0.0)
-  - FBSDKCoreKit_Basics (18.0.0)
-  - FBSDKLoginKit (18.0.0):
-    - FBSDKCoreKit (= 18.0.0)
-  - Firebase/Auth (12.0.0):
+  - FBAEMKit (18.0.1):
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit (18.0.1):
+    - FBAEMKit (= 18.0.1)
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit_Basics (18.0.1)
+  - FBSDKLoginKit (18.0.1):
+    - FBSDKCoreKit (= 18.0.1)
+  - Firebase/Auth (12.4.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 12.0.0)
-  - Firebase/CoreOnly (12.0.0):
-    - FirebaseCore (~> 12.0.0)
-  - firebase_auth (6.0.0):
-    - Firebase/Auth (= 12.0.0)
+    - FirebaseAuth (~> 12.4.0)
+  - Firebase/CoreOnly (12.4.0):
+    - FirebaseCore (~> 12.4.0)
+  - firebase_auth (6.1.1):
+    - Firebase/Auth (= 12.4.0)
     - firebase_core
     - Flutter
-  - firebase_core (4.0.0):
-    - Firebase/CoreOnly (= 12.0.0)
+  - firebase_core (4.2.0):
+    - Firebase/CoreOnly (= 12.4.0)
     - Flutter
-  - FirebaseAppCheckInterop (12.0.0)
-  - FirebaseAuth (12.0.0):
-    - FirebaseAppCheckInterop (~> 12.0.0)
-    - FirebaseAuthInterop (~> 12.0.0)
-    - FirebaseCore (~> 12.0.0)
-    - FirebaseCoreExtension (~> 12.0.0)
+  - FirebaseAppCheckInterop (12.4.0)
+  - FirebaseAuth (12.4.0):
+    - FirebaseAppCheckInterop (~> 12.4.0)
+    - FirebaseAuthInterop (~> 12.4.0)
+    - FirebaseCore (~> 12.4.0)
+    - FirebaseCoreExtension (~> 12.4.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
     - GoogleUtilities/Environment (~> 8.1)
     - GTMSessionFetcher/Core (< 6.0, >= 3.4)
     - RecaptchaInterop (~> 101.0)
-  - FirebaseAuthInterop (12.0.0)
-  - FirebaseCore (12.0.0):
-    - FirebaseCoreInternal (~> 12.0.0)
+  - FirebaseAuthInterop (12.4.0)
+  - FirebaseCore (12.4.0):
+    - FirebaseCoreInternal (~> 12.4.0)
     - GoogleUtilities/Environment (~> 8.1)
     - GoogleUtilities/Logger (~> 8.1)
-  - FirebaseCoreExtension (12.0.0):
-    - FirebaseCore (~> 12.0.0)
-  - FirebaseCoreInternal (12.0.0):
+  - FirebaseCoreExtension (12.4.0):
+    - FirebaseCore (~> 12.4.0)
+  - FirebaseCoreInternal (12.4.0):
     - "GoogleUtilities/NSData+zlib (~> 8.1)"
   - Flutter (1.0.0)
   - flutter_facebook_auth (7.1.2):
@@ -222,21 +222,21 @@ SPEC CHECKSUMS:
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   audioplayers_darwin: 4f9ca89d92d3d21cec7ec580e78ca888e5fb68bd
-  fast_contacts: dd81973c756255b622b9f272a8432ba230bcf13d
-  FBAEMKit: e34530df538b8eb8aeb53c35867715ba6c63ef0c
-  FBSDKCoreKit: d3f479a69127acebb1c6aad91c1a33907bcf6c2f
-  FBSDKCoreKit_Basics: 017b6dc2a1862024815a8229e75661e627ac1e29
-  FBSDKLoginKit: 5875762d1fe09ddcb05d03365d4f5dc34413843d
-  Firebase: 800d487043c0557d9faed71477a38d9aafb08a41
-  firebase_auth: 5a5603bbe7fc673f88b7c652bf9c41d6c742b545
-  firebase_core: 633e1851ffe1b9ab875f6467a4f574c79cef02e4
-  FirebaseAppCheckInterop: c848d06a04030c9858ef0ae555b82035dbe470d0
-  FirebaseAuth: 654e4de84787c45d7265599a651038e854ccb439
-  FirebaseAuthInterop: 002da671896af5e8879ae117dc604ed240b86e80
-  FirebaseCore: 055f4ab117d5964158c833f3d5e7ec6d91648d4a
-  FirebaseCoreExtension: 639afb3de6abd611952be78a794c54a47fa0f361
-  FirebaseCoreInternal: dedc28e569a4be85f38f3d6af1070a2e12018d55
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  fast_contacts: 85bd59ea48f7f26e9de6818da94171b29b006c3e
+  FBAEMKit: b2ed182002dbcb65d5a60059c9693d322186cd00
+  FBSDKCoreKit: 7f96852f2539bdb88ba8d47e5ab4ae70a6f8d691
+  FBSDKCoreKit_Basics: 22d4c1a509ded4e45116f3bb167a14907550f62e
+  FBSDKLoginKit: f48c06446995cd209332831f692cea28b26e51da
+  Firebase: f07b15ae5a6ec0f93713e30b923d9970d144af3e
+  firebase_auth: c2b8be95d602d4e8a9148fae72333ef78e69cc20
+  firebase_core: 744984dbbed8b3036abf34f0b98d80f130a7e464
+  FirebaseAppCheckInterop: f734c802f21fe1da0837708f0f9a27218c8a4ed0
+  FirebaseAuth: 4a2aed737c84114a9d9b33d11ae1b147d6b94889
+  FirebaseAuthInterop: 858e6b754966e70740a4370dd1503dfffe6dbb49
+  FirebaseCore: bb595f3114953664e3c1dc032f008a244147cfd3
+  FirebaseCoreExtension: 7e1f7118ee970e001a8013719fb90950ee5e0018
+  FirebaseCoreInternal: d7f5a043c2cd01a08103ab586587c1468047bca6
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_facebook_auth: d97dc09216aebd99d7ac52360186a630f67bdf18
   flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
