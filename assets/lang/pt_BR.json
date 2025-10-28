@@ -241,5 +241,7 @@
   "finish-and-return-button": "Concluir e voltar",
   "book-on-the-bookcase-label": "na estante",
   "book-on-loan-label": "em leitura",
-  "book-on-reading-label": "em empréstimo"
+  "book-on-reading-label": "em empréstimo",
+  "previous-month-tooltip": "Mês anterior",
+  "next-month-tooltip": "Próximo mês"
 }

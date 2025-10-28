@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/local_decimal_format/local_decimal_format_extension.dart';
+import 'package:bookify/src/core/helpers/locale_decimal_format/locale_decimal_format_extension.dart';
 import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';

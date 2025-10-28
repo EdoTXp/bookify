@@ -241,5 +241,7 @@
   "finish-and-return-button": "Finish and return",
   "book-on-the-bookcase-label": "on bookcase",
   "book-on-loan-label": "on loan",
-  "book-on-reading-label": "on reading"
+  "book-on-reading-label": "on reading",
+  "previous-month-tooltip": "Previous month",
+  "next-month-tooltip": "Next month"
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:characters/characters.dart';
 
 /// A class to verify ISBN-10 and ISBN-13 codes.
 ///

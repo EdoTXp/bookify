@@ -4,6 +4,7 @@ import 'package:bookify/main.dart' as app;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:localization/localization.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -141,7 +142,7 @@ Future<void> _testHomePage(WidgetTester tester) async {
   await tester.tap(find.byKey(const Key('ISBN Search Type Button')));
   await tester.pumpAndSettle();
 
-  expect(find.text('Digite o ISBN'), findsOneWidget);
+  expect(find.text('enter-isbn-label'.i18n()), findsOneWidget);
 
   // Enter ISBN Text and send request
   await tester.enterText(
@@ -160,7 +161,7 @@ Future<void> _testHomePage(WidgetTester tester) async {
 
   expect(find.byIcon(Icons.bookmark_border), findsOneWidget);
   expect(find.byKey(const Key('Insert Or Remove Book Button')), findsOneWidget);
-  expect(find.text('Adicionar'), findsOneWidget);
+  expect(find.text('add-button'.i18n()), findsOneWidget);
 
   // Add book to my books bookcase
   await tester.tap(find.byKey(const Key('Insert Or Remove Book Button')));
@@ -168,7 +169,7 @@ Future<void> _testHomePage(WidgetTester tester) async {
 
   expect(find.byIcon(Icons.bookmark), findsOneWidget);
   expect(find.byKey(const Key('Insert Or Remove Book Button')), findsOneWidget);
-  expect(find.text('Remover'), findsOneWidget);
+  expect(find.text('remove-button'.i18n()), findsOneWidget);
 
   // Back to home page
   await _testerPop(tester);
@@ -176,7 +177,7 @@ Future<void> _testHomePage(WidgetTester tester) async {
 
 Future<void> _testBookcasePage(WidgetTester tester) async {
   // Navigate to Bookcase PageView
-  await tester.tap(find.text('Estantes'));
+  await tester.tap(find.text('bookcases-label'.i18n()));
   await tester.pumpAndSettle();
 
   // Open bookcase insertion page
@@ -235,8 +236,9 @@ Future<void> _testBookcasePage(WidgetTester tester) async {
     findsOneWidget,
   );
 
+  final booksEmptyTextLabel = '0 ${'books-label'.i18n()}';
   expect(
-    find.text('0 livros'),
+    find.text(booksEmptyTextLabel),
     findsOneWidget,
   );
 
@@ -262,7 +264,8 @@ Future<void> _testBookcasePage(WidgetTester tester) async {
   await tester.tap(find.byKey(const Key('Confirm book IconButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
-  expect(find.text('1 livro'), findsOneWidget);
+  final bookAddedTextLabel = '1 ${'book-label'.i18n()}';
+  expect(find.text(bookAddedTextLabel), findsOneWidget);
 
   // Back to bookcase page
   await tester.pumpAndSettle();
@@ -365,7 +368,7 @@ Future<void> setDurationOfLoan(WidgetTester tester) async {
    the devolution date will be the first day of the next month
   */
   if (todayInicialLoan >= 29) {
-    await tester.tap(find.byTooltip('Próximo mês'));
+    await tester.tap(find.byTooltip('next-month-tooltip'.i18n()));
     await tester.pumpAndSettle();
     devolutionLoanDay = 1;
   } else {
@@ -381,7 +384,7 @@ Future<void> setDurationOfLoan(WidgetTester tester) async {
 
 Future<void> _testReadingsPage(WidgetTester tester) async {
   // Navigate to Readings PageView
-  await tester.tap(find.text('Leituras'));
+  await tester.tap(find.text('readings-label'.i18n()));
   await tester.pumpAndSettle();
   expect(find.byKey(const Key('Readings EmptyState')), findsOneWidget);
 

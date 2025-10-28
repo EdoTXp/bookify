@@ -24,4 +24,13 @@ class AppColor {
 
   ///Bookify disabled Color = [Color(0XFF939393)]
   static const bookifyDisabledColor = Color(0XFF939393);
+
+  /// Bookify Book on Library Color = [Colors.green]
+  static const bookifyBookLibraryColor = Colors.green;
+
+  /// Bookify Book Reading Color = [Colors.orange]
+  static const bookifyBookReadingColor = Colors.orange;
+
+  /// Bookify Book Loaned Color = [Colors.blue]
+  static const bookifyBookLoanedColor = Colors.blue;
 }

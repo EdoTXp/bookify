@@ -4,12 +4,15 @@ import 'package:intl/intl.dart';
 extension LocaleDecimalFormatExtension on double {
   /// Formats the current double value to a locale-specific decimal format.
   ///
-  /// [locale] specifies the locale to use for formatting. Defaults to 'pt-BR'.
-  /// [decimalDigits] specifies the number of digits after the decimal point. Defaults to 1.
+  /// By default, it uses the app's current locale.
+  /// A custom [locale] and the number of [decimalDigits] can be provided
+  /// to override the default behavior, which is useful for testing.
   ///
   /// Returns a string representation of the number formatted according to the specified locale and decimal digits.
-  String toLocaleDecimalFormat(
-      [String locale = 'pt-BR', int decimalDigits = 1]) {
+  String toLocaleDecimalFormat({
+    String? locale,
+    int? decimalDigits,
+  }) {
     final localeFormat = NumberFormat.decimalPatternDigits(
       locale: locale,
       decimalDigits: decimalDigits,

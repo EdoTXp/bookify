@@ -48,10 +48,10 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
   }
 
   @override
-  Future<void> dispose() async {
+  void dispose() {
     LockScreenOrientationService.unLockOrientationScreen();
     WakeLockScreenService.unlockWakeScreen();
-    await _alarmService.dispose();
+    _alarmService.dispose();
     super.dispose();
   }
 

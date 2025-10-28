@@ -1,5 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class DatePickerDialogService {
   static Future<DateTime?> showDateTimePicker({
@@ -15,6 +16,18 @@ class DatePickerDialogService {
       config: CalendarDatePicker2WithActionButtonsConfig(
         calendarType: CalendarDatePicker2Type.single,
         calendarViewMode: CalendarDatePicker2Mode.day,
+        lastMonthIcon: Tooltip(
+          message: 'previous-month-tooltip'.i18n(),
+          child: Icon(
+            Icons.arrow_left,
+          ),
+        ),
+        nextMonthIcon: Tooltip(
+          message: 'next-month-tooltip'.i18n(),
+          child: Icon(
+            Icons.arrow_right,
+          ),
+        ),
         calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
         centerAlignModePicker: true,
         firstDate: DateTime(DateTime.now().year - 1, 1, 1),

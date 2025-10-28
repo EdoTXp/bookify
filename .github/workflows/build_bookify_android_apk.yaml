@@ -8,6 +8,10 @@ on:
     branches:
       - master
 
+env:
+  VERSION: ""
+  TAG_EXISTS: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -92,7 +96,7 @@ jobs:
 
       #13 Modify Tag if it Exists
       - name: Modify Tag
-        if: env.TAG_EXISTS == 'true'
+        if: env.TAG_EXISTS == true
         id: modify_tag
         run: |
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
