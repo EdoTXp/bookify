@@ -10,6 +10,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleAuthStrategy implements AuthStrategy {
+  final FirebaseAuth _firebaseAuth;
+
+  AppleAuthStrategy({
+    required FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
+
   String _generateNonce([int length = 32]) {
     const charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
@@ -43,12 +49,12 @@ class AppleAuthStrategy implements AuthStrategy {
         rawNonce: rawNonce,
       );
 
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+      final userCredential = await _firebaseAuth.signInWithCredential(
         oauthCredential,
       );
 
       final userModel = UserModel(
-        name: userCredential.user?.displayName ?? 'Sem nome',
+        name: userCredential.user?.displayName,
         photo: userCredential.user?.photoURL,
         signInType: SignInType.apple,
       );
@@ -64,7 +70,7 @@ class AppleAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await _firebaseAuth.signOut();
       return true;
     } on FirebaseException catch (e) {
       throw AuthException(e.message ?? 'With no message');

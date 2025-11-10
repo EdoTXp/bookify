@@ -44,7 +44,7 @@ class UserCircleAvatar extends StatelessWidget {
       return ContactCircleAvatar(
         height: 133,
         width: 133,
-        name: userModel.name,
+        name: userModel.name ?? '-',
       );
     }
   }

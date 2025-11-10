@@ -25,11 +25,15 @@ class _BookifyAppState extends State<BookifyApp> {
   late final NotificationsService _notificationService;
   bool userIsLogged = false;
   ThemeMode? _themeMode;
+  bool _isInitialized = false;
 
   @override
-  void initState() {
-    super.initState();
-    _configureApp();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      _configureApp();
+      _isInitialized = true;
+    }
   }
 
   void _configureApp() {

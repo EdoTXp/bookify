@@ -52,7 +52,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
-              userModel.name,
+              userModel.name ?? 'no-name-label'.i18n(),
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: colorScheme.secondary,

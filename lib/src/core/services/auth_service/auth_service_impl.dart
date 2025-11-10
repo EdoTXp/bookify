@@ -1,45 +1,28 @@
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
-import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository.dart';
-import 'package:bookify/src/core/services/auth_service/auth_service.dart';
-import 'package:bookify/src/core/services/auth_service/auth_strategy/apple_auth_strategy.dart';
-import 'package:bookify/src/core/services/auth_service/auth_strategy/auth_strategy_manager.dart';
-import 'package:bookify/src/core/services/auth_service/auth_strategy/facebook_auth_strategy.dart';
-import 'package:bookify/src/core/services/auth_service/auth_strategy/google_auth_strategy.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
+
+import 'auth_service.dart';
+import 'auth_strategy/auth_strategy_factory.dart';
 
 class AuthServiceImpl implements AuthService {
   final AuthRepository _authRepository;
+  final AuthStrategyFactory _authStrategyFactory;
 
   const AuthServiceImpl({
     required AuthRepository authRepository,
-  }) : _authRepository = authRepository;
+    required AuthStrategyFactory authStrategyFactory,
+  })  : _authRepository = authRepository,
+        _authStrategyFactory = authStrategyFactory;
 
   @override
   Future<int> signIn({required SignInType signInType}) async {
     try {
-      AuthStrategyManager authStrategyManager;
+      final authStrategy = _authStrategyFactory.create(signInType);
 
-      switch (signInType) {
-        case SignInType.google:
-          authStrategyManager = AuthStrategyManager(
-            authStrategy: GoogleAuthStrategy(),
-          );
-          break;
-        case SignInType.apple:
-          authStrategyManager = AuthStrategyManager(
-            authStrategy: AppleAuthStrategy(),
-          );
-          break;
-        case SignInType.facebook:
-          authStrategyManager = AuthStrategyManager(
-            authStrategy: FacebookAuthStrategy(),
-          );
-          break;
-      }
-
-      final userModel = await authStrategyManager.signIn();
+      final userModel = await authStrategy.signIn();
       final userInserted = await _authRepository.setUserModel(
         userModel: userModel,
       );
@@ -57,17 +40,8 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<bool> signOut({required SignInType signInType}) async {
     try {
-      return switch (signInType) {
-        SignInType.google => await AuthStrategyManager(
-            authStrategy: GoogleAuthStrategy(),
-          ).signOut(),
-        SignInType.apple => await AuthStrategyManager(
-            authStrategy: AppleAuthStrategy(),
-          ).signOut(),
-        SignInType.facebook => await AuthStrategyManager(
-            authStrategy: FacebookAuthStrategy(),
-          ).signOut(),
-      };
+      final authStrategy = _authStrategyFactory.create(signInType);
+      return await authStrategy.signOut();
     } on AuthException {
       rethrow;
     } on Exception catch (e) {

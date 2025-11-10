@@ -10,6 +10,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FacebookAuthStrategy implements AuthStrategy {
+  final FacebookAuth _facebookAuth;
+  final FirebaseAuth _firebaseAuth;
+
+  FacebookAuthStrategy({
+    required FacebookAuth facebookAuth,
+    required FirebaseAuth firebaseAuth,
+  })  : _facebookAuth = facebookAuth,
+        _firebaseAuth = firebaseAuth;
+
   String _generateNonce([int length = 32]) {
     const charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
@@ -31,7 +40,7 @@ class FacebookAuthStrategy implements AuthStrategy {
       final rawNonce = _generateNonce();
       final nonce = _sha256ofString(rawNonce);
 
-      final loginResult = await FacebookAuth.instance.login(
+      final loginResult = await _facebookAuth.login(
         nonce: nonce,
       );
 
@@ -49,12 +58,12 @@ class FacebookAuthStrategy implements AuthStrategy {
           );
         }
 
-        final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        final userCredential = await _firebaseAuth.signInWithCredential(
           facebookOAuthCredential,
         );
 
         final userModel = UserModel(
-          name: userCredential.user?.displayName ?? 'Sem nome',
+          name: userCredential.user?.displayName,
           photo: userCredential.user?.photoURL,
           signInType: SignInType.facebook,
         );
@@ -73,8 +82,8 @@ class FacebookAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await FacebookAuth.instance.logOut();
-      await FirebaseAuth.instance.signOut();
+      await _facebookAuth.logOut();
+      await _firebaseAuth.signOut();
       return true;
     } on FirebaseException catch (e) {
       throw AuthException(e.message ?? 'With no message');

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:bookify/src/shared/enums/sign_in_type.dart';
 
 class UserModel {
-  final String name;
+  final String? name;
   final String? photo;
   final SignInType signInType;
 

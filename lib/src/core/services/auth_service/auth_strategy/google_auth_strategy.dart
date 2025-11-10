@@ -6,7 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuthStrategy implements AuthStrategy {
-  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  final GoogleSignIn _googleSignIn;
+  final FirebaseAuth _firebaseAuth;
+
+  GoogleAuthStrategy({
+    required GoogleSignIn googleSignIn,
+    required FirebaseAuth firebaseAuth,
+  })  : _googleSignIn = googleSignIn,
+        _firebaseAuth = firebaseAuth;
 
   @override
   Future<UserModel> signIn() async {
@@ -26,7 +33,7 @@ class GoogleAuthStrategy implements AuthStrategy {
         idToken: googleAuth.authentication.idToken,
       );
 
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+      final userCredential = await _firebaseAuth.signInWithCredential(
         credential,
       );
 
@@ -48,7 +55,7 @@ class GoogleAuthStrategy implements AuthStrategy {
   Future<bool> signOut() async {
     try {
       await _googleSignIn.signOut();
-      await FirebaseAuth.instance.signOut();
+      await _firebaseAuth.signOut();
       return true;
     } on FirebaseException catch (e) {
       throw AuthException(e.message ?? 'With no message');
