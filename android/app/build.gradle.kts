@@ -1,13 +1,13 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
-
-import java.util.Properties
-import java.io.FileInputStream
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val keystorePropertiesFile = rootProject.file("key.properties")
 val keystoreProperties = Properties()
@@ -58,7 +58,6 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
             signingConfig = signingConfigs.getByName("config")
         }
     }
