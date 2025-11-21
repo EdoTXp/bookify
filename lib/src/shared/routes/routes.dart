@@ -1,3 +1,6 @@
+import 'package:bookify/src/core/dtos/reading_dto.dart';
+import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/about/views/about_page.dart';
 import 'package:bookify/src/features/auth/views/auth_page.dart';
@@ -8,26 +11,27 @@ import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
+import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/features/notifications/views/notifications_page.dart';
 import 'package:bookify/src/features/on_boarding/views/on_boarding_page.dart';
 import 'package:bookify/src/features/qr_code_scanner/views/qr_code_scanner_page.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
-import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/features/readings_insertion/views/readings_insertion_page.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
-import 'package:bookify/src/core/dtos/reading_dto.dart';
-import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Routes {
+abstract class Routes {
+  Routes._();
+
+  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
+
   static Map<String, WidgetBuilder> routes = {
     OnBoardingPage.routeName: (context) => const OnBoardingPage(),
     AuthPage.routeName: (context) => const AuthPage(),
@@ -85,9 +89,8 @@ class Routes {
     AboutPage.routeName: (context) => const AboutPage(),
   };
 
+  /// Returns the initial route based on the user's authentication status.
   static String getInitialRoute(bool userIsLogged) {
     return userIsLogged ? RootPage.routeName : OnBoardingPage.routeName;
   }
-
-  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 }

@@ -38,8 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-      ProfileErrorState(:final errorMessage) =>
-        Center(
+      ProfileErrorState(:final errorMessage) => Center(
           child: InfoItemStateWidget.withErrorState(
             message: errorMessage,
             onPressed: _refreshPage,

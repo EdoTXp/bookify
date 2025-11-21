@@ -330,6 +330,30 @@ final _outlinedButtonTheme = OutlinedButtonThemeData(
   ),
 );
 
+TextStyle _resolveInputLabelStyle(Set<WidgetState> states) {
+  if (states.contains(WidgetState.focused)) {
+    return const TextStyle(
+      color: AppColor.bookifySecondaryColor,
+      fontSize: 14,
+    );
+  } else if (states.contains(WidgetState.disabled)) {
+    return const TextStyle(
+      color: AppColor.bookifyDisabledColor,
+      fontSize: 14,
+    );
+  } else if (states.contains(WidgetState.error)) {
+    return const TextStyle(
+      color: AppColor.bookifyErrorColor,
+      fontSize: 14,
+    );
+  }
+
+  return const TextStyle(
+    color: AppColor.bookifyPrimaryColor,
+    fontSize: 14,
+  );
+}
+
 final _inputDecorationTheme = InputDecorationTheme(
   focusedBorder: const OutlineInputBorder(
     borderSide: BorderSide(
@@ -364,56 +388,8 @@ final _inputDecorationTheme = InputDecorationTheme(
     fontSize: 12,
     color: AppColor.bookifyErrorColor,
   ),
-  labelStyle: WidgetStateTextStyle.resolveWith(
-    (Set<WidgetState> states) {
-      if (states.contains(WidgetState.focused)) {
-        return const TextStyle(
-          color: AppColor.bookifySecondaryColor,
-          fontSize: 14,
-        );
-      } else if (states.contains(WidgetState.disabled)) {
-        return const TextStyle(
-          color: AppColor.bookifyDisabledColor,
-          fontSize: 14,
-        );
-      } else if (states.contains(WidgetState.error)) {
-        return const TextStyle(
-          color: AppColor.bookifyErrorColor,
-          fontSize: 14,
-        );
-      }
-
-      return const TextStyle(
-        color: AppColor.bookifyPrimaryColor,
-        fontSize: 14,
-      );
-    },
-  ),
-  floatingLabelStyle: WidgetStateTextStyle.resolveWith(
-    (Set<WidgetState> states) {
-      if (states.contains(WidgetState.focused)) {
-        return const TextStyle(
-          color: AppColor.bookifySecondaryColor,
-          fontSize: 14,
-        );
-      } else if (states.contains(WidgetState.disabled)) {
-        return const TextStyle(
-          color: AppColor.bookifyDisabledColor,
-          fontSize: 14,
-        );
-      } else if (states.contains(WidgetState.error)) {
-        return const TextStyle(
-          color: AppColor.bookifyErrorColor,
-          fontSize: 14,
-        );
-      }
-
-      return const TextStyle(
-        color: AppColor.bookifyPrimaryColor,
-        fontSize: 14,
-      );
-    },
-  ),
+  labelStyle: WidgetStateTextStyle.resolveWith(_resolveInputLabelStyle),
+  floatingLabelStyle: WidgetStateTextStyle.resolveWith(_resolveInputLabelStyle),
 );
 
 const _bottomAppBarThemeData = BottomAppBarThemeData();

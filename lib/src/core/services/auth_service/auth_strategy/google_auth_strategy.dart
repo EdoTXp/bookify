@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_strategy/auth_strategy.dart';
+import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -38,7 +38,7 @@ class GoogleAuthStrategy implements AuthStrategy {
       );
 
       final userModel = UserModel(
-        name: userCredential.user?.displayName ?? 'Sem nome',
+        name: userCredential.user?.displayName,
         photo: userCredential.user?.photoURL,
         signInType: SignInType.google,
       );

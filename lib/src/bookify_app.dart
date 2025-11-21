@@ -1,11 +1,11 @@
+import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/shared/routes/routes.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:bookify/src/shared/theme/app_theme.dart';
-import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
 class BookifyApp extends StatefulWidget {
@@ -22,21 +22,12 @@ class BookifyApp extends StatefulWidget {
 
 class _BookifyAppState extends State<BookifyApp> {
   late final UserThemeBloc _userThemeBloc;
-  late final NotificationsService _notificationService;
-  bool userIsLogged = false;
   ThemeMode? _themeMode;
-  bool _isInitialized = false;
+  bool userIsLogged = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInitialized) {
-      _configureApp();
-      _isInitialized = true;
-    }
-  }
-
-  void _configureApp() {
+  void initState() {
+    super.initState();
     _userThemeBloc = context.read<UserThemeBloc>()
       ..add(
         GotUserThemeEvent(),
@@ -46,12 +37,14 @@ class _BookifyAppState extends State<BookifyApp> {
         ? userIsLogged = false
         : userIsLogged = true;
 
-    _notificationService = context.read<NotificationsService>();
-    _checkForNotificationsOnInitializeApp();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkForNotificationsOnInitializeApp();
+    });
   }
 
   Future<void> _checkForNotificationsOnInitializeApp() async {
-    await _notificationService.checkForNotifications();
+    final notificationService = context.read<NotificationsService>();
+    await notificationService.checkForNotifications();
   }
 
   @override

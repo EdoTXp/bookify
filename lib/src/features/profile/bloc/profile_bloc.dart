@@ -31,7 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (userModel == null) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro em buscar o usuário',
+            errorMessage: 'Erro ao buscar o usuário',
           ),
         );
         return;
@@ -44,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
     } on AuthException catch (e) {
       emit(ProfileErrorState(
-          errorMessage: 'Erro em buscar o usuário: ${e.message}'));
+          errorMessage: 'Erro ao buscar o usuário: ${e.message}'));
     } on Exception catch (e) {
       emit(
         ProfileErrorState(
@@ -68,7 +68,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (!userLoggedOut) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro em fazer o logout do usuário',
+            errorMessage: 'Erro ao fazer o logout do usuário',
           ),
         );
         return;
@@ -79,7 +79,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (storageRemoved == 0) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro em limpar as configurações do usuário',
+            errorMessage: 'Erro ao limpar as configurações do usuário',
           ),
         );
         return;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AppColor {
+abstract class AppColor {
+  AppColor._();
+
   ///Bookify primary color = [Color(0xFF62B2DE)]
   static const bookifyPrimaryColor = Color(0xFF62B2DE);
 
