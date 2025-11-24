@@ -1,5 +1,5 @@
-import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/book_ia_text_widget.dart';
-import 'package:bookify/src/features/reading_page_time_calculator/views/widgets/reading_page_timer/timer_widget.dart';
+import 'book_ia_text_widget.dart';
+import 'timer_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';

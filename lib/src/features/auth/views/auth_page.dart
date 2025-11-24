@@ -1,7 +1,5 @@
-import 'dart:io';
-
-import 'package:authentication_buttons/authentication_buttons.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
+import 'package:bookify/src/features/auth/widgets/platform_sign_in_buttons.dart';
 import 'package:bookify/src/features/auth/widgets/terms_information.dart';
 import 'package:bookify/src/features/reading_page_time_calculator/views/reading_page_time_calculator_page.dart';
 import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
@@ -26,7 +24,6 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   late final AuthBloc _bloc;
-  bool showLoader = false;
 
   @override
   void initState() {
@@ -43,13 +40,11 @@ class _AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
-  void _handleAuthStateListener(
-    BuildContext context,
-    AuthState state,
-  ) {
+  void _handleAuthStateListener(BuildContext context, AuthState state) {
     switch (state) {
+      case AuthInitialState():
+        break;
       case AuthLoadingState():
-        showLoader = true;
         SnackbarService.showSnackBar(
           context,
           'wait-snackbar'.i18n(),
@@ -57,7 +52,6 @@ class _AuthPageState extends State<AuthPage> {
         );
         break;
       case AuthSignedState():
-        showLoader = false;
         SnackbarService.showSnackBar(
           context,
           'auth-success-snackbar'.i18n(),
@@ -86,7 +80,6 @@ class _AuthPageState extends State<AuthPage> {
         );
         break;
       case AuthErrorState():
-        showLoader = false;
         SnackbarService.showSnackBar(
           context,
           state.errorMessage,
@@ -101,68 +94,45 @@ class _AuthPageState extends State<AuthPage> {
     final mediaQuerySizeOf = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      body: BlocListener<AuthBloc, AuthState>(
-        bloc: _bloc,
-        listener: _handleAuthStateListener,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                const Spacer(),
-                Image.asset(
-                  BookifyImages.authLogo,
-                  height: mediaQuerySizeOf.height * .5,
-                  width: mediaQuerySizeOf.width,
-                ),
-                const Spacer(),
-                if (Platform.isAndroid)
-                  AuthenticationButton(
-                    key: const Key('Google Button'),
-                    authenticationMethod: AuthenticationMethod.google,
-                    showLoader: showLoader,
-                    onPressed: () {
-                      _bloc.add(
-                        SignedInAuthEvent(
-                          signInTypeButton: SignInType.google,
-                        ),
-                      );
-                    },
-                  )
-                else if (Platform.isIOS)
-                  AuthenticationButton(
-                    key: const Key('Apple Button'),
-                    authenticationMethod: AuthenticationMethod.apple,
-                    showLoader: showLoader,
-                    onPressed: () {
-                      _bloc.add(
-                        SignedInAuthEvent(
-                          signInTypeButton: SignInType.apple,
-                        ),
-                      );
-                    },
-                  ),
-                const SizedBox(
-                  height: 20,
-                ),
-                AuthenticationButton(
-                  key: const Key('Facebook Button'),
-                  authenticationMethod: AuthenticationMethod.facebook,
-                  showLoader: showLoader,
-                  onPressed: () {
-                    _bloc.add(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const Spacer(),
+              Image.asset(
+                BookifyImages.authLogo,
+                height: mediaQuerySizeOf.height * .5,
+                width: mediaQuerySizeOf.width,
+              ),
+              const Spacer(),
+              BlocConsumer<AuthBloc, AuthState>(
+                bloc: _bloc,
+                listener: _handleAuthStateListener,
+                builder: (context, state) {
+                  return PlatformSignInButtons(
+                    showLoader: state is AuthLoadingState,
+                    onGooglePressed: () => _bloc.add(
+                      SignedInAuthEvent(
+                        signInTypeButton: SignInType.google,
+                      ),
+                    ),
+                    onApplePressed: () => _bloc.add(
+                      SignedInAuthEvent(
+                        signInTypeButton: SignInType.apple,
+                      ),
+                    ),
+                    onFacebookPressed: () => _bloc.add(
                       SignedInAuthEvent(
                         signInTypeButton: SignInType.facebook,
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const TermsInformation(),
-              ],
-            ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              const TermsInformation(),
+            ],
           ),
         ),
       ),

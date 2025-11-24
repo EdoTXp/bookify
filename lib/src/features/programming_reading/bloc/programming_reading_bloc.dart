@@ -5,19 +5,19 @@ import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'hour_time_calculator_event.dart';
-part 'hour_time_calculator_state.dart';
+part 'programming_reading_event.dart';
+part 'programming_reading_state.dart';
 
-class HourTimeCalculatorBloc
-    extends Bloc<HourTimeCalculatorEvent, HourTimeCalculatorState> {
+class ProgrammingReadingBloc
+    extends Bloc<ProgrammingReadingEvent, ProgrammingReadingState> {
   final UserHourTimeRepository _userHourTimeRepository;
   final NotificationsService _notificationsService;
   final int _readingNotificationId = 9999;
 
-  HourTimeCalculatorBloc(
+  ProgrammingReadingBloc(
     this._userHourTimeRepository,
     this._notificationsService,
-  ) : super(HourTimeCalculatorLoadingState()) {
+  ) : super(ProgrammingReadingLoadingState()) {
     on<GotHourTimeEvent>(_gotHourTimeEvent);
     on<InsertedHourTimeEvent>(_insertedHourTimeEvent);
     on<RemovedNotificationHourTimeEvent>(_removedNotificationHourTimeEvent);
@@ -25,27 +25,27 @@ class HourTimeCalculatorBloc
 
   Future<void> _gotHourTimeEvent(
     GotHourTimeEvent event,
-    Emitter<HourTimeCalculatorState> emit,
+    Emitter<ProgrammingReadingState> emit,
   ) async {
     try {
-      emit(HourTimeCalculatorLoadingState());
+      emit(ProgrammingReadingLoadingState());
 
       final userHourTimeModel = await _userHourTimeRepository.getUserHourTime();
 
       emit(
-        HourTimeCalculatorLoadedState(
+        ProgrammingReadingLoadedState(
           userHourTimeModel: userHourTimeModel,
         ),
       );
     } on StorageException catch (e) {
       emit(
-        HourTimeCalculatorErrorState(
+        ProgrammingReadingErrorState(
           errorMessage: 'Erro ao buscar a hora para leitura: $e',
         ),
       );
     } on Exception catch (e) {
       emit(
-        HourTimeCalculatorErrorState(
+        ProgrammingReadingErrorState(
           errorMessage: 'Erro inesperado: $e',
         ),
       );
@@ -54,10 +54,10 @@ class HourTimeCalculatorBloc
 
   Future<void> _insertedHourTimeEvent(
     InsertedHourTimeEvent event,
-    Emitter<HourTimeCalculatorState> emit,
+    Emitter<ProgrammingReadingState> emit,
   ) async {
     try {
-      emit(HourTimeCalculatorLoadingState());
+      emit(ProgrammingReadingLoadingState());
 
       final userHourTime = event.userHourTimeModel;
 
@@ -68,7 +68,7 @@ class HourTimeCalculatorBloc
 
       if (userHourTimeInserted == 0) {
         emit(
-          HourTimeCalculatorErrorState(
+          ProgrammingReadingErrorState(
             errorMessage: 'Erro ao inserir buscar a hora de leitura',
           ),
         );
@@ -88,16 +88,16 @@ class HourTimeCalculatorBloc
         notificationChannel: NotificationChannel.readChannel,
       );
 
-      emit(HourTimeCalculatorInsertedState());
+      emit(ProgrammingReadingInsertedState());
     } on StorageException catch (e) {
       emit(
-        HourTimeCalculatorErrorState(
+        ProgrammingReadingErrorState(
           errorMessage: 'Erro ao inserir a hora de leitura: $e',
         ),
       );
     } on Exception catch (e) {
       emit(
-        HourTimeCalculatorErrorState(
+        ProgrammingReadingErrorState(
           errorMessage: 'Erro inesperado: $e',
         ),
       );
@@ -106,19 +106,19 @@ class HourTimeCalculatorBloc
 
   Future<void> _removedNotificationHourTimeEvent(
     RemovedNotificationHourTimeEvent event,
-    Emitter<HourTimeCalculatorState> emit,
+    Emitter<ProgrammingReadingState> emit,
   ) async {
     try {
-      emit(HourTimeCalculatorLoadingState());
+      emit(ProgrammingReadingLoadingState());
 
       await _notificationsService.cancelNotificationById(
         id: _readingNotificationId,
       );
 
-      emit(HourTimeCalculatorRemovedNotificationState());
+      emit(ProgrammingReadingRemovedNotificationState());
     } on Exception catch (e) {
       emit(
-        HourTimeCalculatorErrorState(
+        ProgrammingReadingErrorState(
           errorMessage: 'Erro inesperado: $e',
         ),
       );

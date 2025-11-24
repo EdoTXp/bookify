@@ -3,25 +3,25 @@ import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'reading_page_time_calculator_event.dart';
-part 'reading_page_time_calculator_state.dart';
+part 'reading_page_timer_event.dart';
+part 'reading_page_timer_state.dart';
 
-class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
-    ReadingPageTimeCalculatorState> {
+class ReadingPageTimerBloc
+    extends Bloc<ReadingPageTimerEvent, ReadingPageTimerState> {
   final UserPageReadingTimeRepository _userPageReadingTimeRepository;
 
-  ReadingPageTimeCalculatorBloc(
+  ReadingPageTimerBloc(
     this._userPageReadingTimeRepository,
-  ) : super(ReadingPageTimeCalculatorLoadingState()) {
+  ) : super(ReadingPageTimerLoadingState()) {
     on<InsertedReadingPageTimeEvent>(_insertedReadingPageTimeEvent);
   }
 
   Future<void> _insertedReadingPageTimeEvent(
     InsertedReadingPageTimeEvent event,
-    Emitter<ReadingPageTimeCalculatorState> emit,
+    Emitter<ReadingPageTimerState> emit,
   ) async {
     try {
-      emit(ReadingPageTimeCalculatorLoadingState());
+      emit(ReadingPageTimerLoadingState());
 
       final userPageReading = UserPageReadingTimeModel(
         pageReadingTimeSeconds: event.readingPageTime,
@@ -34,23 +34,23 @@ class ReadingPageTimeCalculatorBloc extends Bloc<ReadingPageTimeCalculatorEvent,
 
       if (userPageReadingTimeInserted == 0) {
         emit(
-          ReadingPageTimeCalculatorErrorState(
+          ReadingPageTimerErrorState(
             errorMessage: 'Erro ao inserir o tempo de leitura da página',
           ),
         );
         return;
       }
 
-      emit(ReadingPageTimeCalculatorInsertedState());
+      emit(ReadingPageTimerInsertedState());
     } on StorageException catch (e) {
       emit(
-        ReadingPageTimeCalculatorErrorState(
+        ReadingPageTimerErrorState(
           errorMessage: 'Erro ao inserir o tempo de leitura da página: $e',
         ),
       );
     } on Exception catch (e) {
       emit(
-        ReadingPageTimeCalculatorErrorState(
+        ReadingPageTimerErrorState(
           errorMessage: 'Erro inesperado: $e',
         ),
       );

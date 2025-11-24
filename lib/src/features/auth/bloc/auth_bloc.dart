@@ -9,7 +9,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthService _authService;
 
-  AuthBloc(this._authService) : super(AuthLoadingState()) {
+  AuthBloc(this._authService) : super(AuthInitialState()) {
     on<SignedInAuthEvent>(_signedInAuthEvent);
   }
 

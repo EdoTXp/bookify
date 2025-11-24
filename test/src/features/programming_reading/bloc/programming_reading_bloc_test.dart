@@ -4,7 +4,7 @@ import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
-import 'package:bookify/src/features/hour_time_calculator/bloc/hour_time_calculator_bloc.dart';
+import 'package:bookify/src/features/programming_reading/bloc/programming_reading_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -24,31 +24,31 @@ void main() {
 
   final userHourTimeRepository = UserReadingTimeRepositoryMock();
   final notificationsService = NotificationsServiceMock();
-  late HourTimeCalculatorBloc hourTimeCalculatorBloc;
+  late ProgrammingReadingBloc programmingReadingBloc;
 
   setUp(
     () {
       registerFallbackValue(NotificationChannel.readChannel);
       registerFallbackValue(RepeatIntervalType.daily);
 
-      hourTimeCalculatorBloc = HourTimeCalculatorBloc(
+      programmingReadingBloc = ProgrammingReadingBloc(
         userHourTimeRepository,
         notificationsService,
       );
     },
   );
 
-  group('Test HourTimeCalculator Bloc', () {
+  group('Test ProgrammingReading Bloc', () {
     blocTest(
       ' Initial state is empty',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       verify: (bloc) async => await bloc.close(),
       expect: () => [],
     );
 
     blocTest(
       'Test GotHourTimeEvent work',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.getUserHourTime(),
       ).thenAnswer(
@@ -59,14 +59,14 @@ void main() {
         () => userHourTimeRepository.getUserHourTime(),
       ).called(1),
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorLoadedState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingLoadedState>(),
       ],
     );
 
     blocTest(
       'Test GotHourTimeEvent work when throw StorageException',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.getUserHourTime(),
       ).thenThrow(
@@ -77,14 +77,14 @@ void main() {
         () => userHourTimeRepository.getUserHourTime(),
       ).called(1),
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorErrorState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingErrorState>(),
       ],
     );
 
     blocTest(
       'Test GotHourTimeEvent work  when throw Generic Exception',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.getUserHourTime(),
       ).thenThrow(
@@ -95,14 +95,14 @@ void main() {
         () => userHourTimeRepository.getUserHourTime(),
       ).called(1),
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorErrorState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingErrorState>(),
       ],
     );
 
     blocTest(
       'Test InsertedHourTimeEvent work',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () {
         when(
           () => userHourTimeRepository.setUserHourTime(
@@ -147,14 +147,14 @@ void main() {
         ).called(1);
       },
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorInsertedState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingInsertedState>(),
       ],
     );
 
     blocTest(
       'Test InsertedHourTimeEvent work when userHourTimeInserted == 0',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.setUserHourTime(
           userHourTime: userHourTime,
@@ -185,14 +185,14 @@ void main() {
         );
       },
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorErrorState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingErrorState>(),
       ],
     );
 
     blocTest(
       'Test InsertedHourTimeEvent work when throw StorageException',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.setUserHourTime(
           userHourTime: userHourTime,
@@ -223,14 +223,14 @@ void main() {
         );
       },
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorErrorState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingErrorState>(),
       ],
     );
 
     blocTest(
       'Test InsertedHourTimeEvent work when throw Generic Exception',
-      build: () => hourTimeCalculatorBloc,
+      build: () => programmingReadingBloc,
       setUp: () => when(
         () => userHourTimeRepository.setUserHourTime(
           userHourTime: userHourTime,
@@ -261,15 +261,15 @@ void main() {
         );
       },
       expect: () => [
-        isA<HourTimeCalculatorLoadingState>(),
-        isA<HourTimeCalculatorErrorState>(),
+        isA<ProgrammingReadingLoadingState>(),
+        isA<ProgrammingReadingErrorState>(),
       ],
     );
   });
 
   blocTest(
     'Test RemovedNotificationHourTimeEvent work',
-    build: () => hourTimeCalculatorBloc,
+    build: () => programmingReadingBloc,
     setUp: () => when(
       () => notificationsService.cancelNotificationById(
         id: any(named: 'id'),
@@ -286,14 +286,14 @@ void main() {
       ).called(1);
     },
     expect: () => [
-      isA<HourTimeCalculatorLoadingState>(),
-      isA<HourTimeCalculatorRemovedNotificationState>(),
+      isA<ProgrammingReadingLoadingState>(),
+      isA<ProgrammingReadingRemovedNotificationState>(),
     ],
   );
 
   blocTest(
     'Test RemovedNotificationHourTimeEvent  work when throw Generic Exception',
-    build: () => hourTimeCalculatorBloc,
+    build: () => programmingReadingBloc,
     setUp: () => when(
       () => notificationsService.cancelNotificationById(
         id: any(named: 'id'),
@@ -310,8 +310,8 @@ void main() {
       ).called(1);
     },
     expect: () => [
-      isA<HourTimeCalculatorLoadingState>(),
-      isA<HourTimeCalculatorErrorState>(),
+      isA<ProgrammingReadingLoadingState>(),
+      isA<ProgrammingReadingErrorState>(),
     ],
   );
 }

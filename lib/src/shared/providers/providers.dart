@@ -3,7 +3,9 @@ import 'package:bookify/src/shared/providers/services/services.dart';
 import 'package:bookify/src/shared/providers/blocs/blocs_providers.dart';
 import 'package:provider/single_child_widget.dart';
 
-class Providers {
+abstract class Providers {
+  Providers._();
+
   static final List<SingleChildStatelessWidget> providers = [
     ...localDatabaseRepositoriesProviders,
     ...userSettingsStorageProviders,
@@ -13,8 +15,8 @@ class Providers {
     ...userThemeBlocProviders,
     ...userInformationBlocProviders,
     ...authBlocProviders,
-    ...readingPageTimeCalculatorBlocProviders,
-    ...hourTimeCalculatorBlocProviders,
+    ...readingPageTimerBlocProviders,
+    ...programmingReadingBlocProviders,
     ...homeBlocProviders,
     ...profileBlocProviders,
     ...aboutBlocProviders,

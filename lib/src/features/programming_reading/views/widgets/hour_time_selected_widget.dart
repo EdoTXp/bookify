@@ -98,7 +98,6 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
                     _startingTime.format(context),
                     _endingTime.format(context),
                   ]),
-                  //  '${_startingTime.format(context)} até ${_endingTime.format(context)}',
                   textScaler: TextScaler.noScaling,
                   textAlign: TextAlign.center,
                   style: const TextStyle(

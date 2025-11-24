@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
-import 'package:bookify/src/features/reading_page_time_calculator/bloc/reading_page_time_calculator_bloc.dart';
+import 'package:bookify/src/features/reading_page_timer/bloc/reading_page_timer_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -14,25 +14,25 @@ void main() {
     pageReadingTimeSeconds: 600,
   );
   final userPageReadingTimeRepository = UserPageReadingTimeRepositoryMock();
-  late ReadingPageTimeCalculatorBloc readingPageTimeCalculatorBloc;
+  late ReadingPageTimerBloc readingPageTimerBloc;
 
   setUp(() {
-    readingPageTimeCalculatorBloc = ReadingPageTimeCalculatorBloc(
+    readingPageTimerBloc = ReadingPageTimerBloc(
       userPageReadingTimeRepository,
     );
   });
 
-  group('Test ReadingPageTimeCalculator Bloc', () {
+  group('Test ReadingPageTimer Bloc', () {
     blocTest(
       'Initial state is empty',
-      build: () => readingPageTimeCalculatorBloc,
+      build: () => readingPageTimerBloc,
       verify: (bloc) async => await bloc.close(),
       expect: () => [],
     );
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work',
-      build: () => readingPageTimeCalculatorBloc,
+      build: () => readingPageTimerBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -51,14 +51,14 @@ void main() {
         ),
       ).called(1),
       expect: () => [
-        isA<ReadingPageTimeCalculatorLoadingState>(),
-        isA<ReadingPageTimeCalculatorInsertedState>(),
+        isA<ReadingPageTimerLoadingState>(),
+        isA<ReadingPageTimerInsertedState>(),
       ],
     );
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when userPageReadingTimeInserted == 0',
-      build: () => readingPageTimeCalculatorBloc,
+      build: () => readingPageTimerBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -77,14 +77,14 @@ void main() {
         ),
       ).called(1),
       expect: () => [
-        isA<ReadingPageTimeCalculatorLoadingState>(),
-        isA<ReadingPageTimeCalculatorErrorState>(),
+        isA<ReadingPageTimerLoadingState>(),
+        isA<ReadingPageTimerErrorState>(),
       ],
     );
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when throw StorageException',
-      build: () => readingPageTimeCalculatorBloc,
+      build: () => readingPageTimerBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -103,14 +103,14 @@ void main() {
         ),
       ).called(1),
       expect: () => [
-        isA<ReadingPageTimeCalculatorLoadingState>(),
-        isA<ReadingPageTimeCalculatorErrorState>(),
+        isA<ReadingPageTimerLoadingState>(),
+        isA<ReadingPageTimerErrorState>(),
       ],
     );
 
     blocTest(
       'Test InsertedReadingPageTimeEvent work when throw Generic Exception',
-      build: () => readingPageTimeCalculatorBloc,
+      build: () => readingPageTimerBloc,
       setUp: () => when(
         () => userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
@@ -129,8 +129,8 @@ void main() {
         ),
       ).called(1),
       expect: () => [
-        isA<ReadingPageTimeCalculatorLoadingState>(),
-        isA<ReadingPageTimeCalculatorErrorState>(),
+        isA<ReadingPageTimerLoadingState>(),
+        isA<ReadingPageTimerErrorState>(),
       ],
     );
   });

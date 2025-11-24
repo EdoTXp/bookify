@@ -102,12 +102,23 @@ jobs:
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
-      #14 Create Release
+      #14 Get last commit message
+      - name: Get last commit message
+        if: github.event_name == 'push'
+        id: get_commit_message
+        run: |
+          message=$(git log -1 --pretty=format:%B)
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$message" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      #15 Create Release
       - name: Create Release
+        if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk"
-          generateReleaseNotes: true
+          body: ${{ steps.get_commit_message.outputs.message }}
           tag: v${{ env.VERSION }}
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true

@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
-import 'package:bookify/src/features/hour_time_calculator/views/widgets/programming_reading/hour_time_selected_widget.dart';
-import 'package:bookify/src/features/hour_time_calculator/views/widgets/programming_reading/repeat_time_widget.dart';
+import 'package:bookify/src/features/programming_reading/views/widgets/hour_time_selected_widget.dart';
+import 'package:bookify/src/features/programming_reading/views/widgets/repeat_time_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
