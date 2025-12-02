@@ -75,16 +75,18 @@ class ProgrammingReadingBloc
         return;
       }
 
-      final repeatType = switch (userHourTime.repeatHourTimeType) {
-        RepeatHourTimeType.daily => RepeatIntervalType.daily,
-        RepeatHourTimeType.weekly => RepeatIntervalType.weekly,
-      };
-
-      await _notificationsService.periodicallyShowNotification(
+      await _notificationsService.periodicallyShowNotificationWithSpecificDate(
         id: _readingNotificationId,
         title: 'A hora da leitura chegou!',
         body: 'A história está esperando a gente!',
-        repeatType: repeatType,
+        repeatType: userHourTime.repeatHourTimeType,
+        scheduledDate: DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+          userHourTime.startingHour,
+          userHourTime.startingMinute,
+        ),
         notificationChannel: NotificationChannel.readChannel,
       );
 

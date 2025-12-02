@@ -15,7 +15,9 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   @override
   Future<List<BookModel>> findBooksByAuthor({required String author}) async {
     try {
-      final books = await _booksDataSource.findBooksByAuthor(author: author);
+      final books = await _booksDataSource.findBooksByAuthor(
+        author: author,
+      );
       return books;
     } on BookNotFoundException {
       rethrow;
@@ -29,7 +31,9 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   @override
   Future<List<BookModel>> findBooksByIsbn({required String isbn}) async {
     try {
-      final books = await _booksDataSource.findBooksByIsbn(isbn: isbn);
+      final books = await _booksDataSource.findBooksByIsbn(
+        isbn: isbn,
+      );
       return books;
     } on BookNotFoundException {
       rethrow;
@@ -44,8 +48,9 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   Future<List<BookModel>> findBooksByPublisher(
       {required String publisher}) async {
     try {
-      final books =
-          await _booksDataSource.findBooksByPublisher(publisher: publisher);
+      final books = await _booksDataSource.findBooksByPublisher(
+        publisher: publisher,
+      );
       return books;
     } on BookNotFoundException {
       rethrow;
@@ -60,8 +65,9 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   Future<List<BookModel>> findBooksByCategory(
       {required String category}) async {
     try {
-      final books =
-          await _booksDataSource.findBooksByCategory(category: category);
+      final books = await _booksDataSource.findBooksByCategory(
+        category: category,
+      );
       return books;
     } on BookNotFoundException {
       rethrow;
@@ -75,7 +81,9 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   @override
   Future<List<BookModel>> findBooksByTitle({required String title}) async {
     try {
-      final books = await _booksDataSource.findBooksByTitle(title: title);
+      final books = await _booksDataSource.findBooksByTitle(
+        title: title,
+      );
       return books;
     } on BookNotFoundException {
       rethrow;

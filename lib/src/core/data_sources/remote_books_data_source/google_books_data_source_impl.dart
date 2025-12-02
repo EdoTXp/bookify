@@ -11,7 +11,7 @@ class GoogleBooksDataSourceImpl implements RemoteBooksDataSource {
 
   static const _baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
   static const _urlParams =
-      '&printType=books&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
+      '&printType=books&orderBy=newest&fields=items(id, volumeInfo(title, authors, publisher, description, infoLink, pageCount, imageLinks/thumbnail, categories, averageRating, ratingsCount))&maxResults=40';
 
   GoogleBooksDataSourceImpl(this._client);
 
@@ -44,9 +44,7 @@ class GoogleBooksDataSourceImpl implements RemoteBooksDataSource {
         baseUrl: _baseUrl,
         urlParams: urlParams,
       );
-      final books = (response['items'] as List)
-          .map((bookMap) => GoogleBooksAdapter.fromJson(bookMap))
-          .toList();
+      final books = GoogleBooksAdapter.fromJsonList(response);
 
       return books;
     } on TypeError {

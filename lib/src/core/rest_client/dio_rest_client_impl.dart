@@ -16,10 +16,8 @@ class DioRestClientImpl implements RestClient {
       DioCacheInterceptor(
         options: CacheOptions(
           store: MemCacheStore(),
-          policy: CachePolicy.request,
           hitCacheOnErrorCodes: [401, 403],
           maxStale: const Duration(days: 7),
-          priority: CachePriority.normal,
         ),
       ),
     );
@@ -28,18 +26,22 @@ class DioRestClientImpl implements RestClient {
   Future<dynamic> get(
       {required String baseUrl, required String urlParams}) async {
     try {
-      _dio.options.baseUrl = baseUrl;
-
-      final response = await _dio.get(urlParams);
-      if (response.statusCode == 200) {
-        return response.data;
-      } else if (response.statusCode == 404) {
-        throw BookNotFoundException(response.statusMessage!);
-      } else {
-        throw BookException(response.statusMessage!);
-      }
+      final fullUrl = '$baseUrl$urlParams';
+      final response = await _dio.get(fullUrl);
+      return response.data;
     } on DioException catch (e) {
-      throw SocketException(e.message ?? e.toString());
+      if (e.response?.statusCode == 404) {
+        throw BookNotFoundException(
+          e.response?.statusMessage ?? 'Book not found',
+        );
+      } else if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout) {
+        throw BookException(
+          e.response?.statusMessage ?? 'An error occurred',
+        );
+      } else {
+        throw SocketException(e.message ?? e.toString());
+      }
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
@@ -129,28 +130,33 @@ class NotificationsServiceImpl implements NotificationsService {
   }
 
   @override
-  Future<void> periodicallyShowNotification({
+  Future<void> periodicallyShowNotificationWithSpecificDate({
     required int id,
     required String title,
     required String body,
-    required RepeatIntervalType repeatType,
+    required RepeatHourTimeType repeatType,
+    required DateTime scheduledDate,
     required NotificationChannel notificationChannel,
   }) async {
-    final repeatInterval = switch (repeatType) {
-      RepeatIntervalType.daily => RepeatInterval.daily,
-      RepeatIntervalType.weekly => RepeatInterval.weekly,
+    final dateTimeComponents = switch (repeatType) {
+      RepeatHourTimeType.daily => DateTimeComponents.time,
+      RepeatHourTimeType.weekly => DateTimeComponents.dayOfWeekAndTime,
     };
 
-    await _notifications.periodicallyShow(
+    await _notifications.zonedSchedule(
       id,
       title,
       body,
-      repeatInterval,
+      tz.TZDateTime.from(
+        scheduledDate,
+        tz.local,
+      ),
       _getNotificationDetails(
         notificationChannel,
         body,
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: dateTimeComponents,
     );
   }
 

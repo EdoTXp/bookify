@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
@@ -29,7 +30,9 @@ void main() {
   setUp(
     () {
       registerFallbackValue(NotificationChannel.readChannel);
-      registerFallbackValue(RepeatIntervalType.daily);
+      registerFallbackValue(RepeatHourTimeType.daily);
+
+      registerFallbackValue(DateTime.now());
 
       programmingReadingBloc = ProgrammingReadingBloc(
         userHourTimeRepository,
@@ -113,12 +116,13 @@ void main() {
         );
 
         when(
-          () => notificationsService.periodicallyShowNotification(
+          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
             id: any(named: 'id'),
             title: any(named: 'title'),
             body: any(named: 'body'),
             notificationChannel: any(named: 'notificationChannel'),
             repeatType: any(named: 'repeatType'),
+            scheduledDate: any(named: 'scheduledDate'),
           ),
         ).thenAnswer(
           (_) async {},
@@ -137,12 +141,13 @@ void main() {
         ).called(1);
 
         verify(
-          () => notificationsService.periodicallyShowNotification(
+          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
             id: any(named: 'id'),
             title: any(named: 'title'),
             body: any(named: 'body'),
             notificationChannel: any(named: 'notificationChannel'),
             repeatType: any(named: 'repeatType'),
+            scheduledDate: any(named: 'scheduledDate'),
           ),
         ).called(1);
       },
@@ -175,12 +180,13 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotification(
+          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
             id: any(named: 'id'),
             title: any(named: 'title'),
             body: any(named: 'body'),
             notificationChannel: any(named: 'notificationChannel'),
             repeatType: any(named: 'repeatType'),
+            scheduledDate: any(named: 'scheduledDate'),
           ),
         );
       },
@@ -213,12 +219,13 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotification(
+          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
             id: any(named: 'id'),
             title: any(named: 'title'),
             body: any(named: 'body'),
             notificationChannel: any(named: 'notificationChannel'),
             repeatType: any(named: 'repeatType'),
+            scheduledDate: any(named: 'scheduledDate'),
           ),
         );
       },
@@ -251,12 +258,13 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotification(
+          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
             id: any(named: 'id'),
             title: any(named: 'title'),
             body: any(named: 'body'),
             notificationChannel: any(named: 'notificationChannel'),
             repeatType: any(named: 'repeatType'),
+            scheduledDate: any(named: 'scheduledDate'),
           ),
         );
       },

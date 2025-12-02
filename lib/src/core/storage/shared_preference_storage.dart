@@ -17,72 +17,55 @@ class SharedPreferencesStorage implements Storage {
   }
 
   @override
-  Future<int> insertStorage({required String key, Object? value}) async {
+  Future<int> insertStorage({
+    required String key,
+    required Object value,
+  }) async {
     try {
       final sharedPreferences = await SharedPreferences.getInstance();
 
-      final int storageInserted;
+      final storageInserted = switch (value.runtimeType) {
+        const (int) => await sharedPreferences.setInt(
+            key,
+            value as int,
+          ),
+        const (String) => await sharedPreferences.setString(
+            key,
+            value as String,
+          ),
+        const (bool) => await sharedPreferences.setBool(
+            key,
+            value as bool,
+          ),
+        const (double) => await sharedPreferences.setDouble(
+            key,
+            value as double,
+          ),
+        const (List<String>) => await sharedPreferences.setStringList(
+            key,
+            value as List<String>,
+          ),
+        _ => throw StorageException(
+            'Type of value not valid: ${value.runtimeType}',
+          ),
+      };
 
-      switch (value.runtimeType) {
-        case const (int):
-          storageInserted = await sharedPreferences.setInt(
-                    key,
-                    value as int,
-                  ) ==
-                  true
-              ? 1
-              : 0;
-          break;
-
-        case const (String):
-          storageInserted = await sharedPreferences.setString(
-                    key,
-                    value as String,
-                  ) ==
-                  true
-              ? 1
-              : 0;
-          break;
-
-        case const (bool):
-          storageInserted = await sharedPreferences.setBool(
-                    key,
-                    value as bool,
-                  ) ==
-                  true
-              ? 1
-              : 0;
-          break;
-
-        case const (double):
-          storageInserted = await sharedPreferences.setDouble(
-                    key,
-                    value as double,
-                  ) ==
-                  true
-              ? 1
-              : 0;
-          break;
-
-        case const (List<String>):
-          storageInserted = await sharedPreferences.setStringList(
-                    key,
-                    value as List<String>,
-                  ) ==
-                  true
-              ? 1
-              : 0;
-          break;
-
-        default:
-          throw StorageException(
-              'Type of value not valid: ${value.runtimeType}');
-      }
-
-      return storageInserted;
+      return storageInserted == true ? 1 : 0;
     } catch (e) {
       throw StorageException(e.toString());
     }
+  }
+
+  @override
+  Future<bool> existsStorage({required String key}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.containsKey(key);
+  }
+
+  @override
+  Future<int> getKeysCount() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getKeys().length;
   }
 
   @override
