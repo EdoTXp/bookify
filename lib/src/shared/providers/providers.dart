@@ -1,4 +1,6 @@
+import 'package:bookify/src/shared/providers/data_sources/remote_books_data_source_providers.dart';
 import 'package:bookify/src/shared/providers/repositories/repositories_providers.dart';
+import 'package:bookify/src/shared/providers/rest_client/rest_client_providers.dart';
 import 'package:bookify/src/shared/providers/services/services.dart';
 import 'package:bookify/src/shared/providers/blocs/blocs_providers.dart';
 import 'package:provider/single_child_widget.dart';
@@ -17,6 +19,9 @@ abstract class Providers {
     ...authBlocProviders,
     ...readingPageTimerBlocProviders,
     ...programmingReadingBlocProviders,
+    ...restClientProvider,
+    ...remoteBooksDataSourceProviders,
+    ...remoteBooksRepositoryProviders,
     ...homeBlocProviders,
     ...profileBlocProviders,
     ...aboutBlocProviders,

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bookify/src/core/repositories/google_book_repository/google_books_repository.dart';
+import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
 import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,10 +10,7 @@ part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  final GoogleBooksRepository _booksRepository;
-
-  /// Variable that avoids making many requests to the API for the same books.
-  List<BookModel>? _cachedBooksList;
+  final RemoteBooksRepository _booksRepository;
 
   BookBloc(this._booksRepository) : super(BooksLoadingState()) {
     on<GotAllBooksEvent>(_getAllBooks);
@@ -31,12 +28,6 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     try {
       emit(BooksLoadingState());
 
-      if (_cachedBooksList != null) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        emit(BooksLoadedState(books: _cachedBooksList!));
-        return;
-      }
-
       final books = await _booksRepository.getAllBooks();
 
       if (books.isEmpty) {
@@ -44,7 +35,6 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         return;
       }
 
-      _cachedBooksList = books;
       emit(BooksLoadedState(books: books));
     } on SocketException catch (socketException) {
       emit(BookErrorSate(errorMessage: socketException.message));

@@ -1,3 +1,3 @@
 abstract interface class RestClient {
-  Future<dynamic> get(String url);
+  Future<dynamic> get({required String baseUrl, required String urlParams});
 }

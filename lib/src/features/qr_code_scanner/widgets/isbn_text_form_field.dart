@@ -28,7 +28,7 @@ class IsbnTextFormField extends StatelessWidget {
       height: 120,
       child: Form(
         key: formKey,
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Center(
           child: TextFormField(
             key: const Key('isbnManuallyTextFormField'),

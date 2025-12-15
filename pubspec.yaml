@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.9.0
+version: 2.9.1
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
   dio: ^5.9.0 # Used to receive books through the Google Books API.
+  dio_cache_interceptor: ^4.0.5 # Used to cache the API responses.
   provider: ^6.1.5+1 # Used for DI.
   flutter_bloc: ^9.1.1 # Used for state management.
   cached_network_image: ^3.4.1 # Used to show the cover of the cached book.
