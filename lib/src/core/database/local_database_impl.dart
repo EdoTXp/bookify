@@ -174,7 +174,7 @@ class LocalDatabaseImpl implements LocalDatabase {
     required String table,
     List<String>? columns,
     required String idColumn,
-    required id,
+    required dynamic id,
   }) async {
     try {
       final db = await database;
@@ -280,7 +280,7 @@ class LocalDatabaseImpl implements LocalDatabase {
   Future<int> countItemsById({
     required String table,
     required String idColumn,
-    required id,
+    required dynamic id,
   }) async {
     try {
       final db = await database;
@@ -327,9 +327,9 @@ class LocalDatabaseImpl implements LocalDatabase {
   Future<int> deleteWithAnotherColumn({
     required String table,
     required String otherColumn,
-    required value,
+    required dynamic value,
     required String idColumn,
-    required id,
+    required dynamic id,
   }) async {
     try {
       final db = await database;
