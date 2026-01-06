@@ -137,7 +137,7 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
             ),
           )
         : BookcaseWidget(
-            key: const Key('Bookcase Widget'),
+            key: const Key('BookcaseWidget'),
             bookcaseDto: bookcasesDto[index],
             onTap: () => _onTap(
               context: context,

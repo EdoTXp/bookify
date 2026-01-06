@@ -25,7 +25,7 @@ class ReadingPageTimeCalculatorPage extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                    key: const Key('Late Calculate Reading Button'),
+                    key: const Key('LateCalculateReadingButton'),
                     child: BookifyOutlinedButton.expanded(
                       text: 'calculate-later-button'.i18n(),
                       onPressed: () => Navigator.pop(context),

@@ -49,7 +49,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
       LoanDetailFinishedState() =>
         const CenterCircularProgressIndicator(),
       LoanDetailLoadedState(:final loanDto) => LoanDetailLoadedWidget(
-          key: const Key('Loan Detail LoadedState'),
+          key: const Key('LoanDetailLoadedState'),
           loanDto: loanDto,
           onPressedButton: () async {
             await ShowDialogService.showAlertDialog(

@@ -58,7 +58,7 @@ class _LoanPageState extends State<LoanPage> {
       LoanLoadingState() => const CenterCircularProgressIndicator(),
       LoanEmptyState() => Center(
           child: ItemEmptyStateWidget(
-            key: const Key('Loan Empty State'),
+            key: const Key('LoanEmptyState'),
             label: 'create-new-loan-button'.i18n(),
             onTap: () async {
               final loanInserted = await Navigator.pushNamed(
@@ -73,7 +73,7 @@ class _LoanPageState extends State<LoanPage> {
           ),
         ),
       LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
-          key: const Key('Loan Loaded State'),
+          key: const Key('LoanLoadedState'),
           loansDto: loansDto,
           refreshPage: _refreshPage,
         ),

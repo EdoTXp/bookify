@@ -231,7 +231,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 40,
                     ),
                     Slider.adaptive(
-                      key: const Key('Reading Slider'),
+                      key: const Key('ReadingSlider'),
                       min: 0.0,
                       max: book.pageCount.toDouble(),
                       value: _readedPages,
@@ -247,7 +247,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 40,
                     ),
                     BookifyOutlinedButton.expanded(
-                      key: const Key('Continue Reading Button'),
+                      key: const Key('ContinueReadingButton'),
                       text: 'continue-reading-button'.i18n(),
                       suffixIcon: Icons.menu_book_rounded,
                       onPressed: () async {
@@ -268,7 +268,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       height: 10,
                     ),
                     BookifyElevatedButton.expanded(
-                      key: const Key('Update / Finish Reading Button'),
+                      key: const Key('UpdateOrFinishReadingButton'),
                       text: (_readedPages == book.pageCount)
                           ? 'finish-reading-button'.i18n()
                           : 'update-reading-button'.i18n(),

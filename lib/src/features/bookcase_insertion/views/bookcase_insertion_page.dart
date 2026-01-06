@@ -199,7 +199,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      key: const Key('Bookcase name TextFormField'),
+                      key: const Key('BookcaseNameTextFormField'),
                       controller: _bookcaseNameEC,
                       cursorColor: colorScheme.secondary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -222,7 +222,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       textInputAction: TextInputAction.next,
                     ),
                     TextFormField(
-                      key: const Key('Bookcase description TextFormField'),
+                      key: const Key('BookcaseDescriptionTextFormField'),
                       controller: _bookcaseDescriptionEC,
                       cursorColor: colorScheme.secondary,
                       onTapOutside: (_) => context.unfocus(),
@@ -233,7 +233,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       textInputAction: TextInputAction.done,
                     ),
                     TextFormField(
-                      key: const Key('Bookcase color TextFormField'),
+                      key: const Key('BookcaseColorTextFormField'),
                       style: const TextStyle(fontSize: 16),
                       readOnly: true,
                       keyboardType: TextInputType.none,
@@ -272,7 +272,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       ),
                     ),
                     BookifyOutlinedButton.expanded(
-                      key: const Key('Confirm Bookcase insertion Button'),
+                      key: const Key('ConfirmBookcaseInsertionButton'),
                       text: 'confirm-button-normal'.i18n(),
                       onPressed: () => _onPressedButton(bookcaseModel),
                     ),

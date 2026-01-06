@@ -39,7 +39,7 @@ class BooksGridView extends StatelessWidget {
                     splashColor: Colors.transparent,
                     onTap: () => onTap(books[index]),
                     child: BookWidget(
-                      key: const Key('Book Widget'),
+                      key: const Key('BookWidget'),
                       bookImageUrl: books[index].imageUrl,
                     ),
                   ),

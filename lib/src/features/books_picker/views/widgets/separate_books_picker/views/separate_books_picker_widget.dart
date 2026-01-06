@@ -51,7 +51,7 @@ class _SeparateBooksPickerWidgetState extends State<SeparateBooksPickerWidget> {
           ),
         ),
       SeparateBooksPickerLoadedState(:final books) => BookSelectorWidget(
-          key: const Key('Book Selector Widget'),
+          key: const Key('BookSelectorWidget'),
           books: books,
           onSelectBook: (book) => Navigator.pop(context, book),
         ),

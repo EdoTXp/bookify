@@ -57,6 +57,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SearchBar(
+          key: const Key('SearchBar'),
           controller: widget.searchEC,
           onSubmitted: (value) {
             widget.searchEC.text = value.trim();
@@ -91,7 +92,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               },
             ),
             IconButton(
-              key: const Key('Search Type Button'),
+              key: const Key('SearchTypeButton'),
               tooltip: 'change-search-type-tooltip'.i18n(),
               onPressed: () {
                 setState(
@@ -142,7 +143,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     value: SearchType.title,
                     tooltip: 'search-by-title-tooltip'.i18n(),
                     icon: Icon(
-                      key: Key('Title Search Type Button'),
+                      key: Key('TitleSearchTypeButton'),
                       Icons.menu_book_rounded,
                     ),
                   ),
@@ -150,7 +151,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     value: SearchType.author,
                     tooltip: 'search-by-author-tooltip'.i18n(),
                     icon: Icon(
-                      key: Key('Author Search Type Button'),
+                      key: Key('AuthorSearchTypeButton'),
                       Icons.person_rounded,
                     ),
                   ),
@@ -158,7 +159,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     value: SearchType.category,
                     tooltip: 'search-by-category-tooltip'.i18n(),
                     icon: Icon(
-                      key: Key('Category Search Type Button'),
+                      key: Key('CategorySearchTypeButton'),
                       Icons.category_rounded,
                     ),
                   ),
@@ -166,7 +167,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     value: SearchType.publisher,
                     tooltip: 'search-by-publisher-tooltip'.i18n(),
                     icon: Icon(
-                      key: Key('Publisher Search Type Button'),
+                      key: Key('PublisherSearchTypeButton'),
                       Icons.publish_rounded,
                     ),
                   ),
@@ -174,7 +175,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     value: SearchType.isbn,
                     tooltip: 'search-by-isbn-tooltip'.i18n(),
                     icon: Icon(
-                      key: Key('ISBN Search Type Button'),
+                      key: Key('ISBNSearchTypeButton'),
                       BookifyIcons.isbn,
                     ),
                   ),

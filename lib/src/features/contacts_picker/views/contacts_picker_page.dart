@@ -43,7 +43,7 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
         ),
       ContactsPickerLoadedState(:final contacts) =>
         ContactsPickerLoadedStateWidget(
-          key: const Key('Contacts Picker LoadedState Widget'),
+          key: const Key('ContactsPickerLoadedStateWidget'),
           contacts: contacts,
           onSelectedContact: (contactDto) => Navigator.pop(context, contactDto),
         ),

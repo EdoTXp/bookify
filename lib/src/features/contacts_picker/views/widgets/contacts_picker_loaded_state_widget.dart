@@ -70,7 +70,7 @@ class _ContactsPickerLoadedStateWidgetState
               itemCount: widget.contacts.length,
               itemBuilder: (context, index) {
                 return ContactWidget(
-                  key: const Key('Contact Widget'),
+                  key: const Key('ContactWidget'),
                   contactDto: widget.contacts[index],
                   isSelected: selectedIndex == index,
                   onTap: () => _clickOnContact(

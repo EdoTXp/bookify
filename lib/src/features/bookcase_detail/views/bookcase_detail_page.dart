@@ -68,7 +68,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       BookcaseDetailDeletedState() =>
         const CenterCircularProgressIndicator(),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
-          key: const Key('Bookcase Detail Books Empty State'),
+          key: const Key('BookcaseDetailBooksEmptyState'),
           label: 'add-new-books-button'.i18n(),
           onTap: () async => await _addNewBooksBottomSheet(),
         ),

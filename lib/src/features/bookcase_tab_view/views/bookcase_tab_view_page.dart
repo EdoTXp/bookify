@@ -149,7 +149,7 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                       text: 'bookcases-label'.i18n(),
                     ),
                     Tab(
-                      key: Key('Loan TabView'),
+                      key: Key('LoanTabView'),
                       text: 'loans-label'.i18n(),
                     ),
                     Tab(

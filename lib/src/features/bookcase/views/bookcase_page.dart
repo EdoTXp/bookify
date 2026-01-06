@@ -59,14 +59,14 @@ class _BookcasePageState extends State<BookcasePage> {
       BookcaseLoadingState() => const CenterCircularProgressIndicator(),
       BookcaseEmptyState() => Center(
           child: ItemEmptyStateWidget(
-            key: const Key('Bookcase Empty State'),
+            key: const Key('BookcaseEmptyState'),
             label: 'create-new-bookcase-button'.i18n(),
             onTap: () async => await _onAddNewBookcase(),
           ),
         ),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
         BookcaseLoadedStateWidget(
-          key: const Key('Bookcase Loaded State'),
+          key: const Key('BookcaseLoadedState'),
           bookcasesDto: bookcasesDto,
           onRefresh: _refreshPage,
           onPressedDeleteButton: (selectedList) => _bloc.add(

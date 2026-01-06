@@ -56,7 +56,7 @@ class _BookcaseBooksInsertionPageState
         ),
       BookcaseBooksInsertionLoadedState(:final books) =>
         BookcaseBooksInsertionLoadedStateWidget(
-          key: const Key('Bookcase Books Insertion LoadedState Widget'),
+          key: const Key('BookcaseBooksInsertionLoadedStateWidget'),
           books: books,
           onSelectedBooks: (selectedBook) {
             _bloc.add(

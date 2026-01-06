@@ -46,7 +46,7 @@ class LoanLoadedStateWidget extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: LoanWidget(
-                  key: const Key('Loan Widget'),
+                  key: const Key('LoanWidget'),
                   loan: loansDto[index],
                   onTap: () async {
                     final loanChanged = await Navigator.pushNamed(

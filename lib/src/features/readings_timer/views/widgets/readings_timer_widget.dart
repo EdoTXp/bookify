@@ -214,7 +214,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: BookifyOutlinedButton.expanded(
-                    key: const Key('End Timer Button'),
+                    key: const Key('EndTimerButton'),
                     text: 'finish-and-return-button'.i18n(),
                     onPressed: () => Navigator.pop(context),
                   ),

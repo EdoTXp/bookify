@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.9.2
+version: 2.9.3
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -67,7 +67,8 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   bloc_test: ^10.0.0
-  sqflite_common_ffi: ^2.4.0+1
+  sqflite_common_ffi: ^2.4.0+2
+  patrol: ^4.1.0
 
   integration_test:
     sdk: flutter
@@ -78,6 +79,14 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+
+patrol:
+  app_name: Bookify
+  test_directory: integration_test
+  android:
+    package_name: com.bookifysoftware.bookify
+  ios:
+    bundle_id: com.bookifysoftware.bookify
 
 flutter:
   uses-material-design: true

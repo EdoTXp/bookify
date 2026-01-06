@@ -19,6 +19,10 @@ android {
     compileSdk = 36
     buildToolsVersion = "36.1.0"
     ndkVersion = "29.0.14206865"
+    
+    testOptions {
+    execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -39,12 +43,15 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
+        testInstrumentationRunner = "pl.leancode.patrol.PatrolJUnitRunner"
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
 
     dependencies {
         coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
-        implementation("androidx.window:window:1.5.0")
-        implementation("androidx.window:window-java:1.5.0")
+        implementation("androidx.window:window:1.5.1")
+        implementation("androidx.window:window-java:1.5.1")
+        androidTestUtil("androidx.test:orchestrator:1.6.1")
     }
 
     signingConfigs {

@@ -19,7 +19,7 @@ class ItemEmptyStateWidget extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Material(
         child: InkWell(
-          key: const Key('Item Empty State Button'),
+          key: const Key('ItemEmptyStateButton'),
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(16.0),

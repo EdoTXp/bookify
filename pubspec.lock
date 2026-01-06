@@ -109,10 +109,10 @@ packages:
     dependency: transitive
     description:
       name: bloc
-      sha256: a2cebb899f91d36eeeaa55c7b20b5915db5a9df1b8fd4a3c9c825e22e474537d
+      sha256: a48653a82055a900b88cd35f92429f068c5a8057ae9b136d197b3d56c57efb81
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.0"
+    version: "9.2.0"
   bloc_test:
     dependency: "direct dev"
     description:
@@ -281,14 +281,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  dispose_scope:
+    dependency: transitive
+    description:
+      name: dispose_scope
+      sha256: "48ec38ca2631c53c4f8fa96b294c801e55c335db5e3fb9f82cede150cfe5a2af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   equatable:
     dependency: transitive
     description:
       name: equatable
-      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      sha256: "3e0141505477fd8ad55d6eb4e7776d3fe8430be8e497ccb1521370c3f21a3e2b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   facebook_auth_desktop:
     dependency: transitive
     description:
@@ -717,6 +725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -933,6 +949,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  patrol:
+    dependency: "direct dev"
+    description:
+      name: patrol
+      sha256: "75c475671a1114586c5b24ab9dedbc61ba55cac6092c2dcd3776a46a2146da8e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  patrol_finders:
+    dependency: transitive
+    description:
+      name: patrol_finders
+      sha256: "2b46426a89498414ee5c24d2fbf34ba1796cc9dff4e49ce4322544bace03be6b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  patrol_log:
+    dependency: transitive
+    description:
+      name: patrol_log
+      sha256: "017fe7ea3ab662e78673a8acbbb7c96b71f38def59b70d44d0169887620e9fbf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   permission_handler:
     dependency: "direct main"
     description:
@@ -1214,10 +1254,10 @@ packages:
     dependency: "direct dev"
     description:
       name: sqflite_common_ffi
-      sha256: cc78dab586034b20a84904ff5a8eb63adae587baa1b383d40428e9ee491b30f6
+      sha256: c59fcdc143839a77581f7a7c4de018e53682408903a0a0800b95ef2dc4033eff
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0+1"
+    version: "2.4.0+2"
   sqflite_darwin:
     dependency: transitive
     description:
@@ -1238,10 +1278,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: "0374add4094d34fcf9d22068b6ddb4056782353ad4a5449bc5b71c5f2175f0ec"
+      sha256: "1d2d2afee96acccabf315e169a4d28019fa21d5217ee014840058a7fbc2008c6"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   stack_trace:
     dependency: transitive
     description:

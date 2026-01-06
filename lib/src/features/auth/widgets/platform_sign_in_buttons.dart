@@ -24,21 +24,21 @@ class PlatformSignInButtons extends StatelessWidget {
       children: [
         if (Platform.isAndroid)
           AuthenticationButton(
-            key: const Key('Google Button'),
+            key: const Key('GoogleButton'),
             authenticationMethod: AuthenticationMethod.google,
             showLoader: showLoader,
             onPressed: onGooglePressed,
           )
         else if (Platform.isIOS)
           AuthenticationButton(
-            key: const Key('Apple Button'),
+            key: const Key('AppleButton'),
             authenticationMethod: AuthenticationMethod.apple,
             showLoader: showLoader,
             onPressed: onApplePressed,
           ),
         const SizedBox(height: 20),
         AuthenticationButton(
-          key: const Key('Facebook Button'),
+          key: const Key('FacebookButton'),
           authenticationMethod: AuthenticationMethod.facebook,
           showLoader: showLoader,
           onPressed: onFacebookPressed,

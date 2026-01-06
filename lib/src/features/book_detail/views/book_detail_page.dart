@@ -241,7 +241,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: BookifyElevatedButton(
-                          key: const Key('Insert Or Remove Book Button'),
+                          key: const Key('InsertOrRemoveBookButton'),
                           // Update the icon
                           suffixIcon:
                               (_bookIsInserted) ? Icons.remove : Icons.add,

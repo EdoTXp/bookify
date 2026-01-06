@@ -87,7 +87,7 @@ class _BookcaseBooksInsertionLoadedStateWidgetState
                         message: books[index].title,
                         child: Material(
                           child: InkWell(
-                            key: const Key('Book insertion Widget'),
+                            key: const Key('BookInsertionWidget'),
                             splashColor: Colors.transparent,
                             onTap: () => _onTap(books[index]),
                             child: (_selectedList.contains(books[index]))

@@ -318,7 +318,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                         children: [
                           (_bookModel == null)
                               ? EmptyBookButtonWidget(
-                                  key: const Key('Empty Book Button Widget'),
+                                  key: const Key('EmptyBookButtonWidget'),
                                   onTap: () async => await _getBook(context),
                                   height: 250,
                                   width: 170,
@@ -329,7 +329,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                     onTap: () async => await _getBook(context),
                                     child: BookWidget.normalSize(
                                       key: const Key(
-                                        'Selected Book Button Widget',
+                                        'SelectedBookButtonWidget',
                                       ),
                                       bookImageUrl: _bookModel!.imageUrl,
                                     ),
@@ -341,7 +341,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                             child: _contact == null
                                 ? EmptyContactButtonWidget(
                                     key: const Key(
-                                      'Empty Contact Button Widget',
+                                      'EmptyContactButtonWidget',
                                     ),
                                     onTap: () async =>
                                         await _getContact(context),
@@ -351,7 +351,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                                   )
                                 : ContactCircleAvatar(
                                     key: const Key(
-                                      'Contact Circle Avatar',
+                                      'ContactCircleAvatar',
                                     ),
                                     name: _contact!.name,
                                     photo: _contact!.photo,
@@ -408,7 +408,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       height: 10,
                     ),
                     TextFormField(
-                      key: const Key('Observation TextFormField'),
+                      key: const Key('ObservationTextFormField'),
                       controller: _observationEC,
                       cursorColor: colorScheme.secondary,
                       onTapOutside: (_) => context.unfocus(),
@@ -427,7 +427,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       children: [
                         Flexible(
                           child: TextFormField(
-                            key: const Key('Loan Date TextFormField'),
+                            key: const Key('LoanDateTextFormField'),
                             controller: _loanDateEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -454,7 +454,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                         ),
                         Flexible(
                           child: TextFormField(
-                            key: const Key('Devolution Date TextFormField'),
+                            key: const Key('DevolutionDateTextFormField'),
                             controller: _devolutionDateEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -496,7 +496,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                       height: 20,
                     ),
                     BookifyElevatedButton.expanded(
-                      key: const Key('Confirm Loan Button'),
+                      key: const Key('ConfirmLoanButton'),
                       text: 'send-button'.i18n(),
                       onPressed: () => _onPressedButton(context),
                     ),

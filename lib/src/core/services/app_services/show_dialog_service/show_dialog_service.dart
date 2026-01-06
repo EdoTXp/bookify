@@ -58,7 +58,7 @@ class ShowDialogService {
                 child: cancelButtonWidget,
               ),
               TextButton(
-                key: const Key('Confirm Dialog Button'),
+                key: const Key('ConfirmDialogButton'),
                 onPressed: confirmButtonFunction,
                 child: confirmButtonWidget,
               )
@@ -69,7 +69,7 @@ class ShowDialogService {
                 child: cancelButtonWidget,
               ),
               CupertinoDialogAction(
-                key: const Key('Confirm Dialog Button'),
+                key: const Key('ConfirmDialogButton'),
                 isDefaultAction: true,
                 onPressed: confirmButtonFunction,
                 child: confirmButtonWidget,
@@ -111,7 +111,7 @@ class ShowDialogService {
             title: titleWidget,
             children: [
               SimpleDialogOption(
-                key: const Key('Ok Dialog Button'),
+                key: const Key('OkDialogButton'),
                 onPressed: () => Navigator.pop(context),
                 child: okButtonWidget,
               ),
@@ -122,7 +122,7 @@ class ShowDialogService {
           title: titleWidget,
           actions: [
             CupertinoDialogAction(
-              key: const Key('Ok Dialog Button'),
+              key: const Key('OkDialogButton'),
               isDefaultAction: true,
               onPressed: () => Navigator.pop(context),
               child: okButtonWidget,

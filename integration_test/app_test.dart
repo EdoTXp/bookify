@@ -38,19 +38,19 @@ Future<void> _testerPop(WidgetTester tester) async {
 }
 
 Future<void> _insertBookPicker(WidgetTester tester) async {
-  expect(find.byKey(const Key('Bookcase / Book Switch')), findsOneWidget);
-  await tester.tap(find.byKey(const Key('Bookcase / Book Switch')));
+  expect(find.byKey(const Key('BookcaseBookSwitch')), findsOneWidget);
+  await tester.tap(find.byKey(const Key('BookcaseBookSwitch')));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(const Key('Book Selector Widget')), findsOneWidget);
+  expect(find.byKey(const Key('BookSelectorWidget')), findsOneWidget);
 
-  await tester.tap(find.byKey(const Key('Book Widget')));
+  await tester.tap(find.byKey(const Key('BookWidget')));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(const Key('Book Widget')), findsNothing);
-  expect(find.byKey(const Key('Selected Book Widget')), findsOneWidget);
+  expect(find.byKey(const Key('BookWidget')), findsNothing);
+  expect(find.byKey(const Key('SelectedBookWidget')), findsOneWidget);
 
-  await tester.tap(find.byKey(const Key('Confirm IconButton')));
+  await tester.tap(find.byKey(const Key('ConfirmIconButton')));
   await tester.pumpAndSettle();
 }
 
@@ -85,39 +85,38 @@ Future<void> _testOnboardingPage(WidgetTester tester) async {
 
 Future<void> _testLoginPage(WidgetTester tester) async {
   Platform.isAndroid
-      ? expect(find.byKey(const Key('Google Button')), findsOneWidget)
-      : expect(find.byKey(const Key('Apple Button')), findsOneWidget);
+      ? expect(find.byKey(const Key('GoogleButton')), findsOneWidget)
+      : expect(find.byKey(const Key('AppleButton')), findsOneWidget);
 
-  expect(find.byKey(const Key('Facebook Button')), findsOneWidget);
+  expect(find.byKey(const Key('FacebookButton')), findsOneWidget);
 
   Platform.isAndroid
-      ? await tester.tap(find.byKey(const Key('Google Button')))
-      : await tester.tap(find.byKey(const Key('Facebook Button')));
+      ? await tester.tap(find.byKey(const Key('GoogleButton')))
+      : await tester.tap(find.byKey(const Key('FacebookButton')));
 
   // wait to allow you to log in.
   await tester.pumpAndSettle(const Duration(seconds: 6));
 
   // login successful, expect the page to be disposed.
-  expect(find.byKey(const Key('Google Button')), findsNothing);
-  expect(find.byKey(const Key('Apple Button')), findsNothing);
-  expect(find.byKey(const Key('Facebook Button')), findsNothing);
+  expect(find.byKey(const Key('GoogleButton')), findsNothing);
+  expect(find.byKey(const Key('AppleButton')), findsNothing);
+  expect(find.byKey(const Key('FacebookButton')), findsNothing);
 }
 
 Future<void> _testReadingSettingsPages(WidgetTester tester) async {
   // navigate to reading calculate page
-  expect(
-      find.byKey(const Key('Late Calculate Reading Button')), findsOneWidget);
+  expect(find.byKey(const Key('LateCalculateReadingButton')), findsOneWidget);
   // wait for hide possible snackbar
   await tester.pumpAndSettle(const Duration(seconds: 6));
-  await tester.tap(find.byKey(const Key('Late Calculate Reading Button')));
+  await tester.tap(find.byKey(const Key('LateCalculateReadingButton')));
   await tester.pumpAndSettle();
-  expect(find.byKey(const Key('Late Calculate Reading Button')), findsNothing);
+  expect(find.byKey(const Key('LateCalculateReadingButton')), findsNothing);
 
   // navigate to hour reading calculate
-  expect(find.byKey(const Key('Late Calculate Hour Button')), findsOneWidget);
-  await tester.tap(find.byKey(const Key('Late Calculate Hour Button')));
+  expect(find.byKey(const Key('LateCalculateHourButton')), findsOneWidget);
+  await tester.tap(find.byKey(const Key('LateCalculateHourButton')));
   await tester.pumpAndSettle();
-  expect(find.byKey(const Key('Late Calculate Hour Button')), findsNothing);
+  expect(find.byKey(const Key('LateCalculateHourButton')), findsNothing);
 }
 
 Future<void> _testHomePage(WidgetTester tester) async {
@@ -125,21 +124,21 @@ Future<void> _testHomePage(WidgetTester tester) async {
 
   expect(find.byKey(const Key('AnimatedSearchBar')), findsOneWidget);
   expect(find.byKey(const Key('BooksGridView')), findsOneWidget);
-  expect(find.byKey(const Key('Book Widget')), findsWidgets);
-  expect(find.byKey(const Key('Search Type Button')), findsOneWidget);
+  expect(find.byKey(const Key('BookWidget')), findsWidgets);
+  expect(find.byKey(const Key('SearchTypeButton')), findsOneWidget);
 
   // Tap to search bar on home page
-  await tester.tap(find.byKey(const Key('Search Type Button')));
+  await tester.tap(find.byKey(const Key('SearchTypeButton')));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(const Key('Title Search Type Button')), findsOneWidget);
-  expect(find.byKey(const Key('Author Search Type Button')), findsOneWidget);
-  expect(find.byKey(const Key('Category Search Type Button')), findsOneWidget);
-  expect(find.byKey(const Key('Publisher Search Type Button')), findsOneWidget);
-  expect(find.byKey(const Key('ISBN Search Type Button')), findsOneWidget);
+  expect(find.byKey(const Key('TitleSearchTypeButton')), findsOneWidget);
+  expect(find.byKey(const Key('AuthorSearchTypeButton')), findsOneWidget);
+  expect(find.byKey(const Key('CategorySearchTypeButton')), findsOneWidget);
+  expect(find.byKey(const Key('PublisherSearchTypeButton')), findsOneWidget);
+  expect(find.byKey(const Key('ISBNSearchTypeButton')), findsOneWidget);
 
   // Tap to ISBN button to search by ISBN
-  await tester.tap(find.byKey(const Key('ISBN Search Type Button')));
+  await tester.tap(find.byKey(const Key('ISBNSearchTypeButton')));
   await tester.pumpAndSettle();
 
   expect(find.text('enter-isbn-label'.i18n()), findsOneWidget);
@@ -153,18 +152,18 @@ Future<void> _testHomePage(WidgetTester tester) async {
   await tester.pumpAndSettle();
 
   expect(find.byKey(const Key('BooksGridView')), findsOneWidget);
-  expect(find.byKey(const Key('Book Widget')), findsWidgets);
+  expect(find.byKey(const Key('BookWidget')), findsWidgets);
 
   // tap on first book and open book detail
   await tester.tap(find.byTooltip('Memórias póstumas de Brás Cubas'));
   await tester.pumpAndSettle();
 
   expect(find.byIcon(Icons.bookmark_border), findsOneWidget);
-  expect(find.byKey(const Key('Insert Or Remove Book Button')), findsOneWidget);
+  expect(find.byKey(const Key('InsertOrRemoveBookButton')), findsOneWidget);
   expect(find.text('add-button'.i18n()), findsOneWidget);
 
   // Add book to my books bookcase
-  await tester.tap(find.byKey(const Key('Insert Or Remove Book Button')));
+  await tester.tap(find.byKey(const Key('InsertOrRemoveBookButton')));
   await tester.pumpAndSettle();
 
   expect(find.byIcon(Icons.bookmark), findsOneWidget);
@@ -181,50 +180,50 @@ Future<void> _testBookcasePage(WidgetTester tester) async {
   await tester.pumpAndSettle();
 
   // Open bookcase insertion page
-  expect(find.byKey(const Key('Bookcase Empty State')), findsOneWidget);
+  expect(find.byKey(const Key('BookcaseEmptyState')), findsOneWidget);
 
-  await tester.tap(find.byKey(const Key('Bookcase Empty State')));
+  await tester.tap(find.byKey(const Key('BookcaseEmptyState')));
   await tester.pumpAndSettle();
 
   expect(
-    find.byKey(const Key('Bookcase name TextFormField')),
+    find.byKey(const Key('BookcaseNameTextFormField')),
     findsOneWidget,
   );
   expect(
-    find.byKey(const Key('Bookcase description TextFormField')),
+    find.byKey(const Key('BookcaseDescriptionTextFormField')),
     findsOneWidget,
   );
   expect(
-    find.byKey(const Key('Bookcase color TextFormField')),
+    find.byKey(const Key('BookcaseColorTextFormField')),
     findsOneWidget,
   );
   expect(
-    find.byKey(const Key('Confirm Bookcase insertion Button')),
+    find.byKey(const Key('ConfirmBookcaseInsertionButton')),
     findsOneWidget,
   );
 
   //Create new bookcase
   await tester.enterText(
-    find.byKey(const Key('Bookcase name TextFormField')),
+    find.byKey(const Key('BookcaseNameTextFormField')),
     'Estante A',
   );
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.enterText(
-    find.byKey(const Key('Bookcase description TextFormField')),
+    find.byKey(const Key('BookcaseDescriptionTextFormField')),
     'Ficção Literária Literatura e Ficção',
   );
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await tester.pumpAndSettle();
 
-  await tester.tap(find.byKey(const Key('Confirm Bookcase insertion Button')));
+  await tester.tap(find.byKey(const Key('ConfirmBookcaseInsertionButton')));
   // Wait loading of snackbar
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
-  expect(find.byKey(const Key('Bookcase Loaded State')), findsOneWidget);
-  expect(find.byKey(const Key('Bookcase Widget')), findsOneWidget);
+  expect(find.byKey(const Key('BookcaseLoadedState')), findsOneWidget);
+  expect(find.byKey(const Key('BookcaseWidget')), findsOneWidget);
 
   // Open bookcase Widget
-  await tester.tap(find.byKey(const Key('Bookcase Widget')));
+  await tester.tap(find.byKey(const Key('BookcaseWidget')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
   expect(
@@ -243,25 +242,25 @@ Future<void> _testBookcasePage(WidgetTester tester) async {
   );
 
   expect(
-    find.byKey(const Key('Bookcase Detail Books Empty State')),
+    find.byKey(const Key('BookcaseDetailBooksEmptyState')),
     findsOneWidget,
   );
 
   // Insert book to bookcase
-  await tester.tap(find.byKey(const Key('Item Empty State Button')));
+  await tester.tap(find.byKey(const Key('ItemEmptyStateButton')));
   await tester.pumpAndSettle();
 
   expect(
-    find.byKey(const Key('Bookcase Books Insertion LoadedState Widget')),
+    find.byKey(const Key('BookcaseBooksInsertionLoadedStateWidget')),
     findsOneWidget,
   );
   expect(
-    find.byKey(const Key('Book insertion Widget')),
+    find.byKey(const Key('BookInsertionWidget')),
     findsOneWidget,
   );
-  await tester.tap(find.byKey(const Key('Book insertion Widget')));
+  await tester.tap(find.byKey(const Key('BookInsertionWidget')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const Key('Confirm book IconButton')));
+  await tester.tap(find.byKey(const Key('ConfirmBookIconButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
   final bookAddedTextLabel = '1 ${'book-label'.i18n()}';
@@ -274,47 +273,47 @@ Future<void> _testBookcasePage(WidgetTester tester) async {
 
 Future<void> _testLoanPage(WidgetTester tester) async {
   // Go to Loan Page
-  await tester.tap(find.byKey(const Key('Loan TabView')));
+  await tester.tap(find.byKey(const Key('LoanTabView')));
   await tester.pumpAndSettle();
 
-  // Insert new  loan
-  expect(find.byKey(const Key('Loan Empty State')), findsOneWidget);
-  await tester.tap(find.byKey(const Key('Loan Empty State')));
+  // Insert new loan
+  expect(find.byKey(const Key('LoanEmptyState')), findsOneWidget);
+  await tester.tap(find.byKey(const Key('LoanEmptyState')));
   await tester.pumpAndSettle();
 
   // Insert book for loan
-  await tester.tap(find.byKey(const Key('Empty Book Button Widget')));
+  await tester.tap(find.byKey(const Key('EmptyBookButtonWidget')));
   await tester.pumpAndSettle();
 
   await _insertBookPicker(tester);
 
-  expect(find.byKey(const Key('Selected Book Button Widget')), findsOneWidget);
+  expect(find.byKey(const Key('SelectedBookButtonWidget')), findsOneWidget);
 
   // Insert contact for loan
-  expect(find.byKey(const Key('Empty Contact Button Widget')), findsOneWidget);
-  await tester.tap(find.byKey(const Key('Empty Contact Button Widget')));
+  expect(find.byKey(const Key('EmptyContactButtonWidget')), findsOneWidget);
+  await tester.tap(find.byKey(const Key('EmptyContactButtonWidget')));
   await tester.pumpAndSettle();
 
   expect(
-    find.byKey(const Key('Contacts Picker LoadedState Widget')),
+    find.byKey(const Key('ContactsPickerLoadedStateWidget')),
     findsOneWidget,
   );
 
-  expect(find.byKey(const Key('Contact Widget')), findsWidgets);
+  expect(find.byKey(const Key('ContactWidget')), findsWidgets);
 
-  final firstContact = find.byKey(const Key('Contact Widget')).evaluate().first;
+  final firstContact = find.byKey(const Key('ContactWidget')).evaluate().first;
   await tester.tap(find.byWidget(firstContact.widget));
   await tester.pumpAndSettle();
 
-  await tester.tap(find.byKey(const Key('Confirm Button')));
+  await tester.tap(find.byKey(const Key('ContactConfirmButton')));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(const Key('Empty Contact Button Widget')), findsNothing);
-  expect(find.byKey(const Key('Contact Circle Avatar')), findsOneWidget);
+  expect(find.byKey(const Key('EmptyContactButtonWidget')), findsNothing);
+  expect(find.byKey(const Key('ContactCircleAvatar')), findsOneWidget);
 
   // Insert observation for loan
   await tester.enterText(
-    find.byKey(const Key('Observation TextFormField')),
+    find.byKey(const Key('ObservationTextFormField')),
     'Amigo',
   );
   await tester.pumpAndSettle();
@@ -323,34 +322,34 @@ Future<void> _testLoanPage(WidgetTester tester) async {
   await setDurationOfLoan(tester);
 
   // Confirm loan
-  await tester.tap(find.byKey(const Key('Confirm Loan Button')));
+  await tester.tap(find.byKey(const Key('ConfirmLoanButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
   // Open Loan Detail
-  expect(find.byKey(const Key('Loan Loaded State')), findsOneWidget);
-  expect(find.byKey(const Key('Loan Widget')), findsOneWidget);
+  expect(find.byKey(const Key('LoanLoadedState')), findsOneWidget);
+  expect(find.byKey(const Key('LoanWidget')), findsOneWidget);
 
-  await tester.tap(find.byKey(const Key('Loan Widget')));
+  await tester.tap(find.byKey(const Key('LoanWidget')));
   await tester.pumpAndSettle();
 
-  expect(find.byKey(const Key('Loan Detail LoadedState')), findsOneWidget);
+  expect(find.byKey(const Key('LoanDetailLoadedState')), findsOneWidget);
 
   // Finalize Loan
-  await tester.tap(find.byKey(const Key('Finish loan Button')));
+  await tester.tap(find.byKey(const Key('FinishLoanButton')));
   await tester.pumpAndSettle();
 
-  await tester.tap(find.byKey(const Key('Confirm Dialog Button')));
+  await tester.tap(find.byKey(const Key('ConfirmDialogButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
-  expect(find.byKey(const Key('Loan Loaded State')), findsNothing);
-  expect(find.byKey(const Key('Loan Empty State')), findsOneWidget);
+  expect(find.byKey(const Key('LoanLoadedState')), findsNothing);
+  expect(find.byKey(const Key('LoanEmptyState')), findsOneWidget);
 }
 
 Future<void> setDurationOfLoan(WidgetTester tester) async {
   final int todayInicialLoan = DateTime.now().day;
 
 // Set loan date and devolution date
-  await tester.tap(find.byKey(const Key('Loan Date TextFormField')));
+  await tester.tap(find.byKey(const Key('LoanDateTextFormField')));
   await tester.pumpAndSettle();
 
   await tester.tap(find.text('$todayInicialLoan'));
@@ -359,7 +358,7 @@ Future<void> setDurationOfLoan(WidgetTester tester) async {
   await tester.tap(find.text('OK'));
   await tester.pumpAndSettle();
 
-  await tester.tap(find.byKey(const Key('Devolution Date TextFormField')));
+  await tester.tap(find.byKey(const Key('DevolutionDateTextFormField')));
   await tester.pumpAndSettle();
 
   final int devolutionLoanDay;
@@ -386,51 +385,51 @@ Future<void> _testReadingsPage(WidgetTester tester) async {
   // Navigate to Readings PageView
   await tester.tap(find.text('readings-label'.i18n()));
   await tester.pumpAndSettle();
-  expect(find.byKey(const Key('Readings EmptyState')), findsOneWidget);
+  expect(find.byKey(const Key('ReadingsEmptyState')), findsOneWidget);
 
   // Get book and insert new reading
-  await tester.tap(find.byKey(const Key('Readings EmptyState')));
+  await tester.tap(find.byKey(const Key('ReadingsEmptyState')));
   await tester.pumpAndSettle();
   await _insertBookPicker(tester);
 
-  await tester.tap(find.byKey(const Key('Add Reading Button')));
+  await tester.tap(find.byKey(const Key('AddReadingButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
-  expect(find.byKey(const Key('Readings LoadedState')), findsOneWidget);
-  expect(find.byKey(const Key('Reading Widget')), findsOneWidget);
+  expect(find.byKey(const Key('ReadingsLoadedState')), findsOneWidget);
+  expect(find.byKey(const Key('ReadingWidget')), findsOneWidget);
 
   // Expect to find a new reading
   expect(find.text('0%'), findsOneWidget);
 
   // Open Reading Detail
-  await tester.tap(find.byKey(const Key('Reading Widget')));
+  await tester.tap(find.byKey(const Key('ReadingWidget')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
   // Open Reading Timer
-  await tester.tap(find.byKey(const Key('Continue Reading Button')));
+  await tester.tap(find.byKey(const Key('ContinueReadingButton')));
   await tester.pumpAndSettle();
 
   // Finalize reading
-  await tester.tap(find.byKey(const Key('End Timer Button')));
+  await tester.tap(find.byKey(const Key('EndTimerButton')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const Key('Ok Dialog Button')));
+  await tester.tap(find.byKey(const Key('OkDialogButton')));
   await tester.pumpAndSettle();
 
   // Update reading pages
   await tester.drag(
-    find.byKey(const Key('Reading Slider')),
+    find.byKey(const Key('ReadingSlider')),
     const Offset(100, 0),
   );
   await tester.pumpAndSettle();
 
   // Confirm update Reading
-  await tester.tap(find.byKey(const Key('Update / Finish Reading Button')));
+  await tester.tap(find.byKey(const Key('UpdateOrFinishReadingButton')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const Key('Confirm Dialog Button')));
+  await tester.tap(find.byKey(const Key('ConfirmDialogButton')));
   await tester.pumpAndSettle(const Duration(seconds: 4));
 
-  expect(find.byKey(const Key('Readings LoadedState')), findsOneWidget);
-  expect(find.byKey(const Key('Reading Widget')), findsOneWidget);
+  expect(find.byKey(const Key('ReadingsLoadedState')), findsOneWidget);
+  expect(find.byKey(const Key('ReadingWidget')), findsOneWidget);
 
   // Expect to find a updated reading
   expect(find.text('0%'), findsNothing);
