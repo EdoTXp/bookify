@@ -101,6 +101,7 @@ class _AuthPageState extends State<AuthPage> {
             children: [
               const Spacer(),
               Image.asset(
+                key: const Key('BookifyLogoImage'),
                 BookifyImages.authLogo,
                 height: mediaQuerySizeOf.height * .5,
                 width: mediaQuerySizeOf.width,

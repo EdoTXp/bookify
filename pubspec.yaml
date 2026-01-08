@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.9.3
+version: 2.9.4
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -18,7 +18,7 @@ dependencies:
   flutter_bloc: ^9.1.1 # Used for state management.
   cached_network_image: ^3.4.1 # Used to show the cover of the cached book.
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
-  google_fonts: ^6.3.3 # Used for App Font.
+  google_fonts: ^7.0.0 # Used for App Font.
   url_launcher: ^6.3.2 # Used to launch at the book store.
   mobile_scanner: ^7.1.4 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
@@ -69,9 +69,6 @@ dev_dependencies:
   bloc_test: ^10.0.0
   sqflite_common_ffi: ^2.4.0+2
   patrol: ^4.1.0
-
-  integration_test:
-    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
