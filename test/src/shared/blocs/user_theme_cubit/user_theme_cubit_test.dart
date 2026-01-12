@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
+import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,31 +10,31 @@ class UserThemeRepositoryMock extends Mock implements UserThemeRepository {}
 
 void main() {
   final userRepository = UserThemeRepositoryMock();
-  late UserThemeBloc userThemeBloc;
+  late UserThemeCubit userThemeCubit;
 
   setUp(() {
-    userThemeBloc = UserThemeBloc(
+    userThemeCubit = UserThemeCubit(
       userRepository,
     );
   });
 
-  group('Test UserTheme Bloc', () {
+  group('Test UserTheme Cubit', () {
     blocTest(
       'Initial state is empty',
-      build: () => userThemeBloc,
-      verify: (bloc) async => await bloc.close(),
+      build: () => userThemeCubit,
+      verify: (cubit) async => await cubit.close(),
       expect: () => [],
     );
 
     blocTest(
-      'Test GotUserThemeEvent work',
-      build: () => userThemeBloc,
+      'Test getTheme function work',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.getThemeMode(),
       ).thenAnswer(
         (_) async => ThemeMode.light,
       ),
-      act: (bloc) => bloc.add(GotUserThemeEvent()),
+      act: (cubit) => cubit.getTheme(),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
       ).called(1),
@@ -45,8 +45,8 @@ void main() {
     );
 
     blocTest(
-      'Test GotUserThemeEvent work when ThemeMode is null',
-      build: () => userThemeBloc,
+      'Test getTheme function work when ThemeMode is null',
+      build: () => userThemeCubit,
       setUp: () {
         when(
           () => userRepository.getThemeMode(),
@@ -56,7 +56,7 @@ void main() {
           () => userRepository.setThemeMode(themeMode: ThemeMode.system),
         ).thenAnswer((_) async => 1);
       },
-      act: (bloc) => bloc.add(GotUserThemeEvent()),
+      act: (cubit) => cubit.getTheme(),
       verify: (_) {
         verify(
           () => userRepository.getThemeMode(),
@@ -72,12 +72,12 @@ void main() {
     );
 
     blocTest(
-      'Test GotUserThemeEvent work when throw StorageException',
-      build: () => userThemeBloc,
+      'Test getTheme function work when throw StorageException',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.getThemeMode(),
       ).thenThrow(const StorageException('Error on storage Data')),
-      act: (bloc) => bloc.add(GotUserThemeEvent()),
+      act: (cubit) => cubit.getTheme(),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
       ).called(1),
@@ -88,12 +88,12 @@ void main() {
     );
 
     blocTest(
-      'Test GotUserThemeEvent work when throw Generic Exception',
-      build: () => userThemeBloc,
+      'Test getTheme function work when throw Generic Exception',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.getThemeMode(),
       ).thenThrow(Exception('Generic Error')),
-      act: (bloc) => bloc.add(GotUserThemeEvent()),
+      act: (bloc) => bloc.getTheme(),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
       ).called(1),
@@ -104,14 +104,14 @@ void main() {
     );
 
     blocTest(
-      'Test InsertedUserThemeEvent work',
-      build: () => userThemeBloc,
+      'Test setTheme function work',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).thenAnswer((_) async => 1),
-      act: (bloc) => bloc.add(InsertedUserThemeEvent(
+      act: (cubit) => cubit.setTheme(
         themeMode: ThemeMode.system,
-      )),
+      ),
       verify: (_) => verify(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).called(1),
@@ -122,14 +122,14 @@ void main() {
     );
 
     blocTest(
-      'Test InsertedUserThemeEvent work when insertion theme error',
-      build: () => userThemeBloc,
+      'Test setTheme function work when insertion theme error',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).thenAnswer((_) async => 0),
-      act: (bloc) => bloc.add(InsertedUserThemeEvent(
+      act: (cubit) => cubit.setTheme(
         themeMode: ThemeMode.system,
-      )),
+      ),
       verify: (_) => verify(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).called(1),
@@ -140,14 +140,14 @@ void main() {
     );
 
     blocTest(
-      'Test InsertedUserThemeEvent work when throw StorageException',
-      build: () => userThemeBloc,
+      'Test setTheme function work when throw StorageException',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).thenThrow(const StorageException('Error on storage Data')),
-      act: (bloc) => bloc.add(InsertedUserThemeEvent(
+      act: (cubit) => cubit.setTheme(
         themeMode: ThemeMode.system,
-      )),
+      ),
       verify: (_) => verify(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).called(1),
@@ -158,14 +158,14 @@ void main() {
     );
 
     blocTest(
-      'Test InsertedUserThemeEvent work when throwGeneric Exception',
-      build: () => userThemeBloc,
+      'Test setTheme function work when throwGeneric Exception',
+      build: () => userThemeCubit,
       setUp: () => when(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).thenThrow(Exception('Generic Error')),
-      act: (bloc) => bloc.add(InsertedUserThemeEvent(
+      act: (cubit) => cubit.setTheme(
         themeMode: ThemeMode.system,
-      )),
+      ),
       verify: (_) => verify(
         () => userRepository.setThemeMode(themeMode: ThemeMode.system),
       ).called(1),

@@ -1,5 +1,5 @@
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
-import 'package:bookify/src/shared/blocs/user_theme_bloc/user_theme_bloc.dart';
+import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +13,12 @@ class ThemeSettings extends StatefulWidget {
 }
 
 class _ThemeSettingsState extends State<ThemeSettings> {
-  late final UserThemeBloc _userThemeBloc;
+  late final UserThemeCubit _userThemeCubit;
 
   @override
   void initState() {
     super.initState();
-    _userThemeBloc = context.read<UserThemeBloc>();
+    _userThemeCubit = context.read<UserThemeCubit>();
   }
 
   Widget _getWidgetOnThemeSetting(BuildContext context, UserThemeState state) {
@@ -82,11 +82,8 @@ class _ThemeSettingsState extends State<ThemeSettings> {
   }
 
   void _onChangedRadioButton(ThemeMode? value) {
-    _userThemeBloc.add(
-      InsertedUserThemeEvent(
-        themeMode: value!,
-      ),
-    );
+    if (value == null) return;
+    _userThemeCubit.setTheme(themeMode: value);
   }
 
   @override
@@ -110,8 +107,8 @@ class _ThemeSettingsState extends State<ThemeSettings> {
           const SizedBox(
             height: 20,
           ),
-          BlocBuilder<UserThemeBloc, UserThemeState>(
-            bloc: _userThemeBloc,
+          BlocBuilder<UserThemeCubit, UserThemeState>(
+            bloc: _userThemeCubit,
             builder: _getWidgetOnThemeSetting,
           ),
         ],

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bookify/firebase_options.dart';
 import 'package:bookify/src/bookify_app.dart';
 import 'package:bookify/src/shared/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,18 +37,14 @@ Future<void> _testerPop(PatrolIntegrationTester $) async {
 }
 
 Future<void> _initApp(PatrolIntegrationTester $) async {
-  final app = await Firebase.initializeApp(
+ await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  final auth = FirebaseAuth.instanceFor(app: app);
 
   await $.pumpWidgetAndSettle(
     MultiProvider(
       providers: Providers.providers,
-      child: BookifyApp(
-        auth: auth,
-      ),
+      child: BookifyApp(),
     ),
   );
 }

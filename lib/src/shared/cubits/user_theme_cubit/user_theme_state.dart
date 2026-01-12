@@ -1,5 +1,6 @@
-part of 'user_theme_bloc.dart';
+part of 'user_theme_cubit.dart';
 
+@immutable
 sealed class UserThemeState {}
 
 final class UserThemeLoadingState extends UserThemeState {}
