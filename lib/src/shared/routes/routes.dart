@@ -67,10 +67,15 @@ abstract class Routes {
         bookcaseId: arguments.last as int,
       );
     },
-    BookcaseInsertionPage.routeName: (context) => BookcaseInsertionPage(
-          bookcaseModel:
-              ModalRoute.of(context)!.settings.arguments as BookcaseModel?,
-        ),
+    BookcaseInsertionPage.routeName: (context) {
+      final args = ModalRoute.of(context)!.settings.arguments;
+      if (args == null) {
+        return BookcaseInsertionPage.newBookcase();
+      }
+      return BookcaseInsertionPage.updateBookcase(
+        bookcaseModel: args as BookcaseModel,
+      );
+    },
     BookcaseBooksInsertionPage.routeName: (context) =>
         BookcaseBooksInsertionPage(
           bookcaseId: ModalRoute.of(context)!.settings.arguments as int,

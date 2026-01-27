@@ -105,7 +105,7 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
         ),
         ListenableBuilder(
           listenable: _scannerController,
-          builder: (_, __) {
+          builder: (_, _) {
             final scannerValue = _scannerController.value;
 
             if (scannerValue.isRunning) {

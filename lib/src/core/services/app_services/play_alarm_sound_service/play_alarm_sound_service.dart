@@ -41,8 +41,8 @@ class PlayAlarmSoundService {
     await player.stop();
   }
 
-  void dispose() {
-    player.dispose();
+  Future<void> dispose() async {
+    await player.dispose();
   }
 
   Future<void> _playSound(double volume) async {

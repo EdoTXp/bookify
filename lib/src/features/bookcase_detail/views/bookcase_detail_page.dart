@@ -152,13 +152,13 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
 
   Future<void> _popupMenuOnSelected(String value, BuildContext context) async {
     if (value == _popupMenuItemsSet.first) {
-      var bookcaseList = await Navigator.pushNamed(
+      final result = await Navigator.pushNamed(
         context,
         BookcaseInsertionPage.routeName,
         arguments: _actualBookcase,
       ) as List<Object?>?;
 
-      final bookcaseUpdated = bookcaseList?[1] as BookcaseModel?;
+      final bookcaseUpdated = result?[1] as BookcaseModel?;
 
       if (bookcaseUpdated != null) {
         setState(() {

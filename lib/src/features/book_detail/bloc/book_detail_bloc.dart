@@ -1,4 +1,5 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,7 +82,7 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
         emit(
           BookDetailErrorState(
             errorMessage:
-                'Impossível remover o livro porque está ${bookStatus.toString()}.',
+                'Impossível remover o livro porque está ${bookStatus.label}.',
           ),
         );
         return;

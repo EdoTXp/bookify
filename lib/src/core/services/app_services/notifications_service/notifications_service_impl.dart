@@ -62,7 +62,7 @@ class NotificationsServiceImpl implements NotificationsService {
     );
 
     await _notifications.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: _onTapOnNotification,
     );
     tz.initializeTimeZones();
@@ -113,14 +113,14 @@ class NotificationsServiceImpl implements NotificationsService {
     CustomNotificationModel notification,
   ) async {
     await _notifications.zonedSchedule(
-      notification.id,
-      notification.title,
-      notification.body,
-      tz.TZDateTime.from(
+      id: notification.id,
+      title: notification.title,
+      body: notification.body,
+      scheduledDate: tz.TZDateTime.from(
         notification.scheduledDate,
         tz.local,
       ),
-      _getNotificationDetails(
+      notificationDetails: _getNotificationDetails(
         notification.notificationChannel,
         notification.body,
       ),
@@ -144,14 +144,14 @@ class NotificationsServiceImpl implements NotificationsService {
     };
 
     await _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: tz.TZDateTime.from(
         scheduledDate,
         tz.local,
       ),
-      _getNotificationDetails(
+      notificationDetails: _getNotificationDetails(
         notificationChannel,
         body,
       ),
@@ -162,7 +162,7 @@ class NotificationsServiceImpl implements NotificationsService {
 
   @override
   Future<void> cancelNotificationById({required int id}) async {
-    await _notifications.cancel(id);
+    await _notifications.cancel(id: id);
   }
 
   @override

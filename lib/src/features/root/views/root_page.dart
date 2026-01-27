@@ -91,7 +91,7 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_, __) => _navigateBackOrClose(),
+      onPopInvokedWithResult: (_, _) => _navigateBackOrClose(),
       child: Scaffold(
         extendBody: _canExtendBody,
         body: PageView(

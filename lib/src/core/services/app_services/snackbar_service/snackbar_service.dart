@@ -24,16 +24,6 @@ enum SnackBarType {
       SnackBarType.success => AppColor.bookifySuccessColor,
     };
   }
-
-  @override
-  String toString() {
-    return switch (this) {
-      SnackBarType.info => 'Informação',
-      SnackBarType.warning => 'Atenção',
-      SnackBarType.error => 'Erro',
-      SnackBarType.success => 'Sucesso',
-    };
-  }
 }
 
 class SnackbarService {
