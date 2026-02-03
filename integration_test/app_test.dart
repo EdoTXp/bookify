@@ -6,6 +6,8 @@ import 'package:bookify/src/shared/providers/providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:localization/localization.dart';
 import 'package:patrol/patrol.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +39,10 @@ Future<void> _testerPop(PatrolIntegrationTester $) async {
 }
 
 Future<void> _initApp(PatrolIntegrationTester $) async {
- await Firebase.initializeApp(
+  await initializeDateFormatting(Platform.localeName);
+  Intl.defaultLocale = Platform.localeName;
+
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -274,7 +279,7 @@ Future<void> _insertBookPicker(PatrolIntegrationTester $) async {
 Future<void> setDurationOfLoan(PatrolIntegrationTester $) async {
   final int todayInicialLoan = DateTime.now().day;
 
-// Set loan date and devolution date
+  // Set loan date and devolution date
   await $(#LoanDateTextFormField).tap();
   await $.pumpAndSettle();
 

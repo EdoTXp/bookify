@@ -105,7 +105,8 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                 ),
                 actions: [
                   Visibility(
-                    visible: (_searchBarIsVisible &&
+                    visible:
+                        (_searchBarIsVisible &&
                         _searchController.text.isNotEmpty),
                     child: IconButton(
                       icon: const Icon(Icons.close_rounded),
@@ -136,7 +137,10 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                 ],
                 bottom: TabBar(
                   tabAlignment: TabAlignment.fill,
-                  labelStyle: const TextStyle(),
+                  labelStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorColor: colorScheme.primary,
                   dividerHeight: 2,

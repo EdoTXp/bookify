@@ -25,8 +25,8 @@ class _BookifyAppState extends State<BookifyApp> {
     super.initState();
     _userThemeCubit = context.read<UserThemeCubit>()..getTheme();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _checkForNotificationsOnInitializeApp();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _checkForNotificationsOnInitializeApp();
     });
   }
 

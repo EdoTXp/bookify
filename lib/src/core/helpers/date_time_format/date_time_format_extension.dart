@@ -12,8 +12,9 @@ extension DateTimeFormatExtension on DateTime {
   /// A custom [dateFormat] pattern can be provided to override the default behavior,
   /// which is useful for testing.
   String toFormattedDate([String? dateFormat]) {
-    final formatter =
-        dateFormat != null ? DateFormat(dateFormat) : DateFormat.yMd();
+    final formatter = dateFormat != null
+        ? DateFormat(dateFormat)
+        : DateFormat.yMd();
     return formatter.format(this);
   }
 }
@@ -29,8 +30,9 @@ extension StringDateTime on String {
   /// A custom [dateFormat] pattern can be provided to override the default behavior,
   /// which is useful for testing.
   DateTime parseFormattedDate([String? dateFormat]) {
-    final formatter =
-        dateFormat != null ? DateFormat(dateFormat) : DateFormat.yMd();
+    final formatter = dateFormat != null
+        ? DateFormat(dateFormat)
+        : DateFormat.yMd();
     return formatter.parse(this);
   }
 }

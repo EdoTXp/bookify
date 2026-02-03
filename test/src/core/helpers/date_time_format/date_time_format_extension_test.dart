@@ -7,9 +7,7 @@ void main() {
   final date = DateTime(2023, 10, 25);
 
   setUpAll(() async {
-    await initializeDateFormatting('pt_BR', null);
-    await initializeDateFormatting('it_IT', null);
-    await initializeDateFormatting('en_US', null);
+    await initializeDateFormatting();
   });
 
   group('Test DateTime to String conversion ||', () {
