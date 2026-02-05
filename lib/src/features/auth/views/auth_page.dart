@@ -59,23 +59,21 @@ class _AuthPageState extends State<AuthPage> {
         );
         Future.delayed(const Duration(seconds: 2)).then(
           (_) async {
-            if (context.mounted) {
-              await Navigator.of(context).pushNamed(
-                ReadingPageTimeCalculatorPage.routeName,
-              );
-            }
+            if (!context.mounted) return;
+            await Navigator.of(context).pushNamed(
+              ReadingPageTimeCalculatorPage.routeName,
+            );
 
-            if (context.mounted) {
-              await Navigator.of(context).pushNamed(
-                HourTimeCalculatorPage.routeName,
-              );
-            }
+            if (!context.mounted) return;
+            await Navigator.of(context).pushNamed(
+              HourTimeCalculatorPage.routeName,
+            );
 
-            if (context.mounted) {
-              await Navigator.of(context).pushReplacementNamed(
-                RootPage.routeName,
-              );
-            }
+            if (!context.mounted) return;
+            await Navigator.of(context).pushNamedAndRemoveUntil(
+              RootPage.routeName,
+              (route) => false,
+            );
           },
         );
         break;
