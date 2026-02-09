@@ -78,6 +78,7 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
             width: 5,
           ),
           IconButton(
+            key: const Key('DeleteSelectedItemsButton'),
             onPressed: widget.onPressedDeleteButton,
             tooltip:
                 'delete-item-button-tooltip'.i18n([itemText.toLowerCase()]),

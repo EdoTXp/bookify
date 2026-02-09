@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/widgets/widgets.dart';
@@ -132,14 +133,13 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                       children: [
                         switch (state) {
                           BookOnBookcaseDetailLoadingState() ||
-                          BookOnBookcaseDetailDeletedState() =>
-                            const SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: CenterCircularProgressIndicator(),
-                            ),
+                          BookOnBookcaseDetailDeletedState() => const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CenterCircularProgressIndicator(),
+                          ),
                           BookOnBookcaseDetailLoadedState(
-                            :final bookcasesCount
+                            :final bookcasesCount,
                           ) =>
                             BookcasesCountWidget(
                               message: bookcasesCount.toString(),
@@ -185,7 +185,9 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                         if (book.status == BookStatus.loaned ||
                             book.status == BookStatus.reading) {
                           complementMessage = 'book-complement-message'.i18n(
-                            [book.status.toString()],
+                            [
+                              book.status!.label,
+                            ],
                           );
                         }
 

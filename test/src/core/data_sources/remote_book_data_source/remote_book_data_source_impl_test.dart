@@ -18,18 +18,21 @@ void main() {
 
   group('Test all methods of RemoteBookDataSourceImpl:', () {
     test('Get a List of books by author', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
-                data: authorJsonBooksMock, // books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ''))
-            .data;
+          data: authorJsonBooksMock, // books of file books_json_mock.dart
+          requestOptions: RequestOptions(path: ''),
+        ).data;
       });
 
-      final books =
-          await bookDataSource.findBooksByAuthor(author: 'J.R.R. Tolkien');
+      final books = await bookDataSource.findBooksByAuthor(
+        author: 'J.R.R. Tolkien',
+      );
 
       expect(books[0].authors.first.name, 'J. R. R. Tolkien');
       expect(books[1].authors.first.name, 'J. R. R. Tolkien');
@@ -39,10 +42,12 @@ void main() {
     });
 
     test('Get a book by ISBN', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
           data: isbnJsonBookMock, //  book of file books_json_mock.dart
           requestOptions: RequestOptions(path: ''),
@@ -54,10 +59,12 @@ void main() {
     });
 
     test('Get a List of books by publisher', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
           data: publisherJsonBooksMock, // books of file books_json_mock.dart
           requestOptions: RequestOptions(path: ''),
@@ -65,7 +72,8 @@ void main() {
       });
 
       final books = await bookDataSource.findBooksByPublisher(
-          publisher: 'Alta Books Editora');
+        publisher: 'Alta Books Editora',
+      );
 
       for (var book in books) {
         expect(book.publisher, 'Alta Books Editora');
@@ -73,10 +81,12 @@ void main() {
     });
 
     test('Get a list of books', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
           data: allBooksMock, // books of file books_json_mock.dart
 
@@ -90,15 +100,19 @@ void main() {
       expect(books[1].title, 'Amamentação');
       expect(books[2].title, 'O trem da Amizade');
       expect(books[3].title, 'Missão prevenir e proteger');
-      expect(books[4].title,
-          'O Clube dos Caçadores de Códigos 1 - O segredo da chave do Esqueleto');
+      expect(
+        books[4].title,
+        'O Clube dos Caçadores de Códigos 1 - O segredo da chave do Esqueleto',
+      );
     });
 
     test('Get a list of books by title', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
           data: titleBooksMock, // books of file books_json_mock.dart
           requestOptions: RequestOptions(path: ''),
@@ -113,18 +127,21 @@ void main() {
     });
 
     test('Get a list of books by category', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenAnswer((_) async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenAnswer((_) async {
         return Response(
-                data: categoryBooksMock, //  books of file books_json_mock.dart
-                requestOptions: RequestOptions(path: ''))
-            .data;
+          data: categoryBooksMock, //  books of file books_json_mock.dart
+          requestOptions: RequestOptions(path: ''),
+        ).data;
       });
 
-      final books =
-          await bookDataSource.findBooksByCategory(category: 'Fiction');
+      final books = await bookDataSource.findBooksByCategory(
+        category: 'Fiction',
+      );
 
       for (var book in books) {
         expect(book.categories.first.name, 'Fiction');
@@ -132,43 +149,55 @@ void main() {
     });
 
     test('test a BookException', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenThrow(const BookException(''));
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(const BookException(''));
       expect(bookDataSource.getAllBooks(), throwsA(isA<BookException>()));
     });
 
     test('test a BookNotFoundException', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenThrow(const BookNotFoundException('BookNotFoundException'));
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(const BookNotFoundException('BookNotFoundException'));
       expect(
-          bookDataSource.getAllBooks(), throwsA(isA<BookNotFoundException>()));
+        bookDataSource.getAllBooks(),
+        throwsA(isA<BookNotFoundException>()),
+      );
     });
 
     test('test a SocketException', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenThrow(const SocketException('message'));
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(const SocketException('message'));
       expect(bookDataSource.getAllBooks(), throwsA(isA<SocketException>()));
     });
 
     test('test a TypeError expecting an empty list of books', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenThrow(TypeError());
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(TypeError());
       expect(await bookDataSource.getAllBooks(), <BookModel>[]);
     });
 
     test('test a generic Exception', () async {
-      when(() => restClient.get(
-            baseUrl: any(named: 'baseUrl'),
-            urlParams: any(named: 'urlParams'),
-          )).thenThrow(Exception());
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(Exception());
       expect(bookDataSource.getAllBooks(), throwsA(isA<Exception>()));
     });
   });

@@ -53,12 +53,17 @@ jobs:
         run: |
           echo "${{ secrets.FACEBOOK_CONFIG_XML }}" | base64 --decode > android/app/src/main/res/values/facebook_config.xml
 
-      #7 Setup Firebase Config
+      #7 Setup Firebase and Google Books API Key Configs
       - name: Setup Firebase Config
         run: |
           echo "${{ secrets.FIREBASE_GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
           echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > firebase.json
           echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase_options.dart
+
+      - name: Setup Google Books API Key and Run Flutter Build Runner
+        run: |
+          echo "${{ secrets.GOOGLE_BOOKS_API_KEY }}" | base64 --decode > .env
+          dart run build_runner build --delete-conflicting-outputs
 
       #8 Install SQLite Package to linux
       - name: Install SQLite Package

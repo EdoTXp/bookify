@@ -124,7 +124,7 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: BookcaseWidget(
-                key: const Key('Selected Bookcase Widget'),
+                key: const Key('SelectedBookcaseWidget'),
                 bookcaseDto: bookcasesDto[index],
                 onTap: () => _onTap(
                   context: context,

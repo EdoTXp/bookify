@@ -52,3 +52,7 @@ app.*.map.json
 # Firebase configuration files
 firebase_options.dart
 firebase.json
+
+# Environment variable file
+.env
+env.g.dart

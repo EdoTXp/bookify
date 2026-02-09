@@ -56,14 +56,16 @@ class _BookcasePageState extends State<BookcasePage> {
 
   Widget _getWidgetOnBookcaseState(BuildContext context, BookcaseState state) {
     return switch (state) {
-      BookcaseLoadingState() => const CenterCircularProgressIndicator(),
+      BookcaseLoadingState() => const CenterCircularProgressIndicator(
+        key: Key('BookcaseLoadingState'),
+      ),
       BookcaseEmptyState() => Center(
-          child: ItemEmptyStateWidget(
-            key: const Key('BookcaseEmptyState'),
-            label: 'create-new-bookcase-button'.i18n(),
-            onTap: () async => await _onAddNewBookcase(),
-          ),
+        child: ItemEmptyStateWidget(
+          key: const Key('BookcaseEmptyState'),
+          label: 'create-new-bookcase-button'.i18n(),
+          onTap: () async => await _onAddNewBookcase(),
         ),
+      ),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
         BookcaseLoadedStateWidget(
           key: const Key('BookcaseLoadedState'),
@@ -76,11 +78,13 @@ class _BookcasePageState extends State<BookcasePage> {
           ),
         ),
       BookcaseNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message: 'bookcase-not-found-whit-this-terms'.i18n(),
-          onPressed: _refreshPage,
-        ),
+        key: const Key('BookcaseNotFoundStateWidget'),
+        message: 'bookcase-not-found-whit-this-terms'.i18n(),
+        onPressed: _refreshPage,
+      ),
       BookcaseErrorState(errorMessage: final message) =>
         InfoItemStateWidget.withErrorState(
+          key: const Key('BookcaseErrorStateWidget'),
           message: message,
           onPressed: _refreshPage,
         ),
@@ -88,10 +92,12 @@ class _BookcasePageState extends State<BookcasePage> {
   }
 
   Future<void> _onAddNewBookcase() async {
-    var bookcaseInsertionList = await Navigator.pushNamed(
-      context,
-      BookcaseInsertionPage.routeName,
-    ) as List<Object?>?;
+    var bookcaseInsertionList =
+        await Navigator.pushNamed(
+              context,
+              BookcaseInsertionPage.routeName,
+            )
+            as List<Object?>?;
 
     final isInserted = bookcaseInsertionList?[0] as bool?;
 
