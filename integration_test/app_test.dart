@@ -27,7 +27,6 @@ void main() {
     await $.pumpAndSettle();
     await _testLoanPage($);
     await $.pumpAndSettle();
-    await $.pumpAndSettle();
     await _testReadingsPage($);
   });
 }
@@ -104,7 +103,7 @@ Future<void> _testLoginPage(PatrolIntegrationTester $) async {
   await $(#FacebookButton).tap();
 
   //! At this time, the test device "MUST" already be logged
-  // in to Facebook in order to access the app.
+  //! in to Facebook in order to access the app.
   await _tapOnNativeLoginButton();
   await $.pumpAndSettle(duration: const Duration(seconds: 5));
 

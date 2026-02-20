@@ -179,8 +179,8 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
         break;
       case BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: final successMessage,
-        ):
+        bookcaseInsertionMessage: final successMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
           successMessage,
@@ -226,120 +226,119 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     final colorScheme = Theme.of(context).colorScheme;
 
-    return BlocConsumer<BookcaseInsertionBloc, BookcaseInsertionState>(
+    return BlocListener<BookcaseInsertionBloc, BookcaseInsertionState>(
       bloc: _bloc,
       listener: _handleBookcaseInsertionState,
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              titlePage,
-              style: const TextStyle(fontSize: 14),
-            ),
-            actions: [
-              IconButton(
-                onPressed: _clearAllTextField,
-                tooltip: 'clear-all-fields-button'.i18n(),
-                icon: const Icon(Icons.delete_forever_outlined),
-              ),
-            ],
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            titlePage,
+            style: const TextStyle(fontSize: 14),
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                canPop: _canPopPage,
-                child: Column(
-                  spacing: 20,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      key: const Key('BookcaseNameTextFormField'),
-                      controller: _bookcaseNameEC,
-                      cursorColor: colorScheme.secondary,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: Validatorless.multiple(
-                        [
-                          Validatorless.required(
-                            'field-cannot-be-empty-error'.i18n(),
-                          ),
-                          Validatorless.min(
-                            3,
-                            'field-need-3-characters-error'.i18n(),
-                          ),
-                        ],
-                      ),
-                      onTapOutside: (_) => context.unfocus(),
-                      style: const TextStyle(fontSize: 16),
-                      decoration: InputDecoration(
-                        labelText: 'name-required-field'.i18n(),
-                      ),
-                      textInputAction: TextInputAction.next,
+          actions: [
+            IconButton(
+              key: const Key('ClearAllFieldsButton'),
+              onPressed: _clearAllTextField,
+              tooltip: 'clear-all-fields-button'.i18n(),
+              icon: const Icon(Icons.delete_forever_outlined),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              canPop: _canPopPage,
+              child: Column(
+                spacing: 20,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    key: const Key('BookcaseNameTextFormField'),
+                    controller: _bookcaseNameEC,
+                    cursorColor: colorScheme.secondary,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: Validatorless.multiple(
+                      [
+                        Validatorless.required(
+                          'field-cannot-be-empty-error'.i18n(),
+                        ),
+                        Validatorless.min(
+                          3,
+                          'field-need-3-characters-error'.i18n(),
+                        ),
+                      ],
                     ),
-                    TextFormField(
-                      key: const Key('BookcaseDescriptionTextFormField'),
-                      controller: _bookcaseDescriptionEC,
-                      cursorColor: colorScheme.secondary,
-                      onTapOutside: (_) => context.unfocus(),
-                      style: const TextStyle(fontSize: 16),
-                      decoration: InputDecoration(
-                        labelText: 'description-optional-field'.i18n(),
-                      ),
-                      textInputAction: TextInputAction.done,
+                    onTapOutside: (_) => context.unfocus(),
+                    style: const TextStyle(fontSize: 16),
+                    decoration: InputDecoration(
+                      labelText: 'name-required-field'.i18n(),
                     ),
-                    TextFormField(
-                      key: const Key('BookcaseColorTextFormField'),
-                      style: const TextStyle(fontSize: 16),
-                      readOnly: true,
-                      keyboardType: TextInputType.none,
-                      onTap: () async {
-                        _selectedColor = await ColorPickerDialogService
-                            .showColorPickerDialog(
-                          context,
-                          _selectedColor,
-                        );
-                      },
-                      onTapOutside: (_) => context.unfocus(),
-                      decoration: InputDecoration(
-                        labelText: 'color-field'.i18n(),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            width: 100,
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: _selectedColor,
-                              border: Border.all(color: colorScheme.primary),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
+                    textInputAction: TextInputAction.next,
+                  ),
+                  TextFormField(
+                    key: const Key('BookcaseDescriptionTextFormField'),
+                    controller: _bookcaseDescriptionEC,
+                    cursorColor: colorScheme.secondary,
+                    onTapOutside: (_) => context.unfocus(),
+                    style: const TextStyle(fontSize: 16),
+                    decoration: InputDecoration(
+                      labelText: 'description-optional-field'.i18n(),
+                    ),
+                    textInputAction: TextInputAction.done,
+                  ),
+                  TextFormField(
+                    key: const Key('BookcaseColorTextFormField'),
+                    style: const TextStyle(fontSize: 16),
+                    readOnly: true,
+                    keyboardType: TextInputType.none,
+                    onTap: () async {
+                      _selectedColor =
+                          await ColorPickerDialogService.showColorPickerDialog(
+                            context,
+                            _selectedColor,
+                          );
+                    },
+                    onTapOutside: (_) => context.unfocus(),
+                    decoration: InputDecoration(
+                      labelText: 'color-field'.i18n(),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          width: 100,
+                          margin: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: _selectedColor,
+                            border: Border.all(color: colorScheme.primary),
+                            borderRadius: BorderRadius.circular(4.0),
                           ),
                         ),
-                        suffixIcon: const Icon(
-                          Icons.arrow_drop_down_rounded,
-                        ),
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.arrow_drop_down_rounded,
                       ),
                     ),
-                    Text(
-                      'fields-required-label'.i18n(),
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
+                  ),
+                  Text(
+                    'fields-required-label'.i18n(),
+                    style: TextStyle(
+                      fontSize: 16,
                     ),
-                    BookifyOutlinedButton.expanded(
-                      key: const Key('ConfirmBookcaseInsertionButton'),
-                      text: 'confirm-button-normal'.i18n(),
-                      onPressed: _onPressedButton,
-                    ),
-                  ],
-                ),
+                  ),
+                  BookifyOutlinedButton.expanded(
+                    key: const Key('ConfirmBookcaseInsertionButton'),
+                    text: 'confirm-button-normal'.i18n(),
+                    onPressed: _onPressedButton,
+                  ),
+                ],
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

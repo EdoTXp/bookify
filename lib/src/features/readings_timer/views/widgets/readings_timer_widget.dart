@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
 import 'package:bookify/src/core/services/app_services/play_alarm_sound_service/play_alarm_sound_service.dart';
@@ -51,7 +53,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
   void dispose() {
     LockScreenOrientationService.unLockOrientationScreen();
     WakeLockScreenService.unlockWakeScreen();
-    _alarmService.dispose();
+    unawaited(_alarmService.dispose());
     super.dispose();
   }
 
@@ -203,8 +205,9 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                               suffixIcon: _timerIsStarted
                                   ? Icons.pause_rounded
                                   : Icons.play_arrow_rounded,
-                              onPressed:
-                                  _timerIsStarted ? _pauseTimer : _resumeTimer,
+                              onPressed: _timerIsStarted
+                                  ? _pauseTimer
+                                  : _resumeTimer,
                             ),
                           ),
                         ],

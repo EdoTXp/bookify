@@ -9,7 +9,7 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-val keystorePropertiesFile = rootProject.file("key.properties")
+val keystorePropertiesFile: File = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
@@ -17,6 +17,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 android {
     namespace = "com.bookifysoftware.bookify"
     compileSdk = 36
+    compileSdkMinor = 1
     buildToolsVersion = "36.1.0"
     ndkVersion = "29.0.14206865"
     

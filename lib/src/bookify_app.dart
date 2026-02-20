@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:bookify/src/shared/routes/routes.dart';
@@ -25,14 +27,14 @@ class _BookifyAppState extends State<BookifyApp> {
     super.initState();
     _userThemeCubit = context.read<UserThemeCubit>()..getTheme();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _checkForNotificationsOnInitializeApp();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _checkForNotificationsOnInitializeApp(),
+    );
   }
 
-  Future<void> _checkForNotificationsOnInitializeApp() async {
+  void _checkForNotificationsOnInitializeApp() {
     final notificationService = context.read<NotificationsService>();
-    await notificationService.checkForNotifications();
+    unawaited(notificationService.checkForNotifications());
   }
 
   @override

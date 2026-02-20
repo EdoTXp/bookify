@@ -19,20 +19,48 @@ class ReadingPageTimerLoadedStateWidget extends StatefulWidget {
 }
 
 class _ReadingPageTimerLoadedStateWidgetState
-    extends State<ReadingPageTimerLoadedStateWidget> {
+    extends State<ReadingPageTimerLoadedStateWidget>
+    with WidgetsBindingObserver {
   late StopWatchTimer _stopWatchTimer;
-  late bool _stopWatchIsRunning;
+  final ValueNotifier<bool> _isTimerRunningNotifier = ValueNotifier<bool>(
+    false,
+  );
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _stopWatchTimer = StopWatchTimer();
-    _stopWatchIsRunning = _stopWatchTimer.isRunning;
   }
 
   @override
-  void dispose() {
-    _stopWatchTimer.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive && _isTimerRunningNotifier.value) {
+      _toggleTimer(false);
+    }
+
+    super.didChangeAppLifecycleState(state);
+  }
+
+  void _toggleTimer(bool start) {
+    if (start) {
+      _stopWatchTimer.onStartTimer();
+    } else {
+      _stopWatchTimer.onStopTimer();
+    }
+    _isTimerRunningNotifier.value = _stopWatchTimer.isRunning;
+  }
+
+  void _resetTimer() {
+    _stopWatchTimer.onResetTimer();
+    _isTimerRunningNotifier.value = false;
+  }
+
+  @override
+  Future<void> dispose() async {
+    await _stopWatchTimer.dispose();
+    _isTimerRunningNotifier.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -50,42 +78,42 @@ class _ReadingPageTimerLoadedStateWidgetState
             Row(
               children: [
                 Expanded(
-                  child: StreamBuilder(
+                  child: StreamBuilder<int>(
                     stream: _stopWatchTimer.secondTime,
                     initialData: 0,
                     builder: (_, seconds) {
                       return TimerWidget(
+                        key: const Key('TimerWidget'),
                         seconds: seconds.data ?? 0,
                       );
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
+                const SizedBox(width: 5),
+                ValueListenableBuilder<bool>(
+                  valueListenable: _isTimerRunningNotifier,
+                  builder: (context, isRunning, _) {
+                    if (!isRunning) {
+                      return IconButton(
+                        tooltip: 'close-page-button-tooltip'.i18n(),
+                        onPressed: Navigator.of(context).pop,
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: colorScheme.secondary,
+                        ),
+                      );
+                    } else {
+                      return IconButton(
+                        tooltip: 'reset-timer-button-tooltip'.i18n(),
+                        onPressed: _resetTimer,
+                        icon: Icon(
+                          Icons.restart_alt_outlined,
+                          color: colorScheme.secondary,
+                        ),
+                      );
+                    }
+                  },
                 ),
-                if (!_stopWatchIsRunning)
-                  IconButton(
-                    tooltip: 'close-page-button-tooltip'.i18n(),
-                    onPressed: Navigator.of(context).pop,
-                    icon: Icon(
-                      Icons.close_rounded,
-                      color: colorScheme.secondary,
-                    ),
-                  )
-                else
-                  IconButton(
-                    tooltip: 'reset-timer-button-tooltip'.i18n(),
-                    onPressed: () {
-                      _stopWatchTimer.onResetTimer();
-                      setState(() {
-                        _stopWatchIsRunning = false;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.restart_alt_outlined,
-                      color: colorScheme.secondary,
-                    ),
-                  ),
               ],
             ),
             const SizedBox(
@@ -100,43 +128,38 @@ class _ReadingPageTimerLoadedStateWidgetState
             Row(
               children: [
                 Flexible(
-                  child: BookifyOutlinedButton.expanded(
-                    text: _stopWatchIsRunning
-                        ? 'stop-timer-button'.i18n()
-                        : 'start-timer-button'.i18n(),
-                    suffixIcon: _stopWatchTimer.isRunning
-                        ? Icons.pause_rounded
-                        : Icons.play_arrow_rounded,
-                    onPressed: () {
-                      if (_stopWatchIsRunning) {
-                        _stopWatchTimer.onStopTimer();
-                        setState(() {
-                          _stopWatchIsRunning = false;
-                        });
-                      } else {
-                        _stopWatchTimer.onStartTimer();
-                        setState(() {
-                          _stopWatchIsRunning = true;
-                        });
-                      }
+                  child: ValueListenableBuilder(
+                    valueListenable: _isTimerRunningNotifier,
+                    builder: (context, isRunning, _) {
+                      return BookifyOutlinedButton.expanded(
+                        key: const Key('StartStopTimerButton'),
+                        text: isRunning
+                            ? 'stop-timer-button'.i18n()
+                            : 'start-timer-button'.i18n(),
+                        suffixIcon: isRunning
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded,
+                        onPressed: () => _toggleTimer(!isRunning),
+                      );
                     },
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                StreamBuilder(
+                StreamBuilder<int>(
                   stream: _stopWatchTimer.secondTime,
                   initialData: 0,
-                  builder: (_, seconds) {
-                    if (seconds.data! > 0) {
+                  builder: (_, snapshot) {
+                    final seconds = snapshot.data ?? 0;
+                    if (seconds > 0) {
                       return Flexible(
                         child: BookifyElevatedButton.expanded(
                           text: 'finish-timer-button'.i18n(),
                           suffixIcon: Icons.check_rounded,
                           onPressed: () {
                             _stopWatchTimer.onStopTimer();
-                            widget.onFinish(seconds.data!);
+                            widget.onFinish(seconds);
                           },
                         ),
                       );

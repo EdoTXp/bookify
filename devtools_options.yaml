@@ -1,2 +1,4 @@
 extensions:
   - provider: true
+  - shared_preferences: true
+  - patrol: true

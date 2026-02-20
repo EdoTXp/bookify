@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,26 +18,52 @@ class QrCodeScannerWidget extends StatefulWidget {
   State<QrCodeScannerWidget> createState() => _QrCodeScannerWidgetState();
 }
 
-class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
+class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget>
+    with WidgetsBindingObserver {
   late final MobileScannerController _scannerController;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!_scannerController.value.hasCameraPermission) {
+      return;
+    }
+
+    switch (state) {
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+        return;
+      case AppLifecycleState.resumed:
+        unawaited(_scannerController.start());
+      case AppLifecycleState.inactive:
+        unawaited(_scannerController.stop());
+    }
+  }
 
   @override
   void initState() {
     super.initState();
 
+    WidgetsBinding.instance.addObserver(this);
+
     _scannerController = MobileScannerController(
+      autoStart: false,
       formats: [
-        BarcodeFormat.codebar,
+        BarcodeFormat.qrCode,
+        BarcodeFormat.codabar,
         BarcodeFormat.ean13,
         BarcodeFormat.ean8,
       ],
       detectionTimeoutMs: 2000,
     );
+    unawaited(_scannerController.start());
   }
 
   @override
   void dispose() {
-    _scannerController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+
+    unawaited(_scannerController.dispose());
     super.dispose();
   }
 
@@ -76,8 +104,8 @@ class _QrCodeScannerWidgetState extends State<QrCodeScannerWidget> {
                     message: 'camera-error'.i18n([errorDetails]),
                     onPressed: () async {
                       await _scannerController.stop().then(
-                            (_) async => await _scannerController.start(),
-                          );
+                        (_) async => await _scannerController.start(),
+                      );
                     },
                   ),
                 );
