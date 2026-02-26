@@ -26,18 +26,23 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     try {
       emit(BookDetailLoadingState());
 
-      final bookIsInserted =
-          await _bookService.verifyBookIsAlreadyInserted(id: event.bookId);
+      final bookIsInserted = await _bookService.verifyBookIsAlreadyInserted(
+        id: event.bookId,
+      );
 
       emit(BookDetailLoadedState(bookIsInserted: bookIsInserted));
     } on LocalDatabaseException catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+        ),
+      );
     } catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+        ),
+      );
     }
   }
 
@@ -48,24 +53,30 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     try {
       emit(BookDetailLoadingState());
 
-      final bookInserted =
-          await _bookService.insertCompleteBook(bookModel: event.bookModel);
+      final bookInserted = await _bookService.insertCompleteBook(
+        bookModel: event.bookModel,
+      );
 
       if (bookInserted != 1) {
         emit(
-            BookDetailErrorState(errorMessage: 'Erro no inserimento do livro'));
+          BookDetailErrorState(errorMessage: 'Erro no inserimento do livro'),
+        );
         return;
       }
 
       emit(BookDetailLoadedState(bookIsInserted: true));
     } on LocalDatabaseException catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+        ),
+      );
     } catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+        ),
+      );
     }
   }
 
@@ -100,13 +111,17 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       emit(BookDetailLoadedState(bookIsInserted: false));
       return;
     } on LocalDatabaseException catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+        ),
+      );
     } catch (e) {
-      emit(BookDetailErrorState(
-        errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
-      ));
+      emit(
+        BookDetailErrorState(
+          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+        ),
+      );
     }
   }
 }

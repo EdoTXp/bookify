@@ -2,7 +2,7 @@
 
 ![Bookify Logo](design/documentation/images/bookify.png)
 
-**A Flutter project that helps you search for books, add them to your library and track your reading time.**
+**Bookify is a cross-platform Flutter application designed to help users organize their personal library, track reading progress and manage book loans with a scalable and maintainable architecture.**
 
 ## 🎨 Design
 

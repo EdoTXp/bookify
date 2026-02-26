@@ -51,11 +51,17 @@ class _BookDetailPageState extends State<BookDetailPage> {
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController();
-    _scrollController.addListener(_setAppBarTitleIsVisible);
+    _scrollController = ScrollController()
+      ..addListener(
+        _setAppBarTitleIsVisible,
+      );
 
     _bloc = context.read<BookDetailBloc>()
-      ..add(VerifiedBookIsInsertedEvent(bookId: widget.bookModel.id));
+      ..add(
+        VerifiedBookIsInsertedEvent(
+          bookId: widget.bookModel.id,
+        ),
+      );
 
     // disable the snackbar.
     _isCallVerifyBookEvent = true;
@@ -63,6 +69,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   void dispose() {
+    _scrollController.removeListener(_setAppBarTitleIsVisible);
     _scrollController.dispose();
     super.dispose();
   }
@@ -73,8 +80,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
     double currentScroll = _scrollController.position.pixels;
 
     //Scroll under the book title in pixels depending on the book description is ellipsed.
-    double underTitleBookScroll =
-        (_isEllipsisText) ? maxScroll * .8 : maxScroll * .15;
+    double underTitleBookScroll = (_isEllipsisText)
+        ? maxScroll * .8
+        : maxScroll * .15;
 
     bool isTitleVisible = (currentScroll <= underTitleBookScroll);
 
@@ -101,7 +109,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
         _canClickToInsertOrRemoveButton = true;
 
         if (!_isCallVerifyBookEvent) {
-          final message = (_bookIsInserted)
+          final message = (state.bookIsInserted)
               ? 'book-successfully-added-snackbar'.i18n()
               : 'book-successfully-removed-snackbar'.i18n();
 
@@ -148,10 +156,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     final book = widget.bookModel;
-    final authors =
-        book.authors.map((author) => author.name).toList().join(', ');
-    final categories =
-        book.categories.map((category) => category.name).toList().join(', ');
+    final authors = book.authors
+        .map((author) => author.name)
+        .toList()
+        .join(', ');
+    final categories = book.categories
+        .map((category) => category.name)
+        .toList()
+        .join(', ');
 
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -173,10 +185,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
+                  key: const Key('BookmarkIcon'),
                   // Update bookMark icon
                   (_bookIsInserted) ? Icons.bookmark : Icons.bookmark_border,
                 ),
-              )
+              ),
             ],
           ),
           body: Padding(
@@ -193,6 +206,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 children: [
                   Center(
                     child: Text(
+                      key: const Key('TitleAndAuthorsText'),
                       '${book.title} ― $authors',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
@@ -204,6 +218,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   const SizedBox(height: 12),
                   Center(
                     child: BookWidget.normalSize(
+                      key: const Key('BookWidget'),
                       bookImageUrl: book.imageUrl,
                     ),
                   ),
@@ -212,6 +227,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
+                        key: const Key('BookPagesText'),
                         'pages-label'.i18n([book.pageCount.toString()]),
                         textScaler: TextScaler.noScaling,
                         style: TextStyle(
@@ -221,6 +237,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       ),
                       const SizedBox(width: 24),
                       BookPagesReadingTime(
+                        key: const Key('BookPagesReadingTimeWidget'),
                         pagesCount: book.pageCount,
                       ),
                     ],
@@ -232,6 +249,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     children: [
                       Expanded(
                         child: BookifyOutlinedButton(
+                          key: const Key('GoToStoreButton'),
                           text: 'go-to-store-button'.i18n(),
                           suffixIcon: Icons.store,
                           onPressed: () async =>
@@ -243,8 +261,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         child: BookifyElevatedButton(
                           key: const Key('InsertOrRemoveBookButton'),
                           // Update the icon
-                          suffixIcon:
-                              (_bookIsInserted) ? Icons.remove : Icons.add,
+                          suffixIcon: (_bookIsInserted)
+                              ? Icons.remove
+                              : Icons.add,
                           // Update the text
                           text: (_bookIsInserted)
                               ? 'remove-button'.i18n()
@@ -259,6 +278,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
+                    key: const Key('SynopsisTitle'),
                     'synopsis-title'.i18n(),
                     textScaler: TextScaler.noScaling,
                     style: TextStyle(
@@ -269,8 +289,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   const SizedBox(height: 12),
                   InkWell(
                     splashColor: Colors.transparent,
-                    onTap: () =>
-                        setState(() => _isEllipsisText = !_isEllipsisText),
+                    onTap: () => setState(
+                      () => _isEllipsisText = !_isEllipsisText,
+                    ),
                     child: Text(
                       book.description,
                       maxLines: (_isEllipsisText) ? 4 : null,
@@ -292,6 +313,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       Column(
                         children: [
                           Text(
+                            key: const Key('RatingsTitle'),
                             'ratings-title'.i18n(),
                             textScaler: TextScaler.noScaling,
                             style: TextStyle(
@@ -301,6 +323,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           ),
                           const SizedBox(height: 12),
                           BookRating(
+                            key: const Key('BookRatingWidget'),
                             averageRating: book.averageRating,
                             ratingsCount: book.ratingsCount,
                           ),
@@ -313,6 +336,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+                              key: const Key('BookInformationTitle'),
                               'book-information-title'.i18n(),
                               textScaler: TextScaler.noScaling,
                               style: TextStyle(
@@ -322,10 +346,12 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             ),
                             const SizedBox(height: 30),
                             BookDescriptionWidget(
+                              key: const Key('PublisherDescriptionWidget'),
                               title: 'publisher-title'.i18n(),
                               content: book.publisher,
                             ),
                             BookDescriptionWidget(
+                              key: const Key('CategoriesDescriptionWidget'),
                               title: 'categories-title'.i18n(),
                               content: categories,
                             ),
