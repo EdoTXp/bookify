@@ -3,9 +3,9 @@ import java.util.Properties
 import java.io.FileInputStream
 
 plugins {
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    id("kotlin-android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.kotlin.android)
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -18,11 +18,10 @@ android {
     namespace = "com.bookifysoftware.bookify"
     compileSdk = 36
     compileSdkMinor = 1
-    buildToolsVersion = "36.1.0"
     ndkVersion = "29.0.14206865"
-    
+
     testOptions {
-    execution = "ANDROIDX_TEST_ORCHESTRATOR"
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 
     compileOptions {
@@ -49,10 +48,10 @@ android {
     }
 
     dependencies {
-        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
-        implementation("androidx.window:window:1.5.1")
-        implementation("androidx.window:window-java:1.5.1")
-        androidTestUtil("androidx.test:orchestrator:1.6.1")
+        coreLibraryDesugaring(libs.android.desugar.jdk.libs)
+        implementation(libs.androidx.window)
+        implementation(libs.androidx.window.java)
+        androidTestUtil(libs.androidx.test.orchestrator)
     }
 
     signingConfigs {
@@ -74,8 +73,6 @@ android {
             signingConfig = signingConfigs.getByName("config")
         }
     }
-
-
 }
 
 flutter {

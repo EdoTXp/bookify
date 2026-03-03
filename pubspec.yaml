@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.10.2
+version: 2.10.3
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^5.9.1 # Used to receive books through the Google Books API.
+  dio: ^5.9.2 # Used to receive books through the Google Books API.
   dio_cache_interceptor: ^4.0.5 # Used to cache the API responses.
   provider: ^6.1.5+1 # Used for DI.
   flutter_bloc: ^9.1.1 # Used for state management.
@@ -28,7 +28,7 @@ dependencies:
   calendar_date_picker2: ^2.0.1 # Used to pick the date for loan.
   circular_countdown_timer: ^0.2.4 # Used for timer.
   stop_watch_timer: ^3.2.2 # Used to take reading time per page.
-  audioplayers: ^6.5.1 # Used for play default alarm ringtone.
+  audioplayers: ^6.6.0 # Used for play default alarm ringtone.
   wakelock_plus: ^1.4.0 # Used for keep the screen awake when timer is started.
   permission_handler: ^12.0.1 # Used to request permission for contacts.
   fast_contacts: ^5.0.1 # Used to get Phone Contacts.
@@ -40,8 +40,8 @@ dependencies:
   path: ^1.9.1 # Used to find the default path of the database.
   shared_preferences: ^2.5.4 # Used for storage the user setting.
   authentication_buttons: ^0.0.5 # Used for show login button on auth page.
-  firebase_auth: ^6.1.4 # Used for authenticate user on Firebase.
-  firebase_core: ^4.4.0 # Used for initialize the Firebase.
+  firebase_auth: ^6.2.0 # Used for authenticate user on Firebase.
+  firebase_core: ^4.5.0 # Used for initialize the Firebase.
   google_sign_in: ^7.2.0 # Used for login with Google.
   flutter_facebook_auth: ^7.1.5 # Used for login with Facebook.
   sign_in_with_apple: ^7.0.1 # Used for login with Apple.

@@ -77,7 +77,7 @@ jobs:
 
       #10 Building APK
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --obfuscate --split-debug-info=${{ github.workspace }}
 
       #11 Extract Version
       - name: Extract version from pubspec.yaml
