@@ -261,8 +261,8 @@
 				BA9384FD2F0DDE7E00A34034 /* Frameworks */,
 				BA9384FE2F0DDE7E00A34034 /* Resources */,
 				8405F07C71367739CD48F54A /* [CP] Embed Pods Frameworks */,
-				45EE5A9AAAD16949EF9BC9DB /* [CP] Copy Pods Resources */,
 				BA93850F2F0DE1C400A34034 /* xcode_backend embed_and_thin */,
+				45EE5A9AAAD16949EF9BC9DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -496,7 +496,7 @@
 		};
 		BA93850E2F0DE1A200A34034 /* xcode_backend build */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -508,13 +508,13 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 		BA93850F2F0DE1C400A34034 /* xcode_backend embed_and_thin */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -526,7 +526,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};

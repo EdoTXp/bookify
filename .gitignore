@@ -53,6 +53,9 @@ app.*.map.json
 firebase_options.dart
 firebase.json
 
+# Patrol bundle file
+/integration_test/test_bundle.dart
+
 # Environment variable file
 .env
 env.g.dart
