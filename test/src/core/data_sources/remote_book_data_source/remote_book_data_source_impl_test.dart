@@ -14,7 +14,10 @@ class RestClientMock extends Mock implements RestClient {}
 
 void main() {
   final restClient = RestClientMock();
-  final bookDataSource = GoogleBooksDataSourceImpl(restClient);
+  final bookDataSource = GoogleBooksDataSourceImpl(
+    restClient,
+    'test_api_key_12345',
+  );
 
   group('Test all methods of RemoteBookDataSourceImpl:', () {
     test('Get a List of books by author', () async {

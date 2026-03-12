@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bookify/src/core/adapters/google_books_adapter.dart';
-import 'package:bookify/src/core/config/env.dart';
 import 'package:bookify/src/core/data_sources/remote_books_data_source/remote_books_data_source.dart';
 import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -9,7 +8,12 @@ import 'package:bookify/src/core/rest_client/rest_client.dart';
 
 class GoogleBooksDataSourceImpl implements RemoteBooksDataSource {
   final RestClient _client;
-  GoogleBooksDataSourceImpl(this._client);
+  final String _googleBooksApiKey;
+
+  const GoogleBooksDataSourceImpl(
+    this._client,
+    this._googleBooksApiKey,
+  );
 
   @override
   Future<List<BookModel>> getAllBooks() => _fetch('_');
@@ -45,7 +49,7 @@ class GoogleBooksDataSourceImpl implements RemoteBooksDataSource {
           'fields':
               'items(id,volumeInfo(title,authors,publisher,description,infoLink,pageCount,imageLinks/thumbnail,categories,averageRating,ratingsCount))',
           'maxResults': 40,
-          'key': Env.googleBooksApiKey,
+          'key': _googleBooksApiKey,
         },
       );
       final books = GoogleBooksAdapter.fromJsonList(response);
