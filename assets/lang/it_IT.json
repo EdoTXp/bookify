@@ -243,5 +243,11 @@
   "book-on-loan-label": "in prestito",
   "book-on-reading-label": "in lettura",
   "previous-month-tooltip": "Mese precedente",
-  "next-month-tooltip": "Mese successivo"
+  "next-month-tooltip": "Mese successivo",
+  "error-rest-client-connection-timeout": "Timeout connessione: %s",
+  "error-rest-client-receive-timeout": "Timeout risposta: %s",
+  "error-rest-client-not-found": "Risorsa non trovata: %s",
+  "error-rest-client-socket-exception": "Errore di rete: %s",
+  "error-invalid-isbn": "ISBN non valido: %s",
+  "error-unknown": "Errore imprevisto: %s"
 }

@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:bookify/src/core/adapters/google_books_adapter.dart';
 import 'package:bookify/src/core/data_sources/remote_books_data_source/remote_books_data_source.dart';
-import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/rest_client/rest_client.dart';
 
@@ -57,14 +56,13 @@ class GoogleBooksDataSourceImpl implements RemoteBooksDataSource {
       return books;
     } on TypeError {
       return <BookModel>[];
-    } on BookNotFoundException {
-      rethrow;
-    } on BookException {
-      rethrow;
-    } on SocketException {
+    } on RestClientException {
       rethrow;
     } catch (e) {
-      throw Exception(e.toString());
+      throw RestClientException(
+        RestClientErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }
