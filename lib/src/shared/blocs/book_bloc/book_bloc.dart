@@ -1,5 +1,5 @@
-import 'dart:io';
-
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
 import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,10 +36,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -57,10 +67,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         return;
       }
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -71,8 +91,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     try {
       emit(BooksLoadingState());
 
-      final books =
-          await _booksRepository.findBooksByAuthor(author: event.author);
+      final books = await _booksRepository.findBooksByAuthor(
+        author: event.author,
+      );
 
       if (books.isEmpty) {
         emit(BookEmptyState());
@@ -80,10 +101,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -94,8 +125,9 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     try {
       emit(BooksLoadingState());
 
-      final books =
-          await _booksRepository.findBooksByCategory(category: event.category);
+      final books = await _booksRepository.findBooksByCategory(
+        category: event.category,
+      );
 
       if (books.isEmpty) {
         emit(BookEmptyState());
@@ -103,10 +135,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -118,7 +160,8 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(BooksLoadingState());
 
       final books = await _booksRepository.findBooksByPublisher(
-          publisher: event.publisher);
+        publisher: event.publisher,
+      );
 
       if (books.isEmpty) {
         emit(BookEmptyState());
@@ -126,10 +169,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -143,7 +196,12 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       final verifier = IsbnVerifier();
       String? isbn = verifier.verifyIsbn(event.isbn);
       if (isbn == null) {
-        emit(BookErrorSate(errorMessage: 'Digite um ISBN Válido'));
+        emit(
+          BookErrorState(
+            errorCode: RestClientErrorCode.invalidInput,
+            errorMessage: 'Invalid ISBN provided',
+          ),
+        );
         return;
       }
 
@@ -155,10 +213,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
 
       emit(BooksLoadedState(books: books));
-    } on SocketException catch (socketException) {
-      emit(BookErrorSate(errorMessage: socketException.message));
-    } on Exception catch (e) {
-      emit(BookErrorSate(errorMessage: e.toString()));
+    } on RestClientException catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: e.code,
+          errorMessage: e.descriptionMessage,
+        ),
+      );
+    } catch (e) {
+      emit(
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

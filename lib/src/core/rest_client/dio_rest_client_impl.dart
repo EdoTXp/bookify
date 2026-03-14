@@ -1,9 +1,8 @@
 import 'dart:io';
-
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-
-import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
+import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'rest_client.dart';
 
 class DioRestClientImpl implements RestClient {
@@ -37,19 +36,36 @@ class DioRestClientImpl implements RestClient {
       return response.data;
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
-        throw BookNotFoundException(
-          e.response?.statusMessage ?? 'Book not found',
+        throw RestClientException(
+          RestClientErrorCode.notFound,
+          descriptionMessage: e.response?.statusMessage ?? 'Item not found',
         );
-      } else if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout) {
-        throw BookException(
-          e.response?.statusMessage ?? 'An error occurred',
+      } else if (e.type == DioExceptionType.connectionTimeout) {
+        throw RestClientException(
+          RestClientErrorCode.connectionTimeout,
+          descriptionMessage: 'Connection timed out',
+        );
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+        throw RestClientException(
+          RestClientErrorCode.receiveTimeout,
+          descriptionMessage: 'Receive timed out',
+        );
+      } else if (e.error is SocketException) {
+        throw RestClientException(
+          RestClientErrorCode.socketException,
+          descriptionMessage: 'No internet connection',
         );
       } else {
-        throw SocketException(e.message ?? e.toString());
+        throw RestClientException(
+          RestClientErrorCode.unknown,
+          descriptionMessage: e.message,
+        );
       }
     } catch (e) {
-      throw Exception(e.toString());
+      throw RestClientException(
+        RestClientErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

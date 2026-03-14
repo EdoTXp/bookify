@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
@@ -98,7 +99,10 @@ void main() {
 
     testWidgets('Test Home Page when is throw error', (tester) async {
       when(() => bookBloc.state).thenReturn(
-        BookErrorSate(errorMessage: 'errorMessage'),
+        BookErrorState(
+          errorCode: RestClientErrorCode.unknown,
+          errorMessage: 'errorMessage',
+        ),
       );
 
       await _initHomePage(tester, bookBloc);
@@ -108,7 +112,7 @@ void main() {
         findsOneWidget,
       );
 
-      expect(find.text('errorMessage'), findsOne);
+      expect(find.text('error-unknown'), findsOne);
 
       expect(
         find.byKey(const Key('AnimatedSearchBar')),

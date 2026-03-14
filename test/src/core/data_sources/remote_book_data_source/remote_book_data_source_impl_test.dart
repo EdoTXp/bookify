@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:bookify/src/core/data_sources/remote_books_data_source/google_books_data_source_impl.dart';
-import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/rest_client/rest_client.dart';
 import 'package:dio/dio.dart';
@@ -13,11 +12,16 @@ import '../../../mocks/json/books_json_mock.dart';
 class RestClientMock extends Mock implements RestClient {}
 
 void main() {
-  final restClient = RestClientMock();
-  final bookDataSource = GoogleBooksDataSourceImpl(
-    restClient,
-    'test_api_key_12345',
-  );
+  late RestClientMock restClient;
+  late GoogleBooksDataSourceImpl bookDataSource;
+
+  setUp(() {
+    restClient = RestClientMock();
+    bookDataSource = GoogleBooksDataSourceImpl(
+      restClient,
+      'test_api_key_12345',
+    );
+  });
 
   group('Test all methods of RemoteBookDataSourceImpl:', () {
     test('Get a List of books by author', () async {
@@ -151,37 +155,92 @@ void main() {
       }
     });
 
-    test('test a BookException', () async {
+    test('test a RestClientException with NotFound code', () async {
       when(
         () => restClient.get(
           baseUrl: any(named: 'baseUrl'),
           queryParameters: any(named: 'queryParameters'),
         ),
-      ).thenThrow(const BookException(''));
-      expect(bookDataSource.getAllBooks(), throwsA(isA<BookException>()));
-    });
+      ).thenThrow(
+        const RestClientException(RestClientErrorCode.notFound),
+      );
 
-    test('test a BookNotFoundException', () async {
-      when(
-        () => restClient.get(
-          baseUrl: any(named: 'baseUrl'),
-          queryParameters: any(named: 'queryParameters'),
-        ),
-      ).thenThrow(const BookNotFoundException('BookNotFoundException'));
       expect(
         bookDataSource.getAllBooks(),
-        throwsA(isA<BookNotFoundException>()),
+        throwsA(
+          isA<RestClientException>().having(
+            (e) => e.code,
+            'code',
+            RestClientErrorCode.notFound,
+          ),
+        ),
       );
     });
 
-    test('test a SocketException', () async {
+    test('test a Connection Timeout Exception', () async {
       when(
         () => restClient.get(
           baseUrl: any(named: 'baseUrl'),
           queryParameters: any(named: 'queryParameters'),
         ),
-      ).thenThrow(const SocketException('message'));
-      expect(bookDataSource.getAllBooks(), throwsA(isA<SocketException>()));
+      ).thenThrow(
+        const RestClientException(RestClientErrorCode.connectionTimeout),
+      );
+
+      expect(
+        bookDataSource.getAllBooks(),
+        throwsA(
+          isA<RestClientException>().having(
+            (e) => e.code,
+            'code',
+            RestClientErrorCode.connectionTimeout,
+          ),
+        ),
+      );
+    });
+
+    test('test a Receive Timeout Exception', () async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(
+        const RestClientException(RestClientErrorCode.receiveTimeout),
+      );
+
+      expect(
+        bookDataSource.getAllBooks(),
+        throwsA(
+          isA<RestClientException>().having(
+            (e) => e.code,
+            'code',
+            RestClientErrorCode.receiveTimeout,
+          ),
+        ),
+      );
+    });
+
+    test('test a RestClientException with SocketException code', () async {
+      when(
+        () => restClient.get(
+          baseUrl: any(named: 'baseUrl'),
+          queryParameters: any(named: 'queryParameters'),
+        ),
+      ).thenThrow(
+        const RestClientException(RestClientErrorCode.socketException),
+      );
+
+      expect(
+        bookDataSource.getAllBooks(),
+        throwsA(
+          isA<RestClientException>().having(
+            (e) => e.code,
+            'code',
+            RestClientErrorCode.socketException,
+          ),
+        ),
+      );
     });
 
     test('test a TypeError expecting an empty list of books', () async {
@@ -191,17 +250,33 @@ void main() {
           queryParameters: any(named: 'queryParameters'),
         ),
       ).thenThrow(TypeError());
-      expect(await bookDataSource.getAllBooks(), <BookModel>[]);
+
+      final result = await bookDataSource.getAllBooks();
+      expect(result, isA<List<BookModel>>());
+      expect(result, isEmpty);
     });
 
-    test('test a generic Exception', () async {
-      when(
-        () => restClient.get(
-          baseUrl: any(named: 'baseUrl'),
-          queryParameters: any(named: 'queryParameters'),
-        ),
-      ).thenThrow(Exception());
-      expect(bookDataSource.getAllBooks(), throwsA(isA<Exception>()));
-    });
+    test(
+      'test a generic Exception should be wrapped in RestClientException unknown',
+      () async {
+        when(
+          () => restClient.get(
+            baseUrl: any(named: 'baseUrl'),
+            queryParameters: any(named: 'queryParameters'),
+          ),
+        ).thenThrow(Exception('Generic Error'));
+
+        expect(
+          bookDataSource.getAllBooks(),
+          throwsA(
+            isA<RestClientException>().having(
+              (e) => e.code,
+              'code',
+              RestClientErrorCode.unknown,
+            ),
+          ),
+        );
+      },
+    );
   });
 }

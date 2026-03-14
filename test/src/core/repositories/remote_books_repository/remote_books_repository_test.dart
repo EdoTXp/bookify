@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:bookify/src/core/data_sources/remote_books_data_source/remote_books_data_source.dart';
-import 'package:bookify/src/core/errors/book_exception/book_exception.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository_impl.dart';
@@ -18,9 +15,9 @@ void main() {
 
   group('Test all methods of GoogleBookRepository:', () {
     test('Get a List of books by author', () async {
-      when(() =>
-              booksDataSource.findBooksByAuthor(author: any(named: 'author')))
-          .thenAnswer((_) async {
+      when(
+        () => booksDataSource.findBooksByAuthor(author: any(named: 'author')),
+      ).thenAnswer((_) async {
         return booksModelMock
             .map(
               (book) => book.copyWith(
@@ -30,16 +27,18 @@ void main() {
             .toList();
       });
 
-      final books =
-          await bookRepository.findBooksByAuthor(author: 'J.R.R. Tolkien');
+      final books = await bookRepository.findBooksByAuthor(
+        author: 'J.R.R. Tolkien',
+      );
 
       expect(books[0].authors.first.name, 'J. R. R. Tolkien');
       expect(books[1].authors.first.name, 'J. R. R. Tolkien');
     });
 
     test('Get a book by ISBN', () async {
-      when(() => booksDataSource.findBooksByIsbn(isbn: any(named: 'isbn')))
-          .thenAnswer((_) async {
+      when(
+        () => booksDataSource.findBooksByIsbn(isbn: any(named: 'isbn')),
+      ).thenAnswer((_) async {
         return booksModelMock
             .map(
               (book) => book.copyWith(
@@ -54,8 +53,11 @@ void main() {
     });
 
     test('Get a List of books by publisher', () async {
-      when(() => booksDataSource.findBooksByPublisher(
-          publisher: any(named: 'publisher'))).thenAnswer((_) async {
+      when(
+        () => booksDataSource.findBooksByPublisher(
+          publisher: any(named: 'publisher'),
+        ),
+      ).thenAnswer((_) async {
         return booksModelMock
             .map(
               (book) => book.copyWith(
@@ -66,7 +68,8 @@ void main() {
       });
 
       final books = await bookRepository.findBooksByPublisher(
-          publisher: 'Alta Books Editora');
+        publisher: 'Alta Books Editora',
+      );
 
       for (var book in books) {
         expect(book.publisher, 'Alta Books Editora');
@@ -85,8 +88,9 @@ void main() {
     });
 
     test('Get a list of books by title', () async {
-      when(() => booksDataSource.findBooksByTitle(title: any(named: 'title')))
-          .thenAnswer((_) async {
+      when(
+        () => booksDataSource.findBooksByTitle(title: any(named: 'title')),
+      ).thenAnswer((_) async {
         return booksModelMock
             .map(
               (book) => book.copyWith(
@@ -104,8 +108,11 @@ void main() {
     });
 
     test('Get a list of books by category', () async {
-      when(() => booksDataSource.findBooksByCategory(
-          category: any(named: 'category'))).thenAnswer((_) async {
+      when(
+        () => booksDataSource.findBooksByCategory(
+          category: any(named: 'category'),
+        ),
+      ).thenAnswer((_) async {
         return booksModelMock
             .map(
               (book) => book.copyWith(
@@ -115,36 +122,13 @@ void main() {
             .toList();
       });
 
-      final books =
-          await bookRepository.findBooksByCategory(category: 'Fiction');
+      final books = await bookRepository.findBooksByCategory(
+        category: 'Fiction',
+      );
 
       for (var book in books) {
         expect(book.categories.first.name, 'Fiction');
       }
-    });
-
-    test('test a BookException', () async {
-      when(() => booksDataSource.getAllBooks())
-          .thenThrow(const BookException(''));
-      expect(bookRepository.getAllBooks(), throwsA(isA<BookException>()));
-    });
-
-    test('test a BookNotFoundException', () async {
-      when(() => booksDataSource.getAllBooks())
-          .thenThrow(const BookNotFoundException('BookNotFoundException'));
-      expect(
-          bookRepository.getAllBooks(), throwsA(isA<BookNotFoundException>()));
-    });
-
-    test('test a SocketException', () async {
-      when(() => booksDataSource.getAllBooks())
-          .thenThrow(const SocketException('message'));
-      expect(bookRepository.getAllBooks(), throwsA(isA<SocketException>()));
-    });
-
-    test('test a generic Exception', () async {
-      when(() => booksDataSource.getAllBooks()).thenThrow(Exception());
-      expect(bookRepository.getAllBooks(), throwsA(isA<Exception>()));
     });
   });
 }
