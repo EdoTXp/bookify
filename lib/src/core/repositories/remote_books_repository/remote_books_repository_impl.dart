@@ -8,32 +8,36 @@ class RemoteBooksRepositoryImpl implements RemoteBooksRepository {
   RemoteBooksRepositoryImpl(this._booksDataSource);
 
   @override
-  Future<List<BookModel>> findBooksByAuthor({required String author}) {
-    return _booksDataSource.findBooksByAuthor(author: author);
+  Future<List<BookModel>> findBooksByAuthor({required String author}) async {
+    return await _booksDataSource.findBooksByAuthor(author: author);
   }
 
   @override
-  Future<List<BookModel>> findBooksByIsbn({required String isbn}) {
-    return _booksDataSource.findBooksByIsbn(isbn: isbn);
+  Future<List<BookModel>> findBooksByIsbn({required String isbn}) async {
+    return await _booksDataSource.findBooksByIsbn(isbn: isbn);
   }
 
   @override
-  Future<List<BookModel>> findBooksByPublisher({required String publisher}) {
-    return _booksDataSource.findBooksByPublisher(publisher: publisher);
+  Future<List<BookModel>> findBooksByPublisher({
+    required String publisher,
+  }) async {
+    return await _booksDataSource.findBooksByPublisher(publisher: publisher);
   }
 
   @override
-  Future<List<BookModel>> findBooksByCategory({required String category}) {
-    return _booksDataSource.findBooksByCategory(category: category);
+  Future<List<BookModel>> findBooksByCategory({
+    required String category,
+  }) async {
+    return await _booksDataSource.findBooksByCategory(category: category);
   }
 
   @override
-  Future<List<BookModel>> findBooksByTitle({required String title}) {
-    return _booksDataSource.findBooksByTitle(title: title);
+  Future<List<BookModel>> findBooksByTitle({required String title}) async {
+    return await _booksDataSource.findBooksByTitle(title: title);
   }
 
   @override
-  Future<List<BookModel>> getAllBooks() {
-    return _booksDataSource.getAllBooks();
+  Future<List<BookModel>> getAllBooks() async {
+    return await _booksDataSource.getAllBooks();
   }
 }
