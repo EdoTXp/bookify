@@ -29,11 +29,11 @@ dependencies:
   circular_countdown_timer: ^0.2.4 # Used for timer.
   stop_watch_timer: ^3.2.2 # Used to take reading time per page.
   audioplayers: ^6.6.0 # Used for play default alarm ringtone.
-  wakelock_plus: ^1.4.0 # Used for keep the screen awake when timer is started.
+  wakelock_plus: ^1.5.1 # Used for keep the screen awake when timer is started.
   permission_handler: ^12.0.1 # Used to request permission for contacts.
   fast_contacts: ^5.0.1 # Used to get Phone Contacts.
   flutter_local_notifications: ^21.0.0 # Used for send notifications.
-  flutter_timezone: ^5.0.1 # Used for get local timezone.
+  flutter_timezone: ^5.0.2 # Used for get local timezone.
   timezone: ^0.11.0 # Used for get timezone for schedule notification.
   intl: ^0.20.2 # Used for set a format to DateTime.
   sqflite: ^2.4.2 # Used for local database.
