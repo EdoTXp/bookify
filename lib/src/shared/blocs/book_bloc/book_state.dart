@@ -16,10 +16,10 @@ final class BooksLoadedState extends BookState {
 
 final class BookErrorState extends BookState {
   final RestClientErrorCode errorCode;
-  final String? errorMessage;
+  final String? errorDescriptionMessage;
 
   BookErrorState({
     required this.errorCode,
-    this.errorMessage,
+    this.errorDescriptionMessage,
   });
 }

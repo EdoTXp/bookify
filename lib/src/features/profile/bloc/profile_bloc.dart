@@ -1,7 +1,6 @@
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
-import 'package:bookify/src/core/services/storage_services/storage_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_event.dart';
@@ -9,11 +8,9 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthService _authService;
-  final StorageServices _storageServices;
 
   ProfileBloc(
     this._authService,
-    this._storageServices,
   ) : super(ProfileLoadingState()) {
     on<GotUserProfileEvent>(_gotUserProfileEvent);
     on<UserLoggedOutEvent>(_userLoggedOutEvent);
@@ -69,17 +66,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(
           ProfileErrorState(
             errorMessage: 'Erro ao fazer o logout do usuário',
-          ),
-        );
-        return;
-      }
-
-      final storageRemoved = await _storageServices.clearStorage();
-
-      if (storageRemoved == 0) {
-        emit(
-          ProfileErrorState(
-            errorMessage: 'Erro ao limpar as configurações do usuário',
           ),
         );
         return;

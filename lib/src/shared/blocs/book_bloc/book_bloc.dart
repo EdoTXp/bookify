@@ -40,14 +40,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -71,14 +71,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -105,14 +105,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -139,14 +139,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -173,14 +173,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -199,7 +199,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         emit(
           BookErrorState(
             errorCode: RestClientErrorCode.invalidInput,
-            errorMessage: 'Invalid ISBN provided',
+            errorDescriptionMessage: 'Invalid ISBN provided',
           ),
         );
         return;
@@ -217,14 +217,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       emit(
         BookErrorState(
           errorCode: e.code,
-          errorMessage: e.descriptionMessage,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: e.toString(),
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

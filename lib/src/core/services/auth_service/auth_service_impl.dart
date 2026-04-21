@@ -14,8 +14,8 @@ class AuthServiceImpl implements AuthService {
   const AuthServiceImpl({
     required AuthRepository authRepository,
     required AuthStrategyFactory authStrategyFactory,
-  })  : _authRepository = authRepository,
-        _authStrategyFactory = authStrategyFactory;
+  }) : _authRepository = authRepository,
+       _authStrategyFactory = authStrategyFactory;
 
   @override
   Future<int> signIn({required SignInType signInType}) async {
@@ -41,7 +41,12 @@ class AuthServiceImpl implements AuthService {
   Future<bool> signOut({required SignInType signInType}) async {
     try {
       final authStrategy = _authStrategyFactory.create(signInType);
-      return await authStrategy.signOut();
+      final strategyResult = await authStrategy.signOut();
+
+      if (strategyResult) {
+        await _authRepository.clearUserData();
+      }
+      return strategyResult;
     } on AuthException {
       rethrow;
     } on Exception catch (e) {
