@@ -45,8 +45,9 @@ void main() {
     test(
       'Test signIn success',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signIn()).thenAnswer((_) async => userModel);
         when(
           () => authRepository.setUserModel(userModel: userModel),
@@ -61,15 +62,19 @@ void main() {
     test(
       'Test signIn throws AuthException when strategy fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
-        when(() => authStrategy.signIn())
-            .thenThrow(AuthException('Strategy failed'));
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
+        when(
+          () => authStrategy.signIn(),
+        ).thenThrow(AuthException('Strategy failed'));
 
         expect(
           () async => await authService.signIn(signInType: SignInType.google),
-          throwsA((Exception e) =>
-              e is AuthException && e.message == 'Strategy failed'),
+          throwsA(
+            (Exception e) =>
+                e is AuthException && e.message == 'Strategy failed',
+          ),
         );
       },
     );
@@ -77,16 +82,19 @@ void main() {
     test(
       'Test signIn throws AuthException when repository fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signIn()).thenAnswer((_) async => userModel);
-        when(() => authRepository.setUserModel(userModel: userModel))
-            .thenThrow(StorageException('DB failed'));
+        when(
+          () => authRepository.setUserModel(userModel: userModel),
+        ).thenThrow(StorageException('DB failed'));
 
         expect(
           () async => await authService.signIn(signInType: SignInType.google),
           throwsA(
-              (Exception e) => e is AuthException && e.message == 'DB failed'),
+            (Exception e) => e is AuthException && e.message == 'DB failed',
+          ),
         );
       },
     );
@@ -96,31 +104,37 @@ void main() {
     test(
       'Test signOut success',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenAnswer((_) async => true);
+        when(() => authRepository.clearUserData()).thenAnswer((_) async => 1);
 
         final result = await authService.signOut(signInType: SignInType.google);
 
         expect(result, isTrue);
         verify(() => authStrategyFactory.create(SignInType.google)).called(1);
         verify(() => authStrategy.signOut()).called(1);
+        verify(() => authRepository.clearUserData()).called(1);
       },
     );
 
     test(
       'Test signOut throws AuthException when strategy fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenThrow(
           AuthException('Strategy failed'),
         );
 
         expect(
           () async => await authService.signOut(signInType: SignInType.google),
-          throwsA((Exception e) =>
-              e is AuthException && e.message == 'Strategy failed'),
+          throwsA(
+            (Exception e) =>
+                e is AuthException && e.message == 'Strategy failed',
+          ),
         );
         verify(() => authStrategyFactory.create(SignInType.google)).called(1);
         verify(() => authStrategy.signOut()).called(1);

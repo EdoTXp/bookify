@@ -101,7 +101,7 @@ void main() {
       when(() => bookBloc.state).thenReturn(
         BookErrorState(
           errorCode: RestClientErrorCode.unknown,
-          errorMessage: 'errorMessage',
+          errorDescriptionMessage: 'errorMessage',
         ),
       );
 

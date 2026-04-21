@@ -2,8 +2,8 @@ import 'package:bookify/src/core/enums/rest_client_error_code.dart';
 import 'package:localization/localization.dart';
 
 extension RestClientErrorCodeExtension on RestClientErrorCode {
-  String toLocalizedMessage(String? description) {
-    final messageArg = description ?? '---';
+  String toLocalizedMessage(String? descriptionMessage) {
+    final messageArg = descriptionMessage ?? '---';
 
     return switch (this) {
       RestClientErrorCode.connectionTimeout =>

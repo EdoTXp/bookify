@@ -14,9 +14,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserModel?> getUserModel() async {
     try {
-      final userJson = await _storage.getStorage(
-        key: _userKey,
-      ) as String?;
+      final userJson =
+          await _storage.getStorage(
+                key: _userKey,
+              )
+              as String?;
 
       if (userJson == null) {
         return null;
@@ -41,6 +43,15 @@ class AuthRepositoryImpl implements AuthRepository {
       );
 
       return (userJsonInserted == 1) ? 1 : 0;
+    } on StorageException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> clearUserData() async {
+    try {
+      return await _storage.deleteAllStorage();
     } on StorageException {
       rethrow;
     }

@@ -58,13 +58,17 @@ class _HomePageState extends State<HomePage> {
         key: const Key('BooksLoadedStateWidget'),
         books: books,
       ),
-      BookErrorState(:final errorCode, :final errorMessage) => Center(
-        key: const Key('BookErrorSateWidget'),
-        child: InfoItemStateWidget.withErrorState(
-          message: errorCode.toLocalizedMessage(errorMessage),
-          onPressed: _refreshPage,
+      BookErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
+          key: const Key('BookErrorSateWidget'),
+          child: InfoItemStateWidget.withErrorState(
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
+            onPressed: _refreshPage,
+          ),
         ),
-      ),
     };
   }
 
