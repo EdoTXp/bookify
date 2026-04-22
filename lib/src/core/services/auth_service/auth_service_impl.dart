@@ -3,6 +3,7 @@ import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository.dart';
 import 'package:bookify/src/shared/enums/sign_in_type.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'auth_service.dart';
 import 'auth_strategy/auth_strategy_factory.dart';
@@ -16,6 +17,17 @@ class AuthServiceImpl implements AuthService {
     required AuthStrategyFactory authStrategyFactory,
   }) : _authRepository = authRepository,
        _authStrategyFactory = authStrategyFactory;
+
+  @override
+  Future<bool> userIsLoggedIn() async {
+    final userIsLoggedIn = FirebaseAuth.instance.currentUser != null;
+
+    if (!userIsLoggedIn) {
+      await _authRepository.deleteUserModel();
+      return false;
+    }
+    return true;
+  }
 
   @override
   Future<int> signIn({required SignInType signInType}) async {
@@ -44,7 +56,7 @@ class AuthServiceImpl implements AuthService {
       final strategyResult = await authStrategy.signOut();
 
       if (strategyResult) {
-        await _authRepository.clearUserData();
+        await _authRepository.deleteUserModel();
       }
       return strategyResult;
     } on AuthException {

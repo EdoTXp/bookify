@@ -64,6 +64,19 @@ void main() {
 
       expect(userModelInserted, equals(1));
     });
+
+    test('Test delete UserModel', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+      final userModelDeleted = await authRepository.deleteUserModel();
+
+      expect(userModelDeleted, equals(1));
+    });
   });
 
   group('Test normal crud with error', () {
@@ -78,9 +91,11 @@ void main() {
 
       expect(
         () async => await authRepository.getUserModel(),
-        throwsA((Exception e) =>
-            e is StorageException &&
-            e.message == 'impossível converter o usuário.'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.message == 'impossível converter o usuário.',
+        ),
       );
     });
 
@@ -93,8 +108,10 @@ void main() {
 
       expect(
         () async => await authRepository.getUserModel(),
-        throwsA((Exception e) =>
-            e is StorageException && e.message == 'Storage error'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException && e.message == 'Storage error',
+        ),
       );
     });
 
@@ -110,8 +127,26 @@ void main() {
         () async => await authRepository.setUserModel(
           userModel: userModel,
         ),
-        throwsA((Exception e) =>
-            e is StorageException && e.message == 'Storage error'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException && e.message == 'Storage error',
+        ),
+      );
+    });
+
+    test('Test delete UserModel with Storage Exception', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenThrow(const StorageException('Storage error'));
+
+      expect(
+        () async => await authRepository.deleteUserModel(),
+        throwsA(
+          (Exception e) =>
+              e is StorageException && e.message == 'Storage error',
+        ),
       );
     });
   });

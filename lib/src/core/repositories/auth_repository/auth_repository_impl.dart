@@ -49,9 +49,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<int> clearUserData() async {
+  Future<int> deleteUserModel() async {
     try {
-      return await _storage.deleteAllStorage();
+      return await _storage.deleteStorage(key: _userKey);
     } on StorageException {
       rethrow;
     }
