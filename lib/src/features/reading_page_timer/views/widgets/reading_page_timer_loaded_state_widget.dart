@@ -57,8 +57,13 @@ class _ReadingPageTimerLoadedStateWidgetState
   }
 
   @override
-  Future<void> dispose() async {
+  Future<void> deactivate() async {
     await _stopWatchTimer.dispose();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
     _isTimerRunningNotifier.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();

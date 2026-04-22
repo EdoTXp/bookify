@@ -108,14 +108,14 @@ void main() {
           () => authStrategyFactory.create(SignInType.google),
         ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenAnswer((_) async => true);
-        when(() => authRepository.clearUserData()).thenAnswer((_) async => 1);
+        when(() => authRepository.deleteUserModel()).thenAnswer((_) async => 1);
 
         final result = await authService.signOut(signInType: SignInType.google);
 
         expect(result, isTrue);
         verify(() => authStrategyFactory.create(SignInType.google)).called(1);
         verify(() => authStrategy.signOut()).called(1);
-        verify(() => authRepository.clearUserData()).called(1);
+        verify(() => authRepository.deleteUserModel()).called(1);
       },
     );
 
