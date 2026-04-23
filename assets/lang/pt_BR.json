@@ -244,10 +244,10 @@
   "book-on-reading-label": "em empréstimo",
   "previous-month-tooltip": "Mês anterior",
   "next-month-tooltip": "Próximo mês",
-  "error-rest-client-connection-timeout": "Tempo esgotado: %s",
-  "error-rest-client-receive-timeout": "O servidor não respondeu: %s",
-  "error-rest-client-not-found": "Não encontrado: %s",
-  "error-rest-client-socket-exception": "Erro de conexão: %s",
-  "error-invalid-isbn": "ISBN inválido: %s",
-  "error-unknown": "Erro inesperado: %s"
+  "error-rest-client-connection-timeout": "A conexão com o servidor expirou. Verifique sua conexão de internet e tente novamente: %s",
+  "error-rest-client-receive-timeout": "O servidor demorou muito para responder. Verifique a qualidade da sua conexão e tente novamente: %s",
+  "error-rest-client-not-found": "O recurso solicitado não foi encontrado. Verifique os termos de pesquisa ou tente uma busca diferente: %s",
+  "error-rest-client-socket-exception": "Erro de conexão de rede detectado. Verifique sua conexão de internet e tente novamente: %s",
+  "error-invalid-isbn": "O formato do ISBN é inválido. Digite um número ISBN válido (10 ou 13 dígitos): %s",
+  "error-unknown": "Ocorreu um erro inesperado. Tente novamente mais tarde ou entre em contato com o suporte: %s"
 }
