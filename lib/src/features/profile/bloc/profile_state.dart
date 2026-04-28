@@ -15,9 +15,11 @@ final class ProfileLoadedState extends ProfileState {
 final class ProfileLogOutState extends ProfileState {}
 
 final class ProfileErrorState extends ProfileState {
-  final String errorMessage;
+  final AuthErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ProfileErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

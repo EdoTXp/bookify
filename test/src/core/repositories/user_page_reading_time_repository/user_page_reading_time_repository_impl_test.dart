@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository_impl.dart';
@@ -27,8 +28,8 @@ void main() {
         (_) async => const Duration(minutes: 10).inSeconds,
       );
 
-      final userPageReadingTime =
-          await userPageReadingTimeRepository.getUserPageReadingTime();
+      final userPageReadingTime = await userPageReadingTimeRepository
+          .getUserPageReadingTime();
 
       expect(
         userPageReadingTime.pageReadingTimeSeconds,
@@ -46,10 +47,10 @@ void main() {
         (_) async => 1,
       );
 
-      final userPageReadingInserted =
-          await userPageReadingTimeRepository.setUserPageReadingTime(
-        userPageReadingTime: userPageReadingTime,
-      );
+      final userPageReadingInserted = await userPageReadingTimeRepository
+          .setUserPageReadingTime(
+            userPageReadingTime: userPageReadingTime,
+          );
 
       expect(
         userPageReadingInserted,
@@ -74,7 +75,9 @@ void main() {
         throwsA(
           (Exception e) =>
               e is StorageException &&
-              e.message == 'impossível converter o tempo de leitura da página.',
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage ==
+                  'Impossible to convert user page reading time.',
         ),
       );
     });
@@ -84,14 +87,21 @@ void main() {
         () => storage.getStorage(
           key: any(named: 'key'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.readFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async =>
             await userPageReadingTimeRepository.getUserPageReadingTime(),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.readFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });
@@ -102,7 +112,12 @@ void main() {
           key: any(named: 'key'),
           value: any(named: 'value'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await userPageReadingTimeRepository.setUserPageReadingTime(
@@ -110,7 +125,9 @@ void main() {
         ),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });

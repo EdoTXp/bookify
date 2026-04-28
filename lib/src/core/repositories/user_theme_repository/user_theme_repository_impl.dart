@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/core/storage/storage.dart';
@@ -27,7 +28,10 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
           return null;
       }
     } on TypeError {
-      throw const StorageException('impossível converter o tema.');
+      throw const StorageException(
+        StorageErrorCode.invalidValue,
+        descriptionMessage: 'Impossible to convert theme mode.',
+      );
     } on StorageException {
       rethrow;
     }
@@ -43,6 +47,11 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
       return themeInserted;
     } on StorageException {
       rethrow;
+    } catch (e) {
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

@@ -1,8 +1,14 @@
-class AuthException implements Exception {
-  final String message;
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 
-  const AuthException(this.message);
+class AuthException implements Exception {
+  final AuthErrorCode code;
+  final String? descriptionMessage;
+
+  const AuthException(
+    this.code, {
+    this.descriptionMessage,
+  });
 
   @override
-  String toString() => message;
+  String toString() => 'AuthException: [$code] $descriptionMessage';
 }

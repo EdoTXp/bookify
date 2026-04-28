@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
@@ -80,7 +81,10 @@ void main() {
           when(
             () => authService.getUserModel(),
           ).thenThrow(
-            const AuthException('Error on authentication'),
+            const AuthException(
+              AuthErrorCode.tooManyRequests,
+              descriptionMessage: 'Error on authentication',
+            ),
           ),
       act: (bloc) => bloc.add(
         GotUserProfileEvent(),
@@ -191,7 +195,10 @@ void main() {
               signInType: SignInType.google,
             ),
           ).thenThrow(
-            const AuthException('Error on authentication'),
+            const AuthException(
+              AuthErrorCode.tooManyRequests,
+              descriptionMessage: 'Error on authentication',
+            ),
           ),
       act: (bloc) => bloc.add(
         UserLoggedOutEvent(

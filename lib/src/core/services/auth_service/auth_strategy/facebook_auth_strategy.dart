@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/shared/enums/sign_in_type.dart';
@@ -16,16 +17,18 @@ class FacebookAuthStrategy implements AuthStrategy {
   FacebookAuthStrategy({
     required FacebookAuth facebookAuth,
     required FirebaseAuth firebaseAuth,
-  })  : _facebookAuth = facebookAuth,
-        _firebaseAuth = firebaseAuth;
+  }) : _facebookAuth = facebookAuth,
+       _firebaseAuth = firebaseAuth;
 
   String _generateNonce([int length = 32]) {
     const charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
 
     final random = Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-        .join();
+    return List.generate(
+      length,
+      (_) => charset[random.nextInt(charset.length)],
+    ).join();
   }
 
   String _sha256ofString(String input) {
@@ -71,11 +74,33 @@ class FacebookAuthStrategy implements AuthStrategy {
         return userModel;
       }
 
-      throw const AuthException('O usuário não autorizou a autentificação');
-    } on FirebaseException catch (e) {
-      throw AuthException(e.message ?? 'With no message');
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: loginResult.message,
+      );
+    } on FirebaseAuthException catch (e) {
+      final errorCode = switch (e.code) {
+        'user-not-found' => AuthErrorCode.userNotFound,
+        'wrong-password' => AuthErrorCode.wrongPassword,
+        'invalid-email' => AuthErrorCode.invalidEmail,
+        'account-disabled' => AuthErrorCode.accountDisabled,
+        'too-many-requests' => AuthErrorCode.tooManyRequests,
+        'operation-not-allowed' => AuthErrorCode.operationNotAllowed,
+        'network-request-failed' => AuthErrorCode.networkRequestFailed,
+        _ => AuthErrorCode.internalError,
+      };
+
+      throw AuthException(
+        errorCode,
+        descriptionMessage: e.message,
+      );
+    } on AuthException {
+      rethrow;
     } on Exception catch (e) {
-      throw AuthException(e.toString());
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -85,10 +110,16 @@ class FacebookAuthStrategy implements AuthStrategy {
       await _facebookAuth.logOut();
       await _firebaseAuth.signOut();
       return true;
-    } on FirebaseException catch (e) {
-      throw AuthException(e.message ?? 'With no message');
+    } on FirebaseAuthException catch (e) {
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.message ?? 'Sign out failed',
+      );
     } on Exception catch (e) {
-      throw AuthException(e.toString());
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

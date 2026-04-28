@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,8 +12,13 @@ class SharedPreferencesStorage implements Storage {
 
       final storageValue = sharedPreferences.get(key);
       return storageValue;
+    } on StorageException {
+      rethrow;
     } catch (e) {
-      throw StorageException(e.toString());
+      throw StorageException(
+        StorageErrorCode.readFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -26,33 +32,39 @@ class SharedPreferencesStorage implements Storage {
 
       final storageInserted = switch (value.runtimeType) {
         const (int) => await sharedPreferences.setInt(
-            key,
-            value as int,
-          ),
+          key,
+          value as int,
+        ),
         const (String) => await sharedPreferences.setString(
-            key,
-            value as String,
-          ),
+          key,
+          value as String,
+        ),
         const (bool) => await sharedPreferences.setBool(
-            key,
-            value as bool,
-          ),
+          key,
+          value as bool,
+        ),
         const (double) => await sharedPreferences.setDouble(
-            key,
-            value as double,
-          ),
+          key,
+          value as double,
+        ),
         const (List<String>) => await sharedPreferences.setStringList(
-            key,
-            value as List<String>,
-          ),
+          key,
+          value as List<String>,
+        ),
         _ => throw StorageException(
-            'Type of value not valid: ${value.runtimeType}',
-          ),
+          StorageErrorCode.invalidValue,
+          descriptionMessage: 'Unsupported type: ${value.runtimeType}',
+        ),
       };
 
       return storageInserted == true ? 1 : 0;
     } catch (e) {
-      throw StorageException(e.toString());
+      if (e is StorageException) rethrow;
+
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -76,7 +88,10 @@ class SharedPreferencesStorage implements Storage {
       final deletedStorage = await sharedPreferences.remove(key);
       return deletedStorage == true ? 1 : 0;
     } catch (e) {
-      throw StorageException(e.toString());
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -88,7 +103,10 @@ class SharedPreferencesStorage implements Storage {
       final clearStorage = await sharedPreferences.clear();
       return clearStorage == true ? 1 : 0;
     } catch (e) {
-      throw StorageException(e.toString());
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

@@ -249,5 +249,18 @@
   "error-rest-client-not-found": "O recurso solicitado não foi encontrado. Verifique os termos de pesquisa ou tente uma busca diferente: %s",
   "error-rest-client-socket-exception": "Erro de conexão de rede detectado. Verifique sua conexão de internet e tente novamente: %s",
   "error-invalid-isbn": "O formato do ISBN é inválido. Digite um número ISBN válido (10 ou 13 dígitos): %s",
-  "error-unknown": "Ocorreu um erro inesperado. Tente novamente mais tarde ou entre em contato com o suporte: %s"
+  "error-unknown": "Ocorreu um erro inesperado. Tente novamente mais tarde ou entre em contato com o suporte: %s",
+  "error-auth-user-not-found": "Impossível fazer login. Verifique se seu email está registrado ou se inscreva se não tiver uma conta: %s",
+  "error-auth-wrong-password": "Senha incorreta. Verifique suas credenciais e tente novamente: %s",
+  "error-auth-invalid-email": "Formato de email inválido. Digite um endereço de email válido: %s",
+  "error-auth-account-disabled": "Sua conta foi temporariamente desativada. Entre em contato com o suporte para obter ajuda: %s",
+  "error-auth-too-many-requests": "Muitas tentativas de login. Aguarde alguns minutos e tente novamente: %s",
+  "error-auth-operation-not-allowed": "Este método de autenticação não está disponível no momento. Tente novamente mais tarde: %s",
+  "error-auth-network-request-failed": "Conexão perdida. Verifique sua conexão com a internet e tente novamente: %s",
+  "error-auth-internal-error": "Algo deu errado. Se o problema persistir, entre em contato com o suporte: %s",
+  "error-storage-invalid-value": "Problema detectado ao salvar dados. Tente fazer logout e depois login novamente: %s",
+  "error-storage-data-loss": "Erro ao salvar seus dados. Tente sincronizar novamente ou entre em contato com o suporte se o problema persistir: %s",
+  "error-storage-not-found": "Seus dados não foram encontrados. Tente fazer login novamente com suas credenciais: %s",
+  "error-storage-write-failed": "Impossível salvar suas alterações. Verifique o espaço de armazenamento e tente novamente: %s",
+  "error-storage-read-failed": "Impossível carregar seus dados. Verifique sua conexão com a internet e tente novamente: %s"
 }

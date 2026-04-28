@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
@@ -29,11 +30,12 @@ void main() {
     blocTest(
       'Test getTheme function work',
       build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.getThemeMode(),
-      ).thenAnswer(
-        (_) async => ThemeMode.light,
-      ),
+      setUp: () =>
+          when(
+            () => userRepository.getThemeMode(),
+          ).thenAnswer(
+            (_) async => ThemeMode.light,
+          ),
       act: (cubit) => cubit.getTheme(),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
@@ -74,9 +76,15 @@ void main() {
     blocTest(
       'Test getTheme function work when throw StorageException',
       build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.getThemeMode(),
-      ).thenThrow(const StorageException('Error on storage Data')),
+      setUp: () =>
+          when(
+            () => userRepository.getThemeMode(),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage Data',
+            ),
+          ),
       act: (cubit) => cubit.getTheme(),
       verify: (_) => verify(
         () => userRepository.getThemeMode(),
@@ -142,9 +150,15 @@ void main() {
     blocTest(
       'Test setTheme function work when throw StorageException',
       build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).thenThrow(const StorageException('Error on storage Data')),
+      setUp: () =>
+          when(
+            () => userRepository.setThemeMode(themeMode: ThemeMode.system),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage Data',
+            ),
+          ),
       act: (cubit) => cubit.setTheme(
         themeMode: ThemeMode.system,
       ),

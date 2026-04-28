@@ -249,5 +249,18 @@
   "error-rest-client-not-found": "The requested resource was not found. Verify your search terms or try a different query: %s",
   "error-rest-client-socket-exception": "Network connection error detected. Check your internet connection and try again: %s",
   "error-invalid-isbn": "The ISBN format is invalid. Enter a valid ISBN number (10 or 13 digits): %s",
-  "error-unknown": "An unexpected error occurred. Please try again later or contact support: %s"
+  "error-unknown": "An unexpected error occurred. Please try again later or contact support: %s",
+  "error-auth-user-not-found": "Unable to log in. Check that your email is registered or sign up if you don't have an account: %s",
+  "error-auth-wrong-password": "Incorrect password. Verify your credentials and try again: %s",
+  "error-auth-invalid-email": "Invalid email format. Enter a valid email address: %s",
+  "error-auth-account-disabled": "Your account has been temporarily disabled. Contact support for help: %s",
+  "error-auth-too-many-requests": "Too many login attempts. Wait a few minutes and try again: %s",
+  "error-auth-operation-not-allowed": "This authentication method is not available right now. Try again later: %s",
+  "error-auth-network-request-failed": "Connection lost. Check your internet connection and try again: %s",
+  "error-auth-internal-error": "Something went wrong. If the problem persists, please contact support: %s",
+  "error-storage-invalid-value": "Data storage issue detected. Try logging out and logging back in: %s",
+  "error-storage-data-loss": "Error saving your data. Try syncing again or contact support if the issue continues: %s",
+  "error-storage-not-found": "Your data could not be found. Try logging in again with your credentials: %s",
+  "error-storage-write-failed": "Unable to save your changes. Check your storage space and try again: %s",
+  "error-storage-read-failed": "Unable to load your data. Check your internet connection and try again: %s"
 }

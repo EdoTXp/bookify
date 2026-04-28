@@ -9,9 +9,11 @@ final class AuthLoadingState extends AuthState {}
 final class AuthSignedState extends AuthState {}
 
 final class AuthErrorState extends AuthState {
-  final String errorMessage;
+  final AuthErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   AuthErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

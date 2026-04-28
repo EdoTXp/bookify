@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
@@ -14,9 +15,11 @@ class UserHourTimeRepositoryImpl implements UserHourTimeRepository {
   @override
   Future<UserHourTimeModel?> getUserHourTime() async {
     try {
-      final userHourTimeJson = await _storage.getStorage(
-        key: _userHourTimeKey,
-      ) as String?;
+      final userHourTimeJson =
+          await _storage.getStorage(
+                key: _userHourTimeKey,
+              )
+              as String?;
 
       if (userHourTimeJson == null) {
         return null;
@@ -26,7 +29,10 @@ class UserHourTimeRepositoryImpl implements UserHourTimeRepository {
 
       return userReadingTimeModel;
     } on TypeError {
-      throw const StorageException('impossível converter a hora de leitura.');
+      throw const StorageException(
+        StorageErrorCode.invalidValue,
+        descriptionMessage: 'Impossible to convert user reading time.',
+      );
     } on StorageException {
       rethrow;
     }
@@ -45,6 +51,11 @@ class UserHourTimeRepositoryImpl implements UserHourTimeRepository {
       return (userHourTimeJsonInserted == 1) ? 1 : 0;
     } on StorageException {
       rethrow;
+    } catch (e) {
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

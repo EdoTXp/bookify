@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
@@ -27,13 +28,14 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work when Google button',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.google,
-        ),
-      ).thenAnswer(
-        (_) async => 1,
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.google,
+            ),
+          ).thenAnswer(
+            (_) async => 1,
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
@@ -51,13 +53,14 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work emit error on Apple button',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.apple,
-        ),
-      ).thenAnswer(
-        (_) async => 1,
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.apple,
+            ),
+          ).thenAnswer(
+            (_) async => 1,
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.apple),
       ),
@@ -75,13 +78,14 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work when Facebook button',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.facebook,
-        ),
-      ).thenAnswer(
-        (_) async => 1,
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.facebook,
+            ),
+          ).thenAnswer(
+            (_) async => 1,
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.facebook),
       ),
@@ -99,13 +103,14 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work when authSignedIn is 0',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.google,
-        ),
-      ).thenAnswer(
-        (_) async => 0,
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.google,
+            ),
+          ).thenAnswer(
+            (_) async => 0,
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
@@ -123,13 +128,17 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work when throw AuthException',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.google,
-        ),
-      ).thenThrow(
-        const AuthException('Error on authentication'),
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.google,
+            ),
+          ).thenThrow(
+            const AuthException(
+              AuthErrorCode.internalError,
+              descriptionMessage: 'Error on authentication',
+            ),
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),
@@ -147,13 +156,14 @@ void main() {
     blocTest(
       'Test SignedInAuthEvent work when throw Generic Exception',
       build: () => authBloc,
-      setUp: () => when(
-        () => authService.signIn(
-          signInType: SignInType.google,
-        ),
-      ).thenThrow(
-        Exception('Generic Error'),
-      ),
+      setUp: () =>
+          when(
+            () => authService.signIn(
+              signInType: SignInType.google,
+            ),
+          ).thenThrow(
+            Exception('Generic Error'),
+          ),
       act: (bloc) => bloc.add(
         SignedInAuthEvent(signInTypeButton: SignInType.google),
       ),

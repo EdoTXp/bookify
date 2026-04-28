@@ -249,5 +249,18 @@
   "error-rest-client-not-found": "La risorsa cercata non è stata trovata. Verifica i termini di ricerca o prova una query diversa: %s",
   "error-rest-client-socket-exception": "Errore di connessione di rete rilevato. Controlla la tua connessione internet e riprova: %s",
   "error-invalid-isbn": "Il formato dell'ISBN non è valido. Inserisci un numero ISBN valido (10 o 13 cifre): %s",
-  "error-unknown": "Si è verificato un errore imprevisto. Riprova più tardi o contatta il supporto: %s"
+  "error-unknown": "Si è verificato un errore imprevisto. Riprova più tardi o contatta il supporto: %s",
+  "error-auth-user-not-found": "Impossibile accedere. Verifica che la tua email sia registrata o iscriviti se non hai ancora un account: %s",
+  "error-auth-wrong-password": "Password non corretta. Verifica le tue credenziali e riprova: %s",
+  "error-auth-invalid-email": "Formato email non valido. Inserisci un indirizzo email valido: %s",
+  "error-auth-account-disabled": "Il tuo account è stato temporaneamente disabilitato. Contatta l'assistenza per ricevere aiuto: %s",
+  "error-auth-too-many-requests": "Troppi tentativi di accesso. Attendi alcuni minuti e riprova: %s",
+  "error-auth-operation-not-allowed": "Questo metodo di autenticazione non è disponibile al momento. Riprova più tardi: %s",
+  "error-auth-network-request-failed": "Connessione persa. Verifica la tua connessione internet e riprova: %s",
+  "error-auth-internal-error": "Qualcosa è andato storto. Se il problema persiste, contatta l'assistenza: %s",
+  "error-storage-invalid-value": "Problema rilevato nel salvataggio dei dati. Prova a disconnetterti e riconnetterti: %s",
+  "error-storage-data-loss": "Errore durante il salvataggio dei dati. Prova a sincronizzare di nuovo o contatta l'assistenza se il problema persiste: %s",
+  "error-storage-not-found": "I tuoi dati non sono stati trovati. Prova ad accedere di nuovo con le tue credenziali: %s",
+  "error-storage-write-failed": "Impossibile salvare le tue modifiche. Verifica lo spazio di archiviazione e riprova: %s",
+  "error-storage-read-failed": "Impossibile caricare i tuoi dati. Verifica la tua connessione internet e riprova: %s"
 }

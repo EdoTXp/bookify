@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository_impl.dart';
@@ -94,7 +95,8 @@ void main() {
         throwsA(
           (Exception e) =>
               e is StorageException &&
-              e.message == 'impossível converter o usuário.',
+              e.code == StorageErrorCode.invalidValue &&
+              e.descriptionMessage == 'Expected a String value for user data.',
         ),
       );
     });
@@ -104,13 +106,20 @@ void main() {
         () => storage.getStorage(
           key: 'user',
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await authRepository.getUserModel(),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });
@@ -121,7 +130,12 @@ void main() {
           key: 'user',
           value: any(named: 'value'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await authRepository.setUserModel(
@@ -129,7 +143,9 @@ void main() {
         ),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });
@@ -139,13 +155,20 @@ void main() {
         () => storage.deleteStorage(
           key: any(named: 'key'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await authRepository.deleteUserModel(),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });

@@ -14,9 +14,11 @@ final class UserLoggedLoadedState extends UserLoggedState {
 }
 
 final class UserLoggedErrorState extends UserLoggedState {
-  final String errorMessage;
+  final AuthErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   UserLoggedErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

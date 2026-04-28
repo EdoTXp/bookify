@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,15 @@ class UserLoggedCubit extends Cubit<UserLoggedState> {
     } on AuthException catch (e) {
       emit(
         UserLoggedErrorState(
-          errorMessage: 'Erro ao verificar a sessão: ${e.message}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         UserLoggedErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: AuthErrorCode.internalError,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
