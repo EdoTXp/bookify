@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
@@ -28,7 +29,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (userModel == null) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro ao buscar o usuário',
+            errorCode: AuthErrorCode.internalError,
+            errorDescriptionMessage:
+                'Failed to save user data. Please try again.',
           ),
         );
         return;
@@ -40,12 +43,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       );
     } on AuthException catch (e) {
-      emit(ProfileErrorState(
-          errorMessage: 'Erro ao buscar o usuário: ${e.message}'));
+      emit(
+        ProfileErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProfileErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: AuthErrorCode.internalError,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -65,7 +73,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (!userLoggedOut) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro ao fazer o logout do usuário',
+            errorCode: AuthErrorCode.internalError,
+            errorDescriptionMessage: 'Failed to logout',
           ),
         );
         return;
@@ -73,12 +82,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(ProfileLogOutState());
     } on AuthException catch (e) {
-      emit(ProfileErrorState(
-          errorMessage: 'Erro em fazer o logout do usuário: ${e.message}'));
+      emit(
+        ProfileErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProfileErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: AuthErrorCode.internalError,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

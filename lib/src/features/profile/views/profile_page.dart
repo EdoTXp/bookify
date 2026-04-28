@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
 import 'package:bookify/src/features/profile/views/widgets/profile_loaded_state_widget.dart';
@@ -28,19 +29,23 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _getWidgetOnProfileState(BuildContext context, ProfileState state) {
     return switch (state) {
       ProfileLoadingState() ||
-      ProfileLogOutState() =>
-        const CenterCircularProgressIndicator(),
+      ProfileLogOutState() => const CenterCircularProgressIndicator(),
       ProfileLoadedState(:final userModel) => ProfileLoadedStateWidget(
-          userModel: userModel,
-          onPressedLogOut: () => _bloc.add(
-            UserLoggedOutEvent(
-              userModel: userModel,
-            ),
+        userModel: userModel,
+        onPressedLogOut: () => _bloc.add(
+          UserLoggedOutEvent(
+            userModel: userModel,
           ),
         ),
-      ProfileErrorState(:final errorMessage) => Center(
+      ),
+      ProfileErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
+          key: const Key('BookErrorSateWidget'),
           child: InfoItemStateWidget.withErrorState(
-            message: errorMessage,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _refreshPage,
           ),
         ),

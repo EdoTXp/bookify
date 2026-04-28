@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
@@ -92,7 +93,9 @@ void main() {
         throwsA(
           (Exception e) =>
               e is StorageException &&
-              e.message == 'impossível converter a hora de leitura.',
+              e.code == StorageErrorCode.invalidValue &&
+              e.descriptionMessage ==
+                  'Impossible to convert user reading time.',
         ),
       );
     });
@@ -102,13 +105,20 @@ void main() {
         () => storage.getStorage(
           key: any(named: 'key'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.readFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await userHourTimeRepository.getUserHourTime(),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.readFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });
@@ -119,7 +129,12 @@ void main() {
           key: any(named: 'key'),
           value: any(named: 'value'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await userHourTimeRepository.setUserHourTime(
@@ -127,7 +142,9 @@ void main() {
         ),
         throwsA(
           (Exception e) =>
-              e is StorageException && e.message == 'Storage error',
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
         ),
       );
     });

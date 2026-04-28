@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
@@ -52,11 +53,12 @@ void main() {
     blocTest(
       'Test GotHourTimeEvent work',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenAnswer(
-        (_) async => userHourTime,
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenAnswer(
+            (_) async => userHourTime,
+          ),
       act: (bloc) => bloc.add(GotHourTimeEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),
@@ -70,11 +72,15 @@ void main() {
     blocTest(
       'Test GotHourTimeEvent work when throw StorageException',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenThrow(
-        const StorageException('Error on storage'),
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage',
+            ),
+          ),
       act: (bloc) => bloc.add(GotHourTimeEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),
@@ -88,11 +94,12 @@ void main() {
     blocTest(
       'Test GotHourTimeEvent work  when throw Generic Exception',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenThrow(
-        Exception('Generic Error'),
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenThrow(
+            Exception('Generic Error'),
+          ),
       act: (bloc) => bloc.add(GotHourTimeEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),
@@ -116,14 +123,15 @@ void main() {
         );
 
         when(
-          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
-            id: any(named: 'id'),
-            title: any(named: 'title'),
-            body: any(named: 'body'),
-            notificationChannel: any(named: 'notificationChannel'),
-            repeatType: any(named: 'repeatType'),
-            scheduledDate: any(named: 'scheduledDate'),
-          ),
+          () =>
+              notificationsService.periodicallyShowNotificationWithSpecificDate(
+                id: any(named: 'id'),
+                title: any(named: 'title'),
+                body: any(named: 'body'),
+                notificationChannel: any(named: 'notificationChannel'),
+                repeatType: any(named: 'repeatType'),
+                scheduledDate: any(named: 'scheduledDate'),
+              ),
         ).thenAnswer(
           (_) async {},
         );
@@ -141,14 +149,15 @@ void main() {
         ).called(1);
 
         verify(
-          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
-            id: any(named: 'id'),
-            title: any(named: 'title'),
-            body: any(named: 'body'),
-            notificationChannel: any(named: 'notificationChannel'),
-            repeatType: any(named: 'repeatType'),
-            scheduledDate: any(named: 'scheduledDate'),
-          ),
+          () =>
+              notificationsService.periodicallyShowNotificationWithSpecificDate(
+                id: any(named: 'id'),
+                title: any(named: 'title'),
+                body: any(named: 'body'),
+                notificationChannel: any(named: 'notificationChannel'),
+                repeatType: any(named: 'repeatType'),
+                scheduledDate: any(named: 'scheduledDate'),
+              ),
         ).called(1);
       },
       expect: () => [
@@ -160,13 +169,14 @@ void main() {
     blocTest(
       'Test InsertedHourTimeEvent work when userHourTimeInserted == 0',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.setUserHourTime(
-          userHourTime: userHourTime,
-        ),
-      ).thenAnswer(
-        (_) async => 0,
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.setUserHourTime(
+              userHourTime: userHourTime,
+            ),
+          ).thenAnswer(
+            (_) async => 0,
+          ),
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
@@ -180,14 +190,15 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
-            id: any(named: 'id'),
-            title: any(named: 'title'),
-            body: any(named: 'body'),
-            notificationChannel: any(named: 'notificationChannel'),
-            repeatType: any(named: 'repeatType'),
-            scheduledDate: any(named: 'scheduledDate'),
-          ),
+          () =>
+              notificationsService.periodicallyShowNotificationWithSpecificDate(
+                id: any(named: 'id'),
+                title: any(named: 'title'),
+                body: any(named: 'body'),
+                notificationChannel: any(named: 'notificationChannel'),
+                repeatType: any(named: 'repeatType'),
+                scheduledDate: any(named: 'scheduledDate'),
+              ),
         );
       },
       expect: () => [
@@ -199,13 +210,17 @@ void main() {
     blocTest(
       'Test InsertedHourTimeEvent work when throw StorageException',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.setUserHourTime(
-          userHourTime: userHourTime,
-        ),
-      ).thenThrow(
-        const StorageException('Error on storage'),
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.setUserHourTime(
+              userHourTime: userHourTime,
+            ),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage',
+            ),
+          ),
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
@@ -219,14 +234,15 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
-            id: any(named: 'id'),
-            title: any(named: 'title'),
-            body: any(named: 'body'),
-            notificationChannel: any(named: 'notificationChannel'),
-            repeatType: any(named: 'repeatType'),
-            scheduledDate: any(named: 'scheduledDate'),
-          ),
+          () =>
+              notificationsService.periodicallyShowNotificationWithSpecificDate(
+                id: any(named: 'id'),
+                title: any(named: 'title'),
+                body: any(named: 'body'),
+                notificationChannel: any(named: 'notificationChannel'),
+                repeatType: any(named: 'repeatType'),
+                scheduledDate: any(named: 'scheduledDate'),
+              ),
         );
       },
       expect: () => [
@@ -238,13 +254,14 @@ void main() {
     blocTest(
       'Test InsertedHourTimeEvent work when throw Generic Exception',
       build: () => programmingReadingBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.setUserHourTime(
-          userHourTime: userHourTime,
-        ),
-      ).thenThrow(
-        Exception('Generic Error'),
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.setUserHourTime(
+              userHourTime: userHourTime,
+            ),
+          ).thenThrow(
+            Exception('Generic Error'),
+          ),
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
@@ -258,14 +275,15 @@ void main() {
         ).called(1);
 
         verifyNever(
-          () => notificationsService.periodicallyShowNotificationWithSpecificDate(
-            id: any(named: 'id'),
-            title: any(named: 'title'),
-            body: any(named: 'body'),
-            notificationChannel: any(named: 'notificationChannel'),
-            repeatType: any(named: 'repeatType'),
-            scheduledDate: any(named: 'scheduledDate'),
-          ),
+          () =>
+              notificationsService.periodicallyShowNotificationWithSpecificDate(
+                id: any(named: 'id'),
+                title: any(named: 'title'),
+                body: any(named: 'body'),
+                notificationChannel: any(named: 'notificationChannel'),
+                repeatType: any(named: 'repeatType'),
+                scheduledDate: any(named: 'scheduledDate'),
+              ),
         );
       },
       expect: () => [
@@ -278,13 +296,14 @@ void main() {
   blocTest(
     'Test RemovedNotificationHourTimeEvent work',
     build: () => programmingReadingBloc,
-    setUp: () => when(
-      () => notificationsService.cancelNotificationById(
-        id: any(named: 'id'),
-      ),
-    ).thenAnswer(
-      (_) async {},
-    ),
+    setUp: () =>
+        when(
+          () => notificationsService.cancelNotificationById(
+            id: any(named: 'id'),
+          ),
+        ).thenAnswer(
+          (_) async {},
+        ),
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
       verify(
@@ -302,13 +321,14 @@ void main() {
   blocTest(
     'Test RemovedNotificationHourTimeEvent  work when throw Generic Exception',
     build: () => programmingReadingBloc,
-    setUp: () => when(
-      () => notificationsService.cancelNotificationById(
-        id: any(named: 'id'),
-      ),
-    ).thenThrow(
-      Exception('Generic Error'),
-    ),
+    setUp: () =>
+        when(
+          () => notificationsService.cancelNotificationById(
+            id: any(named: 'id'),
+          ),
+        ).thenThrow(
+          Exception('Generic Error'),
+        ),
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
       verify(

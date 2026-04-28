@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
@@ -34,11 +35,12 @@ void main() {
     blocTest(
       'Test GotBookPagesReadingTimeEvent work',
       build: () => bookPagesReadingTimeBloc,
-      setUp: () => when(
-        () => userPageReadingTimeRepository.getUserPageReadingTime(),
-      ).thenAnswer(
-        (_) async => userPageReadingTime,
-      ),
+      setUp: () =>
+          when(
+            () => userPageReadingTimeRepository.getUserPageReadingTime(),
+          ).thenAnswer(
+            (_) async => userPageReadingTime,
+          ),
       act: (bloc) => bloc.add(GotBookPagesReadingTimeEvent()),
       verify: (_) => verify(
         () => userPageReadingTimeRepository.getUserPageReadingTime(),
@@ -52,11 +54,15 @@ void main() {
     blocTest(
       'Test GotBookPagesReadingTimeEvent work when throw StorageException',
       build: () => bookPagesReadingTimeBloc,
-      setUp: () => when(
-        () => userPageReadingTimeRepository.getUserPageReadingTime(),
-      ).thenThrow(
-        const StorageException('Error on storage'),
-      ),
+      setUp: () =>
+          when(
+            () => userPageReadingTimeRepository.getUserPageReadingTime(),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage',
+            ),
+          ),
       act: (bloc) => bloc.add(GotBookPagesReadingTimeEvent()),
       verify: (_) => verify(
         () => userPageReadingTimeRepository.getUserPageReadingTime(),
@@ -70,11 +76,12 @@ void main() {
     blocTest(
       'Test GotBookPagesReadingTimeEvent work when throw Generic Exception',
       build: () => bookPagesReadingTimeBloc,
-      setUp: () => when(
-        () => userPageReadingTimeRepository.getUserPageReadingTime(),
-      ).thenThrow(
-        Exception('Generic Error'),
-      ),
+      setUp: () =>
+          when(
+            () => userPageReadingTimeRepository.getUserPageReadingTime(),
+          ).thenThrow(
+            Exception('Generic Error'),
+          ),
       act: (bloc) => bloc.add(GotBookPagesReadingTimeEvent()),
       verify: (_) => verify(
         () => userPageReadingTimeRepository.getUserPageReadingTime(),

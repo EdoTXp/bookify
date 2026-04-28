@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
@@ -41,11 +42,12 @@ void main() {
     blocTest(
       'Test GotReadingsUserTimerEvent work',
       build: () => readingsTimerBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenAnswer(
-        (_) async => userHourTimeModel,
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenAnswer(
+            (_) async => userHourTimeModel,
+          ),
       act: (bloc) => bloc.add(GotReadingsUserTimerEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),
@@ -59,11 +61,12 @@ void main() {
     blocTest(
       'Test GotReadingsUserTimerEvent work when userHourTime is null',
       build: () => readingsTimerBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenAnswer(
-        (_) async => null,
-      ),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenAnswer(
+            (_) async => null,
+          ),
       act: (bloc) => bloc.add(GotReadingsUserTimerEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),
@@ -77,9 +80,15 @@ void main() {
     blocTest(
       'Test GotReadingsUserTimerEvent work when throw Storage Exception',
       build: () => readingsTimerBloc,
-      setUp: () => when(
-        () => userHourTimeRepository.getUserHourTime(),
-      ).thenThrow(const StorageException('Error on storage')),
+      setUp: () =>
+          when(
+            () => userHourTimeRepository.getUserHourTime(),
+          ).thenThrow(
+            const StorageException(
+              StorageErrorCode.invalidValue,
+              descriptionMessage: 'Error on storage',
+            ),
+          ),
       act: (bloc) => bloc.add(GotReadingsUserTimerEvent()),
       verify: (_) => verify(
         () => userHourTimeRepository.getUserHourTime(),

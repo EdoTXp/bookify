@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/features/auth/widgets/platform_sign_in_buttons.dart';
 import 'package:bookify/src/features/auth/widgets/terms_information.dart';
@@ -77,10 +78,13 @@ class _AuthPageState extends State<AuthPage> {
           },
         );
         break;
-      case AuthErrorState():
+      case AuthErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          state.errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
         break;

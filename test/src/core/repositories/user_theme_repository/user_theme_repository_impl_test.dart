@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository_impl.dart';
 import 'package:bookify/src/core/storage/storage.dart';
@@ -56,9 +57,12 @@ void main() {
 
       expect(
         () async => await userThemeRepository.getThemeMode(),
-        throwsA((Exception e) =>
-            e is StorageException &&
-            e.message == 'impossível converter o tema.'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.invalidValue &&
+              e.descriptionMessage == 'Impossible to convert theme mode.',
+        ),
       );
     });
 
@@ -67,12 +71,21 @@ void main() {
         () => storage.getStorage(
           key: any(named: 'key'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.readFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await userThemeRepository.getThemeMode(),
-        throwsA((Exception e) =>
-            e is StorageException && e.message == 'Storage error'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.readFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
       );
     });
 
@@ -82,14 +95,23 @@ void main() {
           key: any(named: 'key'),
           value: any(named: 'value'),
         ),
-      ).thenThrow(const StorageException('Storage error'));
+      ).thenThrow(
+        StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
 
       expect(
         () async => await userThemeRepository.setThemeMode(
           themeMode: ThemeMode.light,
         ),
-        throwsA((Exception e) =>
-            e is StorageException && e.message == 'Storage error'),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
       );
     });
   });
