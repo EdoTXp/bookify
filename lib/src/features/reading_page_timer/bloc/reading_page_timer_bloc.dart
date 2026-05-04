@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
@@ -27,31 +28,36 @@ class ReadingPageTimerBloc
         pageReadingTimeSeconds: event.readingPageTime,
       );
 
-      final userPageReadingTimeInserted =
-          await _userPageReadingTimeRepository.setUserPageReadingTime(
-        userPageReadingTime: userPageReading,
-      );
+      final userPageReadingTimeInserted = await _userPageReadingTimeRepository
+          .setUserPageReadingTime(
+            userPageReadingTime: userPageReading,
+          );
 
       if (userPageReadingTimeInserted == 0) {
         emit(
           ReadingPageTimerErrorState(
-            errorMessage: 'Erro ao inserir o tempo de leitura da página',
+            errorCode: StorageErrorCode.writeFailed,
+            errorDescriptionMessage:
+                'Failed to save page reading time. Please try again.',
           ),
         );
         return;
       }
 
       emit(ReadingPageTimerInsertedState());
-    } on StorageException catch (e) {
+    } on StorageException {
       emit(
         ReadingPageTimerErrorState(
-          errorMessage: 'Erro ao inserir o tempo de leitura da página: $e',
+          errorCode: StorageErrorCode.writeFailed,
+          errorDescriptionMessage:
+              ' Failed to save page reading time. Please try again.',
         ),
       );
-    } on Exception catch (e) {
+    } on Exception {
       emit(
         ReadingPageTimerErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: 'An unexpected error occurred',
         ),
       );
     }

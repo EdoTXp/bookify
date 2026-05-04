@@ -14,9 +14,11 @@ final class UserThemeLoadedState extends UserThemeState {
 }
 
 final class UserThemeErrorState extends UserThemeState {
-  final String errorMessage;
+  final StorageErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   UserThemeErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

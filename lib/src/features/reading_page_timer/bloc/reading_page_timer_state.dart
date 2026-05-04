@@ -7,9 +7,11 @@ final class ReadingPageTimerLoadingState extends ReadingPageTimerState {}
 final class ReadingPageTimerInsertedState extends ReadingPageTimerState {}
 
 final class ReadingPageTimerErrorState extends ReadingPageTimerState {
-  final String errorMessage;
+  final StorageErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ReadingPageTimerErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

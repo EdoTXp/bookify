@@ -76,10 +76,12 @@ class _RootPageState extends State<RootPage> {
   }
 
   Future<void> _scanAndGetIsbnCode(BuildContext context) async {
-    final isbn = await Navigator.pushNamed(
-      context,
-      QrCodeScannerPage.routeName,
-    ) as String?;
+    final isbn =
+        await Navigator.pushNamed(
+              context,
+              QrCodeScannerPage.routeName,
+            )
+            as String?;
 
     if (isbn != null) {
       _bookBloc.add(FoundBooksByIsbnEvent(isbn: isbn));

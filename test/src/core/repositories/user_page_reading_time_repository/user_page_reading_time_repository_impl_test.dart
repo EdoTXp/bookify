@@ -75,7 +75,7 @@ void main() {
         throwsA(
           (Exception e) =>
               e is StorageException &&
-              e.code == StorageErrorCode.writeFailed &&
+              e.code == StorageErrorCode.invalidValue &&
               e.descriptionMessage ==
                   'Impossible to convert user page reading time.',
         ),

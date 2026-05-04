@@ -29,7 +29,7 @@ class UserPageReadingTimeRepositoryImpl
       return userPageReadingTime;
     } on TypeError {
       throw const StorageException(
-        StorageErrorCode.writeFailed,
+        StorageErrorCode.invalidValue,
         descriptionMessage: 'Impossible to convert user page reading time.',
       );
     } on StorageException {

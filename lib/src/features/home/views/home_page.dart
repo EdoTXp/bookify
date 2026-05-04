@@ -22,13 +22,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _bookBloc = context.read<BookBloc>()..add(GotAllBooksEvent());
     _searchEC = TextEditingController();
     _isSearchBarVisible = false;
-    _bookBloc = context.read<BookBloc>();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _bookBloc.add(GotAllBooksEvent());
-    });
   }
 
   @override

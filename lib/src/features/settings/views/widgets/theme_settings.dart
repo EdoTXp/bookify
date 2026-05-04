@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -25,55 +26,59 @@ class _ThemeSettingsState extends State<ThemeSettings> {
     return switch (state) {
       UserThemeLoadingState() => const CenterCircularProgressIndicator(),
       UserThemeLoadedState(:final themeMode) => SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: RadioGroup<ThemeMode>(
-            groupValue: themeMode,
-            onChanged: _onChangedRadioButton,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'light-theme-label'.i18n(),
-                  overflow: TextOverflow.ellipsis,
-                  textScaler: TextScaler.noScaling,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+        scrollDirection: Axis.horizontal,
+        child: RadioGroup<ThemeMode>(
+          groupValue: themeMode,
+          onChanged: _onChangedRadioButton,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'light-theme-label'.i18n(),
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                Radio<ThemeMode>.adaptive(
-                  value: ThemeMode.light,
+              ),
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.light,
+              ),
+              Text(
+                'dark-theme-label'.i18n(),
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                Text(
-                  'dark-theme-label'.i18n(),
-                  overflow: TextOverflow.ellipsis,
-                  textScaler: TextScaler.noScaling,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              ),
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.dark,
+              ),
+              Text(
+                'system-theme-label'.i18n(),
+                overflow: TextOverflow.ellipsis,
+                textScaler: TextScaler.noScaling,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                Radio<ThemeMode>.adaptive(
-                  value: ThemeMode.dark,
-                ),
-                Text(
-                  'system-theme-label'.i18n(),
-                  overflow: TextOverflow.ellipsis,
-                  textScaler: TextScaler.noScaling,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Radio<ThemeMode>.adaptive(
-                  value: ThemeMode.system,
-                ),
-              ],
-            ),
+              ),
+              Radio<ThemeMode>.adaptive(
+                value: ThemeMode.system,
+              ),
+            ],
           ),
         ),
-      UserThemeErrorState(:final errorMessage) => Text(
-          errorMessage,
+      ),
+      UserThemeErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Text(
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           style: const TextStyle(
             fontSize: 14,
           ),

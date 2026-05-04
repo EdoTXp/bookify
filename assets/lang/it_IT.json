@@ -89,7 +89,7 @@
   "no-books-found-with-terms": "Nessun libro trovato con questi termini.\nVerifica che sia stato digitato correttamente.",
   "enter-title-label": "Inserisci il Titolo",
   "enter-author-label": "Inserisci l'Autore",
-  "enter-category-label": "Inserisci la Categoria",
+  "enter-category-label": "Inserisci la Categoria (in Inglese)",
   "enter-publisher-label": "Inserisci l'Editore",
   "enter-isbn-label": "Inserisci l'ISBN",
   "delete-text-typed-tooltip": "Cancella il testo digitato.",
