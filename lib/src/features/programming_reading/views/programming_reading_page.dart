@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/features/programming_reading/bloc/programming_reading_bloc.dart';
@@ -50,9 +51,13 @@ class _ProgrammingHourState extends State<ProgrammingReadingPage> {
             RemovedNotificationHourTimeEvent(),
           ),
         ),
-      ProgrammingReadingErrorState(:final errorMessage) => Center(
+      ProgrammingReadingErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
           child: InfoItemStateWidget.withErrorState(
-            message: errorMessage,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _onRefreshPage,
           ),
         ),

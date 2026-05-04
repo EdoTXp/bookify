@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/features/reading_page_timer/bloc/reading_page_timer_bloc.dart';
 import 'widgets/reading_page_timer_loaded_state_widget.dart';
@@ -49,10 +50,13 @@ class _ReadingPageTimerPageState extends State<ReadingPageTimerPage> {
           Navigator.of(context).pop,
         );
         break;
-      case ReadingPageTimerErrorState(:final errorMessage):
+      case ReadingPageTimerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
         break;
