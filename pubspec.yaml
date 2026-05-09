@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.10.6
+version: 2.10.7
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -47,7 +47,7 @@ dependencies:
   sign_in_with_apple: ^8.0.0 # Used for login with Apple.
   crypto: ^3.0.7 # Used for create sha256 code for Apple and Facebook login.
   package_info_plus: ^9.0.1 # Used to get a app version.
-  envied: ^1.3.3 # Used for store the API keys and other secrets in a safe way.
+  envied: ^1.3.4 # Used for store the API keys and other secrets in a safe way.
 
   flutter_localizations:
     sdk: flutter
