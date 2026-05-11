@@ -32,18 +32,18 @@ class UserThemeCubit extends Cubit<UserThemeState> {
       emit(
         UserThemeLoadedState(themeMode: theme),
       );
-    } on StorageException {
+    } on StorageException catch (e) {
       emit(
         UserThemeErrorState(
-          errorCode: StorageErrorCode.readFailed,
-          errorDescriptionMessage: ' Failed to load theme. Please try again.',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
       emit(
         UserThemeErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'An unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -70,18 +70,18 @@ class UserThemeCubit extends Cubit<UserThemeState> {
       emit(
         UserThemeLoadedState(themeMode: themeMode),
       );
-    } on StorageException {
+    } on StorageException catch (e) {
       emit(
         UserThemeErrorState(
-          errorCode: StorageErrorCode.writeFailed,
-          errorDescriptionMessage: 'Failed to save theme. Please try again.',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
       emit(
         UserThemeErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'An unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

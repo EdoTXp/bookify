@@ -38,18 +38,18 @@ class ProgrammingReadingBloc
           userHourTimeModel: userHourTimeModel,
         ),
       );
-    } on StorageException {
+    } on StorageException catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorCode: StorageErrorCode.readFailed,
-          errorDescriptionMessage: 'Failed to load reading hour time',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'Unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -95,18 +95,18 @@ class ProgrammingReadingBloc
       );
 
       emit(ProgrammingReadingInsertedState());
-    } on StorageException {
+    } on StorageException catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorCode: StorageErrorCode.writeFailed,
-          errorDescriptionMessage: 'Failed to insert reading hour time',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'Unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -124,11 +124,18 @@ class ProgrammingReadingBloc
       );
 
       emit(ProgrammingReadingRemovedNotificationState());
-    } on Exception {
+    } on StorageException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'An unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

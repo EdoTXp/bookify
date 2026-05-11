@@ -45,19 +45,18 @@ class ReadingPageTimerBloc
       }
 
       emit(ReadingPageTimerInsertedState());
-    } on StorageException {
+    } on StorageException catch (e) {
       emit(
         ReadingPageTimerErrorState(
-          errorCode: StorageErrorCode.writeFailed,
-          errorDescriptionMessage:
-              ' Failed to save page reading time. Please try again.',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on Exception {
+    } on Exception catch (e) {
       emit(
         ReadingPageTimerErrorState(
           errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: 'An unexpected error occurred',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

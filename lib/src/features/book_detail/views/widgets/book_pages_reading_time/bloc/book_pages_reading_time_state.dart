@@ -14,9 +14,11 @@ final class BookPagesReadingTimeLoadedState extends BookPagesReadingTimeState {
 }
 
 final class BookPagesReadingTimeErrorState extends BookPagesReadingTimeState {
-  final String errorMessage;
+  final StorageErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookPagesReadingTimeErrorState({
-    required this.errorMessage,
+     required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

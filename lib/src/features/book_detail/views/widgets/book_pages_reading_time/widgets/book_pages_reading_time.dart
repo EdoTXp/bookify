@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/views/widgets/book_pages_reading_time/bloc/book_pages_reading_time_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -36,19 +37,23 @@ class _BookPagesReadingTimeState extends State<BookPagesReadingTime> {
       BookPagesReadingTimeLoadingState() =>
         const CenterCircularProgressIndicator(),
       BookPagesReadingTimeLoadedState(:final userPageReadingTime) => Text(
-          'hours-to-read-label'.i18n([
-            userPageReadingTime
-                .readingTimeForTotalBookPage(widget.pagesCount)
-                .toString()
-          ]),
-          textScaler: TextScaler.noScaling,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontSize: 14,
-          ),
+        'hours-to-read-label'.i18n([
+          userPageReadingTime
+              .readingTimeForTotalBookPage(widget.pagesCount)
+              .toString(),
+        ]),
+        textScaler: TextScaler.noScaling,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
         ),
-      BookPagesReadingTimeErrorState(:final errorMessage) => Text(
-          errorMessage,
+      ),
+      BookPagesReadingTimeErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Text(
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           overflow: TextOverflow.ellipsis,
           textScaler: TextScaler.noScaling,
           style: TextStyle(
