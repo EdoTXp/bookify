@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';

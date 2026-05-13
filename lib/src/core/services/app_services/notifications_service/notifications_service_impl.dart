@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
+import 'package:bookify/src/shared/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';

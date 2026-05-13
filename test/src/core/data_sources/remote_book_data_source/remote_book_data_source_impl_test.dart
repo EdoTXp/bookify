@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/data_sources/remote_books_data_source/google_books_data_source_impl.dart';
-import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/rest_client/rest_client.dart';

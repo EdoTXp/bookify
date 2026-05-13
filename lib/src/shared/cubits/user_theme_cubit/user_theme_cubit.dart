@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/enums/storage_error_code.dart';
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:flutter/material.dart';

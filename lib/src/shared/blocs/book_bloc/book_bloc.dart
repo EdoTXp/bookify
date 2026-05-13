@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
 import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';

@@ -43,7 +43,6 @@ class ShowDialogService {
       ),
     );
 
-    //  if (_isAndroidPlatform) {
     await showAdaptiveDialog(
       context: context,
       builder: (context) {
@@ -61,7 +60,7 @@ class ShowDialogService {
                 key: const Key('ConfirmDialogButton'),
                 onPressed: confirmButtonFunction,
                 child: confirmButtonWidget,
-              )
+              ),
             ] else ...[
               CupertinoDialogAction(
                 onPressed:
@@ -105,31 +104,28 @@ class ShowDialogService {
 
     await showDialog(
       context: context,
-      builder: (context) {
-        if (_isAndroidPlatform) {
-          return SimpleDialog(
-            title: titleWidget,
-            children: [
-              SimpleDialogOption(
-                key: const Key('OkDialogButton'),
-                onPressed: () => Navigator.pop(context),
-                child: okButtonWidget,
-              ),
-            ],
-          );
-        }
-        return CupertinoAlertDialog(
-          title: titleWidget,
-          actions: [
-            CupertinoDialogAction(
-              key: const Key('OkDialogButton'),
-              isDefaultAction: true,
-              onPressed: () => Navigator.pop(context),
-              child: okButtonWidget,
+      builder: (context) => (_isAndroidPlatform)
+          ? SimpleDialog(
+              title: titleWidget,
+              children: [
+                SimpleDialogOption(
+                  key: const Key('OkDialogButton'),
+                  onPressed: () => Navigator.pop(context),
+                  child: okButtonWidget,
+                ),
+              ],
+            )
+          : CupertinoAlertDialog(
+              title: titleWidget,
+              actions: [
+                CupertinoDialogAction(
+                  key: const Key('OkDialogButton'),
+                  isDefaultAction: true,
+                  onPressed: () => Navigator.pop(context),
+                  child: okButtonWidget,
+                ),
+              ],
             ),
-          ],
-        );
-      },
     );
   }
 }

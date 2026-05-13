@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/enums/storage_error_code.dart';
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/repositories/auth_repository/auth_repository_impl.dart';

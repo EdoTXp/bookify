@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
 import 'package:localization/localization.dart';
 
 extension RestClientErrorCodeExtension on RestClientErrorCode {
