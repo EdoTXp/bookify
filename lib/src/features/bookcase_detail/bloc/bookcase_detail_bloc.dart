@@ -2,6 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 
@@ -33,27 +34,38 @@ class BookcaseDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Ocorreu um erro não esperado: $e'),
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }
 
   Future<void> _deletedBookcase(
-      DeletedBookcaseEvent event, Emitter<BookcaseDetailState> emit) async {
+    DeletedBookcaseEvent event,
+    Emitter<BookcaseDetailState> emit,
+  ) async {
     try {
       emit(BookcaseDetailLoadingState());
 
-      final bookcaseDeletedRow =
-          await _bookcaseService.deleteBookcase(bookcaseId: event.bookcaseId);
+      final bookcaseDeletedRow = await _bookcaseService.deleteBookcase(
+        bookcaseId: event.bookcaseId,
+      );
 
       if (bookcaseDeletedRow == -1) {
-        emit(BookcaseDetailErrorState(
-            errorMessage: 'Impossível deletar a estante'));
+        emit(
+          BookcaseDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Impossible delete the bookcase',
+          ),
+        );
         return;
       }
 
@@ -61,12 +73,16 @@ class BookcaseDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Ocorreu um erro não esperado: $e'),
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }
@@ -82,11 +98,18 @@ class BookcaseDetailBloc
 
       for (var book in books) {
         final rowDeleted = await _bookcaseService.deleteBookcaseRelationship(
-            bookcaseId: event.bookcaseId, bookId: book.id);
+          bookcaseId: event.bookcaseId,
+          bookId: book.id,
+        );
 
         if (rowDeleted == -1) {
-          emit(BookcaseDetailErrorState(
-              errorMessage: 'Impossível deletar o livro: ${book.title}'));
+          emit(
+            BookcaseDetailErrorState(
+              errorCode: LocalDatabaseErrorCode.unknown,
+              errorDescriptionMessage:
+                  'Impossible delete the book: ${book.title}',
+            ),
+          );
           return;
         }
       }
@@ -95,12 +118,16 @@ class BookcaseDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
         BookcaseDetailErrorState(
-            errorMessage: 'Ocorreu um erro não esperado: $e'),
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }

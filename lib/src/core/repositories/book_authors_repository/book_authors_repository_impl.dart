@@ -2,6 +2,7 @@ import 'package:bookify/src/shared/constants/database_scripts/database_scripts.d
 import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/repositories/book_authors_repository/book_authors_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
   final LocalDatabase _database;
@@ -21,23 +22,31 @@ class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
       );
 
       if (bookAuthorsRelationships.last.isEmpty) {
-        throw const LocalDatabaseException('Impossível buscar os dados');
+        throw const LocalDatabaseException(
+          LocalDatabaseErrorCode.invalidData,
+          descriptionMessage: 'Impossible to fetch data',
+        );
       }
 
       return bookAuthorsRelationships;
-    } on LocalDatabaseException {
-      rethrow;
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
   @override
   Future<int> insert({required String bookId, required int authorId}) async {
     try {
-      final rowInserted =
-          await _database.insert(table: _bookAuthorsTableName, values: {
-        'bookId': bookId,
-        'authorId': authorId,
-      });
+      final rowInserted = await _database.insert(
+        table: _bookAuthorsTableName,
+        values: {
+          'bookId': bookId,
+          'authorId': authorId,
+        },
+      );
 
       return rowInserted;
     } on LocalDatabaseException {

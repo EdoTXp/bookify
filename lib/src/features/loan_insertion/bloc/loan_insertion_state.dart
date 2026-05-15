@@ -13,9 +13,11 @@ final class LoanInsertionInsertedState extends LoanInsertionState {
 }
 
 final class LoanInsertionErrorState extends LoanInsertionState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   LoanInsertionErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

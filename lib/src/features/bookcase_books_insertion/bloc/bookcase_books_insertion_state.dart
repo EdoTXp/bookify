@@ -28,9 +28,11 @@ final class BookcaseBooksInsertionInsertedState
 
 final class BookcaseBooksInsertionErrorState
     extends BookcaseBooksInsertionState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookcaseBooksInsertionErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

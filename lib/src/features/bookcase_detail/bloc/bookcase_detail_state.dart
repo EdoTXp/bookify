@@ -16,9 +16,11 @@ final class BookcaseDetailBooksLoadedState extends BookcaseDetailState {
 final class BookcaseDetailDeletedState extends BookcaseDetailState {}
 
 final class BookcaseDetailErrorState extends BookcaseDetailState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookcaseDetailErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

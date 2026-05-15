@@ -5,6 +5,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -41,23 +42,31 @@ void main() {
       'Test InsertedLoanEvent work',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenAnswer((_) async => 1);
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenAnswer((_) async => 1);
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verify(() => readingService.insert(
-              readingModel: readingModel,
-            )).called(1);
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verify(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -69,32 +78,44 @@ void main() {
       'Test InsertedLoanEvent work when pageCount != 0',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updatePageCount(
-              id: any(named: 'id'),
-              pageCount: any(named: 'pageCount'),
-            )).thenAnswer((_) async => 1);
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenAnswer((_) async => 1);
+        when(
+          () => bookService.updatePageCount(
+            id: any(named: 'id'),
+            pageCount: any(named: 'pageCount'),
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenAnswer((_) async => 1);
       },
       act: (bloc) =>
           bloc.add(InsertedReadingsEvent(bookId: 'bookId', pagesUpdated: 100)),
       verify: (_) {
-        verify(() => bookService.updatePageCount(
-              id: any(named: 'id'),
-              pageCount: any(named: 'pageCount'),
-            )).called(1);
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verify(() => readingService.insert(
-              readingModel: readingModel,
-            )).called(1);
+        verify(
+          () => bookService.updatePageCount(
+            id: any(named: 'id'),
+            pageCount: any(named: 'pageCount'),
+          ),
+        ).called(1);
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verify(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -106,32 +127,44 @@ void main() {
       'Test InsertedLoanEvent work when pageCount != 0 with error update',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updatePageCount(
-              id: any(named: 'id'),
-              pageCount: any(named: 'pageCount'),
-            )).thenAnswer((_) async => 0);
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenAnswer((_) async => 1);
+        when(
+          () => bookService.updatePageCount(
+            id: any(named: 'id'),
+            pageCount: any(named: 'pageCount'),
+          ),
+        ).thenAnswer((_) async => 0);
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenAnswer((_) async => 1);
       },
       act: (bloc) =>
           bloc.add(InsertedReadingsEvent(bookId: 'bookId', pagesUpdated: 100)),
       verify: (_) {
-        verify(() => bookService.updatePageCount(
-              id: any(named: 'id'),
-              pageCount: any(named: 'pageCount'),
-            )).called(1);
-        verifyNever(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            ));
-        verifyNever(() => readingService.insert(
-              readingModel: readingModel,
-            ));
+        verify(
+          () => bookService.updatePageCount(
+            id: any(named: 'id'),
+            pageCount: any(named: 'pageCount'),
+          ),
+        ).called(1);
+        verifyNever(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        );
+        verifyNever(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        );
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -143,23 +176,31 @@ void main() {
       'Test InsertedLoanEvent work when update status error',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 0);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenAnswer((_) async => 1);
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 0);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenAnswer((_) async => 1);
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verifyNever(() => readingService.insert(
-              readingModel: readingModel,
-            ));
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verifyNever(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        );
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -171,23 +212,31 @@ void main() {
       'Test InsertedLoanEvent work when reading insertion error',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenAnswer((_) async => 0);
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenAnswer((_) async => 0);
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verify(() => readingService.insert(
-              readingModel: readingModel,
-            )).called(1);
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verify(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -199,23 +248,36 @@ void main() {
       'Test InsertedLoanEvent work when throw LocalDatabaseException',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenThrow(const LocalDatabaseException('Error on Database'));
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verify(() => readingService.insert(
-              readingModel: readingModel,
-            )).called(1);
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verify(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),
@@ -227,23 +289,31 @@ void main() {
       'Test InsertedLoanEvent work when throw Generic Exception',
       build: () => readingsInsertionBloc,
       setUp: () {
-        when(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).thenAnswer((_) async => 1);
-        when(() => readingService.insert(
-              readingModel: readingModel,
-            )).thenThrow(Exception('Generic Error'));
+        when(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).thenThrow(Exception('Generic Error'));
       },
       act: (bloc) => bloc.add(InsertedReadingsEvent(bookId: 'bookId')),
       verify: (_) {
-        verify(() => bookService.updateStatus(
-              id: any(named: 'id'),
-              status: BookStatus.reading,
-            )).called(1);
-        verify(() => readingService.insert(
-              readingModel: readingModel,
-            )).called(1);
+        verify(
+          () => bookService.updateStatus(
+            id: any(named: 'id'),
+            status: BookStatus.reading,
+          ),
+        ).called(1);
+        verify(
+          () => readingService.insert(
+            readingModel: readingModel,
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<ReadingsInsertionLoadingState>(),

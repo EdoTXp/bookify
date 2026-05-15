@@ -5,6 +5,7 @@ import 'package:bookify/src/core/services/app_services/contacts_service/contacts
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'loan_detail_event.dart';
@@ -51,11 +52,17 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       );
     } on LocalDatabaseException catch (e) {
       emit(
-        LoanDetailErrorState(errorMessage: 'Erro no database: ${e.message}'),
+        LoanDetailErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
-        LoanDetailErrorState(errorMessage: 'Ocorreu um erro não esperado: $e'),
+        LoanDetailErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }
@@ -69,12 +76,16 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
 
       await _notificationsService.cancelNotificationById(id: event.loanId);
       final bookStatusUpdated = await _bookService.updateStatus(
-          id: event.bookId, status: BookStatus.library);
+        id: event.bookId,
+        status: BookStatus.library,
+      );
 
       if (bookStatusUpdated != 1) {
         emit(
           LoanDetailErrorState(
-              errorMessage: 'Impossível remover o livro do empréstimo'),
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Impossible to remove the book status',
+          ),
         );
         return;
       }
@@ -83,7 +94,10 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
 
       if (loanRemovedRow != 1) {
         emit(
-          LoanDetailErrorState(errorMessage: 'Impossível remover o empréstimo'),
+          LoanDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Impossible to remove the loan',
+          ),
         );
         return;
       }
@@ -91,11 +105,17 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       emit(LoanDetailFinishedState());
     } on LocalDatabaseException catch (e) {
       emit(
-        LoanDetailErrorState(errorMessage: 'Erro no database: ${e.message}'),
+        LoanDetailErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
-        LoanDetailErrorState(errorMessage: 'Ocorreu um erro não esperado: $e'),
+        LoanDetailErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: 'Ocorreu um erro não esperado: $e',
+        ),
       );
     }
   }

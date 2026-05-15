@@ -6,6 +6,7 @@ import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'loan_insertion_event.dart';
@@ -39,8 +40,9 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
       if (bookUpdatedStatus < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage:
-                'Ocorreu um erro ao adicionar o livro ao empréstimo. Verifique se o livro já não foi emprestado ou em lista de leitura',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage:
+                'An error occurred while updating the book status to loaned. Verify is already loaned or if the book exists.',
           ),
         );
         return;
@@ -59,7 +61,9 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
       if (loanId < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao criar o empréstimo',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage:
+                'An error occurred while creating the loan',
           ),
         );
         return;
@@ -79,14 +83,23 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         ),
       );
     } on LocalDatabaseException catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
+      emit(
+        LoanInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
+      emit(
+        LoanInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
+  // TODO Create a localizated notification message
   Future<void> _createNotification(
     int loanId,
     String contactName,

@@ -16,9 +16,11 @@ final class BookOnBookcasePickerLoadedState extends BookOnBookcasePickerState {
 }
 
 final class BookOnBookcasePickerErrorState extends BookOnBookcasePickerState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookOnBookcasePickerErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

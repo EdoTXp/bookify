@@ -1,8 +1,14 @@
-class LocalDatabaseException implements Exception {
-  final String message;
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
-  const LocalDatabaseException(this.message);
+class LocalDatabaseException implements Exception {
+  final LocalDatabaseErrorCode code;
+  final String? descriptionMessage;
+
+  const LocalDatabaseException(
+    this.code, {
+    this.descriptionMessage,
+  });
 
   @override
-  String toString() => message;
+  String toString() => 'LocalDatabaseException: [$code] $descriptionMessage';
 }

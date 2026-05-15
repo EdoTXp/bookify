@@ -2,6 +2,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/repositories/author_repository/authors_repository_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -13,10 +14,12 @@ void main() {
 
   group('Test normal CRUD author without error ||', () {
     test('insert a new author', () async {
-      when(() => localDatabase.insert(
-            table: any(named: 'table'),
-            values: any(named: 'values'),
-          )).thenAnswer((_) async => 1);
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenAnswer((_) async => 1);
 
       final authorId = await authorsRepository.insert(
         authorModel: AuthorModel(name: 'Machado de Assis'),
@@ -26,13 +29,17 @@ void main() {
     });
 
     test('get actual author id by name', () async {
-      when(() => localDatabase.getItemsByColumn(
-            table: any(named: 'table'),
-            column: any(named: 'column'),
-            columnValues: any(named: 'columnValues'),
-          )).thenAnswer((_) async => [
-            {'id': 1, 'name': 'Machado de Assis'}
-          ]);
+      when(
+        () => localDatabase.getItemsByColumn(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenAnswer(
+        (_) async => [
+          {'id': 1, 'name': 'Machado de Assis'},
+        ],
+      );
 
       final authorId = await authorsRepository.getAuthorIdByColumnName(
         authorName: 'Machado de Assis',
@@ -42,11 +49,13 @@ void main() {
     });
 
     test('get -1 when is a empty list', () async {
-      when(() => localDatabase.getItemsByColumn(
-            table: any(named: 'table'),
-            column: any(named: 'column'),
-            columnValues: any(named: 'columnValues'),
-          )).thenAnswer((_) async => []);
+      when(
+        () => localDatabase.getItemsByColumn(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenAnswer((_) async => []);
 
       final authorId = await authorsRepository.getAuthorIdByColumnName(
         authorName: 'Machado de Assis',
@@ -56,11 +65,13 @@ void main() {
     });
 
     test('get author by Id', () async {
-      when(() => localDatabase.getItemById(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => {'id': 1, 'name': 'Machado de Assis'});
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'id': 1, 'name': 'Machado de Assis'});
 
       final authorModel = await authorsRepository.getAuthorById(id: 1);
 
@@ -69,11 +80,13 @@ void main() {
     });
 
     test('delete author by Id', () async {
-      when(() => localDatabase.delete(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => 1);
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => 1);
 
       final rowDeleted = await authorsRepository.deleteAuthorById(id: 1);
       expect(rowDeleted, equals(1));
@@ -82,65 +95,113 @@ void main() {
 
   group('Test normal CRUD author with error ||', () {
     test('insert a new author', () async {
-      when(() => localDatabase.insert(
-            table: any(named: 'table'),
-            values: any(named: 'values'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await authorsRepository.insert(
           authorModel: AuthorModel(name: 'Machado de Assis'),
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get actual author id by name', () async {
-      when(() => localDatabase.getItemsByColumn(
-            table: any(named: 'table'),
-            column: any(named: 'column'),
-            columnValues: any(named: 'columnValues'),
-          )).thenAnswer((_) async => [{}]);
+      when(
+        () => localDatabase.getItemsByColumn(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenAnswer((_) async => [{}]);
 
       expect(
         () async => await authorsRepository.getAuthorIdByColumnName(
           authorName: 'Machado de Assis',
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.invalidData,
+          ),
+        ),
       );
     });
 
     test('get author by Id', () async {
-      when(() => localDatabase.getItemById(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => {'id': '1'});
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'id': '1'});
 
       expect(
         () async => await authorsRepository.getAuthorById(id: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.invalidData,
+          ),
+        ),
       );
     });
 
     test('delete author by Id', () async {
-      when(() => localDatabase.delete(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await authorsRepository.deleteAuthorById(
           id: 1,
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
   });

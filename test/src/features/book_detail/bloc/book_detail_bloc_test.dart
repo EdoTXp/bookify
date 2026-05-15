@@ -5,6 +5,7 @@ import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -48,8 +49,9 @@ void main() {
       ).thenAnswer((_) async => true),
       act: (bloc) => bloc.add(VerifiedBookIsInsertedEvent(bookId: '1')),
       verify: (_) {
-        verify(() => bookService.verifyBookIsAlreadyInserted(id: '1'))
-            .called(1);
+        verify(
+          () => bookService.verifyBookIsAlreadyInserted(id: '1'),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -60,13 +62,20 @@ void main() {
     blocTest(
       'test if VerifiedBookIsInsertedEvent work with error state',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.verifyBookIsAlreadyInserted(id: any(named: 'id')),
-      ).thenThrow(const LocalDatabaseException('error on database')),
+      setUp: () =>
+          when(
+            () => bookService.verifyBookIsAlreadyInserted(id: any(named: 'id')),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(VerifiedBookIsInsertedEvent(bookId: '1')),
       verify: (_) {
-        verify(() => bookService.verifyBookIsAlreadyInserted(id: '1'))
-            .called(1);
+        verify(
+          () => bookService.verifyBookIsAlreadyInserted(id: '1'),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -82,8 +91,9 @@ void main() {
       ).thenThrow(Exception('generic exception')),
       act: (bloc) => bloc.add(VerifiedBookIsInsertedEvent(bookId: '1')),
       verify: (_) {
-        verify(() => bookService.verifyBookIsAlreadyInserted(id: '1'))
-            .called(1);
+        verify(
+          () => bookService.verifyBookIsAlreadyInserted(id: '1'),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -99,8 +109,9 @@ void main() {
       ).thenAnswer((_) async => 1),
       act: (bloc) => bloc.add(BookInsertedEvent(bookModel: bookModel)),
       verify: (_) {
-        verify(() => bookService.insertCompleteBook(bookModel: bookModel))
-            .called(1);
+        verify(
+          () => bookService.insertCompleteBook(bookModel: bookModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -116,8 +127,9 @@ void main() {
       ).thenAnswer((_) async => 0),
       act: (bloc) => bloc.add(BookInsertedEvent(bookModel: bookModel)),
       verify: (_) {
-        verify(() => bookService.insertCompleteBook(bookModel: bookModel))
-            .called(1);
+        verify(
+          () => bookService.insertCompleteBook(bookModel: bookModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -128,13 +140,20 @@ void main() {
     blocTest(
       'test if BookInsertedEvent work with error state',
       build: () => bookDetailBloc,
-      setUp: () => when(
-        () => bookService.insertCompleteBook(bookModel: bookModel),
-      ).thenThrow(const LocalDatabaseException('error on database')),
+      setUp: () =>
+          when(
+            () => bookService.insertCompleteBook(bookModel: bookModel),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(BookInsertedEvent(bookModel: bookModel)),
       verify: (_) {
-        verify(() => bookService.insertCompleteBook(bookModel: bookModel))
-            .called(1);
+        verify(
+          () => bookService.insertCompleteBook(bookModel: bookModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -150,8 +169,9 @@ void main() {
       ).thenThrow(Exception('generic exception')),
       act: (bloc) => bloc.add(BookInsertedEvent(bookModel: bookModel)),
       verify: (_) {
-        verify(() => bookService.insertCompleteBook(bookModel: bookModel))
-            .called(1);
+        verify(
+          () => bookService.insertCompleteBook(bookModel: bookModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookDetailLoadingState>(),
@@ -243,7 +263,12 @@ void main() {
       setUp: () {
         when(
           () => bookService.deleteBook(id: '1'),
-        ).thenThrow(const LocalDatabaseException('error on database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
         when(
           () => bookService.getBookStatus(id: '1'),
         ).thenAnswer((_) async => BookStatus.library);

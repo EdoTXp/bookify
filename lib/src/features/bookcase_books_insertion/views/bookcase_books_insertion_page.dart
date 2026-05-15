@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/bookcase_books_insertion_loaded_state_widget/bookcase_books_insertion_loaded_state.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -48,12 +49,12 @@ class _BookcaseBooksInsertionPageState
       BookcaseBooksInsertionLoadingState() ||
       BookcaseBooksInsertionInsertedState() =>
         const CenterCircularProgressIndicator(),
-      BookcaseBooksInsertionEmptyState(:final message) => Center(
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-          ),
+      BookcaseBooksInsertionEmptyState() => Center(
+        child: Text(
+          'Nenhum livro cadastrado. Volte à Página início para cadastrar.',
+          textAlign: TextAlign.center,
         ),
+      ),
       BookcaseBooksInsertionLoadedState(:final books) =>
         BookcaseBooksInsertionLoadedStateWidget(
           key: const Key('BookcaseBooksInsertionLoadedStateWidget'),
@@ -67,9 +68,12 @@ class _BookcaseBooksInsertionPageState
             );
           },
         ),
-      BookcaseBooksInsertionErrorState(:final errorMessage) =>
+      BookcaseBooksInsertionErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };
@@ -114,24 +118,27 @@ class _BookcaseBooksInsertionPageState
       canPop: _canPop,
       child:
           BlocConsumer<BookcaseBooksInsertionBloc, BookcaseBooksInsertionState>(
-              bloc: _bloc,
-              listener: _handleBookcaseInsertionState,
-              builder: (context, state) {
-                return Scaffold(
-                  appBar: AppBar(
-                    centerTitle: true,
-                    title: Text(
-                      'select-books-title'.i18n(),
-                      style: TextStyle(fontSize: 16),
-                    ),
+            bloc: _bloc,
+            listener: _handleBookcaseInsertionState,
+            builder: (context, state) {
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    'select-books-title'.i18n(),
+                    style: TextStyle(fontSize: 16),
                   ),
-                  body: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child:
-                        _getWidgetOnBookcaseBooksInsertionState(context, state),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: _getWidgetOnBookcaseBooksInsertionState(
+                    context,
+                    state,
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
     );
   }
 }

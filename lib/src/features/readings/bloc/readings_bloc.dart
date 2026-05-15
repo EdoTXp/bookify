@@ -3,6 +3,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'readings_event.dart';
@@ -36,9 +37,19 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
 
       await _mountReadingsDto(readings, emit);
     } on LocalDatabaseException catch (e) {
-      emit(ReadingsErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        ReadingsErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(ReadingsErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        ReadingsErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -60,9 +71,19 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
 
       await _mountReadingsDto(readings, emit);
     } on LocalDatabaseException catch (e) {
-      emit(ReadingsErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        ReadingsErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(ReadingsErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        ReadingsErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -75,7 +96,11 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
     for (ReadingModel reading in readings) {
       if (reading.id == null) {
         emit(
-            ReadingsErrorState(errorMessage: 'Erro inesperado: ${reading.id}'));
+          ReadingsErrorState(
+            errorCode: LocalDatabaseErrorCode.invalidData,
+            errorDescriptionMessage: 'Reading not found',
+          ),
+        );
         return;
       }
 

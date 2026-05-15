@@ -17,9 +17,11 @@ final class BookOnBookcaseDetailDeletedState
     extends BookOnBookcaseDetailState {}
 
 final class BookOnBookcaseDetailErrorState extends BookOnBookcaseDetailState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookOnBookcaseDetailErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

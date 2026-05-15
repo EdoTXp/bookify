@@ -3,6 +3,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/repositories/bookcase_repository/bookcase_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class BookcaseRepositoryImpl implements BookcaseRepository {
   final LocalDatabase _database;
@@ -17,9 +18,10 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
       final bookcases = bookcasesMap.map(BookcaseModel.fromMap).toList();
 
       return bookcases;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar as estantes no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -37,9 +39,10 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
       final bookcases = bookcasesMap.map(BookcaseModel.fromMap).toList();
 
       return bookcases;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar as estantes no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -57,9 +60,10 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
       final bookcase = BookcaseModel.fromMap(bookcaseMap);
 
       return bookcase;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar a estante no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;

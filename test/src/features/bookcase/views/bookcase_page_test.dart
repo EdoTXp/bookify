@@ -3,6 +3,7 @@ import 'package:bookify/src/core/dtos/bookcase_dto.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
 import 'package:bookify/src/features/bookcase/views/bookcase_page.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -95,7 +96,10 @@ void main() {
       'Test find Bookcase Error state Widget when Bloc emit Error',
       (tester) async {
         when(() => bookcaseBloc.state).thenReturn(
-          BookcaseErrorState(errorMessage: 'Error message'),
+          BookcaseErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error message',
+          ),
         );
 
         await _initBookcasePage(tester, bookcaseBloc);
@@ -106,7 +110,7 @@ void main() {
         );
 
         expect(
-          find.text('Error message'),
+          find.text('error-local-database-unknown'),
           findsOne,
         );
       },

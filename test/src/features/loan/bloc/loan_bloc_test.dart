@@ -11,6 +11,7 @@ import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -74,8 +75,9 @@ void main() {
           ),
         );
 
-        when(() => contactsService.getContactById(id: any(named: 'id')))
-            .thenAnswer(
+        when(
+          () => contactsService.getContactById(id: any(named: 'id')),
+        ).thenAnswer(
           (_) async => ContactModel(
             id: 'id',
             name: 'name',
@@ -88,8 +90,9 @@ void main() {
       verify: (_) {
         verify(() => loanService.getAll()).called(1);
         verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
-        verify(() => contactsService.getContactById(id: any(named: 'id')))
-            .called(1);
+        verify(
+          () => contactsService.getContactById(id: any(named: 'id')),
+        ).called(1);
       },
       expect: () => [
         isA<LoanLoadingState>(),
@@ -161,7 +164,10 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(GotAllLoansEvent()),
@@ -247,8 +253,9 @@ void main() {
           ),
         );
 
-        when(() => contactsService.getContactById(id: any(named: 'id')))
-            .thenAnswer(
+        when(
+          () => contactsService.getContactById(id: any(named: 'id')),
+        ).thenAnswer(
           (_) async => ContactModel(
             id: 'id',
             name: 'name',
@@ -267,8 +274,9 @@ void main() {
           ),
         ).called(1);
         verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
-        verify(() => contactsService.getContactById(id: any(named: 'id')))
-            .called(1);
+        verify(
+          () => contactsService.getContactById(id: any(named: 'id')),
+        ).called(1);
       },
       expect: () => [
         isA<LoanLoadingState>(),
@@ -279,15 +287,17 @@ void main() {
     blocTest(
       'Test FoundLoanByBookTitleEvent work when loans are empty',
       build: () => loanBloc,
-      setUp: () => when(
-        () => loanService.getLoansByBookTitle(
-          title: any(named: 'title'),
-        ),
-      ).thenAnswer(
-        (_) async => [],
+      setUp: () =>
+          when(
+            () => loanService.getLoansByBookTitle(
+              title: any(named: 'title'),
+            ),
+          ).thenAnswer(
+            (_) async => [],
+          ),
+      act: (bloc) => bloc.add(
+        FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
-      act: (bloc) => bloc
-          .add(FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
       verify: (_) {
         verify(
           () => loanService.getLoansByBookTitle(
@@ -307,8 +317,9 @@ void main() {
       'Test FoundLoanByBookTitleEvent work when loan id is empty',
       build: () => loanBloc,
       setUp: () {
-        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
-            .thenAnswer(
+        when(
+          () => loanService.getLoansByBookTitle(title: any(named: 'title')),
+        ).thenAnswer(
           (_) async => [
             LoanModel(
               observation: 'observation',
@@ -320,8 +331,9 @@ void main() {
           ],
         );
       },
-      act: (bloc) => bloc
-          .add(FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName')),
+      act: (bloc) => bloc.add(
+        FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
+      ),
       verify: (_) {
         verify(
           () => loanService.getLoansByBookTitle(
@@ -341,8 +353,9 @@ void main() {
       'Test FoundLoanByBookTitleEvent work when throw LocalDatabaseException',
       build: () => loanBloc,
       setUp: () {
-        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
-            .thenAnswer(
+        when(
+          () => loanService.getLoansByBookTitle(title: any(named: 'title')),
+        ).thenAnswer(
           (_) async => [
             LoanModel(
               id: 1,
@@ -359,16 +372,19 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(
         FoundLoanByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
-        verify(() =>
-                loanService.getLoansByBookTitle(title: any(named: 'title')))
-            .called(1);
+        verify(
+          () => loanService.getLoansByBookTitle(title: any(named: 'title')),
+        ).called(1);
         verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
         verifyNever(() => contactsService.getContactById(id: any(named: 'id')));
       },
@@ -382,8 +398,9 @@ void main() {
       'Test FoundLoanByBookTitleEvent work when throw Generic Exception',
       build: () => loanBloc,
       setUp: () {
-        when(() => loanService.getLoansByBookTitle(title: any(named: 'title')))
-            .thenAnswer(
+        when(
+          () => loanService.getLoansByBookTitle(title: any(named: 'title')),
+        ).thenAnswer(
           (_) async => [
             LoanModel(
               id: 1,

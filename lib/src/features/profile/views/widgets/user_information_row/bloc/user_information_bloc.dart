@@ -3,6 +3,7 @@ import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'user_information_event.dart';
@@ -47,11 +48,16 @@ class UserInformationBloc
     } on LocalDatabaseException catch (e) {
       emit(
         UserInformationErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } on Exception catch (e) {
       emit(
-        UserInformationErrorState(errorMessage: 'Erro inesperado: $e'),
+        UserInformationErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }

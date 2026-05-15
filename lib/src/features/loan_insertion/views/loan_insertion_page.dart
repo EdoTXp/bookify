@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
@@ -241,8 +242,8 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         break;
 
       case LoanInsertionInsertedState(
-          loanInsertionMessage: final successMessage,
-        ):
+        loanInsertionMessage: final successMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
           successMessage,
@@ -257,10 +258,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           },
         );
         break;
-      case LoanInsertionErrorState(:final errorMessage):
+      case LoanInsertionErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
 

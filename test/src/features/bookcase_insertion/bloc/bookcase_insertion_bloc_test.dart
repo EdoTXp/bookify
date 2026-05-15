@@ -4,6 +4,7 @@ import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -37,18 +38,20 @@ void main() {
     blocTest(
       'Test InsertedBookcaseEvent() work',
       build: () => bookcaseInsertionBloc,
-      setUp: () => when(() =>
-              bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-          .thenAnswer((_) async => 4),
-      act: (bloc) => bloc.add(InsertedBookcaseEvent(
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      setUp: () => when(
+        () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+      ).thenAnswer((_) async => 4),
+      act: (bloc) => bloc.add(
+        InsertedBookcaseEvent(
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() =>
-                bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-            .called(1);
+        verify(
+          () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -59,18 +62,20 @@ void main() {
     blocTest(
       'Test InsertedBookcaseEvent() with Error on insertion work',
       build: () => bookcaseInsertionBloc,
-      setUp: () => when(() =>
-              bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-          .thenAnswer((_) async => 0),
-      act: (bloc) => bloc.add(InsertedBookcaseEvent(
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      setUp: () => when(
+        () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+      ).thenAnswer((_) async => 0),
+      act: (bloc) => bloc.add(
+        InsertedBookcaseEvent(
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() =>
-                bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-            .called(1);
+        verify(
+          () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -81,18 +86,26 @@ void main() {
     blocTest(
       'Test InsertedBookcaseEvent() with LocalDatabaseException work',
       build: () => bookcaseInsertionBloc,
-      setUp: () => when(() =>
-              bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-          .thenThrow(const LocalDatabaseException('Error on database')),
-      act: (bloc) => bloc.add(InsertedBookcaseEvent(
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      setUp: () =>
+          when(
+            () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
+      act: (bloc) => bloc.add(
+        InsertedBookcaseEvent(
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() =>
-                bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-            .called(1);
+        verify(
+          () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -103,18 +116,20 @@ void main() {
     blocTest(
       'Test InsertedBookcaseEvent() with generic Exception work',
       build: () => bookcaseInsertionBloc,
-      setUp: () => when(() =>
-              bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-          .thenThrow(Exception('Generic Exception')),
-      act: (bloc) => bloc.add(InsertedBookcaseEvent(
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      setUp: () => when(
+        () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+      ).thenThrow(Exception('Generic Exception')),
+      act: (bloc) => bloc.add(
+        InsertedBookcaseEvent(
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() =>
-                bookcaseService.insertBookcase(bookcaseModel: bookcaseModel))
-            .called(1);
+        verify(
+          () => bookcaseService.insertBookcase(bookcaseModel: bookcaseModel),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -130,15 +145,20 @@ void main() {
           bookcaseModel: bookcaseModel.copyWith(id: 1),
         ),
       ).thenAnswer((_) async => 1),
-      act: (bloc) => bloc.add(UpdatedBookcaseEvent(
-        id: 1,
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      act: (bloc) => bloc.add(
+        UpdatedBookcaseEvent(
+          id: 1,
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() => bookcaseService.updateBookcase(
-            bookcaseModel: bookcaseModel.copyWith(id: 1))).called(1);
+        verify(
+          () => bookcaseService.updateBookcase(
+            bookcaseModel: bookcaseModel.copyWith(id: 1),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -154,15 +174,20 @@ void main() {
           bookcaseModel: bookcaseModel.copyWith(id: 1),
         ),
       ).thenAnswer((_) async => 0),
-      act: (bloc) => bloc.add(UpdatedBookcaseEvent(
-        id: 1,
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      act: (bloc) => bloc.add(
+        UpdatedBookcaseEvent(
+          id: 1,
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() => bookcaseService.updateBookcase(
-            bookcaseModel: bookcaseModel.copyWith(id: 1))).called(1);
+        verify(
+          () => bookcaseService.updateBookcase(
+            bookcaseModel: bookcaseModel.copyWith(id: 1),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -173,20 +198,31 @@ void main() {
     blocTest(
       'Test UpdatedBookcaseEvent() with LocalDatabaseException work',
       build: () => bookcaseInsertionBloc,
-      setUp: () => when(
-        () => bookcaseService.updateBookcase(
-          bookcaseModel: bookcaseModel.copyWith(id: 1),
+      setUp: () =>
+          when(
+            () => bookcaseService.updateBookcase(
+              bookcaseModel: bookcaseModel.copyWith(id: 1),
+            ),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
+      act: (bloc) => bloc.add(
+        UpdatedBookcaseEvent(
+          id: 1,
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
         ),
-      ).thenThrow(const LocalDatabaseException('Error on database')),
-      act: (bloc) => bloc.add(UpdatedBookcaseEvent(
-        id: 1,
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      ),
       verify: (_) {
-        verify(() => bookcaseService.updateBookcase(
-            bookcaseModel: bookcaseModel.copyWith(id: 1))).called(1);
+        verify(
+          () => bookcaseService.updateBookcase(
+            bookcaseModel: bookcaseModel.copyWith(id: 1),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),
@@ -202,15 +238,20 @@ void main() {
           bookcaseModel: bookcaseModel.copyWith(id: 1),
         ),
       ).thenThrow(Exception('Generic Exception')),
-      act: (bloc) => bloc.add(UpdatedBookcaseEvent(
-        id: 1,
-        name: 'name',
-        description: 'description',
-        color: Colors.pink,
-      )),
+      act: (bloc) => bloc.add(
+        UpdatedBookcaseEvent(
+          id: 1,
+          name: 'name',
+          description: 'description',
+          color: Colors.pink,
+        ),
+      ),
       verify: (_) {
-        verify(() => bookcaseService.updateBookcase(
-            bookcaseModel: bookcaseModel.copyWith(id: 1))).called(1);
+        verify(
+          () => bookcaseService.updateBookcase(
+            bookcaseModel: bookcaseModel.copyWith(id: 1),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseInsertionLoadingState>(),

@@ -7,9 +7,11 @@ final class ReadingsInsertionLoadingState extends ReadingsInsertionState {}
 final class ReadingsInsertionInsertedState extends ReadingsInsertionState {}
 
 final class ReadingsInsertionErrorState extends ReadingsInsertionState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ReadingsInsertionErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

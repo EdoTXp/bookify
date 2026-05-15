@@ -6,6 +6,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -56,8 +57,11 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenAnswer((_) async => bookModel);
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -66,8 +70,9 @@ void main() {
       act: (bloc) => bloc.add(GotAllBookOnBookcasePickerEvent(bookcaseId: 1)),
       verify: (bloc) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookOnBookcasePickerLoadingState>(),
@@ -83,16 +88,20 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenAnswer((_) async => bookModel);
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [],
         );
       },
       act: (bloc) => bloc.add(GotAllBookOnBookcasePickerEvent(bookcaseId: 1)),
       verify: (_) {
         verifyNever(() => bookService.getBookById(id: 'id'));
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookOnBookcasePickerLoadingState>(),
@@ -107,18 +116,23 @@ void main() {
         when(
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenAnswer(
-            (_) async => bookModel.copyWith(status: BookStatus.loaned));
+          (_) async => bookModel.copyWith(status: BookStatus.loaned),
+        );
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [],
         );
       },
       act: (bloc) => bloc.add(GotAllBookOnBookcasePickerEvent(bookcaseId: 1)),
       verify: (_) {
         verifyNever(() => bookService.getBookById(id: 'id'));
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookOnBookcasePickerLoadingState>(),
@@ -132,10 +146,18 @@ void main() {
       setUp: () {
         when(
           () => bookService.getBookById(id: any(named: 'id')),
-        ).thenThrow(const LocalDatabaseException('Error on database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -144,8 +166,9 @@ void main() {
       act: (bloc) => bloc.add(GotAllBookOnBookcasePickerEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookOnBookcasePickerLoadingState>(),
@@ -161,8 +184,11 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenThrow(Exception('Generic Error'));
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -171,8 +197,9 @@ void main() {
       act: (bloc) => bloc.add(GotAllBookOnBookcasePickerEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookOnBookcasePickerLoadingState>(),

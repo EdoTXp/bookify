@@ -3,6 +3,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/repositories/reading_repository/reading_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class ReadingRepositoryImpl implements ReadingRepository {
   final LocalDatabase _database;
@@ -25,9 +26,10 @@ class ReadingRepositoryImpl implements ReadingRepository {
       final readings = readingMap.map(ReadingModel.fromMap).toList();
 
       return readings;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar as leituras no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -53,9 +55,10 @@ class ReadingRepositoryImpl implements ReadingRepository {
       final readings = readingMap.map(ReadingModel.fromMap).toList();
 
       return readings;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar as leituras no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -74,9 +77,10 @@ class ReadingRepositoryImpl implements ReadingRepository {
       final reading = ReadingModel.fromMap(readingMap);
 
       return reading;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar a leitura no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;

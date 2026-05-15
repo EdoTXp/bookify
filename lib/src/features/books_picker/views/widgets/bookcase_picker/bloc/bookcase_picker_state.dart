@@ -7,14 +7,17 @@ final class BookcasePickerLoadingState extends BookcasePickerState {}
 final class BookcasePickerEmptyState extends BookcasePickerState {}
 
 final class BookcasePickerLoadedState extends BookcasePickerState {
-   final List<BookcaseDto> bookcasesDto;
+  final List<BookcaseDto> bookcasesDto;
 
   BookcasePickerLoadedState({required this.bookcasesDto});
-  
 }
 
 final class BookcasePickerErrorState extends BookcasePickerState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
-  BookcasePickerErrorState({required this.errorMessage});
+  BookcasePickerErrorState({
+    required this.errorCode,
+    this.errorDescriptionMessage,
+  });
 }

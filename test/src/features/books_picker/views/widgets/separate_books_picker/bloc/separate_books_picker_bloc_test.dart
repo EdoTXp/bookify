@@ -5,6 +5,7 @@ import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -60,11 +61,12 @@ void main() {
     blocTest(
       'Test if GotAllBooksEvent work',
       build: () => bloc,
-      setUp: () => when(
-        () => bookService.getAllBook(),
-      ).thenAnswer(
-        (_) async => booksModel,
-      ),
+      setUp: () =>
+          when(
+            () => bookService.getAllBook(),
+          ).thenAnswer(
+            (_) async => booksModel,
+          ),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [
@@ -76,11 +78,12 @@ void main() {
     blocTest(
       'Test if GotAllBooksEvent work with empty state',
       build: () => bloc,
-      setUp: () => when(
-        () => bookService.getAllBook(),
-      ).thenAnswer(
-        (_) async => [],
-      ),
+      setUp: () =>
+          when(
+            () => bookService.getAllBook(),
+          ).thenAnswer(
+            (_) async => [],
+          ),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [
@@ -92,11 +95,12 @@ void main() {
     blocTest(
       'Test if GotAllBooksEvent work with empty bookService',
       build: () => bloc,
-      setUp: () => when(
-        () => bookService.getAllBook(),
-      ).thenAnswer(
-        (_) async => [],
-      ),
+      setUp: () =>
+          when(
+            () => bookService.getAllBook(),
+          ).thenAnswer(
+            (_) async => [],
+          ),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [
@@ -108,11 +112,12 @@ void main() {
     blocTest(
       'Test if GotAllBooksEvent work with empty book',
       build: () => bloc,
-      setUp: () => when(
-        () => bookService.getAllBook(),
-      ).thenAnswer(
-        (_) async => [booksModel.first.copyWith(status: BookStatus.loaned)],
-      ),
+      setUp: () =>
+          when(
+            () => bookService.getAllBook(),
+          ).thenAnswer(
+            (_) async => [booksModel.first.copyWith(status: BookStatus.loaned)],
+          ),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [
@@ -124,9 +129,15 @@ void main() {
     blocTest(
       'Test if GotAllBooksEvent work when throw LocalDatabaseException',
       build: () => bloc,
-      setUp: () => when(
-        () => bookService.getAllBook(),
-      ).thenThrow(const LocalDatabaseException('Error on Database')),
+      setUp: () =>
+          when(
+            () => bookService.getAllBook(),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(GotAllSeparatedBooksPickerEvent()),
       verify: (_) => verify(() => bookService.getAllBook()).called(1),
       expect: () => [

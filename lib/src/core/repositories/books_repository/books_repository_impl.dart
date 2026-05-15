@@ -3,6 +3,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/repositories/books_repository/books_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class BooksRepositoryImpl implements BooksRepository {
   final LocalDatabase _database;
@@ -16,9 +17,10 @@ class BooksRepositoryImpl implements BooksRepository {
       final booksMap = await _database.getAll(table: _bookTableName);
       final booksModel = booksMap.map(BookModel.fromMap).toList();
       return booksModel;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível converter o dado do database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -36,9 +38,10 @@ class BooksRepositoryImpl implements BooksRepository {
 
       final bookModel = BookModel.fromMap(bookMap);
       return bookModel;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível converter o dado do database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -70,9 +73,10 @@ class BooksRepositoryImpl implements BooksRepository {
 
       final bookImage = imageMap['imageUrl'] as String;
       return bookImage;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível converter o dado do database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -90,9 +94,10 @@ class BooksRepositoryImpl implements BooksRepository {
       final books = booksMap.map(BookModel.fromMap).toList();
 
       return books;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar os livros com esse título no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -125,9 +130,10 @@ class BooksRepositoryImpl implements BooksRepository {
 
       final bookStatus = BookStatus.fromMap(statusMap['status'] as int);
       return bookStatus!;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar o status do livro no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -158,9 +164,9 @@ class BooksRepositoryImpl implements BooksRepository {
     required String id,
     required int pageCount,
   }) async {
-    assert(pageCount > 0, 'pagesCount must be greater than 0');
-
     try {
+      assert(pageCount > 0, 'pagesCount must be greater than 0');
+
       final bookPagesCountUpdate = await _database.update(
         table: _bookTableName,
         idColumn: 'id',
@@ -171,6 +177,11 @@ class BooksRepositoryImpl implements BooksRepository {
       return bookPagesCountUpdate;
     } on LocalDatabaseException {
       rethrow;
+    } on AssertionError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.invalidData,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 

@@ -2,11 +2,13 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bookcase_books_insertion_event.dart';
 part 'bookcase_books_insertion_state.dart';
 
+//TODO - Remove EmptyState String
 class BookcaseBooksInsertionBloc
     extends Bloc<BookcaseBooksInsertionEvent, BookcaseBooksInsertionState> {
   final BookService _bookService;
@@ -64,11 +66,19 @@ class BookcaseBooksInsertionBloc
               ),
       );
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -90,7 +100,8 @@ class BookcaseBooksInsertionBloc
         if (insertedRow == 0) {
           emit(
             BookcaseBooksInsertionErrorState(
-              errorMessage: 'Erro ao inserir o livro ${book.title}',
+              errorCode: LocalDatabaseErrorCode.unknown,
+              errorDescriptionMessage: 'Error on insert book: ${book.title}',
             ),
           );
           return;
@@ -99,11 +110,19 @@ class BookcaseBooksInsertionBloc
 
       emit(BookcaseBooksInsertionInsertedState());
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

@@ -15,9 +15,11 @@ final class BookcaseEmptyState extends BookcaseState {}
 final class BookcaseNotFoundState extends BookcaseState {}
 
 final class BookcaseErrorState extends BookcaseState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookcaseErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/readings/bloc/readings_bloc.dart';
 import 'package:bookify/src/features/readings/views/widgets/readings_loaded_state_widget.dart';
@@ -74,31 +75,35 @@ class _ReadingsPageState extends State<ReadingsPage> {
     return switch (state) {
       ReadingsLoadingState() => const CenterCircularProgressIndicator(),
       ReadingsEmptyState() => Center(
-          key: const Key('ReadingsEmptyState'),
-          child: ItemEmptyStateWidget(
-            label: 'start-new-reading-title'.i18n(),
-            onTap: () => _insertNewReading(context),
-          ),
+        key: const Key('ReadingsEmptyState'),
+        child: ItemEmptyStateWidget(
+          label: 'start-new-reading-title'.i18n(),
+          onTap: () => _insertNewReading(context),
         ),
+      ),
       ReadingsNotFoundState() => Center(
-          child: InfoItemStateWidget.withNotFoundState(
-            message: 'no-readings-found-with-terms'.i18n(),
-            onPressed: () {
-              _searchController.clear();
-              _toggleSearchBarVisible();
-              _refreshPage();
-            },
-          ),
+        child: InfoItemStateWidget.withNotFoundState(
+          message: 'no-readings-found-with-terms'.i18n(),
+          onPressed: () {
+            _searchController.clear();
+            _toggleSearchBarVisible();
+            _refreshPage();
+          },
         ),
+      ),
       ReadingsLoadedState(:final readingsDto) => ReadingsLoadedStateWidget(
-          key: const Key('ReadingsLoadedState'),
-          readingsDto: readingsDto,
-          onNewReading: () => _insertNewReading(context),
-          onRefreshPage: _refreshPage,
-        ),
-      ReadingsErrorState(:final errorMessage) => Center(
+        key: const Key('ReadingsLoadedState'),
+        readingsDto: readingsDto,
+        onNewReading: () => _insertNewReading(context),
+        onRefreshPage: _refreshPage,
+      ),
+      ReadingsErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
           child: InfoItemStateWidget.withErrorState(
-            message: errorMessage,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _refreshPage,
           ),
         ),

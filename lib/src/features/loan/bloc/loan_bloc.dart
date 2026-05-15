@@ -4,6 +4,7 @@ import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'loan_event.dart';
@@ -39,9 +40,19 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
       await _mountLoanDto(loans, emit);
     } on LocalDatabaseException catch (e) {
-      emit(LoanErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        LoanErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(LoanErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        LoanErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -63,9 +74,19 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
       await _mountLoanDto(loans, emit);
     } on LocalDatabaseException catch (e) {
-      emit(LoanErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        LoanErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(LoanErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        LoanErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -78,7 +99,10 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     for (LoanModel loan in loans) {
       if (loan.id == null) {
         emit(
-          LoanErrorState(errorMessage: 'Erro inesperado: ${loan.id}'),
+          LoanErrorState(
+            errorCode: LocalDatabaseErrorCode.invalidData,
+            errorDescriptionMessage: 'Error: Loan not found',
+          ),
         );
         return;
       }

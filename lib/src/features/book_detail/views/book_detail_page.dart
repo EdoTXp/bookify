@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
@@ -124,13 +125,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
         _isCallVerifyBookEvent = false;
         break;
 
-      case BookDetailErrorState(errorMessage: final message):
+      case BookDetailErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         // enable the click on ElevatedButton.
         _canClickToInsertOrRemoveButton = true;
 
         SnackbarService.showSnackBar(
           context,
-          message,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
         break;

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/loan/bloc/loan_bloc.dart';
 import 'package:bookify/src/features/loan/widgets/loan_loaded_state_widget/loan_loaded_state_widget.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
@@ -57,33 +58,39 @@ class _LoanPageState extends State<LoanPage> {
     return switch (state) {
       LoanLoadingState() => const CenterCircularProgressIndicator(),
       LoanEmptyState() => Center(
-          child: ItemEmptyStateWidget(
-            key: const Key('LoanEmptyState'),
-            label: 'create-new-loan-button'.i18n(),
-            onTap: () async {
-              final loanInserted = await Navigator.pushNamed(
-                context,
-                LoanInsertionPage.routeName,
-              ) as bool?;
+        child: ItemEmptyStateWidget(
+          key: const Key('LoanEmptyState'),
+          label: 'create-new-loan-button'.i18n(),
+          onTap: () async {
+            final loanInserted =
+                await Navigator.pushNamed(
+                      context,
+                      LoanInsertionPage.routeName,
+                    )
+                    as bool?;
 
-              if (loanInserted != null && loanInserted) {
-                _refreshPage();
-              }
-            },
-          ),
+            if (loanInserted != null && loanInserted) {
+              _refreshPage();
+            }
+          },
         ),
+      ),
       LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
-          key: const Key('LoanLoadedState'),
-          loansDto: loansDto,
-          refreshPage: _refreshPage,
-        ),
+        key: const Key('LoanLoadedState'),
+        loansDto: loansDto,
+        refreshPage: _refreshPage,
+      ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message: 'no-loans-found-with-terms'.i18n(),
-          onPressed: _refreshPage,
-        ),
-      LoanErrorState(:final errorMessage) => Center(
+        message: 'no-loans-found-with-terms'.i18n(),
+        onPressed: _refreshPage,
+      ),
+      LoanErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
           child: InfoItemStateWidget.withErrorState(
-            message: errorMessage,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _refreshPage,
           ),
         ),

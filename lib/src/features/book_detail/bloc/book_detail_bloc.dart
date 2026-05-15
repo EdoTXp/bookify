@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bookify/src/core/services/book_service/book_service.dart';
@@ -34,13 +35,15 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     } on LocalDatabaseException catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -59,7 +62,10 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
 
       if (bookInserted != 1) {
         emit(
-          BookDetailErrorState(errorMessage: 'Erro no inserimento do livro'),
+          BookDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on insert book',
+          ),
         );
         return;
       }
@@ -68,13 +74,15 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     } on LocalDatabaseException catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -92,8 +100,9 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       if (bookStatus != BookStatus.library) {
         emit(
           BookDetailErrorState(
-            errorMessage:
-                'Impossível remover o livro porque está ${bookStatus.label}.',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage:
+                'Impossible to remove this book because is: ${bookStatus.label}.',
           ),
         );
         return;
@@ -103,7 +112,8 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       if (bookRemoved != 1) {
         emit(
           BookDetailErrorState(
-            errorMessage: 'Erro ao remover o livro',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on remove book',
           ),
         );
         return;
@@ -113,13 +123,15 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
     } on LocalDatabaseException catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.toString()}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         BookDetailErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: ${e.toString()}',
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/core/dtos/reading_dto.dart';
@@ -84,10 +85,13 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
         );
         break;
 
-      case ReadingsDetailErrorState(:final errorMessage):
+      case ReadingsDetailErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
 
@@ -201,7 +205,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -278,7 +282,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                           await _updateReadingOnPressedButton();
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

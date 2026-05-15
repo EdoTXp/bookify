@@ -3,6 +3,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'readings_detail_event.dart';
@@ -34,7 +35,10 @@ class ReadingsDetailBloc
 
       if (readingUpdatedRow != 1) {
         emit(
-          ReadingsDetailErrorState(errorMessage: 'Erro ao atualizar a leitura'),
+          ReadingsDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on updating reading',
+          ),
         );
         return;
       }
@@ -43,13 +47,15 @@ class ReadingsDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         ReadingsDetailErrorState(
-          errorMessage: 'Erro no database: ${e.message}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         ReadingsDetailErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e',
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -69,7 +75,10 @@ class ReadingsDetailBloc
 
       if (bookUpdatedStatusRow != 1) {
         emit(
-          ReadingsDetailErrorState(errorMessage: 'Erro ao atualizar o livro'),
+          ReadingsDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on updating book status',
+          ),
         );
         return;
       }
@@ -80,7 +89,10 @@ class ReadingsDetailBloc
 
       if (readingDeletedRow != 1) {
         emit(
-          ReadingsDetailErrorState(errorMessage: 'Erro ao finalizar a leitura'),
+          ReadingsDetailErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on deleting reading',
+          ),
         );
         return;
       }
@@ -89,13 +101,15 @@ class ReadingsDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         ReadingsDetailErrorState(
-          errorMessage: 'Erro no database: ${e.message}',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } catch (e) {
       emit(
         ReadingsDetailErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e',
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
