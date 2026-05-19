@@ -87,6 +87,7 @@
   "page-tooltip": "Página %s",
   "try-again-button": "Tentar novamente",
   "no-books-found-with-terms": "Não foi encontrado nenhum livro com esses termos.\nVerifique se digitou corretamente.",
+  "no-books-registered": "Nenhum livro cadastrado. Volte à página início para cadastrar.",
   "enter-title-label": "Digite o Título",
   "enter-author-label": "Digite o Autor",
   "enter-category-label": "Digite o Gênero (em Inglês)",
@@ -101,6 +102,8 @@
   "search-by-isbn-tooltip": "Buscar por ISBN",
   "book-successfully-added-snackbar": "Livro adicionado com sucesso.",
   "book-successfully-removed-snackbar": "Livro removido com sucesso.",
+  "bookcase-inserted-success-snackbar": "Estante inserida com sucesso.",
+  "bookcase-updated-success-snackbar": "Estante atualizada com sucesso.",
   "remove-book-title": "Remover o livro %s",
   "remove-book-description": "Clicando em \"CONFIRMAR\" você removerá este livro da sua estante.\nTem Certeza?",
   "pages-label": "%s PÁGINAS",
@@ -153,6 +156,7 @@
   "delete-bookcase-description": "Clicando em \"CONFIRMAR\" você removerá a estante %s.\nTem Certeza?",
   "delete-books-title": "Deletar livros",
   "delete-books-description": "Clicando em \"CONFIRMAR\" você removerá os livros selecionados dessa estante.\nTem certeza?",
+  "all-books-already-inserted": "Todos os livros cadastrados já foram adicionados nessa estante.",
   "books-added-successfully-snackbar": "Livro adicionado com sucesso.\nAguarde até voltar à página anterior.",
   "select-books-title": "Selecionar os livros",
   "selected-books-quantity-label": "Livros selecionados: %s",
@@ -262,5 +266,11 @@
   "error-storage-data-loss": "Erro ao salvar seus dados. Tente sincronizar novamente ou entre em contato com o suporte se o problema persistir: %s",
   "error-storage-not-found": "Seus dados não foram encontrados. Tente fazer login novamente com suas credenciais: %s",
   "error-storage-write-failed": "Impossível salvar suas alterações. Verifique o espaço de armazenamento e tente novamente: %s",
-  "error-storage-read-failed": "Impossível carregar seus dados. Verifique sua conexão com a internet e tente novamente: %s"
+  "error-storage-read-failed": "Impossível carregar seus dados. Verifique sua conexão com a internet e tente novamente: %s",
+  "error-local-database-invalid-data": "Os dados fornecidos não são válidos. %s",
+  "error-local-database-not-null-constraint": "Um campo obrigatório está vazio. %s",
+  "error-local-database-open-failed": "Não foi possível abrir o banco de dados. %s",
+  "error-local-database-operation-failed": "Operação do banco de dados falhou durante leitura, escrita ou atualização. %s",
+  "error-local-database-unique-constraint": "Este registro já existe no banco de dados. %s",
+  "error-local-database-unknown": "Erro desconhecido no banco de dados. %s"
 }

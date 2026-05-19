@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'bookcase_books_insertion_event.dart';
 part 'bookcase_books_insertion_state.dart';
 
-//TODO - Remove EmptyState String
 class BookcaseBooksInsertionBloc
     extends Bloc<BookcaseBooksInsertionEvent, BookcaseBooksInsertionState> {
   final BookService _bookService;
@@ -34,8 +33,7 @@ class BookcaseBooksInsertionBloc
       if (booksList.isEmpty) {
         emit(
           BookcaseBooksInsertionEmptyState(
-            message:
-                'Nenhum livro cadastrado. Volte à Página início para cadastrar.',
+            reason: BookcaseBooksEmptyReason.noBooksRegistered,
           ),
         );
         return;
@@ -61,8 +59,7 @@ class BookcaseBooksInsertionBloc
                 books: booksList,
               )
             : BookcaseBooksInsertionEmptyState(
-                message:
-                    'Todos os livros cadastrados já foram adicionados nessa estante.',
+                reason: BookcaseBooksEmptyReason.allBooksAlreadyInserted,
               ),
       );
     } on LocalDatabaseException catch (e) {
@@ -100,7 +97,7 @@ class BookcaseBooksInsertionBloc
         if (insertedRow == 0) {
           emit(
             BookcaseBooksInsertionErrorState(
-              errorCode: LocalDatabaseErrorCode.unknown,
+              errorCode: LocalDatabaseErrorCode.operationFailed,
               errorDescriptionMessage: 'Error on insert book: ${book.title}',
             ),
           );

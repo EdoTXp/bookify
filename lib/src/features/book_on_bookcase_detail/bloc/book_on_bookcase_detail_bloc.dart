@@ -65,7 +65,7 @@ class BookOnBookcaseDetailBloc
       if (deletedBook != 1) {
         emit(
           BookOnBookcaseDetailErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'Failed to delete the book from the bookcase. Please try again.',
           ),

@@ -439,48 +439,20 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   LocalDatabaseException _toLocalDatabaseMapper(DatabaseException e) {
-    if (e.isNoSuchTableError()) {
-      return LocalDatabaseException(
-        LocalDatabaseErrorCode.noSuchTable,
-        descriptionMessage: e.toString(),
-      );
-    }
-    if (e.isDuplicateColumnError()) {
-      return LocalDatabaseException(
-        LocalDatabaseErrorCode.duplicateColumn,
-        descriptionMessage: e.toString(),
-      );
-    }
-    if (e.isSyntaxError()) {
-      return LocalDatabaseException(
-        LocalDatabaseErrorCode.syntaxError,
-        descriptionMessage: e.toString(),
-      );
-    }
     if (e.isOpenFailedError()) {
       return LocalDatabaseException(
         LocalDatabaseErrorCode.openFailed,
         descriptionMessage: e.toString(),
       );
     }
-    if (e.isDatabaseClosedError()) {
-      return LocalDatabaseException(
-        LocalDatabaseErrorCode.databaseClosed,
-        descriptionMessage: e.toString(),
-      );
-    }
-    if (e.isReadOnlyError()) {
-      return LocalDatabaseException(
-        LocalDatabaseErrorCode.readOnly,
-        descriptionMessage: e.toString(),
-      );
-    }
+
     if (e.isUniqueConstraintError()) {
       return LocalDatabaseException(
         LocalDatabaseErrorCode.uniqueConstraint,
         descriptionMessage: e.toString(),
       );
     }
+    
     if (e.isNotNullConstraintError()) {
       return LocalDatabaseException(
         LocalDatabaseErrorCode.notNullConstraint,

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'bookcase_insertion_event.dart';
 part 'bookcase_insertion_state.dart';
 
-//TODO - Remove SuccessMessage String
 class BookcaseInsertionBloc
     extends Bloc<BookcaseInsertionEvent, BookcaseInsertionState> {
   final BookcaseService _bookcaseService;
@@ -40,7 +39,7 @@ class BookcaseInsertionBloc
       if (newBookcaseId == 0) {
         emit(
           BookcaseInsertionErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'An error occurred while inserting the bookcase',
           ),
@@ -50,7 +49,7 @@ class BookcaseInsertionBloc
 
       emit(
         BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: 'Estante inserida com sucesso',
+          reason: BookcaseInsertionSuccessReason.inserted,
         ),
       );
     } on LocalDatabaseException catch (e) {
@@ -91,7 +90,7 @@ class BookcaseInsertionBloc
       if (bookcaseRowUpdated < 1) {
         emit(
           BookcaseInsertionErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'An error occurred while updating the bookcase',
           ),
@@ -101,7 +100,7 @@ class BookcaseInsertionBloc
 
       emit(
         BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: 'Estante atualizada com sucesso',
+          reason: BookcaseInsertionSuccessReason.updated,
         ),
       );
     } on LocalDatabaseException catch (e) {

@@ -87,6 +87,7 @@
   "page-tooltip": "Page %s",
   "try-again-button": "Try again",
   "no-books-found-with-terms": "No books were found with these terms.\nCheck that you have typed them correctly.",
+  "no-books-registered": "No books registered. Go back to the home page to register.",
   "enter-title-label": "Enter the Title",
   "enter-author-label": "Enter the Author",
   "enter-category-label": "Enter the Category",
@@ -101,6 +102,8 @@
   "search-by-isbn-tooltip": "Search by ISBN",
   "book-successfully-added-snackbar": "Book successfully added.",
   "book-successfully-removed-snackbar": "Book successfully removed.",
+  "bookcase-inserted-success-snackbar": "Bookcase successfully added.",
+  "bookcase-updated-success-snackbar": "Bookcase successfully updated.",
   "remove-book-title": "Remove the book %s",
   "remove-book-description": "By clicking \"CONFIRM\" you will remove this book from your bookcase.\nAre you sure?",
   "pages-label": "%s PAGES",
@@ -153,6 +156,7 @@
   "delete-bookcase-description": "By clicking \"CONFIRM\" you will delete the bookcase %s.\nAre you sure?",
   "delete-books-title": "Delete books",
   "delete-books-description": "By clicking \"CONFIRM\" you will delete the selected books in this bookcase.\nAre you sure?",
+  "all-books-already-inserted": "All registered books have already been added to this bookcase.",
   "book-added-successfully-snackbar": "Book added successfully.\nWait until you are redirected to the previous page.",
   "select-books-title": "Select the books",
   "selected-books-quantity-label": "Selected books: %s",
@@ -262,5 +266,11 @@
   "error-storage-data-loss": "Error saving your data. Try syncing again or contact support if the issue continues: %s",
   "error-storage-not-found": "Your data could not be found. Try logging in again with your credentials: %s",
   "error-storage-write-failed": "Unable to save your changes. Check your storage space and try again: %s",
-  "error-storage-read-failed": "Unable to load your data. Check your internet connection and try again: %s"
+  "error-storage-read-failed": "Unable to load your data. Check your internet connection and try again: %s",
+  "error-local-database-invalid-data": "The data provided is not valid. %s",
+  "error-local-database-not-null-constraint": "A required field is empty. %s",
+  "error-local-database-open-failed": "Could not open the database. %s",
+  "error-local-database-operation-failed": "Database operation failed during read, write, or update. %s",
+  "error-local-database-unique-constraint": "This record already exists in the database. %s",
+  "error-local-database-unknown": "Unknown error in the database. %s"
 }

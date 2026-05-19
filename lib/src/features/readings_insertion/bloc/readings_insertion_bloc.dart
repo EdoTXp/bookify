@@ -38,7 +38,7 @@ class ReadingsInsertionBloc
         if (bookPageCountUpdated != 1) {
           emit(
             ReadingsInsertionErrorState(
-              errorCode: LocalDatabaseErrorCode.unknown,
+              errorCode: LocalDatabaseErrorCode.operationFailed,
               errorDescriptionMessage:
                   'An error occurred while updating the book page count.',
             ),
@@ -54,7 +54,7 @@ class ReadingsInsertionBloc
       if (bookStatusUpdated != 1) {
         emit(
           ReadingsInsertionErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'An error occurred while updating the book status.',
           ),
@@ -72,7 +72,7 @@ class ReadingsInsertionBloc
       if (newReadingId < 1) {
         emit(
           ReadingsInsertionErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'An error occurred while inserting the reading.',
           ),

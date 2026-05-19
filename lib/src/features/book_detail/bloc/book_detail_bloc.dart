@@ -63,7 +63,7 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       if (bookInserted != 1) {
         emit(
           BookDetailErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage: 'Error on insert book',
           ),
         );
@@ -100,7 +100,7 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       if (bookStatus != BookStatus.library) {
         emit(
           BookDetailErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage:
                 'Impossible to remove this book because is: ${bookStatus.label}.',
           ),
@@ -112,7 +112,7 @@ class BookDetailBloc extends Bloc<BookDetailEvent, BookDetailState> {
       if (bookRemoved != 1) {
         emit(
           BookDetailErrorState(
-            errorCode: LocalDatabaseErrorCode.unknown,
+            errorCode: LocalDatabaseErrorCode.operationFailed,
             errorDescriptionMessage: 'Error on remove book',
           ),
         );

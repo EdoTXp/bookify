@@ -49,9 +49,14 @@ class _BookcaseBooksInsertionPageState
       BookcaseBooksInsertionLoadingState() ||
       BookcaseBooksInsertionInsertedState() =>
         const CenterCircularProgressIndicator(),
-      BookcaseBooksInsertionEmptyState() => Center(
+      BookcaseBooksInsertionEmptyState(:final reason) => Center(
         child: Text(
-          'Nenhum livro cadastrado. Volte à Página início para cadastrar.',
+          switch (reason) {
+            BookcaseBooksEmptyReason.noBooksRegistered =>
+              'no-books-registered'.i18n(),
+            BookcaseBooksEmptyReason.allBooksAlreadyInserted =>
+              'all-books-already-inserted'.i18n(),
+          },
           textAlign: TextAlign.center,
         ),
       ),

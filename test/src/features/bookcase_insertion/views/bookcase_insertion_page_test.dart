@@ -64,7 +64,7 @@ void main() {
         bookcaseInsertionBloc,
         Stream.fromIterable([
           BookcaseInsertionInsertedState(
-            bookcaseInsertionMessage: 'Bookcase inserted successfully',
+            reason: BookcaseInsertionSuccessReason.inserted,
           ),
         ]),
       );
@@ -86,7 +86,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.text('Bookcase inserted successfully'), findsOneWidget);
+      expect(find.text('bookcase-inserted-success-snackbar'), findsOneWidget);
 
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
@@ -174,7 +174,7 @@ void main() {
         bookcaseInsertionBloc,
         Stream.fromIterable([
           BookcaseInsertionInsertedState(
-            bookcaseInsertionMessage: 'Updated successfully',
+            reason: BookcaseInsertionSuccessReason.updated,
           ),
         ]),
       );
@@ -192,7 +192,7 @@ void main() {
       await tester.tap(find.byKey(const Key('ConfirmBookcaseInsertionButton')));
       await tester.pumpAndSettle();
 
-      expect(find.text('Updated successfully'), findsOneWidget);
+      expect(find.text('bookcase-updated-success-snackbar'), findsOneWidget);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.byType(BookcaseInsertionPage), findsNothing);
     });

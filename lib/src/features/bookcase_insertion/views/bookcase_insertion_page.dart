@@ -179,12 +179,15 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         );
 
         break;
-      case BookcaseInsertionInsertedState(
-        bookcaseInsertionMessage: final successMessage,
-      ):
+      case BookcaseInsertionInsertedState(:final reason):
         SnackbarService.showSnackBar(
           context,
-          successMessage,
+          switch (reason) {
+            BookcaseInsertionSuccessReason.inserted =>
+              'bookcase-inserted-success-snackbar'.i18n(),
+            BookcaseInsertionSuccessReason.updated =>
+              'bookcase-updated-success-snackbar'.i18n(),
+          },
           SnackBarType.success,
         );
 

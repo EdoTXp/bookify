@@ -1,12 +1,8 @@
 enum LocalDatabaseErrorCode {
-  noSuchTable,
-  duplicateColumn,
-  syntaxError,
-  openFailed,
-  databaseClosed,
-  readOnly,
   uniqueConstraint,
   notNullConstraint,
+  openFailed,
   invalidData,
+  operationFailed,
   unknown,
 }

@@ -90,7 +90,7 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
         if (bookcaseDeletedRow == -1) {
           emit(
             BookcaseErrorState(
-              errorCode: LocalDatabaseErrorCode.unknown,
+              errorCode: LocalDatabaseErrorCode.operationFailed,
               errorDescriptionMessage:
                   'Failed to delete the bookcase ${bookcaseDto.bookcase.name}.',
             ),

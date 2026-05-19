@@ -99,7 +99,7 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     }
   }
 
-  // TODO Create a localizated notification message
+  // TODO Create a localized notification message
   Future<void> _createNotification(
     int loanId,
     String contactName,

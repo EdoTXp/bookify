@@ -18,6 +18,6 @@ final class BookDetailErrorState extends BookDetailState {
 
   BookDetailErrorState({
     required this.errorCode,
-    required this.errorDescriptionMessage,
+    this.errorDescriptionMessage,
   });
 }
