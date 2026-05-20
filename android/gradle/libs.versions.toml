@@ -1,9 +1,7 @@
 [versions]
 # Plugins
-androidGradlePlugin = "8.13.2"
-kotlin = "2.2.21"
+androidGradlePlugin = "9.2.1"
 googleServices = "4.4.4"
-flutterPluginLoader = "1.0.0"
 
 # Libraries
 desugar = "2.1.5"
@@ -18,6 +16,4 @@ androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", v
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-flutter-loader = { id = "dev.flutter.flutter-plugin-loader", version.ref = "flutterPluginLoader" }

@@ -5,7 +5,6 @@ import java.io.FileInputStream
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.kotlin.android)
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -16,9 +15,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.bookifysoftware.bookify"
-    compileSdk = 36
-    compileSdkMinor = 1
-    ndkVersion = "29.0.14206865"
+    compileSdk = 37
 
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"

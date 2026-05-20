@@ -19,12 +19,12 @@ class _TermsInformationState extends State<TermsInformation> {
     super.initState();
     _termsRecognizer = TapGestureRecognizer()
       ..onTap = () async => await LauncherService.openUrl(
-        'https://edotxp.github.io/projects/bookify/terms.html',
+        'https://edotxp.github.io/bookify/policies/terms.html',
       );
 
     _privacyRecognizer = TapGestureRecognizer()
       ..onTap = () async => await LauncherService.openUrl(
-        'https://edotxp.github.io/projects/bookify/privacy-policy.html',
+        'https://edotxp.github.io/bookify/policies/privacy-policy.html',
       );
   }
 
