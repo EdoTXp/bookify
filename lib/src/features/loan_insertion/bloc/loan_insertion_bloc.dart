@@ -1,5 +1,4 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
@@ -56,7 +55,9 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         idContact: event.idContact,
       );
 
-      final loanId = await _loanService.insert(loanModel: loanModel);
+      final loanId = await _loanService.insert(
+        loanModel: loanModel,
+      );
 
       if (loanId < 1) {
         emit(
@@ -71,17 +72,12 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
 
       await _createNotification(
         loanId,
-        event.contactName,
-        event.bookTitle,
-        event.loanDate,
         event.devolutionDate,
+        event.notificationTitle,
+        event.notificationBody,
       );
 
-      emit(
-        LoanInsertionInsertedState(
-          loanInsertionMessage: 'Empréstimo inserido com sucesso',
-        ),
-      );
+      emit(LoanInsertionInsertedState());
     } on LocalDatabaseException catch (e) {
       emit(
         LoanInsertionErrorState(
@@ -99,19 +95,16 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     }
   }
 
-  // TODO Create a localized notification message
   Future<void> _createNotification(
     int loanId,
-    String contactName,
-    String bookTitle,
-    DateTime loanDate,
     DateTime devolutionDate,
+    String title,
+    String body,
   ) async {
     final customNotification = CustomNotificationModel(
       id: loanId,
-      title: 'Ei, seu livro tá voltando!',
-      body:
-          'Olá! Só passando pra lembrar que tá na hora de ${contactName.toUpperCase()} devolver o ${bookTitle.toUpperCase()} que você emprestou no dia ${loanDate.toFormattedDate()}.',
+      title: title,
+      body: body,
       notificationChannel: NotificationChannel.loanChannel,
       scheduledDate: devolutionDate,
       payload: '/loan_detail',

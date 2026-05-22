@@ -4,13 +4,7 @@ sealed class LoanInsertionState {}
 
 final class LoanInsertionLoadingState extends LoanInsertionState {}
 
-final class LoanInsertionInsertedState extends LoanInsertionState {
-  final String loanInsertionMessage;
-
-  LoanInsertionInsertedState({
-    required this.loanInsertionMessage,
-  });
-}
+final class LoanInsertionInsertedState extends LoanInsertionState {}
 
 final class LoanInsertionErrorState extends LoanInsertionState {
   final LocalDatabaseErrorCode errorCode;

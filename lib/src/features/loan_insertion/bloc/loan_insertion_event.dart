@@ -7,17 +7,17 @@ final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
   final DateTime loanDate;
   final DateTime devolutionDate;
   final String idContact;
-  final String contactName;
   final String bookId;
-  final String bookTitle;
+  final String notificationTitle;
+  final String notificationBody;
 
   InsertedLoanInsertionEvent({
     this.observation,
     required this.loanDate,
     required this.devolutionDate,
-    required this.contactName,
     required this.idContact,
     required this.bookId,
-    required this.bookTitle,
+    required this.notificationTitle,
+    required this.notificationBody,
   });
 }
