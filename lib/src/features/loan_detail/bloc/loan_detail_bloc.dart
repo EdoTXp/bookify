@@ -114,7 +114,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       emit(
         LoanDetailErrorState(
           errorCode: LocalDatabaseErrorCode.unknown,
-          errorDescriptionMessage: 'Ocorreu um erro não esperado: $e',
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

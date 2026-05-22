@@ -35,6 +35,8 @@
   "reading-time-description": "A programação para um momento de leitura é o primeiro passo para criar o hábito.\n\nDefina quais dias e o melhor horário para as suas leituras, e a gente te lembrará aqui nas notificações!",
   "reading-time-calculate-success-snackbar": "Hora de leitura calculado com sucesso.",
   "reading-time-notification-removed-success-snackbar": "Notificação removida com sucesso.",
+  "reading-time-notification-title": "A hora da leitura chegou!",
+  "reading-time-notification-body": "Muitas aventuras te aguardam!",
   "repeat-time-title": "Defina a repetição para ser notificado para a suas leituras:",
   "daily-dropdown-menu-entry": "Diariamente",
   "weekly-dropdown-menu-entry": "Semanalmente",
@@ -272,5 +274,9 @@
   "error-local-database-open-failed": "Não foi possível abrir o banco de dados. %s",
   "error-local-database-operation-failed": "Operação do banco de dados falhou durante leitura, escrita ou atualização. %s",
   "error-local-database-unique-constraint": "Este registro já existe no banco de dados. %s",
-  "error-local-database-unknown": "Erro desconhecido no banco de dados. %s"
+  "error-local-database-unknown": "Erro desconhecido no banco de dados. %s",
+  "notification-channel-loan-description": "Canal que notifica quando é o dia de receber o livro emprestado.",
+  "notification-channel-loan-label": "Empréstimos",
+  "notification-channel-read-description": "Canal que notifica que está na hora da leitura.",
+  "notification-channel-read-label": "Leituras"
 }

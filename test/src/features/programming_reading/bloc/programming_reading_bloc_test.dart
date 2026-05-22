@@ -139,6 +139,8 @@ void main() {
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
+          readingTimeNotificationTitle: 'notificationTitle',
+          readingTimeNotificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -180,6 +182,8 @@ void main() {
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
+          readingTimeNotificationTitle: 'notificationTitle',
+          readingTimeNotificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -224,6 +228,8 @@ void main() {
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
+          readingTimeNotificationTitle: 'notificationTitle',
+          readingTimeNotificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -265,6 +271,8 @@ void main() {
       act: (bloc) => bloc.add(
         InsertedHourTimeEvent(
           userHourTimeModel: userHourTime,
+          readingTimeNotificationTitle: 'notificationTitle',
+          readingTimeNotificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {

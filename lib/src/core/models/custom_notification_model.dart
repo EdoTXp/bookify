@@ -15,23 +15,6 @@ enum NotificationChannel {
       '1' || _ => NotificationChannel.loanChannel,
     };
   }
-
-  String description() {
-    return switch (this) {
-      NotificationChannel.loanChannel =>
-        'Canal que notifica quando é o dia de receber o livro emprestado.',
-      NotificationChannel.readChannel =>
-        'Canal que notifica que está na hora da leitura.',
-    };
-  }
-
-  @override
-  String toString() {
-    return switch (this) {
-      NotificationChannel.loanChannel => 'Empréstimos',
-      NotificationChannel.readChannel => 'Leituras',
-    };
-  }
 }
 
 class CustomNotificationModel {

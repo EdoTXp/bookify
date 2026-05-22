@@ -22,8 +22,9 @@ class ContactsServiceImpl implements ContactsService {
         return ContactModel(
           id: contact.id,
           name: contact.displayName,
-          phoneNumber:
-              (contact.phones.isNotEmpty) ? contact.phones.first.number : null,
+          phoneNumber: (contact.phones.isNotEmpty)
+              ? contact.phones.first.number
+              : null,
           photo: photo,
         );
       }
@@ -52,8 +53,9 @@ class ContactsServiceImpl implements ContactsService {
         final contactDto = ContactModel(
           id: contact.id,
           name: contact.displayName,
-          phoneNumber:
-              (contact.phones.isNotEmpty) ? contact.phones.first.number : null,
+          phoneNumber: (contact.phones.isNotEmpty)
+              ? contact.phones.first.number
+              : null,
           photo: photo,
         );
 

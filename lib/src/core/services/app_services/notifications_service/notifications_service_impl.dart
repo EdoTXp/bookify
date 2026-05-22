@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bookify/src/shared/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
+import 'package:bookify/src/core/helpers/notification_channel/notification_channel_extension.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notification_navigator.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
@@ -94,7 +95,7 @@ class NotificationsServiceImpl implements NotificationsService {
     return NotificationDetails(
       android: AndroidNotificationDetails(
         channel.channelId(),
-        channel.toString(),
+        channel.label,
         channelDescription: channel.description(),
         color: AppColor.bookifySecondaryColor,
         styleInformation: BigTextStyleInformation(
@@ -103,7 +104,7 @@ class NotificationsServiceImpl implements NotificationsService {
         importance: Importance.high,
       ),
       iOS: DarwinNotificationDetails(
-        categoryIdentifier: channel.toString(),
+        categoryIdentifier: channel.label,
       ),
     );
   }

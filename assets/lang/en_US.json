@@ -35,6 +35,8 @@
   "reading-time-description": "Scheduling time for reading is the first step to creating a habit.\n\nSet the days and times that work best for your reading, and we'll remind you here in the notifications!",
   "reading-time-calculate-success-snackbar": "Reading time successfully calculated.",
   "reading-time-notification-removed-success-snackbar": "Notification successfully removed.",
+  "reading-time-notification-title": "Time to read!",
+  "reading-time-notification-body": "Many adventures await you!",
   "repeat-time-title": "Set the repetition to be notified for your readings:",
   "daily-dropdown-menu-entry": "Daily",
   "weekly-dropdown-menu-entry": "Weekly",
@@ -272,5 +274,9 @@
   "error-local-database-open-failed": "Could not open the database. %s",
   "error-local-database-operation-failed": "Database operation failed during read, write, or update. %s",
   "error-local-database-unique-constraint": "This record already exists in the database. %s",
-  "error-local-database-unknown": "Unknown error in the database. %s"
+  "error-local-database-unknown": "Unknown error in the database. %s",
+  "notification-channel-loan-description": "Channel that notifies when it's time to receive your loaned book.",
+  "notification-channel-loan-label": "Loans",
+  "notification-channel-read-description": "Channel that notifies when it's time for reading.",
+  "notification-channel-read-label": "Readings"
 }

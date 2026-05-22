@@ -35,6 +35,8 @@
   "reading-time-description": "Pianificare un momento dedicato alla lettura è il primo passo per creare l'abitudine.\n\nDecidi quali giorni e quali sono gli orari migliori per le tue letture e noi te lo ricorderemo qui nelle notifiche!",
   "reading-time-calculate-success-snackbar": "Tempo di lettura calcolato con successo.",
   "reading-time-notification-removed-success-snackbar": "Notifica rimossa con successo.",
+  "reading-time-notification-title": "È l'ora di leggere!",
+  "reading-time-notification-body": "Molte avventure ti aspettano!",
   "repeat-time-title": "Imposta la ripetizione per ricevere una notifica per le tue letture:",
   "daily-dropdown-menu-entry": "Giornaliera",
   "weekly-dropdown-menu-entry": "Settimanale",
@@ -101,8 +103,10 @@
   "search-by-publisher-tooltip": "Cerca per editore",
   "search-by-isbn-tooltip": "Cerca per ISBN",
   "book-successfully-added-snackbar": "Libro aggiunto con successo.",
-  "book-successfully-removed-snackbar": "Libro rimosso con successo.",  "bookcase-inserted-success-snackbar": "Libreria aggiunta con successo.",
-  "bookcase-updated-success-snackbar": "Libreria aggiornata con successo.",  "remove-book-title": "Rimuovere il libro %s",
+  "book-successfully-removed-snackbar": "Libro rimosso con successo.",
+  "bookcase-inserted-success-snackbar": "Libreria aggiunta con successo.",
+  "bookcase-updated-success-snackbar": "Libreria aggiornata con successo.",
+  "remove-book-title": "Rimuovere il libro %s",
   "remove-book-description": "Cliccando su “CONFERMA” rimuoverai questo libro dal tuo Scaffale.\nSei sicuro?",
   "pages-label": "%s PAGINE",
   "go-to-store-button": "Vai allo store",
@@ -270,5 +274,9 @@
   "error-local-database-open-failed": "Impossibile aprire il database. %s",
   "error-local-database-operation-failed": "Operazione del database fallita durante lettura, scrittura o aggiornamento. %s",
   "error-local-database-unique-constraint": "Questo record esiste già nel database. %s",
-  "error-local-database-unknown": "Errore sconosciuto nel database. %s"
+  "error-local-database-unknown": "Errore sconosciuto del database. %s",
+  "notification-channel-loan-description": "Canale che notifica quando è il momento di ricevere il libro prestato.",
+  "notification-channel-loan-label": "Prestiti",
+  "notification-channel-read-description": "Canale che notifica quando è il momento della lettura.",
+  "notification-channel-read-label": "Letture"
 }

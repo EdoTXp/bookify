@@ -81,8 +81,8 @@ class ProgrammingReadingBloc
 
       await _notificationsService.periodicallyShowNotificationWithSpecificDate(
         id: _readingNotificationId,
-        title: 'A hora da leitura chegou!',
-        body: 'A história está esperando a gente!',
+        title: event.readingTimeNotificationTitle,
+        body: event.readingTimeNotificationBody,
         repeatType: userHourTime.repeatHourTimeType,
         scheduledDate: DateTime(
           DateTime.now().year,

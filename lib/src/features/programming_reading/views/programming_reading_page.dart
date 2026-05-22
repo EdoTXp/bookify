@@ -44,6 +44,8 @@ class _ProgrammingHourState extends State<ProgrammingReadingPage> {
             _bloc.add(
               InsertedHourTimeEvent(
                 userHourTimeModel: userHourTimeModel,
+                readingTimeNotificationTitle: 'reading_time_title'.i18n(),
+                readingTimeNotificationBody: 'reading_time_body'.i18n(),
               ),
             );
           },
