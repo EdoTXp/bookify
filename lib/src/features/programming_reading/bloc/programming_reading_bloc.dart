@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
@@ -102,6 +103,13 @@ class ProgrammingReadingBloc
           errorDescriptionMessage: e.descriptionMessage,
         ),
       );
+    } on PlatformException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
@@ -128,6 +136,13 @@ class ProgrammingReadingBloc
       emit(
         ProgrammingReadingErrorState(
           errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on PlatformException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: StorageErrorCode.unknown,
           errorDescriptionMessage: e.descriptionMessage,
         ),
       );

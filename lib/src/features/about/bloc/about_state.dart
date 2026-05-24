@@ -13,9 +13,11 @@ final class AboutLoadedState extends AboutState {
 }
 
 final class AboutErrorState extends AboutState {
-  final String errorMessage;
+  final PlatformErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   AboutErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

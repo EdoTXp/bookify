@@ -281,5 +281,8 @@
   "notification-channel-loan-description": "Canal que notifica quando é o dia de receber o livro emprestado.",
   "notification-channel-loan-label": "Empréstimos",
   "notification-channel-read-description": "Canal que notifica que está na hora da leitura.",
-  "notification-channel-read-label": "Leituras"
+  "notification-channel-read-label": "Leituras",
+  "error-platform-permission-denied": "Permissão negada: %s",
+  "error-platform-permission-permanently-denied": "Permissão negada permanentemente. Abra as configurações para concedê-la: %s",
+  "error-platform-unsupported": "Operação não suportada neste dispositivo: %s"
 }

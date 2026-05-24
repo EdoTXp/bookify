@@ -281,5 +281,8 @@
   "notification-channel-loan-description": "Canale che notifica quando è il momento di ricevere il libro prestato.",
   "notification-channel-loan-label": "Prestiti",
   "notification-channel-read-description": "Canale che notifica quando è il momento della lettura.",
-  "notification-channel-read-label": "Letture"
+  "notification-channel-read-label": "Letture",
+  "error-platform-permission-denied": "Permesso negato: %s",
+  "error-platform-permission-permanently-denied": "Permesso negato permanentemente. Apri le impostazioni per concederlo: %s",
+  "error-platform-unsupported": "Operazione non supportata su questo dispositivo: %s"
 }

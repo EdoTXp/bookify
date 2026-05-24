@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
+import 'package:bookify/src/shared/enums/platform_error_code.dart';
 import 'package:bookify/src/shared/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/helpers/notification_channel/notification_channel_extension.dart';
@@ -29,17 +31,20 @@ class NotificationsServiceImpl implements NotificationsService {
     if (Platform.isAndroid) {
       await _notifications
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()!
+            AndroidFlutterLocalNotificationsPlugin
+          >()!
           .requestNotificationsPermission();
 
       await _notifications
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()!
+            AndroidFlutterLocalNotificationsPlugin
+          >()!
           .requestExactAlarmsPermission();
     } else if (Platform.isIOS) {
       await _notifications
           .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()!
+            IOSFlutterLocalNotificationsPlugin
+          >()!
           .requestPermissions();
     }
   }
@@ -113,21 +118,30 @@ class NotificationsServiceImpl implements NotificationsService {
   Future<void> scheduleNotification(
     CustomNotificationModel notification,
   ) async {
-    await _notifications.zonedSchedule(
-      id: notification.id,
-      title: notification.title,
-      body: notification.body,
-      scheduledDate: tz.TZDateTime.from(
-        notification.scheduledDate,
-        tz.local,
-      ),
-      notificationDetails: _getNotificationDetails(
-        notification.notificationChannel,
-        notification.body,
-      ),
-      payload: notification.payload,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
+    try {
+      await _notifications.zonedSchedule(
+        id: notification.id,
+        title: notification.title,
+        body: notification.body,
+        scheduledDate: tz.TZDateTime.from(
+          notification.scheduledDate,
+          tz.local,
+        ),
+        notificationDetails: _getNotificationDetails(
+          notification.notificationChannel,
+          notification.body,
+        ),
+        payload: notification.payload,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   @override
@@ -139,62 +153,96 @@ class NotificationsServiceImpl implements NotificationsService {
     required DateTime scheduledDate,
     required NotificationChannel notificationChannel,
   }) async {
-    final dateTimeComponents = switch (repeatType) {
-      RepeatHourTimeType.daily => DateTimeComponents.time,
-      RepeatHourTimeType.weekly => DateTimeComponents.dayOfWeekAndTime,
-    };
+    try {
+      final dateTimeComponents = switch (repeatType) {
+        RepeatHourTimeType.daily => DateTimeComponents.time,
+        RepeatHourTimeType.weekly => DateTimeComponents.dayOfWeekAndTime,
+      };
 
-    await _notifications.zonedSchedule(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: tz.TZDateTime.from(
-        scheduledDate,
-        tz.local,
-      ),
-      notificationDetails: _getNotificationDetails(
-        notificationChannel,
-        body,
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: dateTimeComponents,
-    );
+      await _notifications.zonedSchedule(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: tz.TZDateTime.from(
+          scheduledDate,
+          tz.local,
+        ),
+        notificationDetails: _getNotificationDetails(
+          notificationChannel,
+          body,
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: dateTimeComponents,
+      );
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   @override
   Future<void> cancelNotificationById({required int id}) async {
-    await _notifications.cancel(id: id);
+    try {
+      await _notifications.cancel(id: id);
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   @override
   Future<void> checkForNotifications() async {
-    final details = await _notifications.getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      if (details.notificationResponse != null) {
-        _onTapOnNotification(details.notificationResponse!);
+    try {
+      final details = await _notifications.getNotificationAppLaunchDetails();
+      if (details != null && details.didNotificationLaunchApp) {
+        if (details.notificationResponse != null) {
+          _onTapOnNotification(details.notificationResponse!);
+        }
       }
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
   @override
   Future<List<CustomNotificationModel>> getNotifications() async {
-    final pendingNotifications =
-        await _notifications.pendingNotificationRequests();
+    try {
+      final pendingNotifications = await _notifications
+          .pendingNotificationRequests();
 
-    final notifications = pendingNotifications
-        .map(
-          (notification) => CustomNotificationModel(
-            id: notification.id,
-            notificationChannel: notification.payload!.isEmpty
-                ? NotificationChannel.readChannel
-                : NotificationChannel.loanChannel,
-            title: notification.title ?? 'sem título',
-            body: notification.body ?? 'sem corpo',
-            scheduledDate: DateTime.now(),
-          ),
-        )
-        .toList();
+      final notifications = pendingNotifications
+          .map(
+            (notification) => CustomNotificationModel(
+              id: notification.id,
+              notificationChannel: notification.payload!.isEmpty
+                  ? NotificationChannel.readChannel
+                  : NotificationChannel.loanChannel,
+              title: notification.title ?? '--',
+              body: notification.body ?? '--',
+              scheduledDate: DateTime.now(),
+            ),
+          )
+          .toList();
 
-    return notifications;
+      return notifications;
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 }

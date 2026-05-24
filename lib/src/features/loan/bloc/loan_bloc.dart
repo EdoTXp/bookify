@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/dtos/loan_dto.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
@@ -46,6 +47,13 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
           errorDescriptionMessage: e.descriptionMessage,
         ),
       );
+    } on PlatformException catch (e) {
+      emit(
+        LoanErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         LoanErrorState(
@@ -77,6 +85,13 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
       emit(
         LoanErrorState(
           errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on PlatformException catch (e) {
+      emit(
+        LoanErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
           errorDescriptionMessage: e.descriptionMessage,
         ),
       );

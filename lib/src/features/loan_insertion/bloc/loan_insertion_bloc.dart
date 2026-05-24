@@ -1,4 +1,5 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
@@ -82,6 +83,13 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
       emit(
         LoanInsertionErrorState(
           errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on PlatformException catch (e) {
+      emit(
+        LoanInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
           errorDescriptionMessage: e.descriptionMessage,
         ),
       );

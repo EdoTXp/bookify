@@ -281,5 +281,8 @@
   "notification-channel-loan-description": "Channel that notifies when it's time to receive your loaned book.",
   "notification-channel-loan-label": "Loans",
   "notification-channel-read-description": "Channel that notifies when it's time for reading.",
-  "notification-channel-read-label": "Readings"
+  "notification-channel-read-label": "Readings",
+  "error-platform-permission-denied": "Permission denied: %s",
+  "error-platform-permission-permanently-denied": "Permission permanently denied. Open settings to grant it: %s",
+  "error-platform-unsupported": "Operation not supported on this device: %s"
 }

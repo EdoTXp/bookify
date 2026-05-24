@@ -1,3 +1,5 @@
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
+import 'package:bookify/src/shared/enums/platform_error_code.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LauncherService {
@@ -5,16 +7,31 @@ class LauncherService {
     try {
       final uri = Uri.parse(url);
 
-      final urlIsLaunched = await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
+      if (await canLaunchUrl(uri)) {
+        final urlIsLaunched = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
 
-      if (!urlIsLaunched) {
-        throw 'Erro ao abrir o link';
+        if (!urlIsLaunched) {
+          throw const PlatformException(
+            PlatformErrorCode.unknown,
+            descriptionMessage: 'Impossible to launch the URL',
+          );
+        }
+      } else {
+        throw const PlatformException(
+          PlatformErrorCode.unsupported,
+          descriptionMessage: 'The URL scheme is not supported',
+        );
       }
+    } on PlatformException {
+      rethrow;
     } catch (e) {
-      throw Exception('Ocorreu um erro inesperado: $e');
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -31,13 +48,24 @@ class LauncherService {
         );
 
         if (!callIsLaunched) {
-          throw 'Erro ao efetuar a chamada';
+          throw const PlatformException(
+            PlatformErrorCode.unknown,
+            descriptionMessage: 'Impossible to launch the call',
+          );
         }
       } else {
-        throw 'Não foi possível executar a ação de chamada';
+        throw const PlatformException(
+          PlatformErrorCode.unsupported,
+          descriptionMessage: 'The phone number format is not supported',
+        );
       }
+    } on PlatformException {
+      rethrow;
     } catch (e) {
-      throw Exception('Ocorreu um erro inesperado: $e');
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 }

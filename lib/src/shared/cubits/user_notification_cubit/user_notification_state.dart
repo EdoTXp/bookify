@@ -8,9 +8,11 @@ final class UserNotificationLoadingState extends UserNotificationState {}
 final class UserNotificationLoadedState extends UserNotificationState {}
 
 final class UserNotificationErrorState extends UserNotificationState {
-  final String errorMessage;
+  final PlatformErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   UserNotificationErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }
