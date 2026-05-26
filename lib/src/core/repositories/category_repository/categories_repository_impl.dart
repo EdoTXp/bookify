@@ -24,7 +24,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
       return categoryModel;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -51,7 +51,7 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
       return actualAuthorId;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {

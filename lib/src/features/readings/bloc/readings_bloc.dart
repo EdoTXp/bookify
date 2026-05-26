@@ -97,7 +97,7 @@ class ReadingsBloc extends Bloc<ReadingsEvent, ReadingsState> {
       if (reading.id == null) {
         emit(
           ReadingsErrorState(
-            errorCode: LocalDatabaseErrorCode.invalidData,
+            errorCode: LocalDatabaseErrorCode.conversionFailed,
             errorDescriptionMessage: 'Reading not found',
           ),
         );

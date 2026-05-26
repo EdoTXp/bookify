@@ -43,7 +43,7 @@ class BookcasePickerBloc
         if (bookcaseId == null) {
           emit(
             BookcasePickerErrorState(
-              errorCode: LocalDatabaseErrorCode.invalidData,
+              errorCode: LocalDatabaseErrorCode.conversionFailed,
               errorDescriptionMessage: 'Error: Bookcase not found',
             ),
           );

@@ -19,8 +19,8 @@ extension LocalDatabaseErrorCodeExtension on LocalDatabaseErrorCode {
         'error-local-database-not-null-constraint'.i18n([
           messageArg,
         ]),
-      LocalDatabaseErrorCode.invalidData =>
-        'error-local-database-invalid-data'.i18n([
+      LocalDatabaseErrorCode.conversionFailed =>
+        'error-local-database-conversion-failed'.i18n([
           messageArg,
         ]),
       LocalDatabaseErrorCode.unknown => 'error-unknown'.i18n([

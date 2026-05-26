@@ -201,7 +201,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );

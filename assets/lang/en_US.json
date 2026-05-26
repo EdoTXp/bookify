@@ -269,7 +269,7 @@
   "error-storage-invalid-value": "Data storage issue detected. Try logging out and logging back in: %s",
   "error-storage-write-failed": "Unable to save your changes. Check your storage space and try again: %s",
   "error-storage-read-failed": "Unable to load your data. Check your internet connection and try again: %s",
-  "error-local-database-invalid-data": "The data provided is not valid. %s",
+  "error-local-database-conversion-failed": "Failed to process data from database. %s",
   "error-local-database-not-null-constraint": "A required field is empty. %s",
   "error-local-database-open-failed": "Could not open the database. %s",
   "error-local-database-operation-failed": "Database operation failed during read, write, or update. %s",

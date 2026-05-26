@@ -19,7 +19,7 @@ class BooksRepositoryImpl implements BooksRepository {
       return booksModel;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -40,7 +40,7 @@ class BooksRepositoryImpl implements BooksRepository {
       return bookModel;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -75,7 +75,7 @@ class BooksRepositoryImpl implements BooksRepository {
       return bookImage;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -96,7 +96,7 @@ class BooksRepositoryImpl implements BooksRepository {
       return books;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -132,7 +132,7 @@ class BooksRepositoryImpl implements BooksRepository {
       return bookStatus!;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
@@ -179,7 +179,7 @@ class BooksRepositoryImpl implements BooksRepository {
       rethrow;
     } on AssertionError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     }

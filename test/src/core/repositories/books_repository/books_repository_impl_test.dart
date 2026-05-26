@@ -360,7 +360,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );
@@ -415,7 +415,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );
@@ -472,7 +472,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );
@@ -524,7 +524,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );
@@ -579,7 +579,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );
@@ -663,7 +663,7 @@ void main() {
         ),
       ).thenThrow(
         const LocalDatabaseException(
-          LocalDatabaseErrorCode.invalidData,
+          LocalDatabaseErrorCode.conversionFailed,
           descriptionMessage: 'Invalid page count',
         ),
       );
@@ -677,7 +677,7 @@ void main() {
           isA<LocalDatabaseException>().having(
             (e) => e.code,
             'code',
-            LocalDatabaseErrorCode.invalidData,
+            LocalDatabaseErrorCode.conversionFailed,
           ),
         ),
       );

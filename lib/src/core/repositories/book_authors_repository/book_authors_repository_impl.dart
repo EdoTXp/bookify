@@ -23,7 +23,7 @@ class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
 
       if (bookAuthorsRelationships.last.isEmpty) {
         throw const LocalDatabaseException(
-          LocalDatabaseErrorCode.invalidData,
+          LocalDatabaseErrorCode.conversionFailed,
           descriptionMessage: 'Impossible to fetch data',
         );
       }
@@ -31,7 +31,7 @@ class BookAuthorsRepositoryImpl implements BookAuthorsRepository {
       return bookAuthorsRelationships;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     }

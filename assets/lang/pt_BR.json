@@ -269,7 +269,7 @@
   "error-storage-invalid-value": "Problema detectado ao salvar dados. Tente fazer logout e depois login novamente: %s",
   "error-storage-write-failed": "Impossível salvar suas alterações. Verifique o espaço de armazenamento e tente novamente: %s",
   "error-storage-read-failed": "Impossível carregar seus dados. Verifique sua conexão com a internet e tente novamente: %s",
-  "error-local-database-invalid-data": "Os dados fornecidos não são válidos. %s",
+  "error-local-database-conversion-failed": "Falha ao processar dados do banco de dados. %s",
   "error-local-database-not-null-constraint": "Um campo obrigatório está vazio. %s",
   "error-local-database-open-failed": "Não foi possível abrir o banco de dados. %s",
   "error-local-database-operation-failed": "Operação do banco de dados falhou durante leitura, escrita ou atualização. %s",

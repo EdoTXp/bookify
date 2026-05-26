@@ -115,7 +115,7 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
       if (loan.id == null) {
         emit(
           LoanErrorState(
-            errorCode: LocalDatabaseErrorCode.invalidData,
+            errorCode: LocalDatabaseErrorCode.conversionFailed,
             errorDescriptionMessage: 'Error: Loan not found',
           ),
         );

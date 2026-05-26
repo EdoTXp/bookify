@@ -41,7 +41,7 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
       return bookId;
     } on TypeError catch (e) {
       throw LocalDatabaseException(
-        LocalDatabaseErrorCode.invalidData,
+        LocalDatabaseErrorCode.conversionFailed,
         descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {

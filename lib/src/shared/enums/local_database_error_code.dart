@@ -2,7 +2,7 @@ enum LocalDatabaseErrorCode {
   uniqueConstraint,
   notNullConstraint,
   openFailed,
-  invalidData,
+  conversionFailed,
   operationFailed,
   unknown,
 }
