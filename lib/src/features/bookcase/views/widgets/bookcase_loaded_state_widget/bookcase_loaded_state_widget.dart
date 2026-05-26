@@ -92,10 +92,12 @@ class _BookcaseLoadedStateWidgetState extends State<BookcaseLoadedStateWidget> {
   }
 
   Future<void> _onAddNewBookcase(BuildContext context) async {
-    var bookcaseInsertionList = await Navigator.pushNamed(
-      context,
-      BookcaseInsertionPage.routeName,
-    ) as List<Object?>?;
+    var bookcaseInsertionList =
+        await Navigator.pushNamed(
+              context,
+              BookcaseInsertionPage.routeName,
+            )
+            as List<Object?>?;
 
     final isInserted = bookcaseInsertionList?[0] as bool?;
 

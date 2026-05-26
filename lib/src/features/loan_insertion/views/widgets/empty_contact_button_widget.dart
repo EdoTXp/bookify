@@ -18,7 +18,6 @@ class EmptyContactButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-
     final borderColor = contactIsValid ? Colors.grey[300]! : colorScheme.error;
 
     return GestureDetector(

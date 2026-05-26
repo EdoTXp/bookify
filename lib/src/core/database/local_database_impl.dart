@@ -452,7 +452,7 @@ class LocalDatabaseImpl implements LocalDatabase {
         descriptionMessage: e.toString(),
       );
     }
-    
+
     if (e.isNotNullConstraintError()) {
       return LocalDatabaseException(
         LocalDatabaseErrorCode.notNullConstraint,

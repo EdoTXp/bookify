@@ -81,7 +81,7 @@ class BookCard extends StatelessWidget {
                           content: devolutionDate,
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

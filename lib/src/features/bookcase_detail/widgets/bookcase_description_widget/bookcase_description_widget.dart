@@ -19,8 +19,9 @@ class BookcaseDescriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final bookTextQuantity =
-        (booksQuantity == 1) ? 'book-label'.i18n() : 'books-label'.i18n();
+    final bookTextQuantity = (booksQuantity == 1)
+        ? 'book-label'.i18n()
+        : 'books-label'.i18n();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

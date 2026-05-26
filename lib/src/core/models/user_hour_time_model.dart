@@ -23,17 +23,17 @@ class UserHourTimeModel {
     // Calculate total minutes in starting time
     int startingTimeInMinutes = (startingHour * 60) + startingMinute;
 
-// Calculate total minutes in ending time
+    // Calculate total minutes in ending time
     int endingTimeInMinutes = (endingHour * 60) + endingMinute;
 
-// Calculate the difference in minutes (handling negative values)
+    // Calculate the difference in minutes (handling negative values)
     int differenceInMinutes = endingTimeInMinutes - startingTimeInMinutes;
     if (differenceInMinutes < 0) {
       // Add a day's worth of minutes if negative
       differenceInMinutes += 24 * 60;
     }
 
-// Convert the difference in minutes to seconds
+    // Convert the difference in minutes to seconds
     int differenceInSeconds = differenceInMinutes * 60;
     return differenceInSeconds;
   }
@@ -66,8 +66,9 @@ class UserHourTimeModel {
 
   factory UserHourTimeModel.fromMap(Map<String, dynamic> map) {
     return UserHourTimeModel(
-      repeatHourTimeType:
-          RepeatHourTimeType.toType(map['repeatHourTimeType'] as int),
+      repeatHourTimeType: RepeatHourTimeType.toType(
+        map['repeatHourTimeType'] as int,
+      ),
       startingHour: map['startingHour'] as int,
       startingMinute: map['startingMinute'] as int,
       endingHour: map['endingHour'] as int,

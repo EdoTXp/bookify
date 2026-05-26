@@ -31,7 +31,7 @@ class LoanIsLateWidget extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
-          )
+          ),
         ],
       ),
     );

@@ -4,8 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 const qrCodeScannerWidgetKey = Key('qrCodeScannerWidget');
 const changeModeTextButtonKey = Key('changeModeTextButton');
-const isbnManuallyTextFormFieldWidgetKey =
-    Key('isbnManuallyTextFormFieldWidget');
+const isbnManuallyTextFormFieldWidgetKey = Key(
+  'isbnManuallyTextFormFieldWidget',
+);
 const isbnManuallyOutlinedButtonKey = Key('isbnManuallyOutlinedButton');
 const isbnManuallyTextFormFieldKey = Key('isbnManuallyTextFormField');
 

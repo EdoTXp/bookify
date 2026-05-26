@@ -2,13 +2,7 @@ import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-enum SearchType {
-  title,
-  author,
-  category,
-  publisher,
-  isbn;
-}
+enum SearchType { title, author, category, publisher, isbn }
 
 class AnimatedSearchBar extends StatefulWidget {
   final TextEditingController searchEC;
@@ -37,11 +31,11 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       SearchType.title => {'enter-title-label'.i18n(): Icons.menu_book_rounded},
       SearchType.author => {'enter-author-label'.i18n(): Icons.person_rounded},
       SearchType.category => {
-          'enter-category-label'.i18n(): Icons.category_rounded
-        },
+        'enter-category-label'.i18n(): Icons.category_rounded,
+      },
       SearchType.publisher => {
-          'enter-publisher-label'.i18n(): Icons.publish_rounded
-        },
+        'enter-publisher-label'.i18n(): Icons.publish_rounded,
+      },
       SearchType.isbn => {'enter-isbn-label'.i18n(): BookifyIcons.isbn},
     };
 

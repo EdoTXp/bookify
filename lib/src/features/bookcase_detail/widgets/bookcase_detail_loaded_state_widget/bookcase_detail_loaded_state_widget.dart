@@ -40,14 +40,16 @@ class _BookcaseDetailLoadedStateWidgetState
   }
 
   Future<void> _normalOnTap(BuildContext context, BookModel book) async {
-    final bookIsChanged = await Navigator.pushNamed(
-      context,
-      BookOnBookcaseDetailPage.routeName,
-      arguments: [
-        book,
-        widget.bookcaseId,
-      ],
-    ) as bool?;
+    final bookIsChanged =
+        await Navigator.pushNamed(
+              context,
+              BookOnBookcaseDetailPage.routeName,
+              arguments: [
+                book,
+                widget.bookcaseId,
+              ],
+            )
+            as bool?;
 
     if (bookIsChanged != null && bookIsChanged) {
       widget.refreshPage();

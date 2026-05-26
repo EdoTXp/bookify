@@ -33,7 +33,8 @@ class _ProgrammingHourLoadingStateWidgetState
   void initState() {
     super.initState();
     userHourTimeModel = UserHourTimeModel(
-      repeatHourTimeType: widget.initialUserHourTimeModel?.repeatHourTimeType ??
+      repeatHourTimeType:
+          widget.initialUserHourTimeModel?.repeatHourTimeType ??
           RepeatHourTimeType.daily,
       startingHour: widget.initialUserHourTimeModel?.startingHour ?? 7,
       startingMinute: widget.initialUserHourTimeModel?.startingMinute ?? 0,
@@ -74,8 +75,9 @@ class _ProgrammingHourLoadingStateWidgetState
                       height: 10,
                     ),
                     RepeatTimeWidget(
-                      initialRepeatTimeSelected:
-                          userHourTimeModel.repeatHourTimeType.toIntValue(),
+                      initialRepeatTimeSelected: userHourTimeModel
+                          .repeatHourTimeType
+                          .toIntValue(),
                       onSelectedRepeatTime: (int selectedRepeatTime) {
                         setState(() {
                           userHourTimeModel = userHourTimeModel.copyWith(
@@ -91,19 +93,20 @@ class _ProgrammingHourLoadingStateWidgetState
                     ),
                     HourTimeSelectedWidget(
                       userHourTimeModel: userHourTimeModel,
-                      onSelectedTimes: (
-                        TimeOfDay startingTime,
-                        TimeOfDay endingTime,
-                      ) {
-                        setState(() {
-                          userHourTimeModel = userHourTimeModel.copyWith(
-                            startingHour: startingTime.hour,
-                            startingMinute: startingTime.minute,
-                            endingHour: endingTime.hour,
-                            endingMinute: endingTime.minute,
-                          );
-                        });
-                      },
+                      onSelectedTimes:
+                          (
+                            TimeOfDay startingTime,
+                            TimeOfDay endingTime,
+                          ) {
+                            setState(() {
+                              userHourTimeModel = userHourTimeModel.copyWith(
+                                startingHour: startingTime.hour,
+                                startingMinute: startingTime.minute,
+                                endingHour: endingTime.hour,
+                                endingMinute: endingTime.minute,
+                              );
+                            });
+                          },
                     ),
                     const Spacer(),
                     BookifyOutlinedButton.expanded(

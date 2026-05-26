@@ -79,7 +79,7 @@ class _BooksPickerPageState extends State<BooksPickerPage> {
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
       body: !isSelectionBook

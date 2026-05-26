@@ -19,7 +19,6 @@ class EmptyBookButtonWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final colorBorder = bookIsValid ? Colors.grey[300]! : colorScheme.error;
 
-
     return GestureDetector(
       onTap: onTap,
       child: Container(

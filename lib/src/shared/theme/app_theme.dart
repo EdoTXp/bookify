@@ -229,7 +229,8 @@ const _segmentedButtonTheme = SegmentedButtonThemeData(
       ),
     ),
     side: WidgetStatePropertyAll(
-        BorderSide(color: AppColor.bookifySecondaryColor)),
+      BorderSide(color: AppColor.bookifySecondaryColor),
+    ),
     iconColor: WidgetStatePropertyAll(AppColor.bookifySecondaryColor),
   ),
 );
@@ -258,12 +259,13 @@ final _sliderTheme = SliderThemeData(
 );
 
 const _radioTheme = RadioThemeData(
-    fillColor: WidgetStatePropertyAll(
-      AppColor.bookifySecondaryColor,
-    ),
-    overlayColor: WidgetStatePropertyAll(
-      AppColor.bookifySecondaryColor,
-    ));
+  fillColor: WidgetStatePropertyAll(
+    AppColor.bookifySecondaryColor,
+  ),
+  overlayColor: WidgetStatePropertyAll(
+    AppColor.bookifySecondaryColor,
+  ),
+);
 
 const _textButtonTheme = TextButtonThemeData(
   style: ButtonStyle(

@@ -18,7 +18,7 @@ final class BookPagesReadingTimeErrorState extends BookPagesReadingTimeState {
   final String? errorDescriptionMessage;
 
   BookPagesReadingTimeErrorState({
-     required this.errorCode,
+    required this.errorCode,
     this.errorDescriptionMessage,
   });
 }

@@ -20,5 +20,5 @@ final booksPickerBlocProviders = [
     create: (context) => SeparateBooksPickerBloc(
       context.read(),
     ),
-  )
+  ),
 ];

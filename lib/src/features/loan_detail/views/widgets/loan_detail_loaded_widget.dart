@@ -52,8 +52,8 @@ class LoanDetailLoadedWidget extends StatelessWidget {
               bookTitle: loanDto.bookTitlePreview,
               observation: loanDto.loanModel.observation,
               loanDate: loanDto.loanModel.loanDate.toFormattedDate(),
-              devolutionDate:
-                  loanDto.loanModel.devolutionDate.toFormattedDate(),
+              devolutionDate: loanDto.loanModel.devolutionDate
+                  .toFormattedDate(),
             ),
             const SizedBox(
               height: 20,

@@ -6,7 +6,7 @@ class LoanModel {
   final String idContact;
   final String bookId;
 
- const LoanModel({
+  const LoanModel({
     this.id,
     this.observation,
     required this.loanDate,

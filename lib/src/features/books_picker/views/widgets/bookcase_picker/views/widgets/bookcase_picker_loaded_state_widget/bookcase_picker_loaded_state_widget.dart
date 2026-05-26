@@ -26,20 +26,22 @@ class BookcasePickerLoadedStateWidget extends StatelessWidget {
         return BookcaseWidget(
           bookcaseDto: bookcasesDto[index],
           onTap: () async {
-            final book = await showModalBottomSheet(
-              context: context,
-              constraints: BoxConstraints.loose(
-                Size(
-                  MediaQuery.of(context).size.width,
-                  MediaQuery.of(context).size.height * 0.75,
-                ),
-              ),
-              isScrollControlled: true,
-              showDragHandle: true,
-              builder: (context) => BookOnBookcaseWidget(
-                bookcaseId: bookcasesDto[index].bookcase.id!,
-              ),
-            ) as BookModel?;
+            final book =
+                await showModalBottomSheet(
+                      context: context,
+                      constraints: BoxConstraints.loose(
+                        Size(
+                          MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).size.height * 0.75,
+                        ),
+                      ),
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      builder: (context) => BookOnBookcaseWidget(
+                        bookcaseId: bookcasesDto[index].bookcase.id!,
+                      ),
+                    )
+                    as BookModel?;
 
             if (book != null) {
               onSelectBookModel(book);

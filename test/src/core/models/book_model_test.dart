@@ -33,15 +33,17 @@ void main() {
     );
 
     test(
-        'should return false when comparing instances with different properties',
-        () {
-      expect(book1 == book2, false);
-    });
+      'should return false when comparing instances with different properties',
+      () {
+        expect(book1 == book2, false);
+      },
+    );
 
     test(
-        'should return a different hashCode for instances with different properties',
-        () {
-      expect(book1.hashCode != book2.hashCode, true);
-    });
+      'should return a different hashCode for instances with different properties',
+      () {
+        expect(book1.hashCode != book2.hashCode, true);
+      },
+    );
   });
 }

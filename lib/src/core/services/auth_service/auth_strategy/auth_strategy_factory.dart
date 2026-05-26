@@ -12,16 +12,16 @@ class AuthStrategyFactory {
   AuthStrategy create(SignInType signInType) {
     return switch (signInType) {
       SignInType.google => GoogleAuthStrategy(
-          googleSignIn: GoogleSignIn.instance,
-          firebaseAuth: FirebaseAuth.instance,
-        ),
+        googleSignIn: GoogleSignIn.instance,
+        firebaseAuth: FirebaseAuth.instance,
+      ),
       SignInType.apple => AppleAuthStrategy(
-          firebaseAuth: FirebaseAuth.instance,
-        ),
+        firebaseAuth: FirebaseAuth.instance,
+      ),
       SignInType.facebook => FacebookAuthStrategy(
-          facebookAuth: FacebookAuth.instance,
-          firebaseAuth: FirebaseAuth.instance,
-        ),
+        facebookAuth: FacebookAuth.instance,
+        firebaseAuth: FirebaseAuth.instance,
+      ),
     };
   }
 }

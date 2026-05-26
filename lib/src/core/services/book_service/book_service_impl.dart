@@ -24,11 +24,11 @@ class BookServiceImpl implements BookService {
     required CategoriesRepository categoriesRepository,
     required BookAuthorsRepository bookAuthorsRepository,
     required BookCategoriesRepository bookCategoriesRepository,
-  })  : _booksRepository = booksRepository,
-        _authorsRepository = authorsRepository,
-        _categoriesRepository = categoriesRepository,
-        _bookAuthorsRepository = bookAuthorsRepository,
-        _bookCategoriesRepository = bookCategoriesRepository;
+  }) : _booksRepository = booksRepository,
+       _authorsRepository = authorsRepository,
+       _categoriesRepository = categoriesRepository,
+       _bookAuthorsRepository = bookAuthorsRepository,
+       _bookCategoriesRepository = bookCategoriesRepository;
 
   @override
   Future<List<BookModel>> getAllBook() async {
@@ -36,8 +36,9 @@ class BookServiceImpl implements BookService {
       final booksModel = await _booksRepository.getAll();
 
       for (var index = 0; index < booksModel.length; index++) {
-        final (authors, categories) =
-            await _getBookComponents(booksModel[index].id);
+        final (authors, categories) = await _getBookComponents(
+          booksModel[index].id,
+        );
         booksModel[index] = booksModel[index].copyWith(
           authors: authors,
           categories: categories,
@@ -74,8 +75,9 @@ class BookServiceImpl implements BookService {
       final booksModel = await _booksRepository.getBooksByTitle(title: title);
 
       for (var index = 0; index < booksModel.length; index++) {
-        final (authors, categories) =
-            await _getBookComponents(booksModel[index].id);
+        final (authors, categories) = await _getBookComponents(
+          booksModel[index].id,
+        );
         booksModel[index] = booksModel[index].copyWith(
           authors: authors,
           categories: categories,
@@ -118,8 +120,9 @@ class BookServiceImpl implements BookService {
         );
 
         if (categoryId == -1) {
-          categoryId =
-              await _categoriesRepository.insert(categoryModel: category);
+          categoryId = await _categoriesRepository.insert(
+            categoryModel: category,
+          );
         }
 
         await _bookCategoriesRepository.insert(
@@ -137,8 +140,9 @@ class BookServiceImpl implements BookService {
   @override
   Future<bool> verifyBookIsAlreadyInserted({required String id}) async {
     try {
-      final isInserted =
-          await _booksRepository.verifyBookIsAlreadyInserted(id: id);
+      final isInserted = await _booksRepository.verifyBookIsAlreadyInserted(
+        id: id,
+      );
       return isInserted;
     } on LocalDatabaseException {
       rethrow;
@@ -218,8 +222,8 @@ class BookServiceImpl implements BookService {
   }
 
   Future<BookComponents> _getBookComponents(String bookId) async {
-    final bookAuthorsRelationShip =
-        await _bookAuthorsRepository.getRelationshipsById(bookId: bookId);
+    final bookAuthorsRelationShip = await _bookAuthorsRepository
+        .getRelationshipsById(bookId: bookId);
 
     final authorsId = bookAuthorsRelationShip
         .map((relationship) => relationship['authorId'] as int)
@@ -231,8 +235,8 @@ class BookServiceImpl implements BookService {
       authors.add(author);
     }
 
-    final bookCategoriesRelationShip =
-        await _bookCategoriesRepository.getRelationshipsById(bookId: bookId);
+    final bookCategoriesRelationShip = await _bookCategoriesRepository
+        .getRelationshipsById(bookId: bookId);
 
     final categoriesId = bookCategoriesRelationShip
         .map((relationship) => relationship['categoryId'] as int)

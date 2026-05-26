@@ -2,7 +2,7 @@ class DatabaseScripts {
   ///Get the name of database : bookify.db
   String get databaseName => _databaseName;
 
-//Table Names Getters
+  //Table Names Getters
   String get bookTableName => _bookTableName;
   String get authorTableName => _authorTableName;
   String get categoryTableName => _categoryTableName;
@@ -13,7 +13,7 @@ class DatabaseScripts {
   String get bookcaseTableName => _bookcaseTableName;
   String get bookOnCaseTableName => _bookOnCaseTableName;
 
-//Tables Scripts Getters
+  //Tables Scripts Getters
   /// Create a table for [BookModel]
   String get bookScript => _bookScript;
 
@@ -58,7 +58,8 @@ class DatabaseScripts {
   static const String _bookcaseTableName = 'bookcase';
   static const String _bookOnCaseTableName = 'bookOnCase';
 
-  static const String _bookScript = '''
+  static const String _bookScript =
+      '''
      CREATE TABLE $_bookTableName (
       id TEXT UNIQUE NOT NULL PRIMARY KEY,
       title TEXT NOT NULL,
@@ -73,21 +74,24 @@ class DatabaseScripts {
       )
 ''';
 
-  static const String _authorScript = '''
+  static const String _authorScript =
+      '''
     CREATE TABLE $_authorTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE NOT NULL
     )
     ''';
 
-  static const String _categoryScript = '''
+  static const String _categoryScript =
+      '''
     CREATE TABLE $_categoryTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE  NOT NULL
     )
     ''';
 
-  static const String _bookAuthorsScript = '''
+  static const String _bookAuthorsScript =
+      '''
      CREATE TABLE $_bookAuthorsTableName (
       bookId TEXT NOT NULL,
       authorId INTEGER NOT NULL,
@@ -97,7 +101,8 @@ class DatabaseScripts {
       )
     ''';
 
-  static const String _bookCategoriesScript = '''
+  static const String _bookCategoriesScript =
+      '''
      CREATE TABLE $_bookCategoriesTableName (
       bookId TEXT NOT NULL,
       categoryId INTEGER NOT NULL,
@@ -107,7 +112,8 @@ class DatabaseScripts {
       )
     ''';
 
-  static const String _bookReadingScript = '''
+  static const String _bookReadingScript =
+      '''
      CREATE TABLE $_bookReadingTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       pagesReaded INTEGER NOT NULL,
@@ -117,7 +123,8 @@ class DatabaseScripts {
       )
     ''';
 
-  static const String _loanScript = '''
+  static const String _loanScript =
+      '''
      CREATE TABLE $_loanTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       observation TEXT,
@@ -129,7 +136,8 @@ class DatabaseScripts {
       )
 ''';
 
-  static const String _bookCaseScript = '''
+  static const String _bookCaseScript =
+      '''
      CREATE TABLE $_bookcaseTableName (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE NOT NULL,
@@ -138,7 +146,8 @@ class DatabaseScripts {
       )
     ''';
 
-  static const String _bookOnCaseScript = '''
+  static const String _bookOnCaseScript =
+      '''
      CREATE TABLE $_bookOnCaseTableName (
       bookId TEXT NOT NULL,
       bookcaseId INTEGER NOT NULL,

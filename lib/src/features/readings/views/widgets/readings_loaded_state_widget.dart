@@ -43,9 +43,10 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
                   onTap: () async {
                     final readingIsChanged =
                         await Navigator.of(context).pushNamed(
-                      ReadingsDetailPage.routeName,
-                      arguments: readingsDto[index],
-                    ) as bool?;
+                              ReadingsDetailPage.routeName,
+                              arguments: readingsDto[index],
+                            )
+                            as bool?;
 
                     if (readingIsChanged != null && readingIsChanged) {
                       onRefreshPage();

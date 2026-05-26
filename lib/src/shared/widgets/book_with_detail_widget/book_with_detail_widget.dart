@@ -31,7 +31,7 @@ class BookWithDetailWidget extends StatelessWidget {
             ),
             BookifyRatingWidget(
               averageRating: bookAverageRating,
-            )
+            ),
           ],
         ),
         const SizedBox(

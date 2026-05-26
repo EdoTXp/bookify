@@ -54,16 +54,18 @@ class _UserInformationRowState extends State<UserInformationRow> {
             ),
             ItemStatusColumn(
               quantity: bookCount,
-              label:
-                  bookCount == 1 ? 'book-label'.i18n() : 'books-label'.i18n(),
+              label: bookCount == 1
+                  ? 'book-label'.i18n()
+                  : 'books-label'.i18n(),
             ),
             const SizedBox(
               width: 5,
             ),
             ItemStatusColumn(
               quantity: loansCount,
-              label:
-                  loansCount == 1 ? 'loan-label'.i18n() : 'loans-label'.i18n(),
+              label: loansCount == 1
+                  ? 'loan-label'.i18n()
+                  : 'loans-label'.i18n(),
             ),
             const SizedBox(
               width: 5,
@@ -77,13 +79,13 @@ class _UserInformationRowState extends State<UserInformationRow> {
           ],
         ),
       UserInformationErrorState() => Center(
-          child: Text(
-            'error-on-loading-data'.i18n(),
-            style: TextStyle(
-              fontSize: 10,
-            ),
+        child: Text(
+          'error-on-loading-data'.i18n(),
+          style: TextStyle(
+            fontSize: 10,
           ),
         ),
+      ),
     };
   }
 

@@ -9,7 +9,8 @@ class IsbnVerifier {
   // This regex ensures the ISBN code contains only digits, 'X', or '-', and follows the structure of ISBN codes.
   // It checks for the presence of 9 digits followed by an 'X' or a digit, and optionally 3 more digits.
   static final _isbnRegExp = RegExp(
-      r'^(?=(?:[^0-9]*[0-9]){9}[^0-9xX]*[0-9xX](?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$');
+    r'^(?=(?:[^0-9]*[0-9]){9}[^0-9xX]*[0-9xX](?:(?:[^0-9]*[0-9]){3})?$)[\dXx-]+$',
+  );
 
   /// Getter for the ISBN format regular expression.
   /// This regex is used to validate if a given string is in a valid ISBN format.
