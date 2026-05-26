@@ -291,7 +291,7 @@ void main() {
       expect(
         find.widgetWithText(
           SnackBar,
-          'error-local-database-unknown',
+          'error-unknown',
         ),
         findsOneWidget,
       );
@@ -401,7 +401,7 @@ void main() {
       expect(
         find.widgetWithText(
           SnackBar,
-          'error-local-database-unknown',
+          'error-unknown',
         ),
         findsOneWidget,
       );

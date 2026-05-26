@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/readings_timer/bloc/readings_timer_bloc.dart';
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/features/readings_timer/views/widgets/readings_timer_widget.dart';
@@ -39,16 +40,18 @@ class _ReadingsTimerPageState extends State<ReadingsTimerPage> {
     return switch (state) {
       ReadingsTimerLoadingState() => const CenterCircularProgressIndicator(),
       ReadingsTimerEmptyState() ||
-      ReadingsTimerLoadedState() =>
-        ReadingsTimerWidget(
-          readingDto: widget.readingDto,
-          timerDurationInSeconds: state is ReadingsTimerLoadedState
-              ? state.initialUserTimerInSeconds
-              : 300,
-        ),
-      ReadingsTimerErrorState(:final errorMessage) =>
+      ReadingsTimerLoadedState() => ReadingsTimerWidget(
+        readingDto: widget.readingDto,
+        timerDurationInSeconds: state is ReadingsTimerLoadedState
+            ? state.initialUserTimerInSeconds
+            : 300,
+      ),
+      ReadingsTimerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _onRefreshPage,
         ),
     };

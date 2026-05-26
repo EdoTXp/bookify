@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
-import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/widgets/widgets.dart';

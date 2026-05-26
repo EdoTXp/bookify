@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_detail_loaded_widget.dart';
 import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';

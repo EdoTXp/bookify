@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/readings/bloc/readings_bloc.dart';
 import 'package:bookify/src/features/readings/views/widgets/readings_loaded_state_widget.dart';

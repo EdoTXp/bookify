@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/platform_error_code/platform_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/platform_error_code/platform_error_code_extension.dart';
 import 'package:bookify/src/features/about/bloc/about_bloc.dart';
 import 'package:bookify/src/features/about/views/widgets/about_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';

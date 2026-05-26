@@ -110,7 +110,7 @@ void main() {
         );
 
         expect(
-          find.text('error-local-database-unknown'),
+          find.text('error-unknown'),
           findsOne,
         );
       },

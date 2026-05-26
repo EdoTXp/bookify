@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/bookcase_books_insertion_loaded_state_widget/bookcase_books_insertion_loaded_state.dart';
 import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';

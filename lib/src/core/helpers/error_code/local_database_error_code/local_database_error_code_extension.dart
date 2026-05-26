@@ -23,7 +23,7 @@ extension LocalDatabaseErrorCodeExtension on LocalDatabaseErrorCode {
         'error-local-database-invalid-data'.i18n([
           messageArg,
         ]),
-      LocalDatabaseErrorCode.unknown => 'error-local-database-unknown'.i18n([
+      LocalDatabaseErrorCode.unknown => 'error-unknown'.i18n([
         messageArg,
       ]),
       LocalDatabaseErrorCode.operationFailed =>

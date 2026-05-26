@@ -9,8 +9,6 @@ extension StorageErrorCodeExtension on StorageErrorCode {
       StorageErrorCode.invalidValue => 'error-storage-invalid-value'.i18n([
         messageArg,
       ]),
-      StorageErrorCode.dataLoss => 'error-storage-data-loss'.i18n([messageArg]),
-      StorageErrorCode.notFound => 'error-storage-not-found'.i18n([messageArg]),
       StorageErrorCode.writeFailed => 'error-storage-write-failed'.i18n([
         messageArg,
       ]),

@@ -15,9 +15,11 @@ final class ReadingsTimerLoadedState extends ReadingsTimerState {
 }
 
 final class ReadingsTimerErrorState extends ReadingsTimerState {
-  final String errorMessage;
+  final StorageErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ReadingsTimerErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

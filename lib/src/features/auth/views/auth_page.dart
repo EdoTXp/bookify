@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/auth_error_code/auth_error_code_extension.dart';
+import 'package:bookify/src/core/helpers/error_code/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/features/auth/widgets/platform_sign_in_buttons.dart';
 import 'package:bookify/src/features/auth/widgets/terms_information.dart';

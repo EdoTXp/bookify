@@ -134,7 +134,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.text('error-local-database-unknown'), findsOneWidget);
+      expect(find.text('error-unknown'), findsOneWidget);
 
       await tester.pumpAndSettle(const Duration(seconds: 2));
       expect(find.byType(BookcaseInsertionPage), findsNothing);

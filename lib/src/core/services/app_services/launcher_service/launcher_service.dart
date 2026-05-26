@@ -7,22 +7,15 @@ class LauncherService {
     try {
       final uri = Uri.parse(url);
 
-      if (await canLaunchUrl(uri)) {
-        final urlIsLaunched = await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
+      final urlIsLaunched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
 
-        if (!urlIsLaunched) {
-          throw const PlatformException(
-            PlatformErrorCode.unknown,
-            descriptionMessage: 'Impossible to launch the URL',
-          );
-        }
-      } else {
+      if (!urlIsLaunched) {
         throw const PlatformException(
-          PlatformErrorCode.unsupported,
-          descriptionMessage: 'The URL scheme is not supported',
+          PlatformErrorCode.unknown,
+          descriptionMessage: 'Impossible to launch the URL',
         );
       }
     } on PlatformException {
