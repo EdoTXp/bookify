@@ -2,11 +2,7 @@ name: CI - Test Bookify Flutter App
 
 on:
   push:
-    branches:
-      - '**'
-
-  pull_request:
-    branches:
+    branches-ignore:
       - main
 
 jobs:
