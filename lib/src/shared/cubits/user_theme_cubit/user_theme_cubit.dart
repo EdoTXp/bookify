@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +35,15 @@ class UserThemeCubit extends Cubit<UserThemeState> {
     } on StorageException catch (e) {
       emit(
         UserThemeErrorState(
-          errorMessage: 'erro ao buscar o tema: $e',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         UserThemeErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -57,7 +60,8 @@ class UserThemeCubit extends Cubit<UserThemeState> {
       if (themeInserted == 0) {
         emit(
           UserThemeErrorState(
-            errorMessage: 'erro ao inserir o tema',
+            errorCode: StorageErrorCode.writeFailed,
+            errorDescriptionMessage: 'Failed to save theme. Please try again.',
           ),
         );
         return;
@@ -69,13 +73,15 @@ class UserThemeCubit extends Cubit<UserThemeState> {
     } on StorageException catch (e) {
       emit(
         UserThemeErrorState(
-          errorMessage: 'erro ao inserir o tema: $e',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         UserThemeErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

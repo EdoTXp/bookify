@@ -6,6 +6,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -55,8 +56,11 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenAnswer((_) async => bookModel);
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -65,8 +69,9 @@ void main() {
       act: (bloc) => bloc.add(GotBookcaseBooksEvent(bookcaseId: 1)),
       verify: (bloc) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
@@ -82,16 +87,20 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenAnswer((_) async => bookModel);
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [],
         );
       },
       act: (bloc) => bloc.add(GotBookcaseBooksEvent(bookcaseId: 1)),
       verify: (_) {
         verifyNever(() => bookService.getBookById(id: 'id'));
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
@@ -105,10 +114,18 @@ void main() {
       setUp: () {
         when(
           () => bookService.getBookById(id: any(named: 'id')),
-        ).thenThrow(const LocalDatabaseException('Error on database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -117,8 +134,9 @@ void main() {
       act: (bloc) => bloc.add(GotBookcaseBooksEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
@@ -134,8 +152,11 @@ void main() {
           () => bookService.getBookById(id: any(named: 'id')),
         ).thenThrow(Exception('Generic Error'));
 
-        when(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+        when(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer(
           (_) async => [
             {'bookcaseId': 1, 'bookId': 'id'},
           ],
@@ -144,8 +165,9 @@ void main() {
       act: (bloc) => bloc.add(GotBookcaseBooksEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getBookById(id: 'id')).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-            .called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseDetailLoadingState>(),
@@ -157,8 +179,10 @@ void main() {
   blocTest(
     'test if DeletedBookcaseEvent work',
     build: () => bloc,
-    setUp: () => when(() => bookcaseService.deleteBookcase(
-        bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1),
+    setUp: () => when(
+      () =>
+          bookcaseService.deleteBookcase(bookcaseId: any(named: 'bookcaseId')),
+    ).thenAnswer((_) async => 1),
     act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
     verify: (_) {
       verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
@@ -172,8 +196,10 @@ void main() {
   blocTest(
     'test if DeletedBookcaseEvent work with deleted is -1',
     build: () => bloc,
-    setUp: () => when(() => bookcaseService.deleteBookcase(
-        bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => -1),
+    setUp: () => when(
+      () =>
+          bookcaseService.deleteBookcase(bookcaseId: any(named: 'bookcaseId')),
+    ).thenAnswer((_) async => -1),
     act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
     verify: (_) {
       verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
@@ -187,9 +213,17 @@ void main() {
   blocTest(
     'test if DeletedBookcaseEvent work when throw LocalDatabaseException',
     build: () => bloc,
-    setUp: () => when(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId')))
-        .thenThrow(const LocalDatabaseException('Error on database')),
+    setUp: () =>
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        ),
     act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
     verify: (_) {
       verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
@@ -203,9 +237,10 @@ void main() {
   blocTest(
     'test if DeletedBookcaseEvent work when throw Generic Exception',
     build: () => bloc,
-    setUp: () => when(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId')))
-        .thenThrow(Exception('Generic Error')),
+    setUp: () => when(
+      () =>
+          bookcaseService.deleteBookcase(bookcaseId: any(named: 'bookcaseId')),
+    ).thenThrow(Exception('Generic Error')),
     act: (bloc) => bloc.add(DeletedBookcaseEvent(bookcaseId: 1)),
     verify: (_) {
       verify(() => bookcaseService.deleteBookcase(bookcaseId: 1)).called(1);
@@ -233,8 +268,11 @@ void main() {
           id: any(named: 'id'),
         ),
       ).thenAnswer((_) async => bookModel);
-      when(() => bookcaseService.getAllBookcaseRelationships(
-          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+      when(
+        () => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'),
+        ),
+      ).thenAnswer(
         (_) async => [
           {'bookcaseId': 1, 'bookId': 'id'},
         ],
@@ -247,12 +285,16 @@ void main() {
       ),
     ),
     verify: (_) {
-      verify(() => bookcaseService.deleteBookcaseRelationship(
+      verify(
+        () => bookcaseService.deleteBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'))).called(1);
+          bookId: any(named: 'bookId'),
+        ),
+      ).called(1);
       verify(() => bookService.getBookById(id: 'id')).called(1);
-      verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1))
-          .called(1);
+      verify(
+        () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+      ).called(1);
     },
     expect: () => [
       isA<BookcaseDetailLoadingState>(),
@@ -277,8 +319,11 @@ void main() {
           id: any(named: 'id'),
         ),
       ).thenAnswer((_) async => bookModel);
-      when(() => bookcaseService.getAllBookcaseRelationships(
-          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+      when(
+        () => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'),
+        ),
+      ).thenAnswer(
         (_) async => [
           {'bookcaseId': 1, 'bookId': 'id'},
         ],
@@ -291,12 +336,16 @@ void main() {
       ),
     ),
     verify: (_) {
-      verify(() => bookcaseService.deleteBookcaseRelationship(
+      verify(
+        () => bookcaseService.deleteBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'))).called(1);
+          bookId: any(named: 'bookId'),
+        ),
+      ).called(1);
       verifyNever(() => bookService.getBookById(id: 'id'));
       verifyNever(
-          () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
+        () => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1),
+      );
     },
     expect: () => [
       isA<BookcaseDetailLoadingState>(),
@@ -321,8 +370,11 @@ void main() {
           id: any(named: 'id'),
         ),
       ).thenAnswer((_) async => bookModel);
-      when(() => bookcaseService.getAllBookcaseRelationships(
-          bookcaseId: any(named: 'bookcaseId'))).thenAnswer(
+      when(
+        () => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'),
+        ),
+      ).thenAnswer(
         (_) async => [],
       );
     },
@@ -333,9 +385,12 @@ void main() {
       ),
     ),
     verify: (_) {
-      verify(() => bookcaseService.deleteBookcaseRelationship(
+      verify(
+        () => bookcaseService.deleteBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'))).called(1);
+          bookId: any(named: 'bookId'),
+        ),
+      ).called(1);
       verifyNever(() => bookService.getBookById(id: 'id'));
       verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
     },
@@ -362,9 +417,16 @@ void main() {
           id: any(named: 'id'),
         ),
       ).thenAnswer((_) async => bookModel);
-      when(() => bookcaseService.getAllBookcaseRelationships(
-              bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
     },
     act: (bloc) => bloc.add(
       DeletedBooksOnBookcaseEvent(
@@ -373,9 +435,12 @@ void main() {
       ),
     ),
     verify: (_) {
-      verify(() => bookcaseService.deleteBookcaseRelationship(
+      verify(
+        () => bookcaseService.deleteBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'))).called(1);
+          bookId: any(named: 'bookId'),
+        ),
+      ).called(1);
       verifyNever(() => bookService.getBookById(id: 'id'));
       verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
     },
@@ -402,9 +467,11 @@ void main() {
           id: any(named: 'id'),
         ),
       ).thenAnswer((_) async => bookModel);
-      when(() => bookcaseService.getAllBookcaseRelationships(
-              bookcaseId: any(named: 'bookcaseId')))
-          .thenThrow(Exception('Generic Exception'));
+      when(
+        () => bookcaseService.getAllBookcaseRelationships(
+          bookcaseId: any(named: 'bookcaseId'),
+        ),
+      ).thenThrow(Exception('Generic Exception'));
     },
     act: (bloc) => bloc.add(
       DeletedBooksOnBookcaseEvent(
@@ -413,9 +480,12 @@ void main() {
       ),
     ),
     verify: (_) {
-      verify(() => bookcaseService.deleteBookcaseRelationship(
+      verify(
+        () => bookcaseService.deleteBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'))).called(1);
+          bookId: any(named: 'bookId'),
+        ),
+      ).called(1);
       verifyNever(() => bookService.getBookById(id: 'id'));
       verify(() => bookcaseService.getAllBookcaseRelationships(bookcaseId: 1));
     },

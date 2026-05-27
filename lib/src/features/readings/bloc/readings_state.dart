@@ -15,7 +15,11 @@ final class ReadingsLoadedState extends ReadingsState {
 }
 
 final class ReadingsErrorState extends ReadingsState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
-  ReadingsErrorState({required this.errorMessage});
+  ReadingsErrorState({
+    required this.errorCode,
+    this.errorDescriptionMessage,
+  });
 }

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/bloc/bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/bookcase_detail/widgets/widgets.dart';
@@ -65,13 +66,12 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
   ) {
     return switch (state) {
       BookcaseDetailLoadingState() ||
-      BookcaseDetailDeletedState() =>
-        const CenterCircularProgressIndicator(),
+      BookcaseDetailDeletedState() => const CenterCircularProgressIndicator(),
       BookcaseDetailBooksEmptyState() => ItemEmptyStateWidget(
-          key: const Key('BookcaseDetailBooksEmptyState'),
-          label: 'add-new-books-button'.i18n(),
-          onTap: () async => await _addNewBooksBottomSheet(),
-        ),
+        key: const Key('BookcaseDetailBooksEmptyState'),
+        label: 'add-new-books-button'.i18n(),
+        onTap: () async => await _addNewBooksBottomSheet(),
+      ),
       BookcaseDetailBooksLoadedState(:final books) =>
         BookcaseDetailLoadedStateWidget(
           books: books,
@@ -85,9 +85,12 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
             ),
           ),
         ),
-      BookcaseDetailErrorState(:final errorMessage) =>
+      BookcaseDetailErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };
@@ -124,7 +127,9 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
   ///
   /// **Note**: If there is an error removing the [_bookcase], the state will always be [BookcaseDetailErrorState].
   Future<void> _handleBookcaseDetailsStateListener(
-      BookcaseDetailState state, BuildContext context) async {
+    BookcaseDetailState state,
+    BuildContext context,
+  ) async {
     if (state is BookcaseDetailDeletedState) {
       setState(() {
         _canPopPage = false;
@@ -152,11 +157,13 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
 
   Future<void> _popupMenuOnSelected(String value, BuildContext context) async {
     if (value == _popupMenuItemsSet.first) {
-      final result = await Navigator.pushNamed(
-        context,
-        BookcaseInsertionPage.routeName,
-        arguments: _actualBookcase,
-      ) as List<Object?>?;
+      final result =
+          await Navigator.pushNamed(
+                context,
+                BookcaseInsertionPage.routeName,
+                arguments: _actualBookcase,
+              )
+              as List<Object?>?;
 
       final bookcaseUpdated = result?[1] as BookcaseModel?;
 

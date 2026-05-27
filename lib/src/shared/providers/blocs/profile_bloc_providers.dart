@@ -5,7 +5,6 @@ final profileBlocProviders = [
   BlocProvider<ProfileBloc>(
     create: (context) => ProfileBloc(
       context.read(),
-      context.read(),
     ),
   ),
 ];

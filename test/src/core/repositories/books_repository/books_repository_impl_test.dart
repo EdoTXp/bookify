@@ -2,6 +2,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/repositories/books_repository/books_repository_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -16,36 +17,44 @@ void main() {
 
   group('Test normal CRUD book without error ||', () {
     test('insert book', () async {
-      when(() => localDatabase.insert(
-            table: any(named: 'table'),
-            values: any(named: 'values'),
-          )).thenAnswer((_) async => 1);
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenAnswer((_) async => 1);
 
       final bookInsertedRow = await bookRepository.insert(bookModel: bookModel);
       expect(bookInsertedRow, equals(1));
     });
 
     test('delete book', () async {
-      when(() => localDatabase.delete(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => 1);
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => 1);
 
-      final bookRemovedRow =
-          await bookRepository.deleteBookById(id: bookModel.id);
+      final bookRemovedRow = await bookRepository.deleteBookById(
+        id: bookModel.id,
+      );
       expect(bookRemovedRow, equals(1));
     });
 
     test('verify book is already inserted', () async {
-      when(() => localDatabase.verifyItemIsAlreadyInserted(
-            table: any(named: 'table'),
-            column: any(named: 'column'),
-            columnValue: any(named: 'columnValue'),
-          )).thenAnswer((_) async => true);
+      when(
+        () => localDatabase.verifyItemIsAlreadyInserted(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValue: any(named: 'columnValue'),
+        ),
+      ).thenAnswer((_) async => true);
 
-      final bookIsInserted =
-          await bookRepository.verifyBookIsAlreadyInserted(id: bookModel.id);
+      final bookIsInserted = await bookRepository.verifyBookIsAlreadyInserted(
+        id: bookModel.id,
+      );
       expect(bookIsInserted, equals(true));
     });
 
@@ -63,19 +72,23 @@ void main() {
         'status': 1,
       };
 
-      when(() => localDatabase.getItemById(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => bookMap);
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => bookMap);
 
       final bookModelFromMap = await bookRepository.getBookById(id: '1');
 
       expect(bookModelFromMap.id, equals('1'));
       expect(bookModelFromMap.title, equals('Memórias Póstumas De Brás Cubas'));
       expect(bookModelFromMap.publisher, equals('FTD Editora'));
-      expect(bookModelFromMap.description,
-          equals('É narrada pelo defunto Brás Cubas...'));
+      expect(
+        bookModelFromMap.description,
+        equals('É narrada pelo defunto Brás Cubas...'),
+      );
       expect(bookModelFromMap.pageCount, equals(320));
       expect(bookModelFromMap.imageUrl, equals('imageUrl'));
       expect(bookModelFromMap.buyLink, equals('buyLink'));
@@ -100,14 +113,17 @@ void main() {
         'status': 1,
       };
 
-      when(() => localDatabase.researchBy(
-              table: any(named: 'table'),
-              column: any(named: 'column'),
-              columnValues: any(named: 'columnValues')))
-          .thenAnswer((_) async => [bookMap]);
+      when(
+        () => localDatabase.researchBy(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenAnswer((_) async => [bookMap]);
 
       final bookModelByName = await bookRepository.getBooksByTitle(
-          title: 'Memórias Póstumas De Brás Cubas');
+        title: 'Memórias Póstumas De Brás Cubas',
+      );
 
       expect(bookModelByName[0].id, equals('1'));
       expect(bookModelByName[0].title, 'Memórias Póstumas De Brás Cubas');
@@ -127,9 +143,11 @@ void main() {
     });
 
     test('get all books', () async {
-      when(() => localDatabase.getAll(
-            table: any(named: 'table'),
-          )).thenAnswer(
+      when(
+        () => localDatabase.getAll(
+          table: any(named: 'table'),
+        ),
+      ).thenAnswer(
         (_) async => booksModelMock.map((book) => book.toMap()).toList(),
       );
 
@@ -147,12 +165,14 @@ void main() {
     });
 
     test('get book image', () async {
-      when(() => localDatabase.getColumnsById(
-            table: any(named: 'table'),
-            columns: any(named: 'columns'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer(
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer(
         (_) async => {'imageUrl': 'http:www//imageurl.com'},
       );
 
@@ -177,32 +197,40 @@ void main() {
     });
 
     test('update book status', () async {
-      when(() => localDatabase.update(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-            values: any(named: 'values'),
-          )).thenAnswer(
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+          values: any(named: 'values'),
+        ),
+      ).thenAnswer(
         (_) async => 1,
       );
 
       final bookUpdated = await bookRepository.updateBookStatus(
-          id: '1', status: BookStatus.reading);
+        id: '1',
+        status: BookStatus.reading,
+      );
       expect(bookUpdated, equals(1));
     });
 
     test('update book page Count', () async {
-      when(() => localDatabase.update(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-            values: any(named: 'values'),
-          )).thenAnswer(
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+          values: any(named: 'values'),
+        ),
+      ).thenAnswer(
         (_) async => 1,
       );
 
-      final bookUpdated =
-          await bookRepository.updateBookPageCount(id: '1', pageCount: 100);
+      final bookUpdated = await bookRepository.updateBookPageCount(
+        id: '1',
+        pageCount: 100,
+      );
       expect(bookUpdated, equals(1));
     });
 
@@ -223,160 +251,315 @@ void main() {
 
   group('Test normal CRUD book with error ||', () {
     test('insert book -- LocalDatabaseException', () async {
-      when(() => localDatabase.insert(
-            table: any(named: 'table'),
-            values: any(named: 'values'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.insert(bookModel: bookModel),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('delete book -- LocalDatabaseException', () async {
-      when(() => localDatabase.delete(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.deleteBookById(id: bookModel.id),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('verify book is already inserted -- LocalDatabaseException', () async {
-      when(() => localDatabase.verifyItemIsAlreadyInserted(
-            table: any(named: 'table'),
-            column: any(named: 'column'),
-            columnValue: any(named: 'columnValue'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.verifyItemIsAlreadyInserted(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValue: any(named: 'columnValue'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.verifyBookIsAlreadyInserted(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get book by id -- TypeError', () async {
-      when(() => localDatabase.getItemById(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => {'id': '1'});
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'id': '1'});
 
       expect(
         () async => await bookRepository.getBookById(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
     test('get book by id -- LocalDatabaseException', () async {
-      when(() => localDatabase.getItemById(
-            table: any(named: 'table'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.getBookById(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get book by Title -- TypeError', () async {
-      when(() => localDatabase.researchBy(
-              table: any(named: 'table'),
-              column: any(named: 'column'),
-              columnValues: any(named: 'columnValues')))
-          .thenAnswer((_) async => [{}]);
+      when(
+        () => localDatabase.researchBy(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenAnswer((_) async => [{}]);
 
       expect(
-          () async => await bookRepository.getBooksByTitle(
-              title: 'Memórias Póstumas de Bras Cubas'),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException &&
-              e.message ==
-                  'Impossível encontrar os livros com esse título no database'));
+        () async => await bookRepository.getBooksByTitle(
+          title: 'Memórias Póstumas de Bras Cubas',
+        ),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
+      );
     });
 
     test('get book by Title -- LocalDatabaseException', () async {
-      when(() => localDatabase.researchBy(
-              table: any(named: 'table'),
-              column: any(named: 'column'),
-              columnValues: any(named: 'columnValues')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.researchBy(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
-          () async => await bookRepository.getBooksByTitle(
-              title: 'Memórias Póstumas de Bras Cubas'),
-          throwsA((Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database'));
+        () async => await bookRepository.getBooksByTitle(
+          title: 'Memórias Póstumas de Bras Cubas',
+        ),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
+      );
     });
 
     test('get all books -- TypeError', () async {
-      when(() => localDatabase.getAll(
-            table: any(named: 'table'),
-          )).thenAnswer((_) async => [
-            {'id': '1'}
-          ]);
+      when(
+        () => localDatabase.getAll(
+          table: any(named: 'table'),
+        ),
+      ).thenAnswer(
+        (_) async => [
+          {'id': '1'},
+        ],
+      );
 
       expect(
         () async => await bookRepository.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
     test('get all books -- LocalDatabaseException', () async {
-      when(() => localDatabase.getAll(
-            table: any(named: 'table'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.getAll(
+          table: any(named: 'table'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get book image -- TypeError', () async {
-      when(() => localDatabase.getColumnsById(
-            table: any(named: 'table'),
-            columns: any(named: 'columns'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => {});
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {});
 
       expect(
         () async => await bookRepository.getBookImageById(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível converter o dado do database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
     test('get book image -- LocalDatabaseException', () async {
-      when(() => localDatabase.getColumnsById(
-            table: any(named: 'table'),
-            columns: any(named: 'columns'),
-            idColumn: any(named: 'idColumn'),
-            id: any(named: 'id'),
-          )).thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => localDatabase.getColumnsById(
+          table: any(named: 'table'),
+          columns: any(named: 'columns'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.getBookImageById(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -392,9 +575,13 @@ void main() {
 
       expect(
         () async => await bookRepository.getBookStatus(id: 'bookId'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível encontrar o status do livro no database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
@@ -406,40 +593,80 @@ void main() {
           idColumn: any(named: 'idColumn'),
           id: any(named: 'id'),
         ),
-      ).thenThrow(const LocalDatabaseException('error on database'));
-
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
       expect(
         () async => await bookRepository.getBookStatus(id: 'bookId'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update book status -- LocalDatabaseException', () async {
-      when(() => localDatabase.update(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id'),
-              values: any(named: 'values')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.updateBookStatus(
           id: '1',
           status: BookStatus.reading,
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update book page Count -- assertion failed', () async {
-      when(() => localDatabase.update(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id'),
-              values: any(named: 'values')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.conversionFailed,
+          descriptionMessage: 'Invalid page count',
+        ),
+      );
 
       expect(
         () async => await bookRepository.updateBookPageCount(
@@ -447,27 +674,48 @@ void main() {
           pageCount: 0,
         ),
         throwsA(
-          (AssertionError e) =>
-              e.message == 'pagesCount must be greater than 0',
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
         ),
       );
     });
 
     test('update book page Count -- LocalDatabaseException', () async {
-      when(() => localDatabase.update(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id'),
-              values: any(named: 'values')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.updateBookPageCount(
           id: '1',
           pageCount: 100,
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -476,12 +724,28 @@ void main() {
         () => localDatabase.countItems(
           table: any(named: 'table'),
         ),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookRepository.countBooks(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
   });

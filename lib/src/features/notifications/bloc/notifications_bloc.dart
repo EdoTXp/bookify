@@ -1,5 +1,7 @@
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/shared/enums/platform_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'notifications_event.dart';
@@ -33,10 +35,19 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           notifications: notifications,
         ),
       );
+    } on PlatformException catch (e) {
+      emit(
+        NotificationErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         NotificationErrorState(
-            errorMessage: 'Erro inesperado: ${e.toString()}'),
+          errorCode: PlatformErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }

@@ -52,7 +52,7 @@ void main() {
       verify: (_) => verify(() => contactsService.getContacts()).called(1),
       expect: () => [
         isA<ContactsPickerLoadingState>(),
-        isA<ContactsPickerErrorState>(),
+        isA<ContactsPickerEmptyState>(),
       ],
     );
 

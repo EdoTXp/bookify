@@ -1,7 +1,7 @@
+import 'package:bookify/src/shared/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
 import 'package:bookify/src/core/services/auth_service/auth_service.dart';
-import 'package:bookify/src/core/services/storage_services/storage_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_event.dart';
@@ -9,11 +9,9 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthService _authService;
-  final StorageServices _storageServices;
 
   ProfileBloc(
     this._authService,
-    this._storageServices,
   ) : super(ProfileLoadingState()) {
     on<GotUserProfileEvent>(_gotUserProfileEvent);
     on<UserLoggedOutEvent>(_userLoggedOutEvent);
@@ -31,7 +29,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (userModel == null) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro ao buscar o usuário',
+            errorCode: AuthErrorCode.internalError,
+            errorDescriptionMessage:
+                'Failed to save user data. Please try again.',
           ),
         );
         return;
@@ -43,12 +43,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       );
     } on AuthException catch (e) {
-      emit(ProfileErrorState(
-          errorMessage: 'Erro ao buscar o usuário: ${e.message}'));
+      emit(
+        ProfileErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProfileErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: AuthErrorCode.internalError,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -68,18 +73,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (!userLoggedOut) {
         emit(
           ProfileErrorState(
-            errorMessage: 'Erro ao fazer o logout do usuário',
-          ),
-        );
-        return;
-      }
-
-      final storageRemoved = await _storageServices.clearStorage();
-
-      if (storageRemoved == 0) {
-        emit(
-          ProfileErrorState(
-            errorMessage: 'Erro ao limpar as configurações do usuário',
+            errorCode: AuthErrorCode.internalError,
+            errorDescriptionMessage: 'Failed to logout',
           ),
         );
         return;
@@ -87,12 +82,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       emit(ProfileLogOutState());
     } on AuthException catch (e) {
-      emit(ProfileErrorState(
-          errorMessage: 'Erro em fazer o logout do usuário: ${e.message}'));
+      emit(
+        ProfileErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProfileErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: AuthErrorCode.internalError,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

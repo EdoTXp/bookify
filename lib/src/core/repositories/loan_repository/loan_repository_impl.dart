@@ -3,6 +3,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/repositories/loan_repository/loan_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class LoanRepositoryImpl implements LoanRepository {
   final LocalDatabase _database;
@@ -22,9 +23,10 @@ class LoanRepositoryImpl implements LoanRepository {
       final loans = loanMap.map(LoanModel.fromMap).toList();
 
       return loans;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar os empréstimos no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -47,9 +49,10 @@ class LoanRepositoryImpl implements LoanRepository {
       final loans = loanMap.map(LoanModel.fromMap).toList();
 
       return loans;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar os empréstimos no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;
@@ -67,9 +70,10 @@ class LoanRepositoryImpl implements LoanRepository {
       final loan = LoanModel.fromMap(loanMap);
 
       return loan;
-    } on TypeError {
-      throw const LocalDatabaseException(
-        'Impossível encontrar o empréstimo no database',
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
       );
     } on LocalDatabaseException {
       rethrow;

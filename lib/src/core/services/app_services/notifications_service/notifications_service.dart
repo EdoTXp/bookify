@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/enums/repeat_hour_time_type.dart';
+import 'package:bookify/src/shared/enums/repeat_hour_time_type.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 
 abstract interface class NotificationsService {

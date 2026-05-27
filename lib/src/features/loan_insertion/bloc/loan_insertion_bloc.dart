@@ -1,11 +1,12 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'loan_insertion_event.dart';
@@ -39,8 +40,9 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
       if (bookUpdatedStatus < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage:
-                'Ocorreu um erro ao adicionar o livro ao empréstimo. Verifique se o livro já não foi emprestado ou em lista de leitura',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage:
+                'An error occurred while updating the book status to loaned. Verify is already loaned or if the book exists.',
           ),
         );
         return;
@@ -54,12 +56,16 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         idContact: event.idContact,
       );
 
-      final loanId = await _loanService.insert(loanModel: loanModel);
+      final loanId = await _loanService.insert(
+        loanModel: loanModel,
+      );
 
       if (loanId < 1) {
         emit(
           LoanInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao criar o empréstimo',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage:
+                'An error occurred while creating the loan',
           ),
         );
         return;
@@ -67,38 +73,46 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
 
       await _createNotification(
         loanId,
-        event.contactName,
-        event.bookTitle,
-        event.loanDate,
         event.devolutionDate,
+        event.notificationTitle,
+        event.notificationBody,
       );
 
+      emit(LoanInsertionInsertedState());
+    } on LocalDatabaseException catch (e) {
       emit(
-        LoanInsertionInsertedState(
-          loanInsertionMessage: 'Empréstimo inserido com sucesso',
+        LoanInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
-    } on LocalDatabaseException catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
+    } on PlatformException catch (e) {
+      emit(
+        LoanInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(LoanInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
+      emit(
+        LoanInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
   Future<void> _createNotification(
     int loanId,
-    String contactName,
-    String bookTitle,
-    DateTime loanDate,
     DateTime devolutionDate,
+    String title,
+    String body,
   ) async {
     final customNotification = CustomNotificationModel(
       id: loanId,
-      title: 'Ei, seu livro tá voltando!',
-      body:
-          'Olá! Só passando pra lembrar que tá na hora de ${contactName.toUpperCase()} devolver o ${bookTitle.toUpperCase()} que você emprestou no dia ${loanDate.toFormattedDate()}.',
+      title: title,
+      body: body,
       notificationChannel: NotificationChannel.loanChannel,
       scheduledDate: devolutionDate,
       payload: '/loan_detail',

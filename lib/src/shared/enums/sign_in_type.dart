@@ -1,8 +1,7 @@
 enum SignInType {
   google,
   apple,
-  facebook
-  ;
+  facebook;
 
   static SignInType toType(int value) {
     return switch (value) {

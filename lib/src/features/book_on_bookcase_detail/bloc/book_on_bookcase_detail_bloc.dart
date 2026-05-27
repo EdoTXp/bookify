@@ -1,5 +1,6 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'book_on_bookcase_detail_event.dart';
@@ -35,11 +36,16 @@ class BookOnBookcaseDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookOnBookcaseDetailErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } on Exception catch (e) {
       emit(
-        BookOnBookcaseDetailErrorState(errorMessage: 'Erro inesperado: $e'),
+        BookOnBookcaseDetailErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }
@@ -59,7 +65,10 @@ class BookOnBookcaseDetailBloc
       if (deletedBook != 1) {
         emit(
           BookOnBookcaseDetailErrorState(
-              errorMessage: 'Erro ao deletar o livro'),
+            errorCode: LocalDatabaseErrorCode.operationFailed,
+            errorDescriptionMessage:
+                'Failed to delete the book from the bookcase. Please try again.',
+          ),
         );
         return;
       }
@@ -68,11 +77,16 @@ class BookOnBookcaseDetailBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookOnBookcaseDetailErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } on Exception catch (e) {
       emit(
-        BookOnBookcaseDetailErrorState(errorMessage: 'Erro inesperado: $e'),
+        BookOnBookcaseDetailErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }

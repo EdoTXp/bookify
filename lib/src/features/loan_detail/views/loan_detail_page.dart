@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_detail_loaded_widget.dart';
 import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
@@ -46,31 +47,33 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
   ) {
     return switch (state) {
       LoanDetailLoadingState() ||
-      LoanDetailFinishedState() =>
-        const CenterCircularProgressIndicator(),
+      LoanDetailFinishedState() => const CenterCircularProgressIndicator(),
       LoanDetailLoadedState(:final loanDto) => LoanDetailLoadedWidget(
-          key: const Key('LoanDetailLoadedState'),
-          loanDto: loanDto,
-          onPressedButton: () async {
-            await ShowDialogService.showAlertDialog(
-              context: context,
-              title: 'finish-loan-title'.i18n(),
-              content: 'finish-loan-description'.i18n(),
-              confirmButtonFunction: () {
-                _bloc.add(
-                  FinishedLoanDetailEvent(
-                    loanId: loanDto.loanModel.id!,
-                    bookId: loanDto.loanModel.bookId,
-                  ),
-                );
-                Navigator.of(context).pop();
-              },
-            );
-          },
-        ),
-      LoanDetailErrorState(:final errorMessage) =>
+        key: const Key('LoanDetailLoadedState'),
+        loanDto: loanDto,
+        onPressedButton: () async {
+          await ShowDialogService.showAlertDialog(
+            context: context,
+            title: 'finish-loan-title'.i18n(),
+            content: 'finish-loan-description'.i18n(),
+            confirmButtonFunction: () {
+              _bloc.add(
+                FinishedLoanDetailEvent(
+                  loanId: loanDto.loanModel.id!,
+                  bookId: loanDto.loanModel.bookId,
+                ),
+              );
+              Navigator.of(context).pop();
+            },
+          );
+        },
+      ),
+      LoanDetailErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

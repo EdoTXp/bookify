@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_on_bookcase_picker/bloc/book_on_bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/book_selector_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -41,23 +42,28 @@ class _BookOnBookcaseWidgetState extends State<BookOnBookcaseWidget> {
   }
 
   Widget _getWidgetOnBookOnBookcasePickerState(
-      BuildContext context, BookOnBookcasePickerState state) {
+    BuildContext context,
+    BookOnBookcasePickerState state,
+  ) {
     return switch (state) {
       BookOnBookcasePickerLoadingState() =>
         const CenterCircularProgressIndicator(),
       BookOnBookcasePickerEmptyState() => Center(
-          child: Text(
-            'empty-bookcase-or-not-contains-books-message'.i18n(),
-            textAlign: TextAlign.center,
-          ),
+        child: Text(
+          'empty-bookcase-or-not-contains-books-message'.i18n(),
+          textAlign: TextAlign.center,
         ),
+      ),
       BookOnBookcasePickerLoadedState(:final books) => BookSelectorWidget(
-          books: books,
-          onSelectBook: (book) => Navigator.pop(context, book),
-        ),
-      BookOnBookcasePickerErrorState(:final errorMessage) =>
+        books: books,
+        onSelectBook: (book) => Navigator.pop(context, book),
+      ),
+      BookOnBookcasePickerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

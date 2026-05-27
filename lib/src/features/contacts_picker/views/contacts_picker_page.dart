@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/platform_error_code/platform_error_code_extension.dart';
 import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.dart';
 import 'package:bookify/src/features/contacts_picker/views/widgets/contacts_picker_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -36,20 +37,24 @@ class _ContactsPickerPageState extends State<ContactsPickerPage> {
     return switch (state) {
       ContactsPickerLoadingState() => const CenterCircularProgressIndicator(),
       ContactsPickerEmptyState() => Center(
-          child: InfoItemStateWidget.withNotFoundState(
-            message: 'no-contacts-found'.i18n(),
-            onPressed: _onRefresh,
-          ),
+        child: InfoItemStateWidget.withNotFoundState(
+          message: 'no-contacts-found'.i18n(),
+          onPressed: _onRefresh,
         ),
+      ),
       ContactsPickerLoadedState(:final contacts) =>
         ContactsPickerLoadedStateWidget(
           key: const Key('ContactsPickerLoadedStateWidget'),
           contacts: contacts,
           onSelectedContact: (contactDto) => Navigator.pop(context, contactDto),
         ),
-      ContactsPickerErrorState(:final errorMessage) => Center(
+      ContactsPickerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
           child: InfoItemStateWidget.withErrorState(
-            message: errorMessage,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _onRefresh,
           ),
         ),

@@ -15,9 +15,11 @@ final class SeparateBooksPickerLoadedState extends SeparateBooksPickerState {
 }
 
 final class SeparateBooksPickerErrorState extends SeparateBooksPickerState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   SeparateBooksPickerErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

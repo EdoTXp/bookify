@@ -6,7 +6,8 @@ class _FloatingActionButtonAlignedCenterDockerLocation
 
   @override
   Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    final double centerWidth = (scaffoldGeometry.scaffoldSize.width -
+    final double centerWidth =
+        (scaffoldGeometry.scaffoldSize.width -
             scaffoldGeometry.floatingActionButtonSize.width) /
         2.0;
 

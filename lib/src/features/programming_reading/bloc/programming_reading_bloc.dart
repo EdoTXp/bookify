@@ -1,3 +1,5 @@
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
@@ -40,13 +42,15 @@ class ProgrammingReadingBloc
     } on StorageException catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorMessage: 'Erro ao buscar a hora para leitura: $e',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -61,15 +65,16 @@ class ProgrammingReadingBloc
 
       final userHourTime = event.userHourTimeModel;
 
-      final userHourTimeInserted =
-          await _userHourTimeRepository.setUserHourTime(
-        userHourTime: userHourTime,
-      );
+      final userHourTimeInserted = await _userHourTimeRepository
+          .setUserHourTime(
+            userHourTime: userHourTime,
+          );
 
       if (userHourTimeInserted == 0) {
         emit(
           ProgrammingReadingErrorState(
-            errorMessage: 'Erro ao inserir buscar a hora de leitura',
+            errorCode: StorageErrorCode.writeFailed,
+            errorDescriptionMessage: 'Failed to insert reading hour time',
           ),
         );
         return;
@@ -77,8 +82,8 @@ class ProgrammingReadingBloc
 
       await _notificationsService.periodicallyShowNotificationWithSpecificDate(
         id: _readingNotificationId,
-        title: 'A hora da leitura chegou!',
-        body: 'A história está esperando a gente!',
+        title: event.readingTimeNotificationTitle,
+        body: event.readingTimeNotificationBody,
         repeatType: userHourTime.repeatHourTimeType,
         scheduledDate: DateTime(
           DateTime.now().year,
@@ -94,13 +99,22 @@ class ProgrammingReadingBloc
     } on StorageException catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorMessage: 'Erro ao inserir a hora de leitura: $e',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on PlatformException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }
@@ -118,10 +132,25 @@ class ProgrammingReadingBloc
       );
 
       emit(ProgrammingReadingRemovedNotificationState());
+    } on StorageException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
+    } on PlatformException catch (e) {
+      emit(
+        ProgrammingReadingErrorState(
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
       emit(
         ProgrammingReadingErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

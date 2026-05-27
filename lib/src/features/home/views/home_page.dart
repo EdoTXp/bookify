@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/rest_client_error_code/rest_client_error_code_extension.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
@@ -21,13 +22,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _bookBloc = context.read<BookBloc>()..add(GotAllBooksEvent());
     _searchEC = TextEditingController();
     _isSearchBarVisible = false;
-    _bookBloc = context.read<BookBloc>();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _bookBloc.add(GotAllBooksEvent());
-    });
   }
 
   @override
@@ -44,23 +41,27 @@ class _HomePageState extends State<HomePage> {
   Widget _getBookStateWidget(BuildContext context, BookState state) {
     return switch (state) {
       BooksLoadingState() => const CenterCircularProgressIndicator(
-          key: Key('BooksLoadingStateWidget'),
-        ),
+        key: Key('BooksLoadingStateWidget'),
+      ),
       BookEmptyState() => Center(
-          key: const Key('BookEmptyStateWidget'),
-          child: InfoItemStateWidget.withNotFoundState(
-            message: 'no-books-found-with-terms'.i18n(),
-            onPressed: _refreshPage,
-          ),
+        key: const Key('BookEmptyStateWidget'),
+        child: InfoItemStateWidget.withNotFoundState(
+          message: 'no-books-found-with-terms'.i18n(),
+          onPressed: _refreshPage,
         ),
+      ),
       BooksLoadedState(:final books) => BooksLoadedStateWidget(
-          key: const Key('BooksLoadedStateWidget'),
-          books: books,
-        ),
-      BookErrorSate(errorMessage: final message) => Center(
+        key: const Key('BooksLoadedStateWidget'),
+        books: books,
+      ),
+      BookErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
+        Center(
           key: const Key('BookErrorSateWidget'),
           child: InfoItemStateWidget.withErrorState(
-            message: message,
+            message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _refreshPage,
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/repositories/loan_repository/loan_repository.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -62,10 +63,11 @@ void main() {
         equals(DateTime(2024, 01, 10)),
       );
       expect(
-          loansModel[0].devolutionDate,
-          equals(
-            DateTime(DateTime.april, 2024),
-          ));
+        loansModel[0].devolutionDate,
+        equals(
+          DateTime(DateTime.april, 2024),
+        ),
+      );
       expect(loansModel[0].idContact, equals('idContact'));
       expect(loansModel[0].bookId, equals('bookId'));
     });
@@ -89,17 +91,19 @@ void main() {
         equals(DateTime(2024, 01, 10)),
       );
       expect(
-          loansModel[0].devolutionDate,
-          equals(
-            DateTime(DateTime.april, 2024),
-          ));
+        loansModel[0].devolutionDate,
+        equals(
+          DateTime(DateTime.april, 2024),
+        ),
+      );
       expect(loansModel[0].idContact, equals('idContact'));
       expect(loansModel[0].bookId, equals('bookId'));
     });
 
     test('get by Id', () async {
-      when(() => loanRepository.getById(loanId: any(named: 'loanId')))
-          .thenAnswer(
+      when(
+        () => loanRepository.getById(loanId: any(named: 'loanId')),
+      ).thenAnswer(
         (_) async => loans[1],
       );
 
@@ -112,10 +116,11 @@ void main() {
         equals(DateTime(2024, 01, 10)),
       );
       expect(
-          loanModel.devolutionDate,
-          equals(
-            DateTime(DateTime.april, 2024),
-          ));
+        loanModel.devolutionDate,
+        equals(
+          DateTime(DateTime.april, 2024),
+        ),
+      );
       expect(loanModel.idContact, equals('idContact'));
       expect(loanModel.bookId, equals('bookId'));
     });
@@ -172,13 +177,30 @@ void main() {
 
   group('test normal CRUD of loan service with error ||', () {
     test('get all -- LocalDatabaseException', () async {
-      when(() => loanRepository.getAll())
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => loanRepository.getAll(),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -187,68 +209,168 @@ void main() {
         () => loanRepository.getLoansByBookTitle(
           title: any(named: 'title'),
         ),
-      ).thenThrow(const LocalDatabaseException('Error on Database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.getLoansByBookTitle(title: 'title'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get by Id -- LocalDatabaseException', () async {
-      when(() => loanRepository.getById(loanId: any(named: 'loanId')))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => loanRepository.getById(loanId: any(named: 'loanId')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.getById(loanId: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('countLoans -- LocalDatabaseException', () async {
       when(
         () => loanRepository.countLoans(),
-      ).thenThrow(const LocalDatabaseException('Error on Database'));
-      
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
+
       expect(
         () async => await loanService.countLoans(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('insert -- LocalDatabaseException', () async {
-      when(() => loanRepository.insert(loanModel: loans[1]))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => loanRepository.insert(loanModel: loans[1]),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.insert(loanModel: loans[1]),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update -- LocalDatabaseException', () async {
-      when(() => loanRepository.update(loanModel: loans[1]))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => loanRepository.update(loanModel: loans[1]),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.update(loanModel: loans[1]),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('delete -- LocalDatabaseException', () async {
-      when(() => loanRepository.delete(loanId: any(named: 'loanId')))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => loanRepository.delete(loanId: any(named: 'loanId')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await loanService.delete(loanId: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
   });

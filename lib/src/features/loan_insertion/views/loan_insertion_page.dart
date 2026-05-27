@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
@@ -186,15 +187,25 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         ),
       );
 
+      final formattedLoanDate = _loanDateEC.text;
+      final contactNameUpper = _contactNameEC.text.toUpperCase();
+      final bookTitleUpper = _bookModel!.title.toUpperCase();
+
       _bloc.add(
         InsertedLoanInsertionEvent(
           idContact: _contact!.id,
           bookId: _bookModel!.id,
-          bookTitle: _bookModel!.title,
-          contactName: _contactNameEC.text,
           observation: _observationEC.text.isEmpty ? null : _observationEC.text,
-          loanDate: _loanDateEC.text.parseFormattedDate(),
+          loanDate: formattedLoanDate.parseFormattedDate(),
           devolutionDate: devolutionDateWithHours,
+          notificationTitle: 'loan-notification-title'.i18n(),
+          notificationBody: 'loan-notification-body'.i18n(
+            [
+              contactNameUpper,
+              bookTitleUpper,
+              formattedLoanDate,
+            ],
+          ),
         ),
       );
 
@@ -240,12 +251,10 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
 
         break;
 
-      case LoanInsertionInsertedState(
-          loanInsertionMessage: final successMessage,
-        ):
+      case LoanInsertionInsertedState():
         SnackbarService.showSnackBar(
           context,
-          successMessage,
+          'loan-insertion-success-snackbar'.i18n(),
           SnackBarType.success,
         );
 
@@ -257,10 +266,13 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
           },
         );
         break;
-      case LoanInsertionErrorState(:final errorMessage):
+      case LoanInsertionErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
 

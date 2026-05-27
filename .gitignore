@@ -38,6 +38,9 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
+# Debug Symbols
+/debug_symbols/
+
 # Symbolication related
 app.*.symbols
 

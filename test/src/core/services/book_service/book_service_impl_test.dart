@@ -8,6 +8,7 @@ import 'package:bookify/src/core/repositories/book_categories_repository/book_ca
 import 'package:bookify/src/core/repositories/books_repository/books_repository.dart';
 import 'package:bookify/src/core/repositories/category_repository/categories_repository.dart';
 import 'package:bookify/src/core/services/book_service/book_service_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -64,22 +65,28 @@ void main() {
       ).thenAnswer((_) async => [bookModel]);
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenAnswer((_) async => categoryModel);
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenAnswer((_) async => categoryModel);
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       final booksModel = await bookService.getAllBook();
 
@@ -95,22 +102,28 @@ void main() {
       ).thenAnswer((_) async => [bookModel]);
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenAnswer((_) async => categoryModel);
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenAnswer((_) async => categoryModel);
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       final booksModel = await bookService.getBooksByTitle(title: 'title');
 
@@ -129,22 +142,28 @@ void main() {
       ).thenAnswer((_) async => bookModel);
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenAnswer((_) async => categoryModel);
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenAnswer((_) async => categoryModel);
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       final completeBookModel = await bookService.getBookById(id: '1');
 
@@ -167,8 +186,10 @@ void main() {
 
     test('insert complete book', () async {
       // setUp all when
-      final completeBookModel = bookModel
-          .copyWith(authors: [authorModel], categories: [categoryModel]);
+      final completeBookModel = bookModel.copyWith(
+        authors: [authorModel],
+        categories: [categoryModel],
+      );
 
       //for book repository
       when(
@@ -178,7 +199,8 @@ void main() {
       //for author repository
       when(
         () => authorsRepository.getAuthorIdByColumnName(
-            authorName: any(named: 'authorName')),
+          authorName: any(named: 'authorName'),
+        ),
       ).thenAnswer((_) async => -1);
 
       when(
@@ -188,7 +210,8 @@ void main() {
       // for category repository
       when(
         () => categoriesRepository.getCategoryIdByColumnName(
-            categoryName: any(named: 'categoryName')),
+          categoryName: any(named: 'categoryName'),
+        ),
       ).thenAnswer((_) async => 1);
 
       // for book authors repository
@@ -207,19 +230,23 @@ void main() {
         ),
       ).thenAnswer((_) async => 1);
 
-      final isInserted =
-          await bookService.insertCompleteBook(bookModel: completeBookModel);
+      final isInserted = await bookService.insertCompleteBook(
+        bookModel: completeBookModel,
+      );
 
       expect(isInserted, equals(1));
     });
 
     test('verify book is exist', () async {
-      when(() => booksRepository.verifyBookIsAlreadyInserted(
-            id: any(named: 'id'),
-          )).thenAnswer((_) async => true);
+      when(
+        () => booksRepository.verifyBookIsAlreadyInserted(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => true);
 
-      final bookIsInserted =
-          await bookService.verifyBookIsAlreadyInserted(id: '1');
+      final bookIsInserted = await bookService.verifyBookIsAlreadyInserted(
+        id: '1',
+      );
       expect(bookIsInserted, isTrue);
     });
 
@@ -235,7 +262,9 @@ void main() {
     test('update status', () async {
       when(
         () => booksRepository.updateBookStatus(
-            id: any(named: 'id'), status: BookStatus.reading),
+          id: any(named: 'id'),
+          status: BookStatus.reading,
+        ),
       ).thenAnswer((_) async => 1);
 
       final bookRowUpdated = await bookService.updateStatus(
@@ -248,7 +277,9 @@ void main() {
     test('update pageCount', () async {
       when(
         () => booksRepository.updateBookPageCount(
-            id: any(named: 'id'), pageCount: any(named: 'pageCount')),
+          id: any(named: 'id'),
+          pageCount: any(named: 'pageCount'),
+        ),
       ).thenAnswer((_) async => 1);
 
       final bookRowUpdated = await bookService.updatePageCount(
@@ -268,8 +299,9 @@ void main() {
     });
 
     test('delete book', () async {
-      when(() => booksRepository.deleteBookById(id: any(named: 'id')))
-          .thenAnswer((_) async => 1);
+      when(
+        () => booksRepository.deleteBookById(id: any(named: 'id')),
+      ).thenAnswer((_) async => 1);
 
       final deleteBookRow = await bookService.deleteBook(id: '1');
 
@@ -281,60 +313,104 @@ void main() {
     test('get all book', () async {
       when(
         () => booksRepository.getAll(),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenAnswer((_) async => categoryModel);
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenAnswer((_) async => categoryModel);
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       expect(
         () async => await bookService.getAllBook(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get book by name', () async {
       when(
         () => booksRepository.getBooksByTitle(title: any(named: 'title')),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenAnswer((_) async => categoryModel);
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenAnswer((_) async => categoryModel);
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       expect(
         () async => await bookService.getBooksByTitle(title: 'title'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -347,46 +423,86 @@ void main() {
       ).thenAnswer((_) async => bookModel);
 
       //for author repository
-      when(() => authorsRepository.getAuthorById(id: any(named: 'id')))
-          .thenAnswer((_) async => authorModel);
+      when(
+        () => authorsRepository.getAuthorById(id: any(named: 'id')),
+      ).thenAnswer((_) async => authorModel);
 
       // for category repository
-      when(() => categoriesRepository.getCategoryById(id: any(named: 'id')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => categoriesRepository.getCategoryById(id: any(named: 'id')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       // for book authors repository
-      when(() => bookAuthorsRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookAuthorsRelationship]);
+      when(
+        () => bookAuthorsRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookAuthorsRelationship]);
 
       // for book categories repository
-      when(() => bookCategoriesRepository.getRelationshipsById(
-              bookId: any(named: 'bookId')))
-          .thenAnswer((_) async => [bookCategoriesRelationship]);
+      when(
+        () => bookCategoriesRepository.getRelationshipsById(
+          bookId: any(named: 'bookId'),
+        ),
+      ).thenAnswer((_) async => [bookCategoriesRelationship]);
 
       expect(
         () async => await bookService.getBookById(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('countBooks', () async {
       when(
         () => booksRepository.countBooks(),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.countBooks(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('insert complete book', () async {
       // setUp all when
-      final completeBookModel = bookModel
-          .copyWith(authors: [authorModel], categories: [categoryModel]);
+      final completeBookModel = bookModel.copyWith(
+        authors: [authorModel],
+        categories: [categoryModel],
+      );
 
       //for book repository
       when(
@@ -396,17 +512,24 @@ void main() {
       //for author repository
       when(
         () => authorsRepository.getAuthorIdByColumnName(
-            authorName: any(named: 'authorName')),
+          authorName: any(named: 'authorName'),
+        ),
       ).thenAnswer((_) async => -1);
 
       when(
         () => authorsRepository.insert(authorModel: authorModel),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       // for category repository
       when(
         () => categoriesRepository.getCategoryIdByColumnName(
-            categoryName: any(named: 'categoryName')),
+          categoryName: any(named: 'categoryName'),
+        ),
       ).thenAnswer((_) async => 1);
 
       // for book authors repository
@@ -428,87 +551,201 @@ void main() {
       expect(
         () async =>
             await bookService.insertCompleteBook(bookModel: completeBookModel),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('verify book is exist', () async {
-      when(() => booksRepository.verifyBookIsAlreadyInserted(
-            id: any(named: 'id'),
-          )).thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => booksRepository.verifyBookIsAlreadyInserted(
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.verifyBookIsAlreadyInserted(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get status', () async {
       when(
         () => booksRepository.getBookStatus(id: any(named: 'id')),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.getBookStatus(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update status', () async {
       when(
         () => booksRepository.updateBookStatus(
-            id: any(named: 'id'), status: BookStatus.reading),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+          id: any(named: 'id'),
+          status: BookStatus.reading,
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.updateStatus(
           id: '1',
           status: BookStatus.reading,
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update pageCount', () async {
       when(
         () => booksRepository.updateBookPageCount(
-            id: any(named: 'id'), pageCount: any(named: 'pageCount')),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+          id: any(named: 'id'),
+          pageCount: any(named: 'pageCount'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.updatePageCount(
           id: '1',
           pageCount: 100,
         ),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get book Image', () async {
       when(
         () => booksRepository.getBookImageById(id: any(named: 'id')),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.getBookImage(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('delete book', () async {
-      when(() => booksRepository.deleteBookById(id: any(named: 'id')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => booksRepository.deleteBookById(id: any(named: 'id')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await bookService.deleteBook(id: '1'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
   });

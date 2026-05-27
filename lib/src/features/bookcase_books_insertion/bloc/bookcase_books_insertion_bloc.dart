@@ -2,6 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bookcase_books_insertion_event.dart';
@@ -32,8 +33,7 @@ class BookcaseBooksInsertionBloc
       if (booksList.isEmpty) {
         emit(
           BookcaseBooksInsertionEmptyState(
-            message:
-                'Nenhum livro cadastrado. Volte à Página início para cadastrar.',
+            reason: BookcaseBooksEmptyReason.noBooksRegistered,
           ),
         );
         return;
@@ -59,16 +59,23 @@ class BookcaseBooksInsertionBloc
                 books: booksList,
               )
             : BookcaseBooksInsertionEmptyState(
-                message:
-                    'Todos os livros cadastrados já foram adicionados nessa estante.',
+                reason: BookcaseBooksEmptyReason.allBooksAlreadyInserted,
               ),
       );
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -90,7 +97,8 @@ class BookcaseBooksInsertionBloc
         if (insertedRow == 0) {
           emit(
             BookcaseBooksInsertionErrorState(
-              errorMessage: 'Erro ao inserir o livro ${book.title}',
+              errorCode: LocalDatabaseErrorCode.operationFailed,
+              errorDescriptionMessage: 'Error on insert book: ${book.title}',
             ),
           );
           return;
@@ -99,11 +107,19 @@ class BookcaseBooksInsertionBloc
 
       emit(BookcaseBooksInsertionInsertedState());
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseBooksInsertionErrorState(
-          errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseBooksInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

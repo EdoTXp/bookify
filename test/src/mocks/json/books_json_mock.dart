@@ -16,11 +16,11 @@ const authorJsonBooksMock = {
         'ratingsCount': 2,
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=IsuqmVlFo30C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=IsuqmVlFo30C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=IsuqmVlFo30C&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=IsuqmVlFo30C&source=gbs_api',
+      },
     },
 
     //2
@@ -38,11 +38,11 @@ const authorJsonBooksMock = {
         'ratingsCount': 58,
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=dFlImpewmqUC&printsec=frontcover&img=1&zoom=1&source=gbs_api'
+              'http://books.google.com/books/content?id=dFlImpewmqUC&printsec=frontcover&img=1&zoom=1&source=gbs_api',
         },
         'infoLink':
-            'http://books.google.com.br/books?id=dFlImpewmqUC&dq=inauthor:J.R.R.+Tolkien%27&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api'
-      }
+            'http://books.google.com.br/books?id=dFlImpewmqUC&dq=inauthor:J.R.R.+Tolkien%27&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api',
+      },
     },
 
     //3
@@ -58,11 +58,11 @@ const authorJsonBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=HTgpAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=HTgpAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=HTgpAwAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=HTgpAwAAQBAJ&source=gbs_api',
+      },
     },
 
     //4
@@ -80,11 +80,11 @@ const authorJsonBooksMock = {
         'ratingsCount': 22,
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=05Cj67qkoaoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=05Cj67qkoaoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=05Cj67qkoaoC&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=05Cj67qkoaoC&source=gbs_api',
+      },
     },
 
     //5
@@ -102,13 +102,13 @@ const authorJsonBooksMock = {
         'ratingsCount': 28,
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=HbG0jd66h3EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=HbG0jd66h3EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'http://books.google.com.br/books?id=HbG0jd66h3EC&dq=inauthor:J.R.R.+Tolkien%27&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api'
-      }
-    }
-  ]
+            'http://books.google.com.br/books?id=HbG0jd66h3EC&dq=inauthor:J.R.R.+Tolkien%27&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api',
+      },
+    },
+  ],
 };
 
 // this is a const list of 5 google books by Author
@@ -127,11 +127,11 @@ const publisherJsonBooksMock = {
         'categories': ['Computers'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=mKW6BAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=mKW6BAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=mKW6BAAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=mKW6BAAAQBAJ&source=gbs_api',
+      },
     },
 
     //2
@@ -147,11 +147,11 @@ const publisherJsonBooksMock = {
         'categories': ['Health & Fitness'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=TjziAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=TjziAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=TjziAwAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=TjziAwAAQBAJ&source=gbs_api',
+      },
     },
 
     //3
@@ -167,11 +167,11 @@ const publisherJsonBooksMock = {
         'categories': ['Mathematics'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=TXblAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=TXblAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=TXblAwAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=TXblAwAAQBAJ&source=gbs_api',
+      },
     },
 
     //4
@@ -187,11 +187,11 @@ const publisherJsonBooksMock = {
         'categories': ['Computers'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=JMKbBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=JMKbBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=JMKbBAAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=JMKbBAAAQBAJ&source=gbs_api',
+      },
     },
 
     //5
@@ -207,13 +207,13 @@ const publisherJsonBooksMock = {
         'categories': ['Computers'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=I0MlDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=I0MlDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=I0MlDQAAQBAJ&source=gbs_api'
-      }
-    }
-  ]
+            'https://play.google.com/store/books/details?id=I0MlDQAAQBAJ&source=gbs_api',
+      },
+    },
+  ],
 };
 
 // this is a const list of 5 google books
@@ -234,11 +234,11 @@ const allBooksMock = {
         'ratingsCount': 1,
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=5unrAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=5unrAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=5unrAgAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=5unrAgAAQBAJ&source=gbs_api',
+      },
     },
 
     //2
@@ -254,11 +254,11 @@ const allBooksMock = {
         'categories': ['Health & Fitness'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=Pm4uBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=Pm4uBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=Pm4uBAAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=Pm4uBAAAQBAJ&source=gbs_api',
+      },
     },
 
     //3
@@ -271,8 +271,8 @@ const allBooksMock = {
             'Desde pequenos, descobrimos que os amigos são um bem precioso. Muitas crianças logo encontram seus pares. Outras têm mais dificuldades em se relacionar e se sentem sós, sem amigos. Artur era um desses. Todos os dias esperava na estação de trem que alguém viesse visitá-lo, mas nunca vinha ninguém. Até o dia em que ele resolveu procurar seus amigos em outras estações. As ilustrações, do próprio autor, enfatizam o texto, enchendo as páginas de amigos.',
         'pageCount': 28,
         'infoLink':
-            'http://books.google.com.br/books?id=sQmtPwAACAAJ&dq=*&hl=&source=gbs_api'
-      }
+            'http://books.google.com.br/books?id=sQmtPwAACAAJ&dq=*&hl=&source=gbs_api',
+      },
     },
 
     //4
@@ -283,7 +283,7 @@ const allBooksMock = {
         'authors': [
           'Maria Cecília de Souza Minayo',
           'Edinilsa Ramos de Souza',
-          'Patrícia Constantino'
+          'Patrícia Constantino',
         ],
         'publisher': 'SciELO - Editora FIOCRUZ',
         'description':
@@ -292,11 +292,11 @@ const allBooksMock = {
         'categories': ['Technology & Engineering'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=T-jrAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=T-jrAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=T-jrAgAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=T-jrAgAAQBAJ&source=gbs_api',
+      },
     },
 
     //5
@@ -313,13 +313,13 @@ const allBooksMock = {
         'categories': ['Juvenile Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=e6-tAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=e6-tAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=e6-tAwAAQBAJ&source=gbs_api'
-      }
-    }
-  ]
+            'https://play.google.com/store/books/details?id=e6-tAwAAQBAJ&source=gbs_api',
+      },
+    },
+  ],
 };
 
 // this is a const list of 5 google books by title
@@ -338,11 +338,11 @@ const titleBooksMock = {
         'categories': ['Computers'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=RY7kp2dT0jwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=RY7kp2dT0jwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=RY7kp2dT0jwC&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=RY7kp2dT0jwC&source=gbs_api',
+      },
     },
 
     //2
@@ -358,11 +358,11 @@ const titleBooksMock = {
         'categories': ['Architecture'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=CWawDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=CWawDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=CWawDAAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=CWawDAAAQBAJ&source=gbs_api',
+      },
     },
 
     //3
@@ -378,11 +378,11 @@ const titleBooksMock = {
         'categories': ['Architecture'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=o1rwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=o1rwDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=o1rwDwAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=o1rwDwAAQBAJ&source=gbs_api',
+      },
     },
 
     //4
@@ -398,11 +398,11 @@ const titleBooksMock = {
         'categories': ['Architecture'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=-DfnDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=-DfnDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=-DfnDwAAQBAJ&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=-DfnDwAAQBAJ&source=gbs_api',
+      },
     },
 
     //5
@@ -413,7 +413,7 @@ const titleBooksMock = {
         'authors': [
           'Maria Aldecy Rodrigues de Lima',
           'Cleidson de Jesus Rocha',
-          'Ana Flávia de Lima Rocha'
+          'Ana Flávia de Lima Rocha',
         ],
         'publisher': 'Editora CRV',
         'description':
@@ -422,13 +422,13 @@ const titleBooksMock = {
         'categories': ['Education'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=m61TEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=m61TEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=m61TEAAAQBAJ&source=gbs_api'
-      }
-    }
-  ]
+            'https://play.google.com/store/books/details?id=m61TEAAAQBAJ&source=gbs_api',
+      },
+    },
+  ],
 };
 
 // this is a const list of 5 google books by Category
@@ -447,11 +447,11 @@ const categoryBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=OajEDNw4lMUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=OajEDNw4lMUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=OajEDNw4lMUC&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=OajEDNw4lMUC&source=gbs_api',
+      },
     },
 
     //2
@@ -467,11 +467,11 @@ const categoryBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=AUbf_9h5D6oC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=AUbf_9h5D6oC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'https://play.google.com/store/books/details?id=AUbf_9h5D6oC&source=gbs_api'
-      }
+            'https://play.google.com/store/books/details?id=AUbf_9h5D6oC&source=gbs_api',
+      },
     },
 
     //3
@@ -487,11 +487,11 @@ const categoryBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=D0gVVh_FLJ8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=D0gVVh_FLJ8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'http://books.google.com.br/books?id=D0gVVh_FLJ8C&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api'
-      }
+            'http://books.google.com.br/books?id=D0gVVh_FLJ8C&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api',
+      },
     },
 
     //4
@@ -507,11 +507,11 @@ const categoryBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=nAQkDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=nAQkDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'http://books.google.com.br/books?id=nAQkDwAAQBAJ&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api'
-      }
+            'http://books.google.com.br/books?id=nAQkDwAAQBAJ&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api',
+      },
     },
 
     //5
@@ -527,13 +527,13 @@ const categoryBooksMock = {
         'categories': ['Fiction'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=1Uuexwzku9gC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=1Uuexwzku9gC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
-            'http://books.google.com.br/books?id=1Uuexwzku9gC&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api'
-      }
-    }
-  ]
+            'http://books.google.com.br/books?id=1Uuexwzku9gC&dq=subject:Fiction&hl=&as_ebook=1&as_pt=BOOKS&source=gbs_api',
+      },
+    },
+  ],
 };
 
 // this is a const list of Google book by ISBN
@@ -551,11 +551,11 @@ const isbnJsonBookMock = {
         'categories': ['Computers'],
         'imageLinks': {
           'thumbnail':
-              'http://books.google.com/books/content?id=BOaPDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+              'http://books.google.com/books/content?id=BOaPDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
         },
         'infoLink':
             'http://books.google.com.br/books?id=BOaPDwAAQBAJ&dq=isbn:9788550808161&hl=&source=gbs_api',
-      }
-    }
-  ]
+      },
+    },
+  ],
 };

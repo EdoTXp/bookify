@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'my_books_event.dart';
@@ -31,9 +32,19 @@ class MyBooksBloc extends Bloc<MyBooksEvent, MyBooksState> {
 
       emit(MyBooksLoadedState(books: books));
     } on LocalDatabaseException catch (e) {
-      emit(MyBooksErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        MyBooksErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(MyBooksErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        MyBooksErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -44,7 +55,9 @@ class MyBooksBloc extends Bloc<MyBooksEvent, MyBooksState> {
     try {
       emit(MyBooksLoadingState());
 
-      final books = await _bookService.getBooksByTitle(title: event.searchQuery);
+      final books = await _bookService.getBooksByTitle(
+        title: event.searchQuery,
+      );
 
       if (books.isEmpty) {
         emit(MyBooksNotFoundState());
@@ -53,9 +66,19 @@ class MyBooksBloc extends Bloc<MyBooksEvent, MyBooksState> {
 
       emit(MyBooksLoadedState(books: books));
     } on LocalDatabaseException catch (e) {
-      emit(MyBooksErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        MyBooksErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(MyBooksErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        MyBooksErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

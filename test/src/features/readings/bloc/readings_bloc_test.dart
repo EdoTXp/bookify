@@ -7,6 +7,7 @@ import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -135,7 +136,10 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(GotAllReadingsEvent()),
@@ -236,13 +240,14 @@ void main() {
     blocTest(
       'Test FoundReadingByBookTitleEvent work when readings are empty',
       build: () => readingsBloc,
-      setUp: () => when(
-        () => readingService.getReadingsByBookTitle(
-          title: any(named: 'title'),
-        ),
-      ).thenAnswer(
-        (_) async => [],
-      ),
+      setUp: () =>
+          when(
+            () => readingService.getReadingsByBookTitle(
+              title: any(named: 'title'),
+            ),
+          ).thenAnswer(
+            (_) async => [],
+          ),
       act: (bloc) => bloc.add(
         FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
@@ -263,19 +268,20 @@ void main() {
     blocTest(
       'Test FoundReadingByBookTitleEvent work when reading id is empty',
       build: () => readingsBloc,
-      setUp: () => when(
-        () => readingService.getReadingsByBookTitle(
-          title: any(named: 'title'),
-        ),
-      ).thenAnswer(
-        (_) async => [
-          ReadingModel(
-            pagesReaded: 100,
-            lastReadingDate: DateTime(2024, 03, 06),
-            bookId: 'bookId',
+      setUp: () =>
+          when(
+            () => readingService.getReadingsByBookTitle(
+              title: any(named: 'title'),
+            ),
+          ).thenAnswer(
+            (_) async => [
+              ReadingModel(
+                pagesReaded: 100,
+                lastReadingDate: DateTime(2024, 03, 06),
+                bookId: 'bookId',
+              ),
+            ],
           ),
-        ],
-      ),
       act: (bloc) => bloc.add(
         FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
@@ -297,8 +303,10 @@ void main() {
       'Test FoundReadingByBookTitleEvent work when throw LocalDatabaseException',
       build: () => readingsBloc,
       setUp: () {
-        when(() => readingService.getReadingsByBookTitle(
-            title: any(named: 'title'))).thenAnswer(
+        when(
+          () =>
+              readingService.getReadingsByBookTitle(title: any(named: 'title')),
+        ).thenAnswer(
           (_) async => [
             ReadingModel(
               id: 1,
@@ -313,15 +321,20 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(
         FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
-        verify(() => readingService.getReadingsByBookTitle(
-            title: any(named: 'title'))).called(1);
+        verify(
+          () =>
+              readingService.getReadingsByBookTitle(title: any(named: 'title')),
+        ).called(1);
         verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
       },
       expect: () => [
@@ -334,8 +347,10 @@ void main() {
       'Test FoundReadingByBookTitleEvent work when throw Generic Exception',
       build: () => readingsBloc,
       setUp: () {
-        when(() => readingService.getReadingsByBookTitle(
-            title: any(named: 'title'))).thenAnswer(
+        when(
+          () =>
+              readingService.getReadingsByBookTitle(title: any(named: 'title')),
+        ).thenAnswer(
           (_) async => [
             ReadingModel(
               id: 1,
@@ -357,8 +372,10 @@ void main() {
         FoundReadingByBookTitleEvent(searchQueryName: 'searchQueryName'),
       ),
       verify: (_) {
-        verify(() => readingService.getReadingsByBookTitle(
-            title: any(named: 'title'))).called(1);
+        verify(
+          () =>
+              readingService.getReadingsByBookTitle(title: any(named: 'title')),
+        ).called(1);
         verify(() => bookService.getBookById(id: any(named: 'id'))).called(1);
       },
       expect: () => [

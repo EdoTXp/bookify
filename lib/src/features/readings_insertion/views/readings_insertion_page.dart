@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_insertion/bloc/readings_insertion_bloc.dart';
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -82,10 +83,13 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
           },
         );
         break;
-      case ReadingsInsertionErrorState(:final errorMessage):
+      case ReadingsInsertionErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
 
@@ -167,7 +171,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
                                 1,
                                 2000,
                                 'enter-pages-between-1-and-2000'.i18n(),
-                              )
+                              ),
                             ],
                           ),
                           onTapOutside: (_) => context.unfocus(),

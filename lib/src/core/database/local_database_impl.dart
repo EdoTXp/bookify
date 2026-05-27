@@ -1,6 +1,7 @@
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -29,7 +30,12 @@ class LocalDatabaseImpl implements LocalDatabase {
         version: 1,
       );
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -65,7 +71,12 @@ class LocalDatabaseImpl implements LocalDatabase {
       );
       return queryItems;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -95,7 +106,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return queryItems;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -115,7 +131,12 @@ class LocalDatabaseImpl implements LocalDatabase {
       );
       return queryItem.first;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -142,7 +163,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return queryItems;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -165,7 +191,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return queryItems;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -190,7 +221,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return queryItems.first;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -209,7 +245,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return newId;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -235,7 +276,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return rowUpdated;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -247,13 +293,21 @@ class LocalDatabaseImpl implements LocalDatabase {
   }) async {
     try {
       final db = await database;
-      final queryMap = await db!
-          .query(table, where: '$column = ?', whereArgs: [columnValue]);
+      final queryMap = await db!.query(
+        table,
+        where: '$column = ?',
+        whereArgs: [columnValue],
+      );
 
       final itemFound = queryMap.isNotEmpty;
       return itemFound;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -272,7 +326,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return 0;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -295,7 +354,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return 0;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -319,7 +383,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return rowCount;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -345,7 +414,12 @@ class LocalDatabaseImpl implements LocalDatabase {
 
       return rowCount;
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
   }
 
@@ -355,7 +429,40 @@ class LocalDatabaseImpl implements LocalDatabase {
       final db = await database;
       await db!.close();
     } on DatabaseException catch (e) {
-      throw LocalDatabaseException(e.toString());
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
     }
+  }
+
+  LocalDatabaseException _toLocalDatabaseMapper(DatabaseException e) {
+    if (e.isOpenFailedError()) {
+      return LocalDatabaseException(
+        LocalDatabaseErrorCode.openFailed,
+        descriptionMessage: e.toString(),
+      );
+    }
+
+    if (e.isUniqueConstraintError()) {
+      return LocalDatabaseException(
+        LocalDatabaseErrorCode.uniqueConstraint,
+        descriptionMessage: e.toString(),
+      );
+    }
+
+    if (e.isNotNullConstraintError()) {
+      return LocalDatabaseException(
+        LocalDatabaseErrorCode.notNullConstraint,
+        descriptionMessage: e.toString(),
+      );
+    }
+
+    return LocalDatabaseException(
+      LocalDatabaseErrorCode.unknown,
+      descriptionMessage: e.toString(),
+    );
   }
 }

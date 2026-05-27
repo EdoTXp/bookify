@@ -2,6 +2,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/repositories/reading_repository/reading_repository_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -77,8 +78,9 @@ void main() {
         ),
       ).thenAnswer((_) async => readingsMap);
 
-      final readings =
-          await readingRepository.getReadingsByBookTitle(title: 'title');
+      final readings = await readingRepository.getReadingsByBookTitle(
+        title: 'title',
+      );
 
       expect(readings.length, equals(3));
       expect(readings[0].id, equals(1));
@@ -93,10 +95,13 @@ void main() {
     });
 
     test('get by Id', () async {
-      when(() => localDatabase.getItemById(
+      when(
+        () => localDatabase.getItemById(
           table: any(named: 'table'),
           idColumn: any(named: 'idColumn'),
-          id: any(named: 'id'))).thenAnswer(
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer(
         (_) async => readingsMap.where((element) => element['id'] == 2).first,
       );
 
@@ -185,15 +190,21 @@ void main() {
           orderColumn: any(named: 'orderColumn'),
           orderBy: any(named: 'orderBy'),
         ),
-      ).thenAnswer((_) async => [
-            {'id': 1}
-          ]);
+      ).thenAnswer(
+        (_) async => [
+          {'id': 1},
+        ],
+      );
 
       expect(
         () async => await readingRepository.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível encontrar as leituras no database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
@@ -204,12 +215,28 @@ void main() {
           orderColumn: any(named: 'orderColumn'),
           orderBy: any(named: 'orderBy'),
         ),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingRepository.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -225,16 +252,22 @@ void main() {
           whereArgs: any(named: 'whereArgs'),
           usingLikeCondition: true,
         ),
-      ).thenAnswer((_) async => [
-            {'id': 1}
-          ]);
+      ).thenAnswer(
+        (_) async => [
+          {'id': 1},
+        ],
+      );
 
       expect(
         () async =>
             await readingRepository.getReadingsByBookTitle(title: 'title'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException &&
-            e.message == 'Impossível encontrar as leituras no database'),
+        throwsA(
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
+        ),
       );
     });
 
@@ -250,44 +283,81 @@ void main() {
           whereArgs: any(named: 'whereArgs'),
           usingLikeCondition: true,
         ),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async =>
             await readingRepository.getReadingsByBookTitle(title: 'title'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('getById -- TypeError', () async {
-      when(() => localDatabase.getItemById(
+      when(
+        () => localDatabase.getItemById(
           table: any(named: 'table'),
           idColumn: any(named: 'idColumn'),
-          id: any(named: 'id'))).thenAnswer((_) async => {'id': 1});
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'id': 1});
 
       expect(
         () async => await readingRepository.getById(readingId: 1),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException &&
-              e.message == 'Impossível encontrar a leitura no database',
+          isA<LocalDatabaseException>().having(
+            (e) => e.code,
+            'code',
+            LocalDatabaseErrorCode.conversionFailed,
+          ),
         ),
       );
     });
 
     test('getById -- LocalDatabaseException', () async {
-      when(() => localDatabase.getItemById(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingRepository.getById(readingId: 1),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database',
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
         ),
       );
     });
@@ -297,65 +367,127 @@ void main() {
         () => localDatabase.countItems(
           table: any(named: 'table'),
         ),
-      ).thenThrow(const LocalDatabaseException('Error on database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingRepository.countReadings(),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database',
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
         ),
       );
     });
 
     test('insert -- LocalDatabaseException', () async {
-      when(() => localDatabase.insert(
-              table: any(named: 'table'), values: any(named: 'values')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingRepository.insert(
-            readingModel: ReadingModel.fromMap(readingsMap[0])),
+          readingModel: ReadingModel.fromMap(readingsMap[0]),
+        ),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database',
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
         ),
       );
     });
 
     test('update -- LocalDatabaseException', () async {
-      when(() => localDatabase.update(
+      when(
+        () => localDatabase.update(
           table: any(named: 'table'),
           values: any(named: 'values'),
           idColumn: any(named: 'idColumn'),
-          id: any(named: 'id'))).thenThrow(
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
         const LocalDatabaseException(
-          'Error on database',
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
         ),
       );
 
       expect(
         () async => await readingRepository.update(
-            readingModel: ReadingModel.fromMap(readingsMap[0])),
+          readingModel: ReadingModel.fromMap(readingsMap[0]),
+        ),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database',
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
         ),
       );
     });
 
     test('delete -- LocalDatabaseException', () async {
-      when(() => localDatabase.delete(
-              table: any(named: 'table'),
-              idColumn: any(named: 'idColumn'),
-              id: any(named: 'id')))
-          .thenThrow(const LocalDatabaseException('Error on database'));
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingRepository.delete(readingId: 1),
         throwsA(
-          (Exception e) =>
-              e is LocalDatabaseException && e.message == 'Error on database',
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
         ),
       );
     });

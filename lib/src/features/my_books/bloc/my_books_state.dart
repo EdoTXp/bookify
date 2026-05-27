@@ -15,7 +15,11 @@ final class MyBooksLoadedState extends MyBooksState {
 final class MyBooksNotFoundState extends MyBooksState {}
 
 final class MyBooksErrorState extends MyBooksState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
-  MyBooksErrorState({required this.errorMessage});
+  MyBooksErrorState({
+    required this.errorCode,
+    required this.errorDescriptionMessage,
+  });
 }

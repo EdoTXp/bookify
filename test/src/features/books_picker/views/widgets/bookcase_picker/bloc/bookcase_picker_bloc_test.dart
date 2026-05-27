@@ -4,6 +4,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -51,21 +52,26 @@ void main() {
       'test if GotAllBookcasePickerEvent work',
       build: () => bookcasePickerBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => bookcasesModel);
-        when(() => bookcaseService.getBookIdForImagePreview(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenAnswer((_) async => 'bookId');
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => bookcasesModel);
+        when(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 'bookId');
 
-        when(() => bookService.getBookImage(id: any(named: 'id')))
-            .thenAnswer((_) async => 'bookImg');
+        when(
+          () => bookService.getBookImage(id: any(named: 'id')),
+        ).thenAnswer((_) async => 'bookImg');
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verify(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         ).called(2);
         verify(() => bookService.getBookImage(id: any(named: 'id'))).called(2);
       },
@@ -79,15 +85,17 @@ void main() {
       'test if GotAllBookcasePickerEvent work when is empty List',
       build: () => bookcasePickerBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => []);
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => []);
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -101,20 +109,23 @@ void main() {
       'test if GotAllBookcasePickerEvent work when bookcaseId is null',
       build: () => bookcasePickerBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases()).thenAnswer((_) async => [
-              const BookcaseModel(
-                name: 'name',
-                description: 'description',
-                color: Colors.black,
-              ),
-            ]);
+        when(() => bookcaseService.getAllBookcases()).thenAnswer(
+          (_) async => [
+            const BookcaseModel(
+              name: 'name',
+              description: 'description',
+              color: Colors.black,
+            ),
+          ],
+        );
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -128,15 +139,20 @@ void main() {
       'test if GotAllBookcasePickerEvent work when throw LocalDatabaseException',
       build: () => bookcasePickerBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenThrow(const LocalDatabaseException('Error on Database'));
+        when(() => bookcaseService.getAllBookcases()).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -150,15 +166,17 @@ void main() {
       'test if GotAllBookcasePickerEvent work when throw Exception',
       build: () => bookcasePickerBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenThrow(Exception('Generic Error'));
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenThrow(Exception('Generic Error'));
       },
       act: (bloc) => bloc.add(GotAllBookcasesPickerEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },

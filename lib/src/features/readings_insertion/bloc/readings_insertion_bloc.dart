@@ -3,6 +3,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'readings_insertion_event.dart';
@@ -37,7 +38,9 @@ class ReadingsInsertionBloc
         if (bookPageCountUpdated != 1) {
           emit(
             ReadingsInsertionErrorState(
-              errorMessage: 'Ocorreu um erro ao atualizar as páginas do livro.',
+              errorCode: LocalDatabaseErrorCode.operationFailed,
+              errorDescriptionMessage:
+                  'An error occurred while updating the book page count.',
             ),
           );
           return;
@@ -51,7 +54,9 @@ class ReadingsInsertionBloc
       if (bookStatusUpdated != 1) {
         emit(
           ReadingsInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao atualizar o livro.',
+            errorCode: LocalDatabaseErrorCode.operationFailed,
+            errorDescriptionMessage:
+                'An error occurred while updating the book status.',
           ),
         );
         return;
@@ -67,19 +72,29 @@ class ReadingsInsertionBloc
       if (newReadingId < 1) {
         emit(
           ReadingsInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao inserir a leitura.',
+            errorCode: LocalDatabaseErrorCode.operationFailed,
+            errorDescriptionMessage:
+                'An error occurred while inserting the reading.',
           ),
         );
         return;
       }
 
-      emit(ReadingsInsertionInsertedState());  
+      emit(ReadingsInsertionInsertedState());
     } on LocalDatabaseException catch (e) {
-      emit(ReadingsInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
+      emit(
+        ReadingsInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(ReadingsInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
+      emit(
+        ReadingsInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

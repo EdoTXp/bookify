@@ -10,6 +10,7 @@ import 'package:bookify/src/core/services/app_services/contacts_service/contacts
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -144,7 +145,10 @@ void main() {
             id: any(named: 'id'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(
@@ -413,7 +417,12 @@ void main() {
           () => loanService.delete(
             loanId: any(named: 'loanId'),
           ),
-        ).thenThrow(const LocalDatabaseException('Error on Database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(
         FinishedLoanDetailEvent(

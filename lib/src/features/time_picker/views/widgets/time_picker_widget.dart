@@ -118,7 +118,7 @@ class TimePickerWidget extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

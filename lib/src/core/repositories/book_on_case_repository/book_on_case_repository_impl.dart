@@ -2,6 +2,7 @@ import 'package:bookify/src/shared/constants/database_scripts/database_scripts.d
 import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/repositories/book_on_case_repository/book_on_case_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   final LocalDatabase _database;
@@ -38,8 +39,11 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
 
       final bookId = bookRelationshipMap['bookId'] as String?;
       return bookId;
-    } on TypeError {
-      throw const LocalDatabaseException('Impossível converter o dado do database');
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
+      );
     } on LocalDatabaseException {
       rethrow;
     }
@@ -48,11 +52,13 @@ class BookOnCaseRepositoryImpl implements BookOnCaseRepository {
   @override
   Future<int> insert({required int bookcaseId, required String bookId}) async {
     try {
-      final rowInserted =
-          await _database.insert(table: _bookOnCaseTableName, values: {
-        'bookId': bookId,
-        'bookcaseId': bookcaseId,
-      });
+      final rowInserted = await _database.insert(
+        table: _bookOnCaseTableName,
+        values: {
+          'bookId': bookId,
+          'bookcaseId': bookcaseId,
+        },
+      );
 
       return rowInserted;
     } on LocalDatabaseException {

@@ -13,12 +13,14 @@ void main() {
   });
 
   group('Test double to locale-specific String conversion ||', () {
-    test('should format number for pt_BR locale with default decimal digits',
-        () {
-      Intl.defaultLocale = 'pt_BR';
-      final formattedNumber = number.toLocaleDecimalFormat();
-      expect(formattedNumber, '1.234,56');
-    });
+    test(
+      'should format number for pt_BR locale with default decimal digits',
+      () {
+        Intl.defaultLocale = 'pt_BR';
+        final formattedNumber = number.toLocaleDecimalFormat();
+        expect(formattedNumber, '1.234,56');
+      },
+    );
 
     test('should format number for it_IT locale with 2 decimal digits', () {
       final formattedNumber = number.toLocaleDecimalFormat(

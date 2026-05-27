@@ -6,7 +6,7 @@ import 'package:localization/localization.dart';
 
 class HourTimeSelectedWidget extends StatefulWidget {
   final void Function(TimeOfDay startingTime, TimeOfDay endingTime)
-      onSelectedTimes;
+  onSelectedTimes;
   final UserHourTimeModel? userHourTimeModel;
 
   const HourTimeSelectedWidget({
@@ -45,10 +45,12 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
     return Material(
       child: InkWell(
         onTap: () async {
-          final times = await Navigator.of(context).pushNamed(
-            TimePickerPage.routeName,
-            arguments: widget.userHourTimeModel,
-          ) as List<TimeOfDay>?;
+          final times =
+              await Navigator.of(context).pushNamed(
+                    TimePickerPage.routeName,
+                    arguments: widget.userHourTimeModel,
+                  )
+                  as List<TimeOfDay>?;
 
           if (times != null) {
             setState(() {

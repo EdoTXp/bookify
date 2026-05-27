@@ -27,16 +27,17 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
   (
     String selectedAllText,
     IconData selectedAllIcon,
-  ) _getAllIconButtonProperties() {
+  )
+  _getAllIconButtonProperties() {
     return switch (_isSelectedAll) {
       true => (
-          'deselect-all-button'.i18n(),
-          Icons.deselect_rounded,
-        ),
+        'deselect-all-button'.i18n(),
+        Icons.deselect_rounded,
+      ),
       false => (
-          'select-all-button'.i18n(),
-          Icons.select_all_rounded,
-        ),
+        'select-all-button'.i18n(),
+        Icons.select_all_rounded,
+      ),
     };
   }
 
@@ -80,8 +81,9 @@ class _SelectedItemRowState extends State<SelectedItemRow> {
           IconButton(
             key: const Key('DeleteSelectedItemsButton'),
             onPressed: widget.onPressedDeleteButton,
-            tooltip:
-                'delete-item-button-tooltip'.i18n([itemText.toLowerCase()]),
+            tooltip: 'delete-item-button-tooltip'.i18n([
+              itemText.toLowerCase(),
+            ]),
             icon: const Icon(Icons.delete_rounded),
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/book_selector_widget.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/separate_books_picker/bloc/separate_books_picker_bloc.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -37,27 +38,32 @@ class _SeparateBooksPickerWidgetState extends State<SeparateBooksPickerWidget> {
   }
 
   Widget _getWidgetOnBookcasePickerState(
-      BuildContext context, SeparateBooksPickerState state) {
+    BuildContext context,
+    SeparateBooksPickerState state,
+  ) {
     return switch (state) {
       SeparateBooksPickerLoadingState() =>
         const CenterCircularProgressIndicator(),
       SeparateBooksPickerEmptyState() => Center(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'no-books-to-add-message'.i18n(),
-              textAlign: TextAlign.center,
-            ),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            'no-books-to-add-message'.i18n(),
+            textAlign: TextAlign.center,
           ),
         ),
+      ),
       SeparateBooksPickerLoadedState(:final books) => BookSelectorWidget(
-          key: const Key('BookSelectorWidget'),
-          books: books,
-          onSelectBook: (book) => Navigator.pop(context, book),
-        ),
-      SeparateBooksPickerErrorState(:final errorMessage) =>
+        key: const Key('BookSelectorWidget'),
+        books: books,
+        onSelectBook: (book) => Navigator.pop(context, book),
+      ),
+      SeparateBooksPickerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

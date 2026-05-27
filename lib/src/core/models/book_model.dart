@@ -10,7 +10,7 @@ enum BookStatus {
     return switch (this) {
       BookStatus.library => 1,
       BookStatus.reading => 2,
-      BookStatus.loaned => 3
+      BookStatus.loaned => 3,
     };
   }
 

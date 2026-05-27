@@ -11,8 +11,8 @@ class BookcaseServiceImpl implements BookcaseService {
   BookcaseServiceImpl({
     required BookcaseRepository bookcaseRepository,
     required BookOnCaseRepository bookOnCaseRepository,
-  })  : _bookcaseRepository = bookcaseRepository,
-        _bookOnCaseRepository = bookOnCaseRepository;
+  }) : _bookcaseRepository = bookcaseRepository,
+       _bookOnCaseRepository = bookOnCaseRepository;
 
   @override
   Future<List<BookcaseModel>> getAllBookcases() async {
@@ -37,8 +37,9 @@ class BookcaseServiceImpl implements BookcaseService {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getAllBookcaseRelationships(
-      {required int bookcaseId}) async {
+  Future<List<Map<String, dynamic>>> getAllBookcaseRelationships({
+    required int bookcaseId,
+  }) async {
     try {
       final bookcasesRelationships = await _bookOnCaseRepository
           .getBooksOnCaseRelationship(bookcaseId: bookcaseId);
@@ -49,14 +50,16 @@ class BookcaseServiceImpl implements BookcaseService {
   }
 
   @override
-  Future<int> deleteBookcaseRelationship(
-      {required int bookcaseId, required String bookId}) async {
+  Future<int> deleteBookcaseRelationship({
+    required int bookcaseId,
+    required String bookId,
+  }) async {
     try {
-      final bookcaseRelationshipRowDeleted =
-          await _bookOnCaseRepository.deleteBookcaseRelationship(
-        bookcaseId: bookcaseId,
-        bookId: bookId,
-      );
+      final bookcaseRelationshipRowDeleted = await _bookOnCaseRepository
+          .deleteBookcaseRelationship(
+            bookcaseId: bookcaseId,
+            bookId: bookId,
+          );
       return bookcaseRelationshipRowDeleted;
     } on LocalDatabaseException {
       rethrow;
@@ -78,8 +81,9 @@ class BookcaseServiceImpl implements BookcaseService {
   @override
   Future<BookcaseModel> getBookcaseById({required int bookcaseId}) async {
     try {
-      final bookcaseModel =
-          await _bookcaseRepository.getById(bookcaseId: bookcaseId);
+      final bookcaseModel = await _bookcaseRepository.getById(
+        bookcaseId: bookcaseId,
+      );
       return bookcaseModel;
     } on LocalDatabaseException {
       rethrow;
@@ -89,8 +93,9 @@ class BookcaseServiceImpl implements BookcaseService {
   @override
   Future<int> insertBookcase({required BookcaseModel bookcaseModel}) async {
     try {
-      final newBookcaseId =
-          _bookcaseRepository.insert(bookcaseModel: bookcaseModel);
+      final newBookcaseId = _bookcaseRepository.insert(
+        bookcaseModel: bookcaseModel,
+      );
       return newBookcaseId;
     } on LocalDatabaseException {
       rethrow;

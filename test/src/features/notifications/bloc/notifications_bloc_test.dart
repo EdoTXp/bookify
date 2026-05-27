@@ -30,19 +30,20 @@ void main() {
     blocTest(
       'Test GotNotificationsEvent work',
       build: () => notificationsBloc,
-      setUp: () => when(
-        () => notificationsService.getNotifications(),
-      ).thenAnswer(
-        (_) async => [
-          CustomNotificationModel(
-            id: 1,
-            notificationChannel: NotificationChannel.loanChannel,
-            title: 'title',
-            body: 'body',
-            scheduledDate: DateTime.now(),
+      setUp: () =>
+          when(
+            () => notificationsService.getNotifications(),
+          ).thenAnswer(
+            (_) async => [
+              CustomNotificationModel(
+                id: 1,
+                notificationChannel: NotificationChannel.loanChannel,
+                title: 'title',
+                body: 'body',
+                scheduledDate: DateTime.now(),
+              ),
+            ],
           ),
-        ],
-      ),
       act: (bloc) => bloc.add(
         GotNotificationsEvent(),
       ),
@@ -58,11 +59,12 @@ void main() {
     blocTest(
       'Test GotNotificationsEvent work when notifications is empty',
       build: () => notificationsBloc,
-      setUp: () => when(
-        () => notificationsService.getNotifications(),
-      ).thenAnswer(
-        (_) async => [],
-      ),
+      setUp: () =>
+          when(
+            () => notificationsService.getNotifications(),
+          ).thenAnswer(
+            (_) async => [],
+          ),
       act: (bloc) => bloc.add(
         GotNotificationsEvent(),
       ),

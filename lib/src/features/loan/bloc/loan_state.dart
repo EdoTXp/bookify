@@ -15,7 +15,11 @@ final class LoanLoadedState extends LoanState {
 }
 
 final class LoanErrorState extends LoanState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
-  LoanErrorState({required this.errorMessage});
+  LoanErrorState({
+    required this.errorCode,
+    this.errorDescriptionMessage,
+  });
 }

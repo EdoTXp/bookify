@@ -80,56 +80,58 @@ class _TimePickerPageState extends State<TimePickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: LayoutBuilder(builder: (context, constraints) {
-        final isSmallDevice = constraints.biggest.isSmallDevice();
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallDevice = constraints.biggest.isSmallDevice();
 
-        return SingleChildScrollView(
-          child: SizedBox(
-            height: isSmallDevice
-                ? MediaQuery.sizeOf(context).height
-                : constraints.biggest.height,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 30.0,
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TimePickerWidget(
-                    onTimeSelected: (TimeOfDay time) {
-                      setState(() {
-                        startingTime = time;
-                      });
-                    },
-                    hour: startingTime.hour,
-                    minute: startingTime.minute,
-                  ),
-                  const Text('|'),
-                  Text('to-time'.i18n()),
-                  const Text('|'),
-                  TimePickerWidget(
-                    onTimeSelected: (TimeOfDay time) {
-                      setState(() {
-                        endingTime = time;
-                      });
-                    },
-                    hour: endingTime.hour,
-                    minute: endingTime.minute,
-                  ),
-                  const Spacer(),
-                  BookifyOutlinedButton.expanded(
-                    text: 'define-return-button'.i18n(),
-                    onPressed: _defineTimer,
-                  )
-                ],
+          return SingleChildScrollView(
+            child: SizedBox(
+              height: isSmallDevice
+                  ? MediaQuery.sizeOf(context).height
+                  : constraints.biggest.height,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16.0,
+                  horizontal: 30.0,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TimePickerWidget(
+                      onTimeSelected: (TimeOfDay time) {
+                        setState(() {
+                          startingTime = time;
+                        });
+                      },
+                      hour: startingTime.hour,
+                      minute: startingTime.minute,
+                    ),
+                    const Text('|'),
+                    Text('to-time'.i18n()),
+                    const Text('|'),
+                    TimePickerWidget(
+                      onTimeSelected: (TimeOfDay time) {
+                        setState(() {
+                          endingTime = time;
+                        });
+                      },
+                      hour: endingTime.hour,
+                      minute: endingTime.minute,
+                    ),
+                    const Spacer(),
+                    BookifyOutlinedButton.expanded(
+                      text: 'define-return-button'.i18n(),
+                      onPressed: _defineTimer,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

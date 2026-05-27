@@ -7,6 +7,7 @@ import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -78,10 +79,10 @@ void main() {
           observation: 'observation',
           loanDate: DateTime(2024, 02, 23),
           devolutionDate: DateTime(2024, 03, 22),
-          contactName: 'contactName',
           idContact: 'idContact',
           bookId: 'bookId',
-          bookTitle: 'bookTitle',
+          notificationTitle: 'notificationTitle',
+          notificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -122,10 +123,10 @@ void main() {
           observation: 'observation',
           loanDate: DateTime(2024, 02, 23),
           devolutionDate: DateTime(2024, 03, 22),
-          contactName: 'contactName',
           idContact: 'idContact',
           bookId: 'bookId',
-          bookTitle: 'bookTitle',
+          notificationTitle: 'notificationTitle',
+          notificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -173,10 +174,10 @@ void main() {
           observation: 'observation',
           loanDate: DateTime(2024, 02, 23),
           devolutionDate: DateTime(2024, 03, 22),
-          contactName: 'contactName',
           idContact: 'idContact',
           bookId: 'bookId',
-          bookTitle: 'bookTitle',
+          notificationTitle: 'notificationTitle',
+          notificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -210,17 +211,22 @@ void main() {
             id: 'bookId',
             status: BookStatus.loaned,
           ),
-        ).thenThrow(const LocalDatabaseException('Error on Database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(
         InsertedLoanInsertionEvent(
           observation: 'observation',
           loanDate: DateTime(2024, 02, 23),
           devolutionDate: DateTime(2024, 03, 22),
-          contactName: 'contactName',
           idContact: 'idContact',
           bookId: 'bookId',
-          bookTitle: 'bookTitle',
+          notificationTitle: 'notificationTitle',
+          notificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {
@@ -261,10 +267,10 @@ void main() {
           observation: 'observation',
           loanDate: DateTime(2024, 02, 23),
           devolutionDate: DateTime(2024, 03, 22),
-          contactName: 'contactName',
           idContact: 'idContact',
           bookId: 'bookId',
-          bookTitle: 'bookTitle',
+          notificationTitle: 'notificationTitle',
+          notificationBody: 'notificationBody',
         ),
       ),
       verify: (_) {

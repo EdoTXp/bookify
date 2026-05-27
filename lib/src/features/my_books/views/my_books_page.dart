@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/my_books/bloc/my_books_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -52,28 +53,31 @@ class _MyBooksPageState extends State<MyBooksPage> {
     return switch (state) {
       MyBooksLoadingState() => const CenterCircularProgressIndicator(),
       MyBooksEmptyState() => Center(
-          child: SizedBox(
-            child: Text('no-books-saved-message'.i18n()),
-          ),
+        child: SizedBox(
+          child: Text('no-books-saved-message'.i18n()),
         ),
+      ),
       MyBooksLoadedState(:final books) => BooksGridView(
-          books: books,
-          onTap: (book) async {
-            await Navigator.pushNamed(
-              context,
-              BookDetailPage.routeName,
-              arguments: book,
-            );
-            _refreshPage();
-          },
-        ),
+        books: books,
+        onTap: (book) async {
+          await Navigator.pushNamed(
+            context,
+            BookDetailPage.routeName,
+            arguments: book,
+          );
+          _refreshPage();
+        },
+      ),
       MyBooksNotFoundState() => InfoItemStateWidget.withNotFoundState(
-          message: 'no-books-found-with-terms'.i18n(),
-          onPressed: _refreshPage,
-        ),
-      MyBooksErrorState(:final errorMessage) =>
+        message: 'no-books-found-with-terms'.i18n(),
+        onPressed: _refreshPage,
+      ),
+      MyBooksErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

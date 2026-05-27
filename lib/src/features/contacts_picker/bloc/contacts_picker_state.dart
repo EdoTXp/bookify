@@ -15,9 +15,11 @@ final class ContactsPickerLoadedState extends ContactsPickerState {
 }
 
 final class ContactsPickerErrorState extends ContactsPickerState {
-  final String errorMessage;
+  final PlatformErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ContactsPickerErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

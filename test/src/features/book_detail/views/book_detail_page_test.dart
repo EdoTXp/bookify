@@ -5,6 +5,7 @@ import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_detail/views/widgets/book_pages_reading_time/bloc/book_pages_reading_time_bloc.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -271,7 +272,8 @@ void main() {
           BookDetailLoadedState(bookIsInserted: false),
           BookDetailLoadingState(),
           BookDetailErrorState(
-            errorMessage: 'Error on inserting the book in database',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on inserting the book in database',
           ),
         ]),
       );
@@ -289,7 +291,7 @@ void main() {
       expect(
         find.widgetWithText(
           SnackBar,
-          'Error on inserting the book in database',
+          'error-unknown',
         ),
         findsOneWidget,
       );
@@ -377,7 +379,8 @@ void main() {
           BookDetailLoadedState(bookIsInserted: true),
           BookDetailLoadingState(),
           BookDetailErrorState(
-            errorMessage: 'Error on removing the book from database',
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Error on removing the book from database',
           ),
         ]),
       );
@@ -398,7 +401,7 @@ void main() {
       expect(
         find.widgetWithText(
           SnackBar,
-          'Error on removing the book from database',
+          'error-unknown',
         ),
         findsOneWidget,
       );

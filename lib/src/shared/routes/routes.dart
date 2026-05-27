@@ -45,19 +45,19 @@ abstract class Routes {
     ProgrammingReadingPage.routeName: (context) =>
         const ProgrammingReadingPage(),
     TimePickerPage.routeName: (context) => TimePickerPage(
-          userHourTimeModel:
-              ModalRoute.of(context)!.settings.arguments as UserHourTimeModel?,
-        ),
+      userHourTimeModel:
+          ModalRoute.of(context)!.settings.arguments as UserHourTimeModel?,
+    ),
     NotificationsPage.routeName: (context) => const NotificationsPage(),
     RootPage.routeName: (context) => const RootPage(),
     BookDetailPage.routeName: (context) => BookDetailPage(
-          bookModel: ModalRoute.of(context)!.settings.arguments as BookModel,
-        ),
+      bookModel: ModalRoute.of(context)!.settings.arguments as BookModel,
+    ),
     QrCodeScannerPage.routeName: (context) => const QrCodeScannerPage(),
     BookcaseDetailPage.routeName: (context) => BookcaseDetailPage(
-          bookcaseModel:
-              ModalRoute.of(context)!.settings.arguments as BookcaseModel,
-        ),
+      bookcaseModel:
+          ModalRoute.of(context)!.settings.arguments as BookcaseModel,
+    ),
     BookOnBookcaseDetailPage.routeName: (context) {
       final arguments =
           ModalRoute.of(context)!.settings.arguments as List<dynamic>;
@@ -82,17 +82,17 @@ abstract class Routes {
         ),
     LoanInsertionPage.routeName: (context) => const LoanInsertionPage(),
     LoanDetailPage.routeName: (context) => LoanDetailPage(
-          loanId: ModalRoute.of(context)!.settings.arguments as int,
-        ),
+      loanId: ModalRoute.of(context)!.settings.arguments as int,
+    ),
     ReadingsInsertionPage.routeName: (context) => ReadingsInsertionPage(
-          book: ModalRoute.of(context)!.settings.arguments as BookModel,
-        ),
+      book: ModalRoute.of(context)!.settings.arguments as BookModel,
+    ),
     ReadingsDetailPage.routeName: (context) => ReadingsDetailPage(
-          readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
-        ),
+      readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
+    ),
     ReadingsTimerPage.routeName: (context) => ReadingsTimerPage(
-          readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
-        ),
+      readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
+    ),
     ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
     BooksPickerPage.routeName: (context) => const BooksPickerPage(),
     SettingsPage.routeName: (context) => const SettingsPage(),

@@ -6,6 +6,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -54,7 +55,7 @@ void main() {
       buyLink: 'buyLink',
       averageRating: 4.5,
       ratingsCount: 720,
-    )
+    ),
   ];
 
   final bookRelationShip = [
@@ -93,8 +94,11 @@ void main() {
       act: (bloc) => bloc.add(GotAllBooksForThisBookcaseEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getAllBook()).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseBooksInsertionLoadingState>(),
@@ -123,8 +127,11 @@ void main() {
       act: (bloc) => bloc.add(GotAllBooksForThisBookcaseEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getAllBook()).called(1);
-        verifyNever(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId')));
+        verifyNever(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        );
       },
       expect: () => [
         isA<BookcaseBooksInsertionLoadingState>(),
@@ -146,7 +153,7 @@ void main() {
             {
               'bookcaseId': 1,
               'bookId': '2',
-            }
+            },
           ],
         );
 
@@ -159,8 +166,11 @@ void main() {
       act: (bloc) => bloc.add(GotAllBooksForThisBookcaseEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getAllBook()).called(1);
-        verify(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
       },
       expect: () => [
         isA<BookcaseBooksInsertionLoadingState>(),
@@ -182,19 +192,27 @@ void main() {
             {
               'bookcaseId': 1,
               'bookId': '2',
-            }
+            },
           ],
         );
 
         when(
           () => bookService.getAllBook(),
-        ).thenThrow(const LocalDatabaseException('Error on Database'));
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(GotAllBooksForThisBookcaseEvent(bookcaseId: 1)),
       verify: (_) {
         verify(() => bookService.getAllBook()).called(1);
-        verifyNever(() => bookcaseService.getAllBookcaseRelationships(
-            bookcaseId: any(named: 'bookcaseId')));
+        verifyNever(
+          () => bookcaseService.getAllBookcaseRelationships(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        );
       },
       expect: () => [
         isA<BookcaseBooksInsertionLoadingState>(),
@@ -216,7 +234,7 @@ void main() {
             {
               'bookcaseId': 1,
               'bookId': '2',
-            }
+            },
           ],
         );
 
@@ -242,45 +260,48 @@ void main() {
     blocTest(
       'Test if InsertBooksOnBookcaseEvent work',
       build: () => bloc,
-      setUp: () => when(
-        () => bookcaseService.insertBookcaseRelationship(
-          bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'),
-        ),
-      ).thenAnswer(
-        (invocation) async => 1,
-      ),
-      act: (bloc) => bloc.add(InsertBooksOnBookcaseEvent(
-        bookcaseId: 2,
-        books: [
-          BookModel(
-            id: '1',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
+      setUp: () =>
+          when(
+            () => bookcaseService.insertBookcaseRelationship(
+              bookcaseId: any(named: 'bookcaseId'),
+              bookId: any(named: 'bookId'),
+            ),
+          ).thenAnswer(
+            (invocation) async => 1,
           ),
-          BookModel(
-            id: '2',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          )
-        ],
-      )),
+      act: (bloc) => bloc.add(
+        InsertBooksOnBookcaseEvent(
+          bookcaseId: 2,
+          books: [
+            BookModel(
+              id: '1',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+            BookModel(
+              id: '2',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+          ],
+        ),
+      ),
       verify: (_) => verify(
         () => bookcaseService.insertBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
@@ -302,37 +323,39 @@ void main() {
           bookId: any(named: 'bookId'),
         ),
       ).thenAnswer((_) async => 0),
-      act: (bloc) => bloc.add(InsertBooksOnBookcaseEvent(
-        bookcaseId: 2,
-        books: [
-          BookModel(
-            id: '1',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          ),
-          BookModel(
-            id: '2',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          )
-        ],
-      )),
+      act: (bloc) => bloc.add(
+        InsertBooksOnBookcaseEvent(
+          bookcaseId: 2,
+          books: [
+            BookModel(
+              id: '1',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+            BookModel(
+              id: '2',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+          ],
+        ),
+      ),
       verify: (_) => verify(
         () => bookcaseService.insertBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
@@ -348,43 +371,51 @@ void main() {
     blocTest(
       'Test if InsertBooksOnBookcaseEvent work when throw LocalDatabaseException',
       build: () => bloc,
-      setUp: () => when(
-        () => bookcaseService.insertBookcaseRelationship(
-          bookcaseId: any(named: 'bookcaseId'),
-          bookId: any(named: 'bookId'),
-        ),
-      ).thenThrow(const LocalDatabaseException('Error on Database')),
-      act: (bloc) => bloc.add(InsertBooksOnBookcaseEvent(
-        bookcaseId: 2,
-        books: [
-          BookModel(
-            id: '1',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
+      setUp: () =>
+          when(
+            () => bookcaseService.insertBookcaseRelationship(
+              bookcaseId: any(named: 'bookcaseId'),
+              bookId: any(named: 'bookId'),
+            ),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
           ),
-          BookModel(
-            id: '2',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          )
-        ],
-      )),
+      act: (bloc) => bloc.add(
+        InsertBooksOnBookcaseEvent(
+          bookcaseId: 2,
+          books: [
+            BookModel(
+              id: '1',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+            BookModel(
+              id: '2',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+          ],
+        ),
+      ),
       verify: (_) => verify(
         () => bookcaseService.insertBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),
@@ -406,37 +437,39 @@ void main() {
           bookId: any(named: 'bookId'),
         ),
       ).thenThrow(Exception('Generic Exception')),
-      act: (bloc) => bloc.add(InsertBooksOnBookcaseEvent(
-        bookcaseId: 2,
-        books: [
-          BookModel(
-            id: '1',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          ),
-          BookModel(
-            id: '2',
-            title: 'title',
-            authors: [AuthorModel.withEmptyName()],
-            publisher: 'publisher',
-            description: 'description',
-            categories: [CategoryModel.withEmptyName()],
-            pageCount: 320,
-            imageUrl: 'imageUrl',
-            buyLink: 'buyLink',
-            averageRating: 4.5,
-            ratingsCount: 720,
-          )
-        ],
-      )),
+      act: (bloc) => bloc.add(
+        InsertBooksOnBookcaseEvent(
+          bookcaseId: 2,
+          books: [
+            BookModel(
+              id: '1',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+            BookModel(
+              id: '2',
+              title: 'title',
+              authors: [AuthorModel.withEmptyName()],
+              publisher: 'publisher',
+              description: 'description',
+              categories: [CategoryModel.withEmptyName()],
+              pageCount: 320,
+              imageUrl: 'imageUrl',
+              buyLink: 'buyLink',
+              averageRating: 4.5,
+              ratingsCount: 720,
+            ),
+          ],
+        ),
+      ),
       verify: (_) => verify(
         () => bookcaseService.insertBookcaseRelationship(
           bookcaseId: any(named: 'bookcaseId'),

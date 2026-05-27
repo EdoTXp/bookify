@@ -38,7 +38,7 @@ class ReadingPageTimeCalculatorPage extends StatelessWidget {
                     child: BookifyElevatedButton.expanded(
                       text: 'calculate-time-button'.i18n(),
                       onPressed: () async {
-                       await Navigator.pushNamed(
+                        await Navigator.pushNamed(
                           context,
                           ReadingPageTimerPage.routeName,
                         );

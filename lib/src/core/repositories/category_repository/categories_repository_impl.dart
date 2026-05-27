@@ -3,6 +3,7 @@ import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/category_model.dart';
 import 'package:bookify/src/core/repositories/category_repository/categories_repository.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 
 class CategoriesRepositoryImpl implements CategoriesRepository {
   final LocalDatabase _database;
@@ -21,8 +22,11 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
 
       final categoryModel = CategoryModel.fromMap(categoryMap);
       return categoryModel;
-    } on TypeError {
-      throw const LocalDatabaseException('Impossível converter o dado do database');
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
+      );
     } on LocalDatabaseException {
       rethrow;
     }
@@ -45,8 +49,11 @@ class CategoriesRepositoryImpl implements CategoriesRepository {
 
       final actualAuthorId = categoryMap.last['id'] as int;
       return actualAuthorId;
-    } on TypeError {
-      throw const LocalDatabaseException('Impossível converter o dado do database');
+    } on TypeError catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.conversionFailed,
+        descriptionMessage: e.toString(),
+      );
     } on LocalDatabaseException {
       rethrow;
     }

@@ -68,54 +68,57 @@ class _BookSelectorWidgetState extends State<BookSelectorWidget> {
           Expanded(
             child: GestureDetector(
               onTap: () => selectedBook != null ? _clearData() : null,
-              child: LayoutBuilder(builder: (context, constraints) {
-                return GridView.builder(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  itemCount: widget.books.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: .7,
-                    crossAxisCount: constraints.maxWidth > 500 ? 6 : 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Tooltip(
-                        message: widget.books[index].title,
-                        child: Material(
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            onTap: () =>
-                                _clickOnBook(widget.books[index], index),
-                            child: (selectedBook == widget.books[index])
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      color: colorScheme.secondary,
-                                      border: Border.all(
-                                        color: Colors.transparent,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return GridView.builder(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemCount: widget.books.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: .7,
+                      crossAxisCount: constraints.maxWidth > 500 ? 6 : 3,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Tooltip(
+                          message: widget.books[index].title,
+                          child: Material(
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              onTap: () =>
+                                  _clickOnBook(widget.books[index], index),
+                              child: (selectedBook == widget.books[index])
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                        color: colorScheme.secondary,
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
                                       ),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: BookWidget(
+                                        key: const Key('SelectedBookWidget'),
+                                        bookImageUrl:
+                                            widget.books[index].imageUrl,
                                       ),
-                                    ),
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: BookWidget(
-                                      key: const Key('SelectedBookWidget'),
+                                    )
+                                  : BookWidget(
+                                      key: const Key('BookWidget'),
                                       bookImageUrl:
                                           widget.books[index].imageUrl,
                                     ),
-                                  )
-                                : BookWidget(
-                                    key: const Key('BookWidget'),
-                                    bookImageUrl: widget.books[index].imageUrl,
-                                  ),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],

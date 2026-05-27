@@ -78,7 +78,8 @@ class LoanWidget extends StatelessWidget {
                           top: -3,
                           right: -3,
                           child: ContactCircleAvatar(
-                            name: loan.contactModel?.name ??
+                            name:
+                                loan.contactModel?.name ??
                                 'no-name-label'.i18n(),
                             photo: loan.contactModel?.photo,
                           ),
@@ -114,13 +115,15 @@ class LoanWidget extends StatelessWidget {
                               ContactInformationWidget(
                                 iconData: Icons.person_outlined,
                                 title: 'name-label'.i18n(),
-                                content: loan.contactModel?.name ??
+                                content:
+                                    loan.contactModel?.name ??
                                     'no-name-label'.i18n(),
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.smartphone_outlined,
                                 title: 'contact-label'.i18n(),
-                                content: loan.contactModel?.phoneNumber ??
+                                content:
+                                    loan.contactModel?.phoneNumber ??
                                     'no-contact-number-label'.i18n(),
                               ),
                             ],
@@ -137,8 +140,8 @@ class LoanWidget extends StatelessWidget {
                               ContactInformationWidget(
                                 iconData: Icons.calendar_month_outlined,
                                 title: 'loan-label'.i18n(),
-                                content:
-                                    loan.loanModel.loanDate.toFormattedDate(),
+                                content: loan.loanModel.loanDate
+                                    .toFormattedDate(),
                               ),
                               ContactInformationWidget(
                                 iconData: Icons.calendar_month_outlined,

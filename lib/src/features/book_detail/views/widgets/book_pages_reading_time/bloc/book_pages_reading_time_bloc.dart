@@ -1,3 +1,4 @@
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_page_reading_time_model.dart';
 import 'package:bookify/src/core/repositories/user_page_reading_time_repository/user_page_reading_time_repository.dart';
@@ -23,8 +24,8 @@ class BookPagesReadingTimeBloc
     try {
       emit(BookPagesReadingTimeLoadingState());
 
-      final userPageReadingTime =
-          await _userPageReadingTimeRepository.getUserPageReadingTime();
+      final userPageReadingTime = await _userPageReadingTimeRepository
+          .getUserPageReadingTime();
 
       emit(
         BookPagesReadingTimeLoadedState(
@@ -34,13 +35,15 @@ class BookPagesReadingTimeBloc
     } on StorageException catch (e) {
       emit(
         BookPagesReadingTimeErrorState(
-          errorMessage: 'Erro ao buscar o tempo de leitura da página: $e',
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
         ),
       );
     } on Exception catch (e) {
       emit(
         BookPagesReadingTimeErrorState(
-          errorMessage: 'Erro inesperado: $e',
+          errorCode: StorageErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
         ),
       );
     }

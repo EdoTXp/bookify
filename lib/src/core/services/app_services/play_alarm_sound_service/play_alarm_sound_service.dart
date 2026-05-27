@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/shared/constants/audios/bookify_audios.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bookify/src/shared/enums/platform_error_code.dart';
 
 class PlayAlarmSoundService {
   final String assetSound;
@@ -34,33 +36,67 @@ class PlayAlarmSoundService {
   }
 
   Future<void> playAlarm() async {
-    await _playSound(volume);
+    try {
+      await _playSound(volume);
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   Future<void> stop() async {
-    await player.stop();
+    try {
+      await player.stop();
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   Future<void> dispose() async {
-    await player.dispose();
+    try {
+      await player.dispose();
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 
   Future<void> _playSound(double volume) async {
-    await player.play(
-      AssetSource(
-        assetSound.replaceRange(0, 7, ''),
-      ),
-      ctx: AudioContext(
-        android: const AudioContextAndroid(
-          usageType: AndroidUsageType.alarm,
-          stayAwake: true,
-          audioMode: AndroidAudioMode.ringtone,
+    try {
+      await player.play(
+        AssetSource(
+          assetSound.replaceRange(0, 7, ''),
         ),
-        iOS: AudioContextIOS(
-          category: AVAudioSessionCategory.ambient,
+        ctx: AudioContext(
+          android: const AudioContextAndroid(
+            usageType: AndroidUsageType.alarm,
+            stayAwake: true,
+            audioMode: AndroidAudioMode.ringtone,
+          ),
+          iOS: AudioContextIOS(
+            category: AVAudioSessionCategory.ambient,
+          ),
         ),
-      ),
-      volume: volume,
-    );
+        volume: volume,
+      );
+    } on PlatformException {
+      rethrow;
+    } catch (e) {
+      throw PlatformException(
+        PlatformErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
   }
 }

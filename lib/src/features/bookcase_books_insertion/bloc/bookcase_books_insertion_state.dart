@@ -1,5 +1,10 @@
 part of 'bookcase_books_insertion_bloc.dart';
 
+enum BookcaseBooksEmptyReason {
+  noBooksRegistered,
+  allBooksAlreadyInserted,
+}
+
 sealed class BookcaseBooksInsertionState {}
 
 final class BookcaseBooksInsertionLoadingState
@@ -7,10 +12,10 @@ final class BookcaseBooksInsertionLoadingState
 
 final class BookcaseBooksInsertionEmptyState
     extends BookcaseBooksInsertionState {
-  final String message;
+  final BookcaseBooksEmptyReason reason;
 
   BookcaseBooksInsertionEmptyState({
-    required this.message,
+    required this.reason,
   });
 }
 
@@ -28,9 +33,11 @@ final class BookcaseBooksInsertionInsertedState
 
 final class BookcaseBooksInsertionErrorState
     extends BookcaseBooksInsertionState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookcaseBooksInsertionErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

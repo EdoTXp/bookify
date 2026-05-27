@@ -1,3 +1,5 @@
+import 'package:bookify/src/shared/enums/auth_error_code.dart';
+import 'package:bookify/src/shared/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/core/models/user_model.dart';
@@ -45,8 +47,9 @@ void main() {
     test(
       'Test signIn success',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signIn()).thenAnswer((_) async => userModel);
         when(
           () => authRepository.setUserModel(userModel: userModel),
@@ -61,15 +64,26 @@ void main() {
     test(
       'Test signIn throws AuthException when strategy fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
-        when(() => authStrategy.signIn())
-            .thenThrow(AuthException('Strategy failed'));
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
+        when(
+          () => authStrategy.signIn(),
+        ).thenThrow(
+          AuthException(
+            AuthErrorCode.internalError,
+            descriptionMessage: 'Strategy failed',
+          ),
+        );
 
         expect(
           () async => await authService.signIn(signInType: SignInType.google),
-          throwsA((Exception e) =>
-              e is AuthException && e.message == 'Strategy failed'),
+          throwsA(
+            (Exception e) =>
+                e is AuthException &&
+                e.code == AuthErrorCode.internalError &&
+                e.descriptionMessage == 'Strategy failed',
+          ),
         );
       },
     );
@@ -77,16 +91,27 @@ void main() {
     test(
       'Test signIn throws AuthException when repository fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signIn()).thenAnswer((_) async => userModel);
-        when(() => authRepository.setUserModel(userModel: userModel))
-            .thenThrow(StorageException('DB failed'));
+        when(
+          () => authRepository.setUserModel(userModel: userModel),
+        ).thenThrow(
+          StorageException(
+            StorageErrorCode.invalidValue,
+            descriptionMessage: 'DB failed',
+          ),
+        );
 
         expect(
           () async => await authService.signIn(signInType: SignInType.google),
           throwsA(
-              (Exception e) => e is AuthException && e.message == 'DB failed'),
+            (Exception e) =>
+                e is AuthException &&
+                e.code == AuthErrorCode.internalError &&
+                e.descriptionMessage == 'DB failed',
+          ),
         );
       },
     );
@@ -96,31 +121,42 @@ void main() {
     test(
       'Test signOut success',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenAnswer((_) async => true);
+        when(() => authRepository.deleteUserModel()).thenAnswer((_) async => 1);
 
         final result = await authService.signOut(signInType: SignInType.google);
 
         expect(result, isTrue);
         verify(() => authStrategyFactory.create(SignInType.google)).called(1);
         verify(() => authStrategy.signOut()).called(1);
+        verify(() => authRepository.deleteUserModel()).called(1);
       },
     );
 
     test(
       'Test signOut throws AuthException when strategy fails',
       () async {
-        when(() => authStrategyFactory.create(SignInType.google))
-            .thenReturn(authStrategy);
+        when(
+          () => authStrategyFactory.create(SignInType.google),
+        ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenThrow(
-          AuthException('Strategy failed'),
+          AuthException(
+            AuthErrorCode.internalError,
+            descriptionMessage: 'Strategy failed',
+          ),
         );
 
         expect(
           () async => await authService.signOut(signInType: SignInType.google),
-          throwsA((Exception e) =>
-              e is AuthException && e.message == 'Strategy failed'),
+          throwsA(
+            (Exception e) =>
+                e is AuthException &&
+                e.code == AuthErrorCode.internalError &&
+                e.descriptionMessage == 'Strategy failed',
+          ),
         );
         verify(() => authStrategyFactory.create(SignInType.google)).called(1);
         verify(() => authStrategy.signOut()).called(1);

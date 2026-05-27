@@ -2,6 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'book_on_bookcase_picker_event.dart';
@@ -55,12 +56,16 @@ class BookOnBookcasePickerBloc
     } on LocalDatabaseException catch (e) {
       emit(
         BookOnBookcasePickerErrorState(
-            errorMessage: 'Erro no database: ${e.message}'),
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
       );
     } catch (e) {
       emit(
         BookOnBookcasePickerErrorState(
-            errorMessage: 'Ocorreu um erro não esperado: $e'),
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
       );
     }
   }

@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/bloc/bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/views/widgets/bookcase_picker_loaded_state_widget/bookcase_picker_loaded_state_widget.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -34,23 +35,28 @@ class _BookcasePickerWidgetState extends State<BookcasePickerWidget> {
   }
 
   Widget _getWidgetOnBookcasePickerState(
-      BuildContext context, BookcasePickerState state) {
+    BuildContext context,
+    BookcasePickerState state,
+  ) {
     return switch (state) {
       BookcasePickerLoadingState() => const CenterCircularProgressIndicator(),
       BookcasePickerEmptyState() => Center(
-          child: Text(
-            'no-bookcases-to-add-message'.i18n(),
-            textAlign: TextAlign.center,
-          ),
+        child: Text(
+          'no-bookcases-to-add-message'.i18n(),
+          textAlign: TextAlign.center,
         ),
+      ),
       BookcasePickerLoadedState(:final bookcasesDto) =>
         BookcasePickerLoadedStateWidget(
           bookcasesDto: bookcasesDto,
           onSelectBookModel: widget.onSelectBookModel,
         ),
-      BookcasePickerErrorState(:final errorMessage) =>
+      BookcasePickerErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

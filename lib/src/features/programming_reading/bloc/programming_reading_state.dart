@@ -18,9 +18,11 @@ final class ProgrammingReadingRemovedNotificationState
     extends ProgrammingReadingState {}
 
 final class ProgrammingReadingErrorState extends ProgrammingReadingState {
-  final String errorMessage;
+  final StorageErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ProgrammingReadingErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

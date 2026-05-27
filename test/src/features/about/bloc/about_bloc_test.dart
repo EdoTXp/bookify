@@ -44,8 +44,9 @@ void main() {
     blocTest(
       'Test GotAppVersionEvent work when throw Generic Exception',
       build: () => aboutBloc,
-      setUp: () => when(() => appVersionService.getAppVersion())
-          .thenThrow(Exception('Generic Error')),
+      setUp: () => when(
+        () => appVersionService.getAppVersion(),
+      ).thenThrow(Exception('Generic Error')),
       act: (bloc) => bloc.add(GotAppVersionEvent()),
       verify: (_) => verify(() => appVersionService.getAppVersion()).called(1),
       expect: () => [

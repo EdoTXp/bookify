@@ -19,9 +19,11 @@ final class UserInformationLoadedState extends UserInformationState {
 }
 
 final class UserInformationErrorState extends UserInformationState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   UserInformationErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    required this.errorDescriptionMessage,
   });
 }

@@ -2,6 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/repositories/reading_repository/reading_repository.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service_impl.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -82,8 +83,9 @@ void main() {
     });
 
     test('get by Id', () async {
-      when(() => readingRepository.getById(readingId: any(named: 'readingId')))
-          .thenAnswer(
+      when(
+        () => readingRepository.getById(readingId: any(named: 'readingId')),
+      ).thenAnswer(
         (_) async => readings[1],
       );
 
@@ -150,13 +152,30 @@ void main() {
 
   group('test normal CRUD of reading service with error ||', () {
     test('get all -- LocalDatabaseException', () async {
-      when(() => readingRepository.getAll())
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => readingRepository.getAll(),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.getAll(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
@@ -165,68 +184,168 @@ void main() {
         () => readingRepository.getReadingsByBookTitle(
           title: any(named: 'title'),
         ),
-      ).thenThrow(const LocalDatabaseException('Error on Database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.getReadingsByBookTitle(title: 'title'),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('get by Id -- LocalDatabaseException', () async {
-      when(() => readingRepository.getById(readingId: any(named: 'readingId')))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => readingRepository.getById(readingId: any(named: 'readingId')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.getById(readingId: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('countReadings -- LocalDatabaseException', () async {
       when(
         () => readingRepository.countReadings(),
-      ).thenThrow(const LocalDatabaseException('Error on Database'));
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.countReadings(),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('insert -- LocalDatabaseException', () async {
-      when(() => readingRepository.insert(readingModel: readings[1]))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => readingRepository.insert(readingModel: readings[1]),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.insert(readingModel: readings[1]),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('update -- LocalDatabaseException', () async {
-      when(() => readingRepository.update(readingModel: readings[1]))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => readingRepository.update(readingModel: readings[1]),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.update(readingModel: readings[1]),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
 
     test('delete -- LocalDatabaseException', () async {
-      when(() => readingRepository.delete(readingId: any(named: 'readingId')))
-          .thenThrow(const LocalDatabaseException('Error on Database'));
+      when(
+        () => readingRepository.delete(readingId: any(named: 'readingId')),
+      ).thenThrow(
+        const LocalDatabaseException(
+          LocalDatabaseErrorCode.unknown,
+          descriptionMessage: 'Error on database',
+        ),
+      );
 
       expect(
         () async => await readingService.delete(readingId: 1),
-        throwsA((Exception e) =>
-            e is LocalDatabaseException && e.message == 'Error on Database'),
+        throwsA(
+          isA<LocalDatabaseException>()
+              .having(
+                (e) => e.code,
+                'code',
+                LocalDatabaseErrorCode.unknown,
+              )
+              .having(
+                (e) => e.descriptionMessage,
+                'descriptionMessage',
+                'Error on database',
+              ),
+        ),
       );
     });
   });

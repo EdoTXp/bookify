@@ -5,6 +5,7 @@ import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/reading_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/reading_services/reading_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -90,13 +91,17 @@ void main() {
     blocTest(
       'Test UpdatedReadingsEvent work when throw LocalDatabaseException',
       build: () => readingsDetailBloc,
-      setUp: () => when(
-        () => readingService.update(
-          readingModel: readingModel,
-        ),
-      ).thenThrow(
-        const LocalDatabaseException('Error on Database'),
-      ),
+      setUp: () =>
+          when(
+            () => readingService.update(
+              readingModel: readingModel,
+            ),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(
         UpdatedReadingsEvent(
           readingModel: readingModel,
@@ -116,13 +121,14 @@ void main() {
     blocTest(
       'Test UpdatedReadingsEvent work when throw Generic Exception',
       build: () => readingsDetailBloc,
-      setUp: () => when(
-        () => readingService.update(
-          readingModel: readingModel,
-        ),
-      ).thenThrow(
-        Exception('Generic Error'),
-      ),
+      setUp: () =>
+          when(
+            () => readingService.update(
+              readingModel: readingModel,
+            ),
+          ).thenThrow(
+            Exception('Generic Error'),
+          ),
       act: (bloc) => bloc.add(
         UpdatedReadingsEvent(
           readingModel: readingModel,
@@ -270,7 +276,10 @@ void main() {
             readingId: any(named: 'readingId'),
           ),
         ).thenThrow(
-          const LocalDatabaseException('Error on Database'),
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
         );
       },
       act: (bloc) => bloc.add(

@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookcase_detail_bloc.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -49,11 +50,17 @@ void main() {
     blocTest(
       'test GotCountOfBookcasesByBookEvent work when throw LocalDatabaseException',
       build: () => bookOnBookcaseDetailBloc,
-      setUp: () => when(
-        () => bookcaseService.countBookcasesByBook(
-          bookId: any(named: 'bookId'),
-        ),
-      ).thenThrow(const LocalDatabaseException('Error on Database')),
+      setUp: () =>
+          when(
+            () => bookcaseService.countBookcasesByBook(
+              bookId: any(named: 'bookId'),
+            ),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(
         GotCountOfBookcasesByBookEvent(bookId: 'bookId'),
       ),
@@ -147,12 +154,18 @@ void main() {
     blocTest(
       'test DeletedBookOnBookcaseEvent work throw LocalDatabaseException',
       build: () => bookOnBookcaseDetailBloc,
-      setUp: () => when(
-        () => bookcaseService.deleteBookcaseRelationship(
-          bookId: any(named: 'bookId'),
-          bookcaseId: any(named: 'bookcaseId'),
-        ),
-      ).thenThrow(const LocalDatabaseException('Error on Database')),
+      setUp: () =>
+          when(
+            () => bookcaseService.deleteBookcaseRelationship(
+              bookId: any(named: 'bookId'),
+              bookcaseId: any(named: 'bookcaseId'),
+            ),
+          ).thenThrow(
+            const LocalDatabaseException(
+              LocalDatabaseErrorCode.unknown,
+              descriptionMessage: 'Error on database',
+            ),
+          ),
       act: (bloc) => bloc.add(
         DeletedBookOnBookcaseEvent(
           bookId: 'bookId',

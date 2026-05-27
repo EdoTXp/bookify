@@ -15,9 +15,11 @@ final class NotificationsLoadedState extends NotificationsState {
 }
 
 final class NotificationErrorState extends NotificationsState {
-  final String errorMessage;
+  final PlatformErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   NotificationErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

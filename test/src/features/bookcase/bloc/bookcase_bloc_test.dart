@@ -5,6 +5,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -52,22 +53,27 @@ void main() {
       'test if GotAllBookcaseEvent work',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => bookcasesModel);
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => bookcasesModel);
 
-        when(() => bookcaseService.getBookIdForImagePreview(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenAnswer((_) async => 'bookId');
+        when(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 'bookId');
 
-        when(() => bookService.getBookImage(id: any(named: 'id')))
-            .thenAnswer((_) async => 'bookImg');
+        when(
+          () => bookService.getBookImage(id: any(named: 'id')),
+        ).thenAnswer((_) async => 'bookImg');
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verify(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         ).called(2);
         verify(() => bookService.getBookImage(id: any(named: 'id'))).called(2);
       },
@@ -81,15 +87,17 @@ void main() {
       'test if GotAllBookcaseEvent work when is empty List',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => []);
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => []);
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -103,20 +111,23 @@ void main() {
       'test if GotAllBookcaseEvent work when bookcaseId is null',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases()).thenAnswer((_) async => [
-              const BookcaseModel(
-                name: 'name',
-                description: 'description',
-                color: Colors.black,
-              ),
-            ]);
+        when(() => bookcaseService.getAllBookcases()).thenAnswer(
+          (_) async => [
+            const BookcaseModel(
+              name: 'name',
+              description: 'description',
+              color: Colors.black,
+            ),
+          ],
+        );
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -130,15 +141,22 @@ void main() {
       'test if GotAllBookcaseEvent work when throw LocalDatabaseException',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenThrow(const LocalDatabaseException('Error on Database'));
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -152,15 +170,17 @@ void main() {
       'test if GotAllBookcaseEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getAllBookcases())
-            .thenThrow(Exception('Generic Error'));
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenThrow(Exception('Generic Error'));
       },
       act: (bloc) => bloc.add(GotAllBookcasesEvent()),
       verify: (_) {
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -174,31 +194,38 @@ void main() {
       'test if FoundBookcaseByNameEvent work',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenAnswer((_) async => [
-                  const BookcaseModel(
-                    id: 1,
-                    name: 'Fantasia',
-                    description: 'Fantasia Description',
-                    color: Colors.black,
-                  ),
-                ]);
-        when(() => bookcaseService.getBookIdForImagePreview(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenAnswer((_) async => 'bookId');
+        when(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).thenAnswer(
+          (_) async => [
+            const BookcaseModel(
+              id: 1,
+              name: 'Fantasia',
+              description: 'Fantasia Description',
+              color: Colors.black,
+            ),
+          ],
+        );
+        when(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 'bookId');
 
-        when(() => bookService.getBookImage(id: any(named: 'id')))
-            .thenAnswer((_) async => 'bookImg');
+        when(
+          () => bookService.getBookImage(id: any(named: 'id')),
+        ).thenAnswer((_) async => 'bookImg');
       },
       act: (bloc) =>
           bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
-        verify(() =>
-                bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .called(1);
+        verify(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).called(1);
         verify(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         ).called(1);
         verify(() => bookService.getBookImage(id: any(named: 'id'))).called(1);
       },
@@ -212,15 +239,16 @@ void main() {
       'test if FoundBookcaseByNameEvent work hen is empty List',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenAnswer((_) async => []);
+        when(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).thenAnswer((_) async => []);
       },
       act: (bloc) =>
           bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
-        verify(() =>
-                bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .called(1);
+        verify(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
             bookcaseId: any(named: 'bookcaseId'),
@@ -242,24 +270,28 @@ void main() {
       'test if FoundBookcaseByNameEvent work when bookcaseId is null',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenAnswer((_) async => [
-                  const BookcaseModel(
-                    name: 'Fantasia',
-                    description: 'description',
-                    color: Colors.black,
-                  ),
-                ]);
+        when(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).thenAnswer(
+          (_) async => [
+            const BookcaseModel(
+              name: 'Fantasia',
+              description: 'description',
+              color: Colors.black,
+            ),
+          ],
+        );
       },
       act: (bloc) =>
           bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
-        verify(() =>
-                bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .called(1);
+        verify(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -273,18 +305,25 @@ void main() {
       'test if FoundBookcaseByNameEvent work when throw LocalDatabaseException',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenThrow(const LocalDatabaseException('Error on Database'));
+        when(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) =>
           bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
-        verify(() =>
-                bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .called(1);
+        verify(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -298,18 +337,20 @@ void main() {
       'test if FoundBookcaseByNameEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .thenThrow(Exception('Generic Error'));
+        when(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).thenThrow(Exception('Generic Error'));
       },
       act: (bloc) =>
           bloc.add(FoundBookcaseByNameEvent(searchQueryName: 'Fantasia')),
       verify: (_) {
-        verify(() =>
-                bookcaseService.getBookcasesByName(name: any(named: 'name')))
-            .called(1);
+        verify(
+          () => bookcaseService.getBookcasesByName(name: any(named: 'name')),
+        ).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -323,15 +364,22 @@ void main() {
       'test if DeletedBookcasesEvent work',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1);
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => bookcasesModel);
-        when(() => bookcaseService.getBookIdForImagePreview(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenAnswer((_) async => 'bookId');
-        when(() => bookService.getBookImage(id: any(named: 'id')))
-            .thenAnswer((_) async => 'bookImg');
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => bookcasesModel);
+        when(
+          () => bookcaseService.getBookIdForImagePreview(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 'bookId');
+        when(
+          () => bookService.getBookImage(id: any(named: 'id')),
+        ).thenAnswer((_) async => 'bookImg');
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(
@@ -341,8 +389,11 @@ void main() {
         ),
       ),
       verify: (_) {
-        verify(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verify(
           () => bookcaseService.getBookIdForImagePreview(
@@ -361,8 +412,11 @@ void main() {
       'test if DeletedBookcasesEvent work with error on delete',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => -1);
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => -1);
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(
@@ -372,8 +426,11 @@ void main() {
         ),
       ),
       verify: (_) {
-        verify(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
         verifyNever(() => bookcaseService.getAllBookcases());
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
@@ -392,10 +449,14 @@ void main() {
       'test if DeletedBookcasesEvent work with empty list',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).thenAnswer((_) async => 1);
-        when(() => bookcaseService.getAllBookcases())
-            .thenAnswer((_) async => []);
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenAnswer((_) async => 1);
+        when(
+          () => bookcaseService.getAllBookcases(),
+        ).thenAnswer((_) async => []);
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(
@@ -405,12 +466,16 @@ void main() {
         ),
       ),
       verify: (_) {
-        verify(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
         verify(() => bookcaseService.getAllBookcases()).called(1);
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -424,9 +489,16 @@ void main() {
       'test if DeletedBookcasesEvent work when throw LocalDatabaseException',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.deleteBookcase(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenThrow(const LocalDatabaseException('Error on Database'));
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenThrow(
+          const LocalDatabaseException(
+            LocalDatabaseErrorCode.unknown,
+            descriptionMessage: 'Error on database',
+          ),
+        );
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(
@@ -436,12 +508,16 @@ void main() {
         ),
       ),
       verify: (_) {
-        verify(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
         verifyNever(() => bookcaseService.getAllBookcases());
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },
@@ -455,9 +531,11 @@ void main() {
       'test if DeletedBookcasesEvent work when throw Generic Exception',
       build: () => bookcaseBloc,
       setUp: () async {
-        when(() => bookcaseService.deleteBookcase(
-                bookcaseId: any(named: 'bookcaseId')))
-            .thenThrow(Exception('Generic Exception'));
+        when(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).thenThrow(Exception('Generic Exception'));
       },
       act: (bloc) => bloc.add(
         DeletedBookcasesEvent(
@@ -467,12 +545,16 @@ void main() {
         ),
       ),
       verify: (_) {
-        verify(() => bookcaseService.deleteBookcase(
-            bookcaseId: any(named: 'bookcaseId'))).called(1);
+        verify(
+          () => bookcaseService.deleteBookcase(
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
+        ).called(1);
         verifyNever(() => bookcaseService.getAllBookcases());
         verifyNever(
           () => bookcaseService.getBookIdForImagePreview(
-              bookcaseId: any(named: 'bookcaseId')),
+            bookcaseId: any(named: 'bookcaseId'),
+          ),
         );
         verifyNever(() => bookService.getBookImage(id: any(named: 'id')));
       },

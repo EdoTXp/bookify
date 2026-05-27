@@ -13,9 +13,11 @@ final class BookDetailLoadedState extends BookDetailState {
 }
 
 final class BookDetailErrorState extends BookDetailState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   BookDetailErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

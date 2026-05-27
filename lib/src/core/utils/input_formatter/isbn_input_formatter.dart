@@ -15,13 +15,13 @@ class IsbnMaskTextInputFormatter extends MaskTextInputFormatter {
   ///
   /// Initializes the formatter with the ISBN-10 mask and a filter for digits and 'X'.
   IsbnMaskTextInputFormatter()
-      : super(
-          mask: _maskIsbn10,
-          filter: {
-            '#': RegExp(r'[0-9]'), // Matches any digit.
-            'S': RegExp(r'[xX0-9]'), // Matches 'X', 'x', or any digit.
-          },
-        );
+    : super(
+        mask: _maskIsbn10,
+        filter: {
+          '#': RegExp(r'[0-9]'), // Matches any digit.
+          'S': RegExp(r'[xX0-9]'), // Matches 'X', 'x', or any digit.
+        },
+      );
 
   @override
   TextEditingValue formatEditUpdate(

@@ -3,6 +3,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bookcase_picker_event.dart';
@@ -42,7 +43,9 @@ class BookcasePickerBloc
         if (bookcaseId == null) {
           emit(
             BookcasePickerErrorState(
-                errorMessage: 'Erro inesperado: ${bookcase.id}'),
+              errorCode: LocalDatabaseErrorCode.conversionFailed,
+              errorDescriptionMessage: 'Error: Bookcase not found',
+            ),
           );
           return;
         }
@@ -72,10 +75,19 @@ class BookcasePickerBloc
 
       emit(BookcasePickerLoadedState(bookcasesDto: bookcasesDto));
     } on LocalDatabaseException catch (e) {
-      emit(BookcasePickerErrorState(
-          errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcasePickerErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcasePickerErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcasePickerErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

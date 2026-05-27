@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase/views/widgets/bookcase_loaded_state_widget/bookcase_loaded_state_widget.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -82,10 +83,13 @@ class _BookcasePageState extends State<BookcasePage> {
         message: 'bookcase-not-found-whit-this-terms'.i18n(),
         onPressed: _refreshPage,
       ),
-      BookcaseErrorState(errorMessage: final message) =>
+      BookcaseErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
           key: const Key('BookcaseErrorStateWidget'),
-          message: message,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _refreshPage,
         ),
     };

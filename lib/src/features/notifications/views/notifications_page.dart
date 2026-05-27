@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/platform_error_code/platform_error_code_extension.dart';
 import 'package:bookify/src/features/notifications/bloc/notifications_bloc.dart';
 import 'package:bookify/src/features/notifications/views/widgets/notifications_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -35,21 +36,24 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return switch (state) {
       NotificationsLoadingState() => const CenterCircularProgressIndicator(),
       NotificationEmptyState() => Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'no-notifications-found'.i18n(),
-              textAlign: TextAlign.center,
-            ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'no-notifications-found'.i18n(),
+            textAlign: TextAlign.center,
           ),
         ),
+      ),
       NotificationsLoadedState(:final notifications) =>
         NotificationsLoadedStateWidget(
           notifications: notifications,
         ),
-      NotificationErrorState(:final errorMessage) =>
+      NotificationErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ) =>
         InfoItemStateWidget.withErrorState(
-          message: errorMessage,
+          message: errorCode.toLocalizedMessage(errorDescriptionMessage),
           onPressed: _onRefreshPage,
         ),
     };

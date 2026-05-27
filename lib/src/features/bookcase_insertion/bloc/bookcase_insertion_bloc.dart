@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,23 +32,40 @@ class BookcaseInsertionBloc
         color: event.color,
       );
 
-      final newBookcaseId =
-          await _bookcaseService.insertBookcase(bookcaseModel: bookcaseModel);
+      final newBookcaseId = await _bookcaseService.insertBookcase(
+        bookcaseModel: bookcaseModel,
+      );
 
       if (newBookcaseId == 0) {
-        emit(BookcaseInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao inserir a estante'));
+        emit(
+          BookcaseInsertionErrorState(
+            errorCode: LocalDatabaseErrorCode.operationFailed,
+            errorDescriptionMessage:
+                'An error occurred while inserting the bookcase',
+          ),
+        );
         return;
       }
 
-      emit(BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: 'Estante inserida com sucesso'));
+      emit(
+        BookcaseInsertionInsertedState(
+          reason: BookcaseInsertionSuccessReason.inserted,
+        ),
+      );
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
+      emit(
+        BookcaseInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
+      emit(
+        BookcaseInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -72,20 +90,33 @@ class BookcaseInsertionBloc
       if (bookcaseRowUpdated < 1) {
         emit(
           BookcaseInsertionErrorState(
-            errorMessage: 'Ocorreu um erro ao atualizar a estante',
+            errorCode: LocalDatabaseErrorCode.operationFailed,
+            errorDescriptionMessage:
+                'An error occurred while updating the bookcase',
           ),
         );
         return;
       }
 
-      emit(BookcaseInsertionInsertedState(
-          bookcaseInsertionMessage: 'Estante atualizada com sucesso'));
+      emit(
+        BookcaseInsertionInsertedState(
+          reason: BookcaseInsertionSuccessReason.updated,
+        ),
+      );
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseInsertionErrorState(
-          errorMessage: 'Ocorreu um erro no database: ${e.message}'));
+      emit(
+        BookcaseInsertionErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseInsertionErrorState(
-          errorMessage: 'Ocorreu um erro não esperado: $e'));
+      emit(
+        BookcaseInsertionErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 }

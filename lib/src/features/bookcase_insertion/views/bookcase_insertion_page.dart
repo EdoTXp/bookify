@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
 import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
@@ -178,12 +179,15 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         );
 
         break;
-      case BookcaseInsertionInsertedState(
-        bookcaseInsertionMessage: final successMessage,
-      ):
+      case BookcaseInsertionInsertedState(:final reason):
         SnackbarService.showSnackBar(
           context,
-          successMessage,
+          switch (reason) {
+            BookcaseInsertionSuccessReason.inserted =>
+              'bookcase-inserted-success-snackbar'.i18n(),
+            BookcaseInsertionSuccessReason.updated =>
+              'bookcase-updated-success-snackbar'.i18n(),
+          },
           SnackBarType.success,
         );
 
@@ -198,10 +202,13 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
           },
         );
         break;
-      case BookcaseInsertionErrorState(:final errorMessage):
+      case BookcaseInsertionErrorState(
+        :final errorCode,
+        :final errorDescriptionMessage,
+      ):
         SnackbarService.showSnackBar(
           context,
-          errorMessage,
+          errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
 

@@ -9,9 +9,11 @@ final class ReadingsDetailUpdatedState extends ReadingsDetailState {}
 final class ReadingsDetailFinishedState extends ReadingsDetailState {}
 
 final class ReadingsDetailErrorState extends ReadingsDetailState {
-  final String errorMessage;
+  final LocalDatabaseErrorCode errorCode;
+  final String? errorDescriptionMessage;
 
   ReadingsDetailErrorState({
-    required this.errorMessage,
+    required this.errorCode,
+    this.errorDescriptionMessage,
   });
 }

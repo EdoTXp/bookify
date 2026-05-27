@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/dtos/bookcase_dto.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/shared/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bookify/src/core/services/book_service/book_service.dart';
@@ -31,9 +32,19 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
       await _getAllBookcases(emit);
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -46,9 +57,19 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
       await _findBookcaseByName(emit, event.searchQueryName);
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -63,12 +84,16 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
       for (var bookcaseDto in selectedList) {
         int bookcaseDeletedRow = await _bookcaseService.deleteBookcase(
-            bookcaseId: bookcaseDto.bookcase.id!);
+          bookcaseId: bookcaseDto.bookcase.id!,
+        );
 
         if (bookcaseDeletedRow == -1) {
           emit(
             BookcaseErrorState(
-                errorMessage: 'Não foi possível deletar a estante'),
+              errorCode: LocalDatabaseErrorCode.operationFailed,
+              errorDescriptionMessage:
+                  'Failed to delete the bookcase ${bookcaseDto.bookcase.name}.',
+            ),
           );
           return;
         }
@@ -76,9 +101,19 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
 
       await _getAllBookcases(emit);
     } on LocalDatabaseException catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro no database: ${e.message}'));
+      emit(
+        BookcaseErrorState(
+          errorCode: e.code,
+          errorDescriptionMessage: e.descriptionMessage,
+        ),
+      );
     } on Exception catch (e) {
-      emit(BookcaseErrorState(errorMessage: 'Erro inesperado: $e'));
+      emit(
+        BookcaseErrorState(
+          errorCode: LocalDatabaseErrorCode.unknown,
+          errorDescriptionMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -94,7 +129,9 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
   }
 
   Future<void> _findBookcaseByName(
-      Emitter<BookcaseState> emit, String name) async {
+    Emitter<BookcaseState> emit,
+    String name,
+  ) async {
     final bookcases = await _bookcaseService.getBookcasesByName(name: name);
 
     if (bookcases.isEmpty) {
@@ -114,7 +151,10 @@ class BookcaseBloc extends Bloc<BookcaseEvent, BookcaseState> {
     for (BookcaseModel bookcase in bookcases) {
       if (bookcase.id == null) {
         emit(
-          BookcaseErrorState(errorMessage: 'Erro inesperado: ${bookcase.id}'),
+          BookcaseErrorState(
+            errorCode: LocalDatabaseErrorCode.unknown,
+            errorDescriptionMessage: 'Bookcase with null ID found.',
+          ),
         );
         return;
       }
