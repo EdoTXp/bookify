@@ -38,6 +38,9 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
+# Hide coverage files
+/coverage/
+
 # Debug Symbols
 /debug_symbols/
 
