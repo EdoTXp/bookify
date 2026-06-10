@@ -108,7 +108,7 @@ void main() {
       await _initHomePage(tester, bookBloc);
 
       expect(
-        find.byKey(const Key('BookErrorSateWidget')),
+        find.byKey(const Key('BookErrorStateWidget')),
         findsOneWidget,
       );
 

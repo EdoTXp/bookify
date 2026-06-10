@@ -37,16 +37,6 @@ class _RootPageState extends State<RootPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Set the status bar with the app theme configuration
-    // without having to instantiate the Appbar widget.
-    SystemChrome.setSystemUIOverlayStyle(
-      Theme.of(context).appBarTheme.systemOverlayStyle!,
-    );
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     _bottomBarController.dispose();

@@ -2,7 +2,9 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class DatePickerDialogService {
+abstract class DatePickerDialogService {
+  DatePickerDialogService._();
+
   static Future<DateTime?> showDateTimePicker({
     required BuildContext context,
     List<DateTime?> value = const [],

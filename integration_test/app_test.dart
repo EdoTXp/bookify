@@ -5,6 +5,7 @@ import 'package:bookify/src/bookify_app.dart';
 import 'package:bookify/src/shared/providers/providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +39,11 @@ Future<void> _testerPop(PatrolIntegrationTester $) async {
 }
 
 Future<void> _initApp(PatrolIntegrationTester $) async {
+  final widgetsBinding = WidgetsBinding.instance;
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await initializeDateFormatting(Platform.localeName);
+
   Intl.defaultLocale = Platform.localeName;
 
   await Firebase.initializeApp(

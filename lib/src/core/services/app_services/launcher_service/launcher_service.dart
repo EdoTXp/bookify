@@ -2,7 +2,9 @@ import 'package:bookify/src/core/errors/platform_exception/platform_exception.da
 import 'package:bookify/src/shared/enums/platform_error_code.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LauncherService {
+abstract class LauncherService {
+  LauncherService._();
+
   static Future<void> openUrl(String url) async {
     try {
       final uri = Uri.parse(url);

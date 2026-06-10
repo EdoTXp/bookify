@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:localization/localization.dart';
 
-class ColorPickerDialogService {
+abstract class ColorPickerDialogService {
+  ColorPickerDialogService._();
+
   static Future<Color> showColorPickerDialog(
     BuildContext context,
     Color? selectedColor,

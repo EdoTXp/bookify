@@ -32,7 +32,7 @@ import 'package:flutter/widgets.dart';
 abstract class Routes {
   Routes._();
 
-  static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   static Map<String, WidgetBuilder> routes = {
     OnBoardingPage.routeName: (context) => const OnBoardingPage(),
@@ -100,7 +100,7 @@ abstract class Routes {
   };
 
   /// Returns the initial route based on the user's authentication status.
-  static String getInitialRoute(bool userIsLogged) {
-    return userIsLogged ? RootPage.routeName : OnBoardingPage.routeName;
+  static Widget getInitialHome(bool userIsLogged) {
+    return userIsLogged ? const RootPage() : const OnBoardingPage();
   }
 }

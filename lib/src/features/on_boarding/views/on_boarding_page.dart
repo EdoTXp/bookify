@@ -4,7 +4,6 @@ import 'package:bookify/src/features/on_boarding/widgets/page_view_indicator.dar
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -26,14 +25,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     super.initState();
     _pageController = PageController();
     _currentPage = 0;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    SystemChrome.setSystemUIOverlayStyle(
-      Theme.of(context).appBarTheme.systemOverlayStyle!,
-    );
   }
 
   @override

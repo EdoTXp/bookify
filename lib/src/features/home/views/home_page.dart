@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         :final errorDescriptionMessage,
       ) =>
         Center(
-          key: const Key('BookErrorSateWidget'),
+          key: const Key('BookErrorStateWidget'),
           child: InfoItemStateWidget.withErrorState(
             message: errorCode.toLocalizedMessage(errorDescriptionMessage),
             onPressed: _refreshPage,
@@ -69,25 +69,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSubmittedSearch(String value, SearchType searchType) {
-    if (value.isNotEmpty) {
-      switch (searchType) {
-        case SearchType.title:
-          _bookBloc.add(FoundBooksByTitleEvent(title: value));
-          break;
-        case SearchType.author:
-          _bookBloc.add(FoundBooksByAuthorEvent(author: value));
-          break;
-        case SearchType.category:
-          _bookBloc.add(FoundBooksByCategoryEvent(category: value));
-          break;
-        case SearchType.publisher:
-          _bookBloc.add(FoundBooksByPublisherEvent(publisher: value));
-          break;
-        case SearchType.isbn:
-          _bookBloc.add(FoundBooksByIsbnEvent(isbn: value));
-          break;
-      }
+    if (value.trim().isEmpty) {
+      return;
     }
+
+    _bookBloc.add(switch (searchType) {
+      SearchType.title => FoundBooksByTitleEvent(title: value),
+      SearchType.author => FoundBooksByAuthorEvent(author: value),
+      SearchType.category => FoundBooksByCategoryEvent(category: value),
+      SearchType.publisher => FoundBooksByPublisherEvent(publisher: value),
+      SearchType.isbn => FoundBooksByIsbnEvent(isbn: value),
+    });
   }
 
   @override

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LockScreenOrientationService {
+abstract class LockScreenOrientationService {
+  LockScreenOrientationService._();
+
   static void lockOrientationScreen({required Orientation orientation}) {
     if (orientation == Orientation.portrait) {
       // Lock the screen only portrait

@@ -1,6 +1,8 @@
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-class WakeLockScreenService {
+abstract class WakeLockScreenService {
+  WakeLockScreenService._();
+
   static void lockWakeScreen() {
     WakelockPlus.toggle(enable: true);
   }

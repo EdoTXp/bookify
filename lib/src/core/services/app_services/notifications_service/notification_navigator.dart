@@ -13,7 +13,7 @@ class NotificationNavigator {
     );
 
     Navigator.pushNamed(
-      Routes.navigatorKey!.currentContext!,
+      Routes.navigatorKey.currentContext!,
       pageRoute,
       arguments: arguments,
     );

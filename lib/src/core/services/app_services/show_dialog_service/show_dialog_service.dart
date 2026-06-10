@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class ShowDialogService {
+abstract class ShowDialogService {
+  ShowDialogService._();
+
   static final bool _isAndroidPlatform = Platform.isAndroid;
 
   static Future<void> showAlertDialog({

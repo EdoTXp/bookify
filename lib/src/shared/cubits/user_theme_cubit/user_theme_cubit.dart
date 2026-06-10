@@ -23,6 +23,7 @@ class UserThemeCubit extends Cubit<UserThemeState> {
         await _userThemeRepository.setThemeMode(
           themeMode: ThemeMode.system,
         );
+
         emit(
           UserThemeLoadedState(themeMode: ThemeMode.system),
         );

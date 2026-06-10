@@ -26,7 +26,9 @@ enum SnackBarType {
   }
 }
 
-class SnackbarService {
+abstract class SnackbarService {
+  SnackbarService._();
+
   static void showSnackBar(
     BuildContext context,
     String message,

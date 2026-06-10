@@ -68,7 +68,6 @@
 		<string>Este aplicativo precisa de acesso à câmera para ler códigos ISBN.</string>
 		<key>NSContactsUsageDescription</key>
 		<string>Este aplicativo precisa de acesso aos contatos para criar empréstimos.</string>
-
 		<key>UIApplicationSceneManifest</key>
 		<dict>
 			<key>UIApplicationSupportsMultipleScenes</key>
@@ -108,6 +107,8 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
+		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>
 </plist>

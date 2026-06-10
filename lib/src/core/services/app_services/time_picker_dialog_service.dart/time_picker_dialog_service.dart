@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class TimePickerDialogService {
+abstract class TimePickerDialogService {
+  TimePickerDialogService._();
+
   static Future<TimeOfDay?> showTimePickerDialog(
     BuildContext context, [
     TimeOfDay? initialTime,

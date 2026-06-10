@@ -21,8 +21,8 @@ abstract class AppColor {
   ///Bookify Warning Color = [Color(0xFFFFCC00)]
   static const bookifyWarningColor = Color(0xFFFFCC00);
 
-  ///Bookify Dark Background Color = [Color(0xff121212)]
-  static const bookifyDarkBackgroundColor = Color(0xff121212);
+  ///Bookify Dark Background Color = [Color(0xFF121212)]
+  static const bookifyDarkBackgroundColor = Color(0xFF121212);
 
   ///Bookify disabled Color = [Color(0XFF939393)]
   static const bookifyDisabledColor = Color(0XFF939393);
