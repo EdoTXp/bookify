@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-import '../../../shared/constants/images/bookify_images.dart';
+import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 
 class Illustration2Page extends StatelessWidget {
   const Illustration2Page({super.key});
@@ -22,7 +22,9 @@ class Illustration2Page extends StatelessWidget {
               key: const Key('Illustration2'),
               height: mediaQuerySizeOf.height * .4,
               width: mediaQuerySizeOf.width,
-              BookifyImages.illustration_2,
+              (Theme.brightnessOf(context) == Brightness.light)
+                  ? BookifyImages.illustration2
+                  : BookifyImages.illustration2Dark,
               fit: BoxFit.scaleDown,
             ),
             const SizedBox(

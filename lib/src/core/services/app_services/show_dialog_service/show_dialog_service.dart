@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
 abstract class ShowDialogService {
   ShowDialogService._();
-
-  static final bool _isAndroidPlatform = Platform.isAndroid;
 
   static Future<void> showAlertDialog({
     required BuildContext context,
@@ -16,66 +12,24 @@ abstract class ShowDialogService {
     VoidCallback? cancelButtonFunction,
     required VoidCallback confirmButtonFunction,
   }) async {
-    final Widget titleWidget = Text(
-      title,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-    );
-
-    final Widget contentWidget = Text(
-      content,
-      style: const TextStyle(fontSize: 14),
-    );
-
-    final Widget cancelButtonWidget = Text(
-      'no-button'.i18n(),
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-
-    final Widget confirmButtonWidget = Text(
-      'confirm-button'.i18n(),
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-
     await showAdaptiveDialog(
       context: context,
       builder: (context) {
         return AlertDialog.adaptive(
-          title: titleWidget,
-          content: contentWidget,
+          title: Text(title),
+          content: Text(content),
           actions: [
-            if (_isAndroidPlatform) ...[
-              TextButton(
-                onPressed:
-                    cancelButtonFunction ?? () => Navigator.of(context).pop(),
-                child: cancelButtonWidget,
-              ),
-              TextButton(
-                key: const Key('ConfirmDialogButton'),
-                onPressed: confirmButtonFunction,
-                child: confirmButtonWidget,
-              ),
-            ] else ...[
-              CupertinoDialogAction(
-                onPressed:
-                    cancelButtonFunction ?? () => Navigator.of(context).pop(),
-                child: cancelButtonWidget,
-              ),
-              CupertinoDialogAction(
-                key: const Key('ConfirmDialogButton'),
-                isDefaultAction: true,
-                onPressed: confirmButtonFunction,
-                child: confirmButtonWidget,
-              ),
-            ],
+            _AdaptiveTextButton(
+              onPressed:
+                  cancelButtonFunction ?? () => Navigator.of(context).pop(),
+              text: 'no-button'.i18n(),
+            ),
+            _AdaptiveTextButton(
+              key: const Key('ConfirmDialogButton'),
+              onPressed: confirmButtonFunction,
+              isIOSDefaultAction: true,
+              text: 'confirm-button'.i18n(),
+            ),
           ],
         );
       },
@@ -86,48 +40,57 @@ abstract class ShowDialogService {
     required BuildContext context,
     required String title,
   }) async {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    final Widget titleWidget = Text(
-      title,
-      style: const TextStyle(
-        fontWeight: FontWeight.normal,
-        fontSize: 16,
-      ),
-    );
-
-    final Widget okButtonWidget = Text(
-      'ok-button'.i18n(),
-      style: TextStyle(
-        fontSize: 16,
-        color: colorScheme.primary,
-      ),
-    );
-
-    await showDialog(
+    await showAdaptiveDialog(
       context: context,
-      builder: (context) => (_isAndroidPlatform)
-          ? SimpleDialog(
-              title: titleWidget,
-              children: [
-                SimpleDialogOption(
-                  key: const Key('OkDialogButton'),
-                  onPressed: () => Navigator.pop(context),
-                  child: okButtonWidget,
-                ),
-              ],
-            )
-          : CupertinoAlertDialog(
-              title: titleWidget,
-              actions: [
-                CupertinoDialogAction(
-                  key: const Key('OkDialogButton'),
-                  isDefaultAction: true,
-                  onPressed: () => Navigator.pop(context),
-                  child: okButtonWidget,
-                ),
-              ],
-            ),
+      builder: (context) => AlertDialog.adaptive(
+        title: Text(title),
+        actions: [
+          _AdaptiveTextButton(
+            key: const Key('OkDialogButton'),
+            isIOSDefaultAction: true,
+            onPressed: () => Navigator.pop(context),
+            text: 'ok-button'.i18n(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AdaptiveTextButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final bool isIOSDefaultAction;
+
+  const _AdaptiveTextButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.isIOSDefaultAction = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final child = Text(
+      text,
+      style: TextStyle(
+        color: theme.colorScheme.tertiary,
+        fontSize: 14,
+      ),
+    );
+
+    if (theme.platform == TargetPlatform.iOS) {
+      return CupertinoDialogAction(
+        onPressed: onPressed,
+        isDefaultAction: isIOSDefaultAction,
+        child: child,
+      );
+    }
+    return TextButton(
+      onPressed: onPressed,
+      child: child,
     );
   }
 }

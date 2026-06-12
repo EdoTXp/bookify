@@ -97,46 +97,59 @@ class _AuthPageState extends State<AuthPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const Spacer(),
-              Image.asset(
-                key: const Key('BookifyLogoImage'),
-                BookifyImages.authLogo,
-                height: mediaQuerySizeOf.height * .5,
-                width: mediaQuerySizeOf.width,
+        child: Stack(
+          children: [
+            if (Theme.brightnessOf(context) == Brightness.dark)
+              Padding(
+                padding: const EdgeInsets.only(left: 26.0),
+                child: Image.asset(
+                  BookifyImages.authLogoDarkBackground,
+                  height: mediaQuerySizeOf.height * .8,
+                  width: mediaQuerySizeOf.width,
+                ),
               ),
-              const Spacer(),
-              BlocConsumer<AuthBloc, AuthState>(
-                bloc: _bloc,
-                listener: _handleAuthStateListener,
-                builder: (context, state) {
-                  return PlatformSignInButtons(
-                    showLoader: state is AuthLoadingState,
-                    onGooglePressed: () => _bloc.add(
-                      SignedInAuthEvent(
-                        signInTypeButton: SignInType.google,
-                      ),
-                    ),
-                    onApplePressed: () => _bloc.add(
-                      SignedInAuthEvent(
-                        signInTypeButton: SignInType.apple,
-                      ),
-                    ),
-                    onFacebookPressed: () => _bloc.add(
-                      SignedInAuthEvent(
-                        signInTypeButton: SignInType.facebook,
-                      ),
-                    ),
-                  );
-                },
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Image.asset(
+                    key: const Key('BookifyLogoImage'),
+                    BookifyImages.authLogo,
+                    height: mediaQuerySizeOf.height * .5,
+                    width: mediaQuerySizeOf.width,
+                  ),
+                  const Spacer(),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    bloc: _bloc,
+                    listener: _handleAuthStateListener,
+                    builder: (context, state) {
+                      return PlatformSignInButtons(
+                        showLoader: state is AuthLoadingState,
+                        onGooglePressed: () => _bloc.add(
+                          SignedInAuthEvent(
+                            signInTypeButton: SignInType.google,
+                          ),
+                        ),
+                        onApplePressed: () => _bloc.add(
+                          SignedInAuthEvent(
+                            signInTypeButton: SignInType.apple,
+                          ),
+                        ),
+                        onFacebookPressed: () => _bloc.add(
+                          SignedInAuthEvent(
+                            signInTypeButton: SignInType.facebook,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const TermsInformation(),
+                ],
               ),
-              const SizedBox(height: 20),
-              const TermsInformation(),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

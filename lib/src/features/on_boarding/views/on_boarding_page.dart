@@ -33,21 +33,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     super.dispose();
   }
 
-  void _goToPrecedentIllustration() {
-    if (_currentPage > 0) {
-      setState(() {
-        _currentPage--;
-      });
-    }
-    _pageController.jumpToPage(_currentPage);
+  Future<void> _goToPrecedentIllustration() async {
+    await _pageController.previousPage(
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeInOutCubicEmphasized,
+    );
   }
 
   Future<void> _goToForwardOrFinalizeIllustration() async {
     if (_currentPage < 3) {
-      setState(() {
-        _currentPage++;
-      });
-      _pageController.jumpToPage(_currentPage);
+      await _pageController.nextPage(
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInOutCubicEmphasized,
+      );
     } else {
       await _navigateToConfigurationsPage();
     }
@@ -70,15 +68,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               Align(
                 alignment: Alignment.topRight,
                 child: TextButton(
+                  onPressed: () async => await _navigateToConfigurationsPage(),
                   child: Text(
                     'skip-button'.i18n(),
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
-                  onPressed: () async => await _navigateToConfigurationsPage(),
                 ),
               ),
               Expanded(
                 child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
                   onPageChanged: (value) {
                     setState(() {
@@ -103,7 +102,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   if (_currentPage != 0) ...[
                     Flexible(
                       child: BookifyOutlinedButton.expanded(
-                        onPressed: _goToPrecedentIllustration,
+                        onPressed: () async =>
+                            await _goToPrecedentIllustration(),
                         color: colorScheme.primary,
                         text: 'back-button'.i18n(),
                         suffixIcon: Icons.arrow_forward_rounded,

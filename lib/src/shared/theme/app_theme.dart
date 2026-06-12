@@ -40,6 +40,9 @@ abstract class AppTheme {
     floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
       backgroundColor: AppColor.bookifyPrimaryColor.lighten(.35),
     ),
+    dialogTheme: _dialogTheme.copyWith(
+      backgroundColor: AppColor.bookifyPrimaryColor.lighten(.35),
+    ),
     disabledColor: AppColor.bookifyDisabledColor,
     colorScheme: const ColorScheme.light(
       primary: AppColor.bookifyPrimaryColor,
@@ -80,6 +83,9 @@ abstract class AppTheme {
       color: AppColor.bookifyPrimaryColor.darken(.6),
     ),
     floatingActionButtonTheme: _floatingActionButtonTheme.copyWith(
+      backgroundColor: AppColor.bookifyPrimaryColor.darken(.6),
+    ),
+    dialogTheme: _dialogTheme.copyWith(
       backgroundColor: AppColor.bookifyPrimaryColor.darken(.6),
     ),
     disabledColor: AppColor.bookifyDisabledColor,
@@ -413,6 +419,21 @@ abstract class AppTheme {
           15,
         ),
       ),
+    ),
+  );
+
+  static final _dialogTheme = DialogThemeData(
+    titleTextStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+      color: AppColor.bookifyTertiaryColor,
+    ),
+    contentTextStyle: TextStyle(
+      fontSize: 14,
+      color: AppColor.bookifyTertiaryColor,
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
     ),
   );
 }

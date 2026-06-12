@@ -21,7 +21,7 @@ class Illustration1Page extends StatelessWidget {
               key: const Key('Illustration1'),
               height: mediaQuerySizeOf.height * .4,
               width: mediaQuerySizeOf.width,
-              BookifyImages.illustration_1,
+              BookifyImages.illustration1,
               fit: BoxFit.scaleDown,
             ),
             const SizedBox(
