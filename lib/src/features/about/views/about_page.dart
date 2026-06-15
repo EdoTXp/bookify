@@ -29,21 +29,18 @@ class _AboutPageState extends State<AboutPage> {
   Widget _getWidgetOnAboutState(BuildContext context, AboutState state) {
     return switch (state) {
       AboutLoadingState() => const CenterCircularProgressIndicator(),
-      AboutLoadedState(appVersionModel: final appVersion) =>
-        AboutLoadedStateWidget(appVersionModel: appVersion),
+      AboutLoadedState(:final appVersionModel) => AboutLoadedStateWidget(
+        appVersionModel: appVersionModel,
+      ),
       AboutErrorState(
         :final errorCode,
         :final errorDescriptionMessage,
       ) =>
         InfoItemStateWidget.withErrorState(
           message: errorCode.toLocalizedMessage(errorDescriptionMessage),
-          onPressed: _refreshPage,
+          onPressed: () => _bloc.add(GotAppVersionEvent()),
         ),
     };
-  }
-
-  void _refreshPage() {
-    _bloc.add(GotAppVersionEvent());
   }
 
   @override

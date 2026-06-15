@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.11.19
+version: 2.11.20
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -32,14 +32,14 @@ dependencies:
   wakelock_plus: ^1.6.1 # Used for keep the screen awake when timer is started.
   permission_handler: ^12.0.3 # Used to request permission for contacts.
   fast_contacts: ^5.0.1 # Used to get Phone Contacts.
-  flutter_local_notifications: ^22.0.0 # Used for send notifications.
+  flutter_local_notifications: ^22.0.1 # Used for send notifications.
   flutter_timezone: ^5.1.0 # Used for get local timezone.
   timezone: ^0.11.0 # Used for get timezone for schedule notification.
   intl: ^0.20.2 # Used for set a format to DateTime.
   sqflite: ^2.4.3 # Used for local database.
   path: ^1.9.1 # Used to find the default path of the database.
   shared_preferences: ^2.5.5 # Used for storage the user setting.
-  authentication_buttons: ^0.0.5 # Used for show login button on auth page.
+  sign_in_button: ^5.0.0 # Used for show login button on auth page.
   firebase_auth: ^6.5.2 # Used for authenticate user on Firebase.
   firebase_core: ^4.10.0 # Used for initialize the Firebase.
   google_sign_in: ^7.2.0 # Used for login with Google.

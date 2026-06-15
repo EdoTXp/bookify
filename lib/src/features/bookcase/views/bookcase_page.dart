@@ -68,13 +68,17 @@ class _BookcasePageState extends State<BookcasePage> {
         ),
       ),
       BookcaseLoadedState(bookcasesDto: final bookcasesDto) =>
-        BookcaseLoadedStateWidget(
-          key: const Key('BookcaseLoadedState'),
-          bookcasesDto: bookcasesDto,
-          onRefresh: _refreshPage,
-          onPressedDeleteButton: (selectedList) => _bloc.add(
-            DeletedBookcasesEvent(
-              selectedList: selectedList,
+        RefreshIndicator.adaptive(
+          onRefresh: () async => _refreshPage(),
+          color: Theme.of(context).colorScheme.secondary,
+          child: BookcaseLoadedStateWidget(
+            key: const Key('BookcaseLoadedState'),
+            bookcasesDto: bookcasesDto,
+            onRefresh: _refreshPage,
+            onPressedDeleteButton: (selectedList) => _bloc.add(
+              DeletedBookcasesEvent(
+                selectedList: selectedList,
+              ),
             ),
           ),
         ),

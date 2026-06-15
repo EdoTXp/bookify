@@ -23,6 +23,7 @@ class BooksLoadedStateWidget extends StatelessWidget {
       child: BooksGridView(
         key: const Key('BooksGridView'),
         books: books,
+        physics: AlwaysScrollableScrollPhysics(),
         onTap: (book) => Navigator.pushNamed(
           context,
           BookDetailPage.routeName,

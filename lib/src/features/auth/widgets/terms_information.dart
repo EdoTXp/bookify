@@ -1,4 +1,5 @@
 import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -19,12 +20,12 @@ class _TermsInformationState extends State<TermsInformation> {
     super.initState();
     _termsRecognizer = TapGestureRecognizer()
       ..onTap = () async => await LauncherService.openUrl(
-        'https://edotxp.github.io/bookify/policies/terms.html',
+        BookifyStrings.termsUrl,
       );
 
     _privacyRecognizer = TapGestureRecognizer()
       ..onTap = () async => await LauncherService.openUrl(
-        'https://edotxp.github.io/bookify/policies/privacy-policy.html',
+        BookifyStrings.privacyUrl,
       );
   }
 

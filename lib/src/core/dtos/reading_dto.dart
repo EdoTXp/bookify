@@ -10,8 +10,14 @@ class ReadingDto {
     required this.book,
   });
 
-  int get percentReading =>
-      ((reading.pagesReaded / book.pageCount) * 100).round();
+  int get percentReading {
+    if (book.pageCount <= 0) return 0;
+
+    if (reading.pagesReaded >= book.pageCount) return 100;
+
+    final percentage = (reading.pagesReaded / book.pageCount) * 100;
+    return percentage.floor();
+  }
 
   ReadingDto copyWith({
     ReadingModel? reading,

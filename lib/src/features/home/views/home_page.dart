@@ -50,9 +50,13 @@ class _HomePageState extends State<HomePage> {
           onPressed: _refreshPage,
         ),
       ),
-      BooksLoadedState(:final books) => BooksLoadedStateWidget(
-        key: const Key('BooksLoadedStateWidget'),
-        books: books,
+      BooksLoadedState(:final books) => RefreshIndicator.adaptive(
+        onRefresh: () async => _refreshPage(),
+        color: Theme.of(context).colorScheme.secondary,
+        child: BooksLoadedStateWidget(
+          key: const Key('BooksLoadedStateWidget'),
+          books: books,
+        ),
       ),
       BookErrorState(
         :final errorCode,
@@ -86,38 +90,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: RefreshIndicator.adaptive(
-        onRefresh: () async => _refreshPage(),
-        color: Theme.of(context).colorScheme.secondary,
-        child: Column(
-          children: [
-            AnimatedOpacity(
-              opacity: _isSearchBarVisible ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 300),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 16.0,
-                  right: 16.0,
-                  left: 16.0,
-                ),
-                child: AnimatedSearchBar(
-                  key: const Key('AnimatedSearchBar'),
-                  searchEC: _searchEC,
-                  onSubmitted: _onSubmittedSearch,
-                ),
+      child: Column(
+        children: [
+          AnimatedOpacity(
+            opacity: _isSearchBarVisible ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 300),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                right: 16.0,
+                left: 16.0,
+              ),
+              child: AnimatedSearchBar(
+                key: const Key('AnimatedSearchBar'),
+                searchEC: _searchEC,
+                onSubmitted: _onSubmittedSearch,
               ),
             ),
-            Expanded(
-              child: BlocConsumer<BookBloc, BookState>(
-                bloc: _bookBloc,
-                listener: (_, state) => setState(() {
-                  _isSearchBarVisible = state is BooksLoadedState;
-                }),
-                builder: _getBookStateWidget,
-              ),
+          ),
+          Expanded(
+            child: BlocConsumer<BookBloc, BookState>(
+              bloc: _bookBloc,
+              listener: (_, state) => setState(() {
+                _isSearchBarVisible = state is BooksLoadedState;
+              }),
+              builder: _getBookStateWidget,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

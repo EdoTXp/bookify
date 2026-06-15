@@ -1,17 +1,16 @@
 import 'dart:io';
 
-import 'package:authentication_buttons/authentication_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class PlatformSignInButtons extends StatelessWidget {
-  final bool showLoader;
   final VoidCallback onGooglePressed;
   final VoidCallback onApplePressed;
   final VoidCallback onFacebookPressed;
 
   const PlatformSignInButtons({
     super.key,
-    required this.showLoader,
     required this.onGooglePressed,
     required this.onApplePressed,
     required this.onFacebookPressed,
@@ -23,25 +22,24 @@ class PlatformSignInButtons extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (Platform.isAndroid)
-          AuthenticationButton(
+          SignInButton(
             key: const Key('GoogleButton'),
-            authenticationMethod: AuthenticationMethod.google,
-            showLoader: showLoader,
+            Buttons.googleDark,
             onPressed: onGooglePressed,
+            text: 'sign-in-google-button'.i18n(),
           )
         else if (Platform.isIOS)
-          AuthenticationButton(
+          SignInButton(
             key: const Key('AppleButton'),
-            authenticationMethod: AuthenticationMethod.apple,
-            showLoader: showLoader,
+            Buttons.apple,
             onPressed: onApplePressed,
+            text: 'sign-in-apple-button'.i18n(),
           ),
-        const SizedBox(height: 20),
-        AuthenticationButton(
+        SignInButton(
           key: const Key('FacebookButton'),
-          authenticationMethod: AuthenticationMethod.facebook,
-          showLoader: showLoader,
+          Buttons.facebookNew,
           onPressed: onFacebookPressed,
+          text: 'sign-in-facebook-button'.i18n(),
         ),
       ],
     );

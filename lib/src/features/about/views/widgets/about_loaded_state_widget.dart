@@ -1,10 +1,12 @@
 import 'package:bookify/src/core/models/app_version_model.dart';
 import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
+import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class AboutLoadedStateWidget extends StatelessWidget {
+class AboutLoadedStateWidget extends StatefulWidget {
   final AppVersionModel appVersionModel;
 
   const AboutLoadedStateWidget({
@@ -13,25 +15,54 @@ class AboutLoadedStateWidget extends StatelessWidget {
   });
 
   @override
+  State<AboutLoadedStateWidget> createState() => _AboutLoadedStateWidgetState();
+}
+
+class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
+  late TapGestureRecognizer _designerRecognizer;
+  late TapGestureRecognizer _developerRecognizer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _designerRecognizer = TapGestureRecognizer()
+      ..onTap = () async => await LauncherService.openUrl(
+        BookifyStrings.designerUrl,
+      );
+
+    _developerRecognizer = TapGestureRecognizer()
+      ..onTap = () async => await LauncherService.openUrl(
+        BookifyStrings.developerUrl,
+      );
+  }
+
+  @override
+  void dispose() {
+    _designerRecognizer.dispose();
+    _developerRecognizer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: .center,
           children: [
             Text(
-              appVersionModel.appName,
-              style: const TextStyle(
+              widget.appVersionModel.appName,
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
+                color: colorScheme.primary,
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
             Text(
-              'version-label'.i18n([appVersionModel.version]),
+              'version-label'.i18n([widget.appVersionModel.version]),
               style: const TextStyle(
                 fontSize: 15,
               ),
@@ -47,49 +78,43 @@ class AboutLoadedStateWidget extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'design-by-label'.i18n(),
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
+            Text.rich(
+              TextSpan(
+                text: 'design-by-label'.i18n(),
+                style: TextStyle(
+                  fontSize: 15,
                 ),
-                TextButton(
-                  child: const Text(
-                    'Fredson',
+                children: [
+                  TextSpan(
+                    text: ' Fredson',
                     style: TextStyle(
                       fontSize: 15,
+                      fontWeight: .bold,
+                      color: colorScheme.primary,
                     ),
+                    recognizer: _designerRecognizer,
                   ),
-                  onPressed: () async => await LauncherService.openUrl(
-                    'https://www.linkedin.com/in/fredsoncosta/',
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'developed-by-label'.i18n(),
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
+            Text.rich(
+              TextSpan(
+                text: 'developed-by-label'.i18n(),
+                style: TextStyle(
+                  fontSize: 15,
                 ),
-                TextButton(
-                  child: const Text(
-                    'Edoardo',
+                children: [
+                  TextSpan(
+                    text: ' Edoardo',
                     style: TextStyle(
                       fontSize: 15,
+                      fontWeight: .bold,
+                      color: colorScheme.primary,
                     ),
+                    recognizer: _developerRecognizer,
                   ),
-                  onPressed: () async => await LauncherService.openUrl(
-                    'https://www.linkedin.com/in/edoardofabrizio/',
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

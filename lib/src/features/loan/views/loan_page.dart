@@ -75,10 +75,14 @@ class _LoanPageState extends State<LoanPage> {
           },
         ),
       ),
-      LoanLoadedState(:final loansDto) => LoanLoadedStateWidget(
-        key: const Key('LoanLoadedState'),
-        loansDto: loansDto,
-        refreshPage: _refreshPage,
+      LoanLoadedState(:final loansDto) => RefreshIndicator.adaptive(
+        onRefresh: () async => _refreshPage(),
+        color: Theme.of(context).colorScheme.secondary,
+        child: LoanLoadedStateWidget(
+          key: const Key('LoanLoadedState'),
+          loansDto: loansDto,
+          refreshPage: _refreshPage,
+        ),
       ),
       LoanNotFoundState() => InfoItemStateWidget.withNotFoundState(
         message: 'no-loans-found-with-terms'.i18n(),

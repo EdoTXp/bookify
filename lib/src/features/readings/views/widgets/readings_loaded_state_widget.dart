@@ -34,6 +34,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 5.0,
             ),
+            physics: AlwaysScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -41,16 +42,12 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
                   key: const Key('ReadingWidget'),
                   readingDto: readingsDto[index],
                   onTap: () async {
-                    final readingIsChanged =
-                        await Navigator.of(context).pushNamed(
-                              ReadingsDetailPage.routeName,
-                              arguments: readingsDto[index],
-                            )
-                            as bool?;
+                    await Navigator.of(context).pushNamed(
+                      ReadingsDetailPage.routeName,
+                      arguments: readingsDto[index],
+                    );
 
-                    if (readingIsChanged != null && readingIsChanged) {
-                      onRefreshPage();
-                    }
+                    onRefreshPage();
                   },
                 ),
               );

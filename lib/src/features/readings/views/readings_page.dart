@@ -91,11 +91,15 @@ class _ReadingsPageState extends State<ReadingsPage> {
           },
         ),
       ),
-      ReadingsLoadedState(:final readingsDto) => ReadingsLoadedStateWidget(
-        key: const Key('ReadingsLoadedState'),
-        readingsDto: readingsDto,
-        onNewReading: () => _insertNewReading(context),
-        onRefreshPage: _refreshPage,
+      ReadingsLoadedState(:final readingsDto) => RefreshIndicator.adaptive(
+        onRefresh: () async => _refreshPage(),
+        color: Theme.of(context).colorScheme.secondary,
+        child: ReadingsLoadedStateWidget(
+          key: const Key('ReadingsLoadedState'),
+          readingsDto: readingsDto,
+          onNewReading: () => _insertNewReading(context),
+          onRefreshPage: _refreshPage,
+        ),
       ),
       ReadingsErrorState(
         :final errorCode,

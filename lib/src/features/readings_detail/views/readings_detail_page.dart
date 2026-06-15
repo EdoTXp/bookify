@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
@@ -11,6 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 
+/// Represents the detail page for a specific reading session.
+///
+/// Displays book information, current progress, and allows the user
+/// to update their read pages or finish the book.
 class ReadingsDetailPage extends StatefulWidget {
   /// The Route Name = '/readings_detail'
   static const routeName = '/readings_detail';
@@ -30,16 +35,23 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
   late final ReadingsDetailBloc _bloc;
   late bool _canPopPage;
   late double _readedPages;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
     super.initState();
-
     _bloc = context.read<ReadingsDetailBloc>();
     _canPopPage = true;
     _readedPages = widget.readingDto.reading.pagesReaded.toDouble();
   }
 
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
+  /// Listens to the [ReadingsDetailBloc] state changes and shows the appropriate feedback UI.
   Future<void> _handleReadingDetailState(
     BuildContext context,
     ReadingsDetailState state,
@@ -58,14 +70,6 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
           context,
           'reading-successfully-updated-snackbar'.i18n(),
           SnackBarType.success,
-        );
-
-        await Future.delayed(const Duration(seconds: 2)).then(
-          (_) {
-            if (context.mounted) {
-              Navigator.of(context).pop(true);
-            }
-          },
         );
         break;
 
@@ -106,42 +110,86 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
     }
   }
 
-  Future<void> _updateReadingOnPressedButton() async {
+  /// Schedules an automatic update of the reading progress.
+  ///
+  /// Uses a [Timer] to wait 500 milliseconds after the last interaction before
+  /// dispatching the [UpdatedReadingsEvent]. If the user finishes the book,
+  /// the update is skipped to force the user to use the "Finish" button.
+  void _scheduleReadingUpdate(double value) {
     final bookPages = widget.readingDto.book.pageCount;
 
-    final contentMessage = (_readedPages == bookPages)
-        ? 'finish-reading-message'.i18n()
-        : 'update-reading-message'.i18n([
-            _readedPages.round().toString(),
-          ]);
+    // Cancel any active timer if the user interacts again quickly.
+    _debounceTimer?.cancel();
 
-    final updatedReading = widget.readingDto.reading.copyWith(
-      pagesReaded: _readedPages.round(),
-      lastReadingDate: DateTime.now(),
-    );
+    // Only auto-update if it's not the final page and the value actually changed.
+    if (value.toInt() < bookPages &&
+        value.toInt() != widget.readingDto.reading.pagesReaded) {
+      _debounceTimer = Timer(const Duration(milliseconds: 400), () {
+        final updatedReading = widget.readingDto.reading.copyWith(
+          pagesReaded: value.round(),
+          lastReadingDate: DateTime.now(),
+        );
 
+        _bloc.add(
+          UpdatedReadingsEvent(
+            readingModel: updatedReading,
+          ),
+        );
+      });
+    }
+  }
+
+  /// Increases the read pages by one.
+  ///
+  /// Instantly updates the UI and schedules a database update.
+  void _incrementPage() {
+    final bookPages = widget.readingDto.book.pageCount.toDouble();
+    if (_readedPages < bookPages) {
+      setState(() {
+        _readedPages++;
+      });
+      _scheduleReadingUpdate(_readedPages);
+    }
+  }
+
+  /// Decreases the read pages by one.
+  ///
+  /// Instantly updates the UI and schedules a database update.
+  void _decrementPage() {
+    if (_readedPages > 0) {
+      setState(() {
+        _readedPages--;
+      });
+      _scheduleReadingUpdate(_readedPages);
+    }
+  }
+
+  /// Strictly handles the explicit action of completing the book.
+  ///
+  /// Shows a confirmation dialog and prevents popping the view until
+  /// the transaction is confirmed.
+  Future<void> _finishReadingOnPressedButton() async {
     await ShowDialogService.showAlertDialog(
       context: context,
-      title: (_readedPages == bookPages)
-          ? 'finish-reading-title'.i18n()
-          : 'update-reading-title'.i18n(),
-      content: contentMessage,
+      title: 'finish-reading-title'.i18n(),
+      content: 'finish-reading-message'.i18n(),
       confirmButtonFunction: () {
+        // Lock navigation to prevent data corruption while finishing.
         setState(() {
           _canPopPage = false;
         });
 
         _bloc.add(
-          (_readedPages == bookPages)
-              ? FinishedReadingsEvent(
-                  readingId: widget.readingDto.reading.id!,
-                  bookId: widget.readingDto.book.id,
-                )
-              : UpdatedReadingsEvent(readingModel: updatedReading),
+          FinishedReadingsEvent(
+            readingId: widget.readingDto.reading.id!,
+            bookId: widget.readingDto.book.id,
+          ),
         );
+
         Navigator.of(context).pop();
       },
       cancelButtonFunction: () {
+        // Revert slider to the last saved state if the user aborts.
         setState(() {
           _readedPages = widget.readingDto.reading.pagesReaded.toDouble();
         });
@@ -154,6 +202,8 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
   Widget build(BuildContext context) {
     final book = widget.readingDto.book;
     final reading = widget.readingDto.reading;
+    final isBookFinished = _readedPages.toInt() == book.pageCount;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return PopScope(
       canPop: _canPopPage,
@@ -234,18 +284,47 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    Slider.adaptive(
-                      key: const Key('ReadingSlider'),
-                      min: 0.0,
-                      max: book.pageCount.toDouble(),
-                      value: _readedPages,
-                      label: _readedPages.round().toString(),
-                      divisions: book.pageCount,
-                      onChanged: (value) {
-                        setState(() {
-                          _readedPages = value;
-                        });
-                      },
+                    Row(
+                      children: [
+                        // Decrement Button
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_outlined,
+                            color: colorScheme.secondary,
+                            size: 20,
+                          ),
+                          onPressed: _readedPages > 0 ? _decrementPage : null,
+                          tooltip: 'decrement-page-tooltip'.i18n(),
+                        ),
+                        Expanded(
+                          child: Slider.adaptive(
+                            key: const Key('ReadingSlider'),
+                            min: 0.0,
+                            max: book.pageCount.toDouble(),
+                            value: _readedPages,
+                            label: _readedPages.round().toString(),
+                            divisions: book.pageCount,
+                            onChanged: (value) {
+                              setState(() {
+                                _readedPages = value;
+                              });
+                            },
+                            onChangeEnd: _scheduleReadingUpdate,
+                          ),
+                        ),
+                        // Increment Button
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_outlined,
+                            color: colorScheme.secondary,
+                            size: 20,
+                          ),
+                          onPressed: _readedPages < book.pageCount
+                              ? _incrementPage
+                              : null,
+                          tooltip: 'increment-page-tooltip'.i18n(),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 40,
@@ -271,18 +350,29 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    BookifyElevatedButton.expanded(
-                      key: const Key('UpdateOrFinishReadingButton'),
-                      text: (_readedPages == book.pageCount)
-                          ? 'finish-reading-button'.i18n()
-                          : 'update-reading-button'.i18n(),
-                      suffixIcon: Icons.check_circle_outline_outlined,
-                      onPressed: () async {
-                        if (_readedPages.toInt() != reading.pagesReaded) {
-                          await _updateReadingOnPressedButton();
-                        }
-                      },
-                    ),
+                    // The finish button only appears when the user reaches the end
+                    if (isBookFinished)
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              'finish-reading-hint'.i18n(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          BookifyElevatedButton.expanded(
+                            key: const Key('FinishReadingButton'),
+                            text: 'finish-reading-button'.i18n(),
+                            suffixIcon: Icons.check_circle_outline_outlined,
+                            onPressed: _finishReadingOnPressedButton,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),

@@ -57,16 +57,21 @@ class _MyBooksPageState extends State<MyBooksPage> {
           child: Text('no-books-saved-message'.i18n()),
         ),
       ),
-      MyBooksLoadedState(:final books) => BooksGridView(
-        books: books,
-        onTap: (book) async {
-          await Navigator.pushNamed(
-            context,
-            BookDetailPage.routeName,
-            arguments: book,
-          );
-          _refreshPage();
-        },
+      MyBooksLoadedState(:final books) => RefreshIndicator.adaptive(
+        onRefresh: () async => _refreshPage(),
+        color: Theme.of(context).colorScheme.secondary,
+        child: BooksGridView(
+          books: books,
+          physics: AlwaysScrollableScrollPhysics(),
+          onTap: (book) async {
+            await Navigator.pushNamed(
+              context,
+              BookDetailPage.routeName,
+              arguments: book,
+            );
+            _refreshPage();
+          },
+        ),
       ),
       MyBooksNotFoundState() => InfoItemStateWidget.withNotFoundState(
         message: 'no-books-found-with-terms'.i18n(),

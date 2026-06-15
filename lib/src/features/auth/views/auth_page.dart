@@ -101,7 +101,7 @@ class _AuthPageState extends State<AuthPage> {
           children: [
             if (Theme.brightnessOf(context) == Brightness.dark)
               Padding(
-                padding: const EdgeInsets.only(left: 26.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Image.asset(
                   BookifyImages.authLogoDarkBackground,
                   height: mediaQuerySizeOf.height * .8,
@@ -125,7 +125,6 @@ class _AuthPageState extends State<AuthPage> {
                     listener: _handleAuthStateListener,
                     builder: (context, state) {
                       return PlatformSignInButtons(
-                        showLoader: state is AuthLoadingState,
                         onGooglePressed: () => _bloc.add(
                           SignedInAuthEvent(
                             signInTypeButton: SignInType.google,

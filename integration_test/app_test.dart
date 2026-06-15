@@ -421,18 +421,18 @@ Future<void> _testReadingsPage(PatrolIntegrationTester $) async {
   // Update reading pages
   await $.tester.drag(
     $(#ReadingSlider),
-    const Offset(100, 0),
+    const Offset(200, 0),
   );
   await $.pumpAndSettle();
 
-  // Confirm update Reading
-  await $(#UpdateOrFinishReadingButton).tap();
+  // Confirm finish Reading
+  await $(#FinishReadingButton).tap();
   await $.pumpAndSettle();
   await $(#ConfirmDialogButton).tap();
   await $.pumpAndSettle(duration: const Duration(seconds: 4));
 
-  expect($(#ReadingsLoadedState), findsOneWidget);
-  expect($(#ReadingWidget), findsOneWidget);
+  expect($(#ReadingsEmptyState), findsOneWidget);
+  expect($(#ReadingWidget), findsNothing);
 
   // Expect to find a updated reading
   expect($('0%'), findsNothing);
