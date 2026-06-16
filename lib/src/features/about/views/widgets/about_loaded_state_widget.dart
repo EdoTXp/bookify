@@ -70,13 +70,26 @@ class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
             const SizedBox(
               height: 30,
             ),
-            Image.asset(
-              BookifyImages.logoMini,
-              height: 200,
-              width: 200,
+            Container(
+              width: 220,
+              height: 220,
+              decoration: Theme.brightnessOf(context) == Brightness.dark
+                  ? BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    )
+                  : null,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Image.asset(
+                  BookifyImages.logoMini,
+                  height: 200,
+                  width: 200,
+                ),
+              ),
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Text.rich(
               TextSpan(

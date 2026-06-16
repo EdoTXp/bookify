@@ -336,7 +336,11 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                       onPressed: () async {
                         await Navigator.of(context).pushNamed(
                           ReadingsTimerPage.routeName,
-                          arguments: widget.readingDto,
+                          arguments: widget.readingDto.copyWith(
+                            reading: reading.copyWith(
+                              pagesReaded: _readedPages.toInt(),
+                            ),
+                          ),
                         );
 
                         if (context.mounted) {
