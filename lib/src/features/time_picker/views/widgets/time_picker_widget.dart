@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
-import 'package:bookify/src/core/extensions/show_time_picker_dialog.dart/show_time_picker_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_time_picker_dialog/show_time_picker_dialog_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/core/helper/lock_screen_orientation/lock_screen_orientation_helper.dart';
 import 'package:bookify/src/core/helper/play_alarm_sound/play_alarm_sound_helper.dart';
-import 'package:bookify/src/core/extensions/show_time_picker_dialog.dart/show_time_picker_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_time_picker_dialog/show_time_picker_dialog_extension.dart';
 import 'package:bookify/src/core/helper/wake_lock_screen/wake_lock_screen_helper.dart';
 import 'package:bookify/src/features/readings_timer/views/widgets/header.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
