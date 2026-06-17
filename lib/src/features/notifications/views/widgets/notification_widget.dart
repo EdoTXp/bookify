@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/notification_channel/notification_channel_extension.dart';
+import 'package:bookify/src/core/extensions/notification_channel/notification_channel_extension.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
 import 'package:flutter/material.dart';
 

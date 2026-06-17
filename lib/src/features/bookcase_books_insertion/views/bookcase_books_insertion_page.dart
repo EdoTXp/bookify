@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/widgets/bookcase_books_insertion_loaded_state_widget/bookcase_books_insertion_loaded_state.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/bloc/bookcase_books_insertion_bloc.dart';
@@ -93,8 +93,7 @@ class _BookcaseBooksInsertionPageState
         _canPop = false;
       });
 
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'books-added-successfully-snackbar'.i18n(),
         SnackBarType.success,
       );
@@ -131,7 +130,7 @@ class _BookcaseBooksInsertionPageState
                   centerTitle: true,
                   title: Text(
                     'select-books-title'.i18n(),
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
                 body: Padding(

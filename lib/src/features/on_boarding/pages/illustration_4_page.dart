@@ -43,7 +43,7 @@ class Illustration4Page extends StatelessWidget {
             Text(
               'onboarding-description4'.i18n(),
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
               ),
             ),

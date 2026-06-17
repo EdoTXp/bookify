@@ -1,13 +1,13 @@
-import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/book_status/book_status_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/book_on_bookcase_detail/views/widgets/widgets.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +57,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
         _canPopPage = false;
       });
 
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'book-removed-from-bookcase-snackbar'.i18n(),
         SnackBarType.success,
       );
@@ -75,8 +74,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
         _canPopPage = false;
       });
 
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'error-snackbar'.i18n([
           state.errorCode.toLocalizedMessage(state.errorDescriptionMessage),
         ]),
@@ -192,8 +190,7 @@ class _BookOnBookcaseDetailPageState extends State<BookOnBookcaseDetailPage> {
                           );
                         }
 
-                        await ShowDialogService.showAlertDialog(
-                          context: context,
+                        await context.showAlertDialog(
                           title: 'remove-book-from-bookcase-title'.i18n(),
                           content: 'remove-book-from-bookcase-description'.i18n(
                             [complementMessage],

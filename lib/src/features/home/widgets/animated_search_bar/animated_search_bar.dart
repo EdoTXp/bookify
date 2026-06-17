@@ -136,7 +136,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.title,
                     tooltip: 'search-by-title-tooltip'.i18n(),
-                    icon: Icon(
+                    icon: const Icon(
                       key: Key('TitleSearchTypeButton'),
                       Icons.menu_book_rounded,
                     ),
@@ -144,7 +144,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.author,
                     tooltip: 'search-by-author-tooltip'.i18n(),
-                    icon: Icon(
+                    icon: const Icon(
                       key: Key('AuthorSearchTypeButton'),
                       Icons.person_rounded,
                     ),
@@ -152,7 +152,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.category,
                     tooltip: 'search-by-category-tooltip'.i18n(),
-                    icon: Icon(
+                    icon: const Icon(
                       key: Key('CategorySearchTypeButton'),
                       Icons.category_rounded,
                     ),
@@ -160,7 +160,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.publisher,
                     tooltip: 'search-by-publisher-tooltip'.i18n(),
-                    icon: Icon(
+                    icon: const Icon(
                       key: Key('PublisherSearchTypeButton'),
                       Icons.publish_rounded,
                     ),
@@ -168,7 +168,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   ButtonSegment<SearchType>(
                     value: SearchType.isbn,
                     tooltip: 'search-by-isbn-tooltip'.i18n(),
-                    icon: Icon(
+                    icon: const Icon(
                       key: Key('ISBNSearchTypeButton'),
                       BookifyIcons.isbn,
                     ),

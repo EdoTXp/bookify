@@ -149,15 +149,15 @@ class _BookcaseTabViewPageState extends State<BookcaseTabViewPage> {
                   ),
                   tabs: [
                     Tab(
-                      key: Key('Bookcases TabView'),
+                      key: const Key('Bookcases TabView'),
                       text: 'bookcases-label'.i18n(),
                     ),
                     Tab(
-                      key: Key('LoanTabView'),
+                      key: const Key('LoanTabView'),
                       text: 'loans-label'.i18n(),
                     ),
                     Tab(
-                      key: Key('My Books TabView'),
+                      key: const Key('My Books TabView'),
                       text: 'my-books-label'.i18n(),
                     ),
                   ],

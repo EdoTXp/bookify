@@ -27,7 +27,7 @@ class LoanIsLateWidget extends StatelessWidget {
           ),
           Text(
             'late-loan-label'.i18n(),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),

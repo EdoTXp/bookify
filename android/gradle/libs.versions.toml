@@ -1,7 +1,7 @@
 [versions]
 # Plugins
 androidGradlePlugin = "9.2.1"
-googleServices = "4.4.4"
+googleServices = "4.5.0"
 
 # Libraries
 desugar = "2.1.5"

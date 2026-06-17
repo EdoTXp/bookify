@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/storage_error_code/storage_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/readings_timer/bloc/readings_timer_bloc.dart';
 import 'package:bookify/src/core/dtos/reading_dto.dart';
 import 'package:bookify/src/features/readings_timer/views/widgets/readings_timer_widget.dart';

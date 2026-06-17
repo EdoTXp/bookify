@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +19,12 @@ class _TermsInformationState extends State<TermsInformation> {
   void initState() {
     super.initState();
     _termsRecognizer = TapGestureRecognizer()
-      ..onTap = () async => await LauncherService.openUrl(
+      ..onTap = () async => await LauncherHelper.openUrl(
         BookifyStrings.termsUrl,
       );
 
     _privacyRecognizer = TapGestureRecognizer()
-      ..onTap = () async => await LauncherService.openUrl(
+      ..onTap = () async => await LauncherHelper.openUrl(
         BookifyStrings.privacyUrl,
       );
   }
@@ -44,7 +44,7 @@ class _TermsInformationState extends State<TermsInformation> {
         children: [
           TextSpan(
             text: 'terms-information2'.i18n(),
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
             recognizer: _termsRecognizer,
@@ -54,7 +54,7 @@ class _TermsInformationState extends State<TermsInformation> {
           ),
           TextSpan(
             text: 'terms-information4'.i18n(),
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
             recognizer: _privacyRecognizer,
@@ -63,7 +63,7 @@ class _TermsInformationState extends State<TermsInformation> {
             text: 'terms-information5'.i18n(),
           ),
         ],
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
         ),
       ),

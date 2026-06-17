@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
+import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.dart';
 import 'package:bookify/src/shared/constants/database_scripts/database_scripts.dart';
 import 'package:bookify/src/core/models/author_model.dart';
 import 'package:bookify/src/core/models/book_model.dart';

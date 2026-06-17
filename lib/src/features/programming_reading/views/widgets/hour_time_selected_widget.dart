@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
+import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class _HourTimeSelectedWidgetState extends State<HourTimeSelectedWidget> {
                 'hour-time-selected-title'.i18n(),
                 textAlign: TextAlign.center,
                 textScaler: TextScaler.noScaling,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
                 ),

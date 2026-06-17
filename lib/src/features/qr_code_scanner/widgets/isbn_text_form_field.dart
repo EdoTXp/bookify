@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
-import 'package:bookify/src/core/utils/input_formatter/isbn_input_formatter.dart';
-import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
+import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/helper/input_formatter/isbn_input_formatter_helper.dart';
+import 'package:bookify/src/core/helper/verifier/isbn_verifier_helper.dart';
 import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,8 @@ class IsbnTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isbnRegExpVerifier = IsbnVerifier.isbnFormatRegExp;
-    final isbnMaskFormatter = IsbnMaskTextInputFormatter();
+    final isbnRegExpVerifier = IsbnVerifierHelper.isbnFormatRegExp;
+    final isbnMaskFormatter = IsbnMaskTextInputFormatterHelper();
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(

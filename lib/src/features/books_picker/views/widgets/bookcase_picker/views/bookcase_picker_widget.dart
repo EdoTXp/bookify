@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/bloc/bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/bookcase_picker/views/widgets/bookcase_picker_loaded_state_widget/bookcase_picker_loaded_state_widget.dart';
 import 'package:bookify/src/core/models/book_model.dart';

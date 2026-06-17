@@ -34,7 +34,7 @@ void main() {
       authStrategyFactory: authStrategyFactory,
     );
 
-    userModel = UserModel(
+    userModel = const UserModel(
       name: 'Test User',
       signInType: SignInType.google,
       photo: 'photo_url',
@@ -70,7 +70,7 @@ void main() {
         when(
           () => authStrategy.signIn(),
         ).thenThrow(
-          AuthException(
+          const AuthException(
             AuthErrorCode.internalError,
             descriptionMessage: 'Strategy failed',
           ),
@@ -98,7 +98,7 @@ void main() {
         when(
           () => authRepository.setUserModel(userModel: userModel),
         ).thenThrow(
-          StorageException(
+          const StorageException(
             StorageErrorCode.invalidValue,
             descriptionMessage: 'DB failed',
           ),
@@ -143,7 +143,7 @@ void main() {
           () => authStrategyFactory.create(SignInType.google),
         ).thenReturn(authStrategy);
         when(() => authStrategy.signOut()).thenThrow(
-          AuthException(
+          const AuthException(
             AuthErrorCode.internalError,
             descriptionMessage: 'Strategy failed',
           ),

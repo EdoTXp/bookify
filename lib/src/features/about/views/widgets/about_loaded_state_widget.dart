@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/models/app_version_model.dart';
-import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
 import 'package:flutter/gestures.dart';
@@ -27,12 +27,12 @@ class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
     super.initState();
 
     _designerRecognizer = TapGestureRecognizer()
-      ..onTap = () async => await LauncherService.openUrl(
+      ..onTap = () async => await LauncherHelper.openUrl(
         BookifyStrings.designerUrl,
       );
 
     _developerRecognizer = TapGestureRecognizer()
-      ..onTap = () async => await LauncherService.openUrl(
+      ..onTap = () async => await LauncherHelper.openUrl(
         BookifyStrings.developerUrl,
       );
   }
@@ -74,7 +74,7 @@ class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
               width: 220,
               height: 220,
               decoration: Theme.brightnessOf(context) == Brightness.dark
-                  ? BoxDecoration(
+                  ? const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
                     )
@@ -94,7 +94,7 @@ class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
             Text.rich(
               TextSpan(
                 text: 'design-by-label'.i18n(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                 ),
                 children: [
@@ -113,7 +113,7 @@ class _AboutLoadedStateWidgetState extends State<AboutLoadedStateWidget> {
             Text.rich(
               TextSpan(
                 text: 'developed-by-label'.i18n(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                 ),
                 children: [

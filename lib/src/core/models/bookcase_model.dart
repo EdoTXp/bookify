@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
+import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.dart';
 import 'package:flutter/material.dart';
 
 class BookcaseModel {

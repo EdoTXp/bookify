@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/core/services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/cubits/user_notification_cubit/user_notification_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

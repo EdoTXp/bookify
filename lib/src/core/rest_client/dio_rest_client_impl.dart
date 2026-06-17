@@ -41,17 +41,17 @@ class DioRestClientImpl implements RestClient {
           descriptionMessage: e.response?.statusMessage ?? 'Item not found',
         );
       } else if (e.type == DioExceptionType.connectionTimeout) {
-        throw RestClientException(
+        throw const RestClientException(
           RestClientErrorCode.connectionTimeout,
           descriptionMessage: 'Connection timed out',
         );
       } else if (e.type == DioExceptionType.receiveTimeout) {
-        throw RestClientException(
+        throw const RestClientException(
           RestClientErrorCode.receiveTimeout,
           descriptionMessage: 'Receive timed out',
         );
       } else if (e.error is SocketException) {
-        throw RestClientException(
+        throw const RestClientException(
           RestClientErrorCode.socketException,
           descriptionMessage: 'No internet connection',
         );

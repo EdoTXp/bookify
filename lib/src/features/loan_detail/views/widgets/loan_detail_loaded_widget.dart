@@ -2,8 +2,8 @@ import 'package:bookify/src/features/loan_detail/views/widgets/book_card.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/contact_card.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_is_late_widget.dart';
 import 'package:bookify/src/core/dtos/loan_dto.dart';
-import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 
@@ -39,7 +39,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             ],
             Text(
               'book-label'.i18n(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -60,7 +60,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             ),
             Text(
               'contact-label'.i18n(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -85,7 +85,7 @@ class LoanDetailLoadedWidget extends StatelessWidget {
             if (loanDto.contactModel?.phoneNumber != null) ...[
               BookifyOutlinedButton.expanded(
                 onPressed: () async {
-                  await LauncherService.launchCall(
+                  await LauncherHelper.launchCall(
                     loanDto.contactModel!.phoneNumber!,
                   );
                 },

@@ -16,7 +16,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: Providers.providers,
-      child: BookifyApp(),
+      child: const BookifyApp(),
     ),
   );
 }

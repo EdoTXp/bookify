@@ -45,7 +45,7 @@ class Header extends StatelessWidget {
             ),
             Text(
               'you-are-on-page-title'.i18n(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
               ),
             ),

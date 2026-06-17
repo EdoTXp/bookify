@@ -1,5 +1,5 @@
 import 'package:bookify/src/shared/enums/repeat_hour_time_type.dart';
-import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
+import 'package:bookify/src/core/extensions/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/programming_reading/views/widgets/hour_time_selected_widget.dart';
 import 'package:bookify/src/features/programming_reading/views/widgets/repeat_time_widget.dart';

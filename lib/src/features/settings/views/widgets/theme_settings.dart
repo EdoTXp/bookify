@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/storage_error_code/storage_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -42,7 +42,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              Radio<ThemeMode>.adaptive(
+              const Radio<ThemeMode>.adaptive(
                 value: ThemeMode.light,
               ),
               Text(
@@ -54,7 +54,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              Radio<ThemeMode>.adaptive(
+              const Radio<ThemeMode>.adaptive(
                 value: ThemeMode.dark,
               ),
               Text(
@@ -66,7 +66,7 @@ class _ThemeSettingsState extends State<ThemeSettings> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              Radio<ThemeMode>.adaptive(
+              const Radio<ThemeMode>.adaptive(
                 value: ThemeMode.system,
               ),
             ],

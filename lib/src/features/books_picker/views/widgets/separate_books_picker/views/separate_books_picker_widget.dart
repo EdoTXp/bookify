@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/book_selector_widget.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/separate_books_picker/bloc/separate_books_picker_bloc.dart';
 import 'package:bookify/src/core/models/book_model.dart';
@@ -46,7 +46,7 @@ class _SeparateBooksPickerWidgetState extends State<SeparateBooksPickerWidget> {
         const CenterCircularProgressIndicator(),
       SeparateBooksPickerEmptyState() => Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             'no-books-to-add-message'.i18n(),
             textAlign: TextAlign.center,

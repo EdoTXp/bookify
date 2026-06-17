@@ -1,9 +1,9 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/book_detail/bloc/book_detail_bloc.dart';
 import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
@@ -114,8 +114,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               ? 'book-successfully-added-snackbar'.i18n()
               : 'book-successfully-removed-snackbar'.i18n();
 
-          SnackbarService.showSnackBar(
-            context,
+          context.showSnackBar(
             message,
             SnackBarType.success,
           );
@@ -132,8 +131,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
         // enable the click on ElevatedButton.
         _canClickToInsertOrRemoveButton = true;
 
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
@@ -143,8 +141,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   void _insertOrRemoveBook(BookModel book) async {
     if (_bookIsInserted) {
-      await ShowDialogService.showAlertDialog(
-        context: context,
+      await context.showAlertDialog(
         title: 'remove-book-title'.i18n([book.title]),
         content: 'remove-book-description'.i18n(),
         confirmButtonFunction: () {
@@ -257,7 +254,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           text: 'go-to-store-button'.i18n(),
                           suffixIcon: Icons.store,
                           onPressed: () async =>
-                              await LauncherService.openUrl(book.buyLink),
+                              await LauncherHelper.openUrl(book.buyLink),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -285,7 +282,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     key: const Key('SynopsisTitle'),
                     'synopsis-title'.i18n(),
                     textScaler: TextScaler.noScaling,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -320,7 +317,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             key: const Key('RatingsTitle'),
                             'ratings-title'.i18n(),
                             textScaler: TextScaler.noScaling,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
@@ -343,7 +340,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                               key: const Key('BookInformationTitle'),
                               'book-information-title'.i18n(),
                               textScaler: TextScaler.noScaling,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),

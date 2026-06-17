@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
+import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -365,37 +365,37 @@ abstract class AppTheme {
     );
   }
 
-  static final _inputDecorationTheme = InputDecorationTheme(
-    focusedBorder: const OutlineInputBorder(
+  static const _inputDecorationTheme = InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 2,
         color: AppColor.bookifySecondaryColor,
       ),
     ),
-    disabledBorder: const OutlineInputBorder(
+    disabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 2,
         color: AppColor.bookifyDisabledColor,
       ),
     ),
-    enabledBorder: const OutlineInputBorder(
+    enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 2,
         color: AppColor.bookifyPrimaryColor,
       ),
     ),
-    errorBorder: const OutlineInputBorder(
+    errorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 2,
         color: AppColor.bookifyErrorColor,
       ),
     ),
-    focusedErrorBorder: const OutlineInputBorder(
+    focusedErrorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColor.bookifyErrorColor,
       ),
     ),
-    errorStyle: const TextStyle(
+    errorStyle: TextStyle(
       fontSize: 12,
       color: AppColor.bookifyErrorColor,
     ),
@@ -423,12 +423,12 @@ abstract class AppTheme {
   );
 
   static final _dialogTheme = DialogThemeData(
-    titleTextStyle: TextStyle(
+    titleTextStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
       color: AppColor.bookifyTertiaryColor,
     ),
-    contentTextStyle: TextStyle(
+    contentTextStyle: const TextStyle(
       fontSize: 14,
       color: AppColor.bookifyTertiaryColor,
     ),

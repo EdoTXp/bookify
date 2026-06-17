@@ -81,7 +81,7 @@ class _UserInformationRowState extends State<UserInformationRow> {
       UserInformationErrorState() => Center(
         child: Text(
           'error-on-loading-data'.i18n(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 10,
           ),
         ),

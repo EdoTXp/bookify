@@ -53,7 +53,7 @@ Future<void> _initApp(PatrolIntegrationTester $) async {
   await $.pumpWidgetAndSettle(
     MultiProvider(
       providers: Providers.providers,
-      child: BookifyApp(),
+      child: const BookifyApp(),
     ),
   );
 }

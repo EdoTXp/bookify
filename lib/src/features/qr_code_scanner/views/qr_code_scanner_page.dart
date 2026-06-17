@@ -1,8 +1,8 @@
-import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
+import 'package:bookify/src/core/extensions/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_manually_text_form_field_widget.dart';
 import 'package:bookify/src/features/qr_code_scanner/widgets/qr_code_scanner_widget.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
-import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
+import 'package:bookify/src/core/helper/lock_screen_orientation/lock_screen_orientation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
@@ -22,14 +22,14 @@ class _QrCodeScannerPageState extends State<QrCodeScannerPage> {
   @override
   void initState() {
     super.initState();
-    LockScreenOrientationService.lockOrientationScreen(
+    LockScreenOrientationHelper.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
   }
 
   @override
   void dispose() {
-    LockScreenOrientationService.unLockOrientationScreen();
+    LockScreenOrientationHelper.unLockOrientationScreen();
     super.dispose();
   }
 

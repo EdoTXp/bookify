@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/helpers/error_code/storage_error_code/storage_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/programming_reading/bloc/programming_reading_bloc.dart';
 import 'package:bookify/src/features/programming_reading/views/widgets/programming_hour_loading_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -87,8 +87,7 @@ class _ProgrammingHourState extends State<ProgrammingReadingPage> {
           };
 
           if (snackBarText != null) {
-            SnackbarService.showSnackBar(
-              context,
+            context.showSnackBar(
               snackBarText,
               SnackBarType.success,
             );

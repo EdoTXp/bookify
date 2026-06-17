@@ -1,5 +1,5 @@
-import 'package:bookify/src/core/helpers/error_code/storage_error_code/storage_error_code_extension.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/reading_page_timer/bloc/reading_page_timer_bloc.dart';
 import 'widgets/reading_page_timer_loaded_state_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +31,13 @@ class _ReadingPageTimerPageState extends State<ReadingPageTimerPage> {
   ) {
     switch (state) {
       case ReadingPageTimerLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
         break;
       case ReadingPageTimerInsertedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'reading-time-success-snackbar'.i18n(),
           SnackBarType.success,
         );
@@ -54,8 +52,7 @@ class _ReadingPageTimerPageState extends State<ReadingPageTimerPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );

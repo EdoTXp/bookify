@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/rest_client_error_code/rest_client_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/rest_client_error_code/rest_client_error_code_extension.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';

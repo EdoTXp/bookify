@@ -4,7 +4,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
 import 'package:bookify/src/core/models/custom_notification_model.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/core/services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
 import 'package:bookify/src/shared/enums/local_database_error_code.dart';

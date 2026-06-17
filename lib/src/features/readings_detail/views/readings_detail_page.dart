@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
 import 'package:bookify/src/core/dtos/reading_dto.dart';
-import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 import 'package:flutter/material.dart';
@@ -58,24 +58,21 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
   ) async {
     switch (state) {
       case ReadingsDetailLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
         break;
 
       case ReadingsDetailUpdatedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'reading-successfully-updated-snackbar'.i18n(),
           SnackBarType.success,
         );
         break;
 
       case ReadingsDetailFinishedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'reading-successfully-finished-snackbar'.i18n(),
           SnackBarType.success,
         );
@@ -93,8 +90,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
@@ -169,8 +165,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
   /// Shows a confirmation dialog and prevents popping the view until
   /// the transaction is confirmed.
   Future<void> _finishReadingOnPressedButton() async {
-    await ShowDialogService.showAlertDialog(
-      context: context,
+    await context.showAlertDialog(
       title: 'finish-reading-title'.i18n(),
       content: 'finish-reading-message'.i18n(),
       confirmButtonFunction: () {
@@ -344,8 +339,7 @@ class _ReadingsDetailPageState extends State<ReadingsDetailPage> {
                         );
 
                         if (context.mounted) {
-                          await ShowDialogService.showSimpleDialog(
-                            context: context,
+                          await context.showSimpleDialog(
                             title: 'update-slider-message'.i18n(),
                           );
                         }

@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
+import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 

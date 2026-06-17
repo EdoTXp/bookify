@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/helpers/size/size_for_small_device_extension.dart';
+import 'package:bookify/src/core/extensions/size/size_for_small_device_extension.dart';
 import 'package:bookify/src/core/models/user_hour_time_model.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/time_picker/views/widgets/time_picker_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +60,7 @@ class _TimePickerPageState extends State<TimePickerPage> {
     );
 
     if (endTimesIsGreaterThanStart > -1) {
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'end-times-is-greater-than-start'.i18n(),
         SnackBarType.error,
       );

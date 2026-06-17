@@ -1,9 +1,9 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
-import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
-import 'package:bookify/src/core/services/app_services/color_picker_dialog_service/color_picker_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/color_picker_dialog/color_picker_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -172,16 +172,14 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
   ) async {
     switch (state) {
       case BookcaseInsertionLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
 
         break;
       case BookcaseInsertionInsertedState(:final reason):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           switch (reason) {
             BookcaseInsertionSuccessReason.inserted =>
               'bookcase-inserted-success-snackbar'.i18n(),
@@ -206,8 +204,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
@@ -302,11 +299,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                     readOnly: true,
                     keyboardType: TextInputType.none,
                     onTap: () async {
-                      _selectedColor =
-                          await ColorPickerDialogService.showColorPickerDialog(
-                            context,
-                            _selectedColor,
-                          );
+                      _selectedColor = await context.showColorPickerDialog(
+                        _selectedColor,
+                      );
                     },
                     onTapOutside: (_) => context.unfocus(),
                     decoration: InputDecoration(
@@ -331,7 +326,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                   ),
                   Text(
                     'fields-required-label'.i18n(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
-import 'package:bookify/src/core/utils/verifier/isbn_verifier.dart';
+import 'package:bookify/src/core/helper/verifier/isbn_verifier_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bookify/src/core/models/book_model.dart';
@@ -193,8 +193,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     try {
       emit(BooksLoadingState());
 
-      final verifier = IsbnVerifier();
-      String? isbn = verifier.verifyIsbn(event.isbn);
+      String? isbn = IsbnVerifierHelper.verifyIsbn(event.isbn);
       if (isbn == null) {
         emit(
           BookErrorState(

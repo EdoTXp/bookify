@@ -1,11 +1,11 @@
-import 'package:bookify/src/core/services/app_services/launcher_service/launcher_service.dart';
+import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/features/about/views/about_page.dart';
 import 'package:bookify/src/features/notifications/views/notifications_page.dart';
 import 'package:bookify/src/features/profile/views/widgets/user_circle_avatar.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/core/models/user_model.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -95,7 +95,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           TextIconButton(
             label: 'policies-label'.i18n(),
             iconData: Icons.article_outlined,
-            onPressed: () async => await LauncherService.openUrl(
+            onPressed: () async => await LauncherHelper.openUrl(
               BookifyStrings.policiesUrl,
             ),
           ),
@@ -116,8 +116,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             label: 'exit-label'.i18n(),
             iconData: Icons.exit_to_app_outlined,
             onPressed: () async {
-              await ShowDialogService.showAlertDialog(
-                context: context,
+              await context.showAlertDialog(
                 title: 'logout-title'.i18n(),
                 content: 'logout-description'.i18n(),
                 confirmButtonFunction: () {

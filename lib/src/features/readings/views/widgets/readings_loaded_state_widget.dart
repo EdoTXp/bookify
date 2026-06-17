@@ -34,7 +34,7 @@ class ReadingsLoadedStateWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 5.0,
             ),
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (_, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -1,8 +1,8 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/loan_detail/bloc/loan_detail_bloc.dart';
 import 'package:bookify/src/features/loan_detail/views/widgets/loan_detail_loaded_widget.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +52,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
         key: const Key('LoanDetailLoadedState'),
         loanDto: loanDto,
         onPressedButton: () async {
-          await ShowDialogService.showAlertDialog(
-            context: context,
+          await context.showAlertDialog(
             title: 'finish-loan-title'.i18n(),
             content: 'finish-loan-description'.i18n(),
             confirmButtonFunction: () {
@@ -96,8 +95,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
         canPopPage = false;
       });
 
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'loan-finalized-success-snackbar'.i18n(),
         SnackBarType.success,
       );
@@ -121,7 +119,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
           centerTitle: true,
           title: Text(
             'loan-details-title'.i18n(),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),

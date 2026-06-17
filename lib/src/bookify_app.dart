@@ -1,6 +1,6 @@
-import 'package:bookify/src/core/helpers/error_code/auth_error_code/auth_error_code_extension.dart';
-import 'package:bookify/src/core/helpers/error_code/platform_error_code/platform_error_code_extension.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/error_code/auth_error_code/auth_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/platform_error_code/platform_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/cubits/user_logged_cubit/user_logged_cubit.dart';
 import 'package:bookify/src/shared/cubits/user_notification_cubit/user_notification_cubit.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
@@ -78,8 +78,7 @@ class _BookifyAppState extends State<BookifyApp> {
                     final errorDescriptionMessage =
                         state.errorDescriptionMessage;
 
-                    SnackbarService.showSnackBar(
-                      context,
+                    context.showSnackBar(
                       errorCode.toLocalizedMessage(errorDescriptionMessage),
                       SnackBarType.error,
                     );
@@ -94,8 +93,7 @@ class _BookifyAppState extends State<BookifyApp> {
                     final errorDescriptionMessage =
                         state.errorDescriptionMessage;
 
-                    SnackbarService.showSnackBar(
-                      context,
+                    context.showSnackBar(
                       errorCode.toLocalizedMessage(errorDescriptionMessage),
                       SnackBarType.error,
                     );
@@ -136,11 +134,11 @@ class _BookifyAppState extends State<BookifyApp> {
 
             // Defaults regional Portuguese variations to Brazilian Portuguese syntax.
             if (locale?.languageCode == 'pt') {
-              return Locale('pt', 'BR');
+              return const Locale('pt', 'BR');
             }
 
             // Default global standard fallback locale.
-            return Locale('en', 'US');
+            return const Locale('en', 'US');
           },
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,

@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/auth_error_code/auth_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/features/auth/bloc/auth_bloc.dart';
 import 'package:bookify/src/features/auth/widgets/platform_sign_in_buttons.dart';
 import 'package:bookify/src/features/auth/widgets/terms_information.dart';
@@ -6,8 +6,8 @@ import 'package:bookify/src/features/reading_page_time_calculator/views/reading_
 import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
-import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/helper/lock_screen_orientation/lock_screen_orientation_helper.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/enums/sign_in_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +29,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     super.initState();
-    LockScreenOrientationService.lockOrientationScreen(
+    LockScreenOrientationHelper.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
     _bloc = context.read<AuthBloc>();
@@ -37,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   void dispose() {
-    LockScreenOrientationService.unLockOrientationScreen();
+    LockScreenOrientationHelper.unLockOrientationScreen();
     super.dispose();
   }
 
@@ -46,15 +46,13 @@ class _AuthPageState extends State<AuthPage> {
       case AuthInitialState():
         break;
       case AuthLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
         break;
       case AuthSignedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'auth-success-snackbar'.i18n(),
           SnackBarType.success,
         );
@@ -82,8 +80,7 @@ class _AuthPageState extends State<AuthPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );

@@ -27,7 +27,7 @@ class ReadingHourIntroductionText extends StatelessWidget {
           Text(
             'reading-time-description'.i18n(),
             textAlign: TextAlign.justify,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
             ),
           ),

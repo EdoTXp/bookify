@@ -1,8 +1,8 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_insertion/bloc/readings_insertion_bloc.dart';
-import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';
 
@@ -60,8 +60,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
   ) async {
     switch (state) {
       case ReadingsInsertionLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
@@ -69,8 +68,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
         break;
 
       case ReadingsInsertionInsertedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'reading-successfully-added-snackbar'.i18n(),
           SnackBarType.success,
         );
@@ -87,8 +85,7 @@ class _ReadingsInsertionPageState extends State<ReadingsInsertionPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );

@@ -2,7 +2,7 @@ import 'package:bookify/src/core/dtos/loan_dto.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/core/models/loan_model.dart';
-import 'package:bookify/src/core/services/app_services/contacts_service/contacts_service.dart';
+import 'package:bookify/src/core/services/contacts_service/contacts_service.dart';
 import 'package:bookify/src/core/services/book_service/book_service.dart';
 import 'package:bookify/src/core/services/loan_services/loan_service.dart';
 import 'package:bookify/src/shared/enums/local_database_error_code.dart';

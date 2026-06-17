@@ -1,6 +1,6 @@
 import 'package:bookify/src/core/database/local_database.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/helpers/color_to_int/color_to_int_extension.dart';
+import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
 import 'package:bookify/src/core/repositories/bookcase_repository/bookcase_repository_impl.dart';
 import 'package:bookify/src/shared/enums/local_database_error_code.dart';

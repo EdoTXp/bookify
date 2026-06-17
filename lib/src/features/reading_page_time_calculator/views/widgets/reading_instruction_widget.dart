@@ -23,7 +23,7 @@ class ReadingInstructionWidget extends StatelessWidget {
           Text(
             'reading-instruction-description'.i18n(),
             textAlign: TextAlign.justify,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
             ),
           ),

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bookify/src/core/dtos/reading_dto.dart';
-import 'package:bookify/src/core/services/app_services/lock_screen_orientation_service/lock_screen_orientation_service.dart';
-import 'package:bookify/src/core/services/app_services/play_alarm_sound_service/play_alarm_sound_service.dart';
-import 'package:bookify/src/core/services/app_services/time_picker_dialog_service.dart/time_picker_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/wake_lock_screen_service/wake_lock_screen_service.dart';
+import 'package:bookify/src/core/helper/lock_screen_orientation/lock_screen_orientation_helper.dart';
+import 'package:bookify/src/core/helper/play_alarm_sound/play_alarm_sound_helper.dart';
+import 'package:bookify/src/core/extensions/show_time_picker_dialog.dart/show_time_picker_dialog_extension.dart';
+import 'package:bookify/src/core/helper/wake_lock_screen/wake_lock_screen_helper.dart';
 import 'package:bookify/src/features/readings_timer/views/widgets/header.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
@@ -28,7 +28,7 @@ class ReadingsTimerWidget extends StatefulWidget {
 
 class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
   late final CountDownController _countDownController;
-  late final PlayAlarmSoundService _alarmService;
+  late final PlayAlarmSoundHelper _alarmService;
   late int _timerDuration;
   late bool _timerIsStarted;
   late bool _timerIsEnded;
@@ -36,12 +36,12 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
   @override
   void initState() {
     super.initState();
-    LockScreenOrientationService.lockOrientationScreen(
+    LockScreenOrientationHelper.lockOrientationScreen(
       orientation: Orientation.portrait,
     );
 
     _countDownController = CountDownController();
-    _alarmService = PlayAlarmSoundService(
+    _alarmService = PlayAlarmSoundHelper(
       volume: 1.0,
     );
     _timerIsStarted = false;
@@ -51,14 +51,14 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
 
   @override
   void dispose() {
-    LockScreenOrientationService.unLockOrientationScreen();
-    WakeLockScreenService.unlockWakeScreen();
+    LockScreenOrientationHelper.unLockOrientationScreen();
+    WakeLockScreenHelper.unlockWakeScreen();
     unawaited(_alarmService.dispose());
     super.dispose();
   }
 
   Future<void> _editTimer(BuildContext context) async {
-    final timeDay = await TimePickerDialogService.showTimePickerDialog(context);
+    final timeDay = await context.showTimePickerDialog();
 
     if (timeDay != null) {
       final durationInSeconds = Duration(
@@ -70,7 +70,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
         setState(() {
           _timerDuration = durationInSeconds;
           _countDownController.restart(duration: _timerDuration);
-          WakeLockScreenService.lockWakeScreen();
+          WakeLockScreenHelper.lockWakeScreen();
           _timerIsStarted = true;
           _timerIsEnded = false;
         });
@@ -83,7 +83,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
     setState(() {
       _timerIsStarted = true;
       _timerIsEnded = false;
-      WakeLockScreenService.lockWakeScreen();
+      WakeLockScreenHelper.lockWakeScreen();
     });
   }
 
@@ -93,7 +93,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
 
     setState(() {
       _timerIsEnded = true;
-      WakeLockScreenService.unlockWakeScreen();
+      WakeLockScreenHelper.unlockWakeScreen();
     });
   }
 
@@ -169,7 +169,7 @@ class _ReadingsTimerWidgetState extends State<ReadingsTimerWidget> {
                     fontWeight: FontWeight.bold,
                   ),
                   onComplete: () async {
-                    WakeLockScreenService.unlockWakeScreen();
+                    WakeLockScreenHelper.unlockWakeScreen();
                     await _alarmService.playAlarm();
                   },
                 ),

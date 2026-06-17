@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/book_status/book_status_extension.dart';
+import 'package:bookify/src/core/extensions/book_status/book_status_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
 import 'package:flutter/material.dart';
 

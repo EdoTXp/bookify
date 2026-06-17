@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
-import 'package:bookify/src/core/services/app_services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/core/services/notifications_service/notifications_service.dart';
 import 'package:bookify/src/shared/enums/platform_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

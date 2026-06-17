@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/platform_error_code/platform_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/platform_error_code/platform_error_code_extension.dart';
 import 'package:bookify/src/features/about/bloc/about_bloc.dart';
 import 'package:bookify/src/features/about/views/widgets/about_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -50,7 +50,7 @@ class _AboutPageState extends State<AboutPage> {
         centerTitle: true,
         title: Text(
           'about-label'.i18n(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
           ),
         ),

@@ -1,5 +1,5 @@
-import 'package:bookify/src/core/helpers/color_brightness/color_brightness_extension.dart';
-import 'package:bookify/src/core/services/app_services/time_picker_dialog_service.dart/time_picker_dialog_service.dart';
+import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
+import 'package:bookify/src/core/extensions/show_time_picker_dialog.dart/show_time_picker_dialog_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
@@ -19,8 +19,7 @@ class TimePickerWidget extends StatelessWidget {
     BuildContext context,
     TimeOfDay initialTime,
   ) async {
-    final time = await TimePickerDialogService.showTimePickerDialog(
-      context,
+    final time = await context.showTimePickerDialog(
       initialTime,
     );
 
@@ -55,7 +54,7 @@ class TimePickerWidget extends StatelessWidget {
             children: [
               Text(
                 'select-hour-title'.i18n(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                 ),
               ),

@@ -1,13 +1,13 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
 import 'package:bookify/src/core/models/contact_model.dart';
-import 'package:bookify/src/core/helpers/date_time_format/date_time_format_extension.dart';
-import 'package:bookify/src/core/helpers/textfield_unfocus/textfield_unfocus_extension.dart';
+import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
+import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
 import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/services/app_services/date_picker_dialog_service/date_picker_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/date_picker_dialog/date_picker_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
@@ -147,10 +147,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         ? dateController.text.parseFormattedDate()
         : null;
 
-    final dateResult = await DatePickerDialogService.showDateTimePicker(
-      context: context,
-      value: [date],
-    );
+    final dateResult = await context.showDateTimePicker(value: [date]);
 
     if (dateResult != null) {
       dateController.text = dateResult.toFormattedDate();
@@ -216,8 +213,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
     } else {
       // Informs the user that one of the textformfields or one of the contact or book buttons is empty.
       // this way, cannot complete insert.
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'loan-some-empty-field-snackbar'.i18n(),
         SnackBarType.error,
       );
@@ -243,8 +239,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
   ) async {
     switch (state) {
       case LoanInsertionLoadingState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'wait-snackbar'.i18n(),
           SnackBarType.info,
         );
@@ -252,8 +247,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         break;
 
       case LoanInsertionInsertedState():
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           'loan-insertion-success-snackbar'.i18n(),
           SnackBarType.success,
         );
@@ -270,8 +264,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
         :final errorCode,
         :final errorDescriptionMessage,
       ):
-        SnackbarService.showSnackBar(
-          context,
+        context.showSnackBar(
           errorCode.toLocalizedMessage(errorDescriptionMessage),
           SnackBarType.error,
         );
@@ -300,7 +293,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
             centerTitle: true,
             title: Text(
               'create-loan-title'.i18n(),
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
             ),
             actions: [
               IconButton(
@@ -500,7 +493,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
                     ),
                     Text(
                       'fields-required-label'.i18n(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),

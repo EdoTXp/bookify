@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_on_bookcase_picker/bloc/book_on_bookcase_picker_bloc.dart';
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/book_selector_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
@@ -77,7 +77,7 @@ class _BookOnBookcaseWidgetState extends State<BookOnBookcaseWidget> {
         automaticallyImplyLeading: false,
         title: Text(
           'choose-book-title'.i18n(),
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       body: BlocBuilder<BookOnBookcasePickerBloc, BookOnBookcasePickerState>(

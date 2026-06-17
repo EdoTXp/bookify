@@ -1,11 +1,11 @@
-import 'package:bookify/src/core/helpers/error_code/local_database_error_code/local_database_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_books_insertion_page.dart';
 import 'package:bookify/src/features/bookcase_detail/bloc/bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/bookcase_detail/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
 import 'package:bookify/src/core/models/bookcase_model.dart';
-import 'package:bookify/src/core/services/app_services/show_dialog_service/show_dialog_service.dart';
-import 'package:bookify/src/core/services/app_services/snackbar_service/snackbar_service.dart';
+import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
+import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/item_empty_state_widget/item_empty_widget.dart';
@@ -135,8 +135,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
         _canPopPage = false;
       });
 
-      SnackbarService.showSnackBar(
-        context,
+      context.showSnackBar(
         'bookcase-successfully-removed-snackbar'.i18n(),
         SnackBarType.success,
       );
@@ -174,8 +173,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
       }
     } else {
       // Ask the user for confirmation before deleting the bookcase
-      await ShowDialogService.showAlertDialog(
-        context: context,
+      await context.showAlertDialog(
         title: 'delete-bookcase-title'.i18n(),
         content: 'delete-bookcase-description'.i18n([_actualBookcase.name]),
         confirmButtonFunction: () {

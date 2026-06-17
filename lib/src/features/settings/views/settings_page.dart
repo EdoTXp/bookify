@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'settings-label'.i18n(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
           ),
         ),

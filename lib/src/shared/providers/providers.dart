@@ -11,7 +11,6 @@ abstract class Providers {
   static final List<SingleChildStatelessWidget> providers = [
     ...localDatabaseRepositoriesProviders,
     ...userSettingsStorageProviders,
-    ...appServicesProviders,
     ...userSettingsServicesProviders,
     ...servicesProviders,
     ...userThemeCubitProviders,

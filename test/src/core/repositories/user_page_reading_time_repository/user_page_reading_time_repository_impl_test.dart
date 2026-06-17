@@ -88,7 +88,7 @@ void main() {
           key: any(named: 'key'),
         ),
       ).thenThrow(
-        StorageException(
+        const StorageException(
           StorageErrorCode.readFailed,
           descriptionMessage: 'Storage error',
         ),
@@ -113,7 +113,7 @@ void main() {
           value: any(named: 'value'),
         ),
       ).thenThrow(
-        StorageException(
+        const StorageException(
           StorageErrorCode.writeFailed,
           descriptionMessage: 'Storage error',
         ),

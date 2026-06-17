@@ -142,7 +142,7 @@ void main() {
   });
 
   group('Testing update Bookcase in BookcaseInsertionPage ||', () {
-    final existingBookcase = BookcaseModel(
+    const existingBookcase = BookcaseModel(
       id: 1,
       name: 'Old Bookcase',
       description: 'Old Description',

@@ -8,10 +8,10 @@ class BookIATextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scrollbar(
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Text(
           'book-ia-text'.i18n(),
-          style: TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: 14),
         ),
       ),
     );
