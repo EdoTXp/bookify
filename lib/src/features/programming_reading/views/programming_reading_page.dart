@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
-import 'package:bookify/src/core/models/user_hour_time_model.dart';
+import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/programming_reading/bloc/programming_reading_bloc.dart';
 import 'package:bookify/src/features/programming_reading/views/widgets/programming_hour_loading_state_widget.dart';

@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/shared/enums/auth_error_code.dart';
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/core/models/user_model.dart';
-import 'package:bookify/src/core/services/auth_service/auth_service.dart';
-import 'package:bookify/src/shared/enums/sign_in_type.dart';
+import 'package:bookify/src/domain/models/user_model.dart';
+import 'package:bookify/src/domain/services/auth_service/auth_service.dart';
+import 'package:bookify/src/core/enums/sign_in_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/core/dtos/bookcase_dto.dart';
-import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/domain/dtos/bookcase_dto.dart';
+import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/features/bookcase/bloc/bookcase_bloc.dart';
 import 'package:bookify/src/features/bookcase/views/bookcase_page.dart';
-import 'package:bookify/src/shared/enums/local_database_error_code.dart';
+import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

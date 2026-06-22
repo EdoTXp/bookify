@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
-import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/data/repositories/remote_books_repository/remote_books_repository.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
 import 'package:flutter_test/flutter_test.dart';

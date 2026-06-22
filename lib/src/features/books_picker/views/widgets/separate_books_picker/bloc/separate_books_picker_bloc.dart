@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/services/book_service/book_service.dart';
-import 'package:bookify/src/shared/enums/local_database_error_code.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
+import 'package:bookify/src/domain/services/book_service/book_service.dart';
+import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'separate_books_picker_event.dart';

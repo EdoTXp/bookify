@@ -1,9 +1,9 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/services/book_service/book_service.dart';
-import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
-import 'package:bookify/src/core/services/loan_services/loan_service.dart';
-import 'package:bookify/src/core/services/reading_services/reading_service.dart';
-import 'package:bookify/src/shared/enums/local_database_error_code.dart';
+import 'package:bookify/src/domain/services/book_service/book_service.dart';
+import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/domain/services/loan_services/loan_service.dart';
+import 'package:bookify/src/domain/services/reading_services/reading_service.dart';
+import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'user_information_event.dart';

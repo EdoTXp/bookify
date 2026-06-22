@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/models/app_version_model.dart';
+import 'package:bookify/src/domain/models/app_version_model.dart';
 import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';

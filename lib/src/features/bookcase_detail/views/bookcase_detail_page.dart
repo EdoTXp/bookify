@@ -3,7 +3,7 @@ import 'package:bookify/src/features/bookcase_books_insertion/views/bookcase_boo
 import 'package:bookify/src/features/bookcase_detail/bloc/bookcase_detail_bloc.dart';
 import 'package:bookify/src/features/bookcase_detail/widgets/widgets.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
-import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';

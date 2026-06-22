@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';

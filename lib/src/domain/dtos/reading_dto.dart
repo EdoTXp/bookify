@@ -1,0 +1,44 @@
+import 'package:bookify/src/domain/models/book_model.dart';
+import 'package:bookify/src/domain/models/reading_model.dart';
+
+class ReadingDto {
+  final ReadingModel reading;
+  final BookModel book;
+
+  const ReadingDto({
+    required this.reading,
+    required this.book,
+  });
+
+  int get percentReading {
+    if (book.pageCount <= 0) return 0;
+
+    if (reading.pagesReaded >= book.pageCount) return 100;
+
+    final percentage = (reading.pagesReaded / book.pageCount) * 100;
+    return percentage.floor();
+  }
+
+  ReadingDto copyWith({
+    ReadingModel? reading,
+    BookModel? book,
+  }) {
+    return ReadingDto(
+      reading: reading ?? this.reading,
+      book: book ?? this.book,
+    );
+  }
+
+  @override
+  String toString() => 'ReadingDto(reading: $reading, book: $book)';
+
+  @override
+  bool operator ==(covariant ReadingDto other) {
+    if (identical(this, other)) return true;
+
+    return other.reading == reading && other.book == book;
+  }
+
+  @override
+  int get hashCode => reading.hashCode ^ book.hashCode;
+}

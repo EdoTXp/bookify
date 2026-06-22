@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
-import 'package:bookify/src/core/models/contact_model.dart';
-import 'package:bookify/src/core/services/contacts_service/contacts_service.dart';
-import 'package:bookify/src/shared/enums/platform_error_code.dart';
+import 'package:bookify/src/domain/models/contact_model.dart';
+import 'package:bookify/src/domain/services/contacts_service/contacts_service.dart';
+import 'package:bookify/src/core/enums/platform_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'contacts_picker_event.dart';

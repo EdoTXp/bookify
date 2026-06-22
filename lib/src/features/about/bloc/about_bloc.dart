@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
-import 'package:bookify/src/core/models/app_version_model.dart';
-import 'package:bookify/src/core/services/app_version_service/app_version_service.dart';
-import 'package:bookify/src/shared/enums/platform_error_code.dart';
+import 'package:bookify/src/domain/models/app_version_model.dart';
+import 'package:bookify/src/domain/services/app_version_service/app_version_service.dart';
+import 'package:bookify/src/core/enums/platform_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'about_event.dart';

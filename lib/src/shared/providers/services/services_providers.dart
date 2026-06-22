@@ -1,17 +1,17 @@
-import 'package:bookify/src/core/services/app_version_service/app_version_service.dart';
-import 'package:bookify/src/core/services/app_version_service/app_version_service_impl.dart';
-import 'package:bookify/src/core/services/book_service/book_service.dart';
-import 'package:bookify/src/core/services/book_service/book_service_impl.dart';
-import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
-import 'package:bookify/src/core/services/bookcase_service/bookcase_service_impl.dart';
-import 'package:bookify/src/core/services/contacts_service/contacts_service.dart';
-import 'package:bookify/src/core/services/contacts_service/contacts_service_impl.dart';
-import 'package:bookify/src/core/services/loan_services/loan_service.dart';
-import 'package:bookify/src/core/services/loan_services/loan_service_impl.dart';
-import 'package:bookify/src/core/services/notifications_service/notifications_service.dart';
-import 'package:bookify/src/core/services/notifications_service/notifications_service_impl.dart';
-import 'package:bookify/src/core/services/reading_services/reading_service.dart';
-import 'package:bookify/src/core/services/reading_services/reading_service_impl.dart';
+import 'package:bookify/src/domain/services/app_version_service/app_version_service.dart';
+import 'package:bookify/src/domain/services/app_version_service/app_version_service_impl.dart';
+import 'package:bookify/src/domain/services/book_service/book_service.dart';
+import 'package:bookify/src/domain/services/book_service/book_service_impl.dart';
+import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/domain/services/bookcase_service/bookcase_service_impl.dart';
+import 'package:bookify/src/domain/services/contacts_service/contacts_service.dart';
+import 'package:bookify/src/domain/services/contacts_service/contacts_service_impl.dart';
+import 'package:bookify/src/domain/services/loan_services/loan_service.dart';
+import 'package:bookify/src/domain/services/loan_services/loan_service_impl.dart';
+import 'package:bookify/src/domain/services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/domain/services/notifications_service/notifications_service_impl.dart';
+import 'package:bookify/src/domain/services/reading_services/reading_service.dart';
+import 'package:bookify/src/domain/services/reading_services/reading_service_impl.dart';
 import 'package:provider/provider.dart';
 
 /// Provider that includes all services.

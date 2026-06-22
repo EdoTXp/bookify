@@ -1,4 +1,4 @@
-import 'package:bookify/src/core/models/contact_model.dart';
+import 'package:bookify/src/domain/models/contact_model.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';

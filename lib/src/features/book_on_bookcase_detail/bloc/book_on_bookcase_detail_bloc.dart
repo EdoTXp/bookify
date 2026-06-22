@@ -1,6 +1,6 @@
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/services/bookcase_service/bookcase_service.dart';
-import 'package:bookify/src/shared/enums/local_database_error_code.dart';
+import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
+import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'book_on_bookcase_detail_event.dart';

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
 import 'package:bookify/src/shared/constants/audios/bookify_audios.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bookify/src/shared/enums/platform_error_code.dart';
+import 'package:bookify/src/core/enums/platform_error_code.dart';
 
 class PlayAlarmSoundHelper {
   final String assetSound;

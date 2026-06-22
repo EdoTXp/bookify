@@ -1,5 +1,5 @@
 import 'package:bookify/src/features/contacts_picker/views/widgets/widgets.dart';
-import 'package:bookify/src/core/models/contact_model.dart';
+import 'package:bookify/src/domain/models/contact_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

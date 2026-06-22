@@ -1,0 +1,176 @@
+import 'package:bookify/src/core/enums/storage_error_code.dart';
+import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
+import 'package:bookify/src/domain/models/user_model.dart';
+import 'package:bookify/src/data/repositories/auth_repository/auth_repository_impl.dart';
+import 'package:bookify/src/data/storage/storage.dart';
+import 'package:bookify/src/core/enums/sign_in_type.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class StorageMock extends Mock implements Storage {}
+
+void main() {
+  const userModel = UserModel(
+    name: 'userName',
+    photo: 'userPhoto',
+    signInType: SignInType.google,
+  );
+
+  final storage = StorageMock();
+  final authRepository = AuthRepositoryImpl(storage: storage);
+
+  group('Test normal crud without error', () {
+    test('Test get UserModel', () async {
+      when(
+        () => storage.getStorage(
+          key: 'user',
+        ),
+      ).thenAnswer(
+        (_) async => userModel.toJson(),
+      );
+      final user = await authRepository.getUserModel();
+
+      expect(user, equals(userModel));
+    });
+
+    test('Test get UserModel when json is null', () async {
+      when(
+        () => storage.getStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => null,
+      );
+
+      final user = await authRepository.getUserModel();
+
+      expect(
+        user,
+        equals(equals(null)),
+      );
+    });
+
+    test('Test set UserModel', () async {
+      when(
+        () => storage.insertStorage(
+          key: 'user',
+          value: any(named: 'value'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+      final userModelInserted = await authRepository.setUserModel(
+        userModel: userModel,
+      );
+
+      expect(userModelInserted, equals(1));
+    });
+
+    test('Test delete UserModel', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+      final userModelDeleted = await authRepository.deleteUserModel();
+
+      expect(userModelDeleted, equals(1));
+    });
+  });
+
+  group('Test normal crud with error', () {
+    test('Test get UserModel with TypeError', () async {
+      when(
+        () => storage.getStorage(
+          key: 'user',
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      expect(
+        () async => await authRepository.getUserModel(),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.invalidValue &&
+              e.descriptionMessage == 'Expected a String value for user data.',
+        ),
+      );
+    });
+
+    test('Test get UserModel with Storage Exception', () async {
+      when(
+        () => storage.getStorage(
+          key: 'user',
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async => await authRepository.getUserModel(),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+
+    test('Test set UserModel with Storage Exception', () async {
+      when(
+        () => storage.insertStorage(
+          key: 'user',
+          value: any(named: 'value'),
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async => await authRepository.setUserModel(
+          userModel: userModel,
+        ),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+
+    test('Test delete UserModel with Storage Exception', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async => await authRepository.deleteUserModel(),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+  });
+}

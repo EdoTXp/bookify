@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bookify/src/shared/widgets/contact_information_widget/contact_information_widget.dart';
-import 'package:bookify/src/core/dtos/loan_dto.dart';
+import 'package:bookify/src/domain/dtos/loan_dto.dart';
 import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';

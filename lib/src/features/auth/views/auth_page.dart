@@ -8,7 +8,7 @@ import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/core/helper/lock_screen_orientation/lock_screen_orientation_helper.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
-import 'package:bookify/src/shared/enums/sign_in_type.dart';
+import 'package:bookify/src/core/enums/sign_in_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';

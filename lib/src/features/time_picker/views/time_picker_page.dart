@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/extensions/size/size_for_small_device_extension.dart';
-import 'package:bookify/src/core/models/user_hour_time_model.dart';
+import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/time_picker/views/widgets/time_picker_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';

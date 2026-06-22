@@ -5,7 +5,7 @@ import 'package:bookify/src/features/book_on_bookcase_detail/bloc/book_on_bookca
 import 'package:bookify/src/features/book_on_bookcase_detail/views/widgets/widgets.dart';
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
-import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/book_with_detail_widget/book_with_detail_widget.dart';

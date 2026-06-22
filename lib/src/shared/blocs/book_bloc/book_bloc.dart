@@ -1,10 +1,10 @@
-import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
 import 'package:bookify/src/core/errors/rest_client_exception/rest_client_exception.dart';
-import 'package:bookify/src/core/repositories/remote_books_repository/remote_books_repository.dart';
+import 'package:bookify/src/data/repositories/remote_books_repository/remote_books_repository.dart';
 import 'package:bookify/src/core/helper/verifier/isbn_verifier_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';

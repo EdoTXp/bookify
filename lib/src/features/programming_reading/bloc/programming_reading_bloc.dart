@@ -1,10 +1,10 @@
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
-import 'package:bookify/src/shared/enums/storage_error_code.dart';
+import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/core/models/user_hour_time_model.dart';
-import 'package:bookify/src/core/repositories/user_hour_time_repository/user_hour_time_repository.dart';
-import 'package:bookify/src/core/models/custom_notification_model.dart';
-import 'package:bookify/src/core/services/notifications_service/notifications_service.dart';
+import 'package:bookify/src/domain/models/user_hour_time_model.dart';
+import 'package:bookify/src/data/repositories/user_hour_time_repository/user_hour_time_repository.dart';
+import 'package:bookify/src/domain/models/custom_notification_model.dart';
+import 'package:bookify/src/domain/services/notifications_service/notifications_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'programming_reading_event.dart';

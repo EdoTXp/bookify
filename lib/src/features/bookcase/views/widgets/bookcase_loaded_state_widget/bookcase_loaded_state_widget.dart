@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/bookcase_detail/views/bookcase_detail_page.dart';
 import 'package:bookify/src/features/bookcase_insertion/views/bookcase_insertion_page.dart';
-import 'package:bookify/src/core/dtos/bookcase_dto.dart';
+import 'package:bookify/src/domain/dtos/bookcase_dto.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/shared/widgets/bookcase_widget/bookcase_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';

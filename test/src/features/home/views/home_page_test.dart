@@ -1,8 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:bookify/src/shared/enums/rest_client_error_code.dart';
-import 'package:bookify/src/core/models/author_model.dart';
-import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/models/category_model.dart';
+import 'package:bookify/src/core/enums/rest_client_error_code.dart';
+import 'package:bookify/src/domain/models/author_model.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
+import 'package:bookify/src/domain/models/category_model.dart';
 import 'package:bookify/src/features/home/views/home_page.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
 import 'package:flutter/material.dart';

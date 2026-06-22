@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/enums/local_database_error_code.dart';
+import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:localization/localization.dart';
 
 extension LocalDatabaseErrorCodeExtension on LocalDatabaseErrorCode {

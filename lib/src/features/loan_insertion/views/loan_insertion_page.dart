@@ -2,10 +2,10 @@ import 'package:bookify/src/core/extensions/error_code/local_database_error_code
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
-import 'package:bookify/src/core/models/contact_model.dart';
+import 'package:bookify/src/domain/models/contact_model.dart';
 import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
-import 'package:bookify/src/core/models/book_model.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/core/extensions/date_picker_dialog/date_picker_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';

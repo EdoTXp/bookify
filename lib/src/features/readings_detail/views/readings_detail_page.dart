@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/readings_detail/bloc/readings_detail_bloc.dart';
 import 'package:bookify/src/features/readings_timer/views/readings_timer.page.dart';
-import 'package:bookify/src/core/dtos/reading_dto.dart';
+import 'package:bookify/src/domain/dtos/reading_dto.dart';
 import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';

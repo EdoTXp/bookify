@@ -1,7 +1,7 @@
 import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
 import 'package:bookify/src/core/extensions/textfield_unfocus/textfield_unfocus_extension.dart';
-import 'package:bookify/src/core/models/bookcase_model.dart';
+import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/core/extensions/color_picker_dialog/color_picker_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';

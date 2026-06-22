@@ -1,7 +1,7 @@
-import 'package:bookify/src/core/dtos/reading_dto.dart';
-import 'package:bookify/src/core/models/book_model.dart';
-import 'package:bookify/src/core/models/bookcase_model.dart';
-import 'package:bookify/src/core/models/user_hour_time_model.dart';
+import 'package:bookify/src/domain/dtos/reading_dto.dart';
+import 'package:bookify/src/domain/models/book_model.dart';
+import 'package:bookify/src/domain/models/bookcase_model.dart';
+import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/about/views/about_page.dart';
 import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/book_detail/views/book_detail_page.dart';

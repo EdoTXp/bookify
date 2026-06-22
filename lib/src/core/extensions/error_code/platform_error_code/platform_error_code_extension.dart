@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/enums/platform_error_code.dart'; // Assicurati che l'import sia corretto
+import 'package:bookify/src/core/enums/platform_error_code.dart'; // Assicurati che l'import sia corretto
 import 'package:localization/localization.dart';
 
 extension PlatformErrorCodeExtension on PlatformErrorCode {

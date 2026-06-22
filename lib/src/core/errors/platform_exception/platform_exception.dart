@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/enums/platform_error_code.dart';
+import 'package:bookify/src/core/enums/platform_error_code.dart';
 
 class PlatformException implements Exception {
   final PlatformErrorCode code;

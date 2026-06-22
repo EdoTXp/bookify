@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/errors/platform_exception/platform_exception.dart';
-import 'package:bookify/src/shared/enums/platform_error_code.dart';
+import 'package:bookify/src/core/enums/platform_error_code.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class LauncherHelper {

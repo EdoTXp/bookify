@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
-import 'package:bookify/src/core/models/user_hour_time_model.dart';
+import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';

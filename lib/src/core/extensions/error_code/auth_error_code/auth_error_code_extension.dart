@@ -1,4 +1,4 @@
-import 'package:bookify/src/shared/enums/auth_error_code.dart';
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:localization/localization.dart';
 
 extension AuthErrorCodeExtension on AuthErrorCode {

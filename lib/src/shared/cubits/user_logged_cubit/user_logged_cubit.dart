@@ -1,6 +1,6 @@
-import 'package:bookify/src/shared/enums/auth_error_code.dart';
+import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
-import 'package:bookify/src/core/services/auth_service/auth_service.dart';
+import 'package:bookify/src/domain/services/auth_service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
