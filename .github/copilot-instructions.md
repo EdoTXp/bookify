@@ -14,9 +14,9 @@
 - Social features (contacts, loans, notifications)
 - Multi-auth support (Firebase with Google, Facebook, Apple login)
 
-**Tech Stack**: Flutter 3.x, Dart 3.0.2+, Firebase (auth/Firestore), SQLite, Provider (DI), BLoC (state management)
+**Tech Stack**: Flutter 3.10+, Dart 3.10+, Firebase (auth), SQLite (sqflite), Provider (DI), BLoC (state management).
 
-**Architecture**: Clean Architecture with layered separation → View → BLoC → Service → Repository → Data Sources
+**Architecture**: Pragmatic Clean Architecture with layer separation → View ➔ BLoC ➔ Service ➔ Repository ➔ Data Sources.
 
 ---
 
@@ -25,76 +25,65 @@
 **ALWAYS complete this checklist before asking Copilot to generate code:**
 
 1. ✅ **Read Documentation First**
+   - Read `ARCHITECTURE.md` and `BUILD.md` completely.
+   - Review `/docs/design/` for design specs and understand the feature requirements.
 
-   - Read `/design/documentation/build_and_architecture.md` completely
-   - Review `/design/documentation/` for design specs
-   - Understand the feature requirements
-
-2. ✅ **Understand the Architecture**
-
-   - Know which layer your code belongs to (View/BLoC/Service/Repository/DTO/Model)
-   - Understand the View → BLoC → Service → Repository flow
-   - Verify dependencies flow inward only (never outward)
+2. ✅ **Understand the Architecture Layout**
+   - Know which layer your code belongs to (`core`, `data`, `domain`, or `features`).
+   - Verify that dependencies flow inward only: Presentation/Features depend on Domain/Data, Data depends on Domain contracts, and Domain remains pure Dart code.
 
 3. ✅ **Check Existing Code**
+   - Search for similar features already implemented.
+   - Review existing BLoCs, Services, and Repositories to follow established patterns and naming conventions.
 
-   - Search for similar features already implemented
-   - Review existing BLoCs, Services, Repositories
-   - Follow established patterns and naming conventions
-
-4. ✅ **Verify Correct Layer for Services**
-
-   - **`core/services/app_services/`** = OS-level services (camera, contacts, permissions, notifications) → DO NOT call repositories
-   - **`core/services/`** = Business logic services → MAY call repositories
-   - Understand the distinction before requesting code
+4. ✅ **Verify Correct Layer for Services & Infrastructure**
+   - **`domain/services/`** = Pure application business workflows (orchestrate logic, can call Repository interfaces).
+   - **`core/` or App Wrappers** = OS-level or low-level technical infrastructure (camera, permissions, notifications) → DO NOT mix with pure domain logic.
 
 5. ✅ **Check Project Structure**
-   - Verify file is in correct location
-   - Confirm naming follows `snake_case` for files, `PascalCase` for classes
-   - Feature structure must follow: `features/[feature_name]/bloc/`, `views/`, `widgets/`
+   - Verify file is in the correct location.
+   - Confirm naming follows `snake_case` for files and `PascalCase` for classes.
+   - Feature structure must follow: `lib/src/features/[feature_name]/bloc/` and `views/`.
 
 ---
 
 ## Project Structure (Reference)
 
-```
+```plaintext
 lib/src/
-├── core/                          # Foundational layer
-│   ├── adapters/                  # Data source abstraction
-│   ├── data_sources/              # API/local data implementations
-│   ├── database/                  # SQLite setup
-│   ├── dtos/                      # Data Transfer Objects
-│   ├── errors/                    # Custom exceptions
-│   ├── helpers/                   # Utility functions
-│   ├── models/                    # Core data structures
-│   ├── repositories/              # Data access interfaces
-│   ├── rest_client/               # HTTP client (Dio)
-│   ├── services/
-│   │   ├── app_services/          # Android/iOS services (NO repositories)
-│   │   └── [business_services]    # Business logic (MAY call repositories)
-│   ├── storage/                   # File storage
-│   └── utils/                     # General utilities
+├── core/                          # Cross-cutting foundational layer (Infrastructure only)
+│   ├── config/                    # Global environment configurations and constants
+│   ├── enums/                     # Global technical and shared error-related Enums
+│   ├── errors/                    # Centralized custom Exceptions and error management
+│   ├── extensions/                # Dart/Flutter extension utilities (e.g., BuildContext)
+│   └── helper/                    # Pure utility functions and general helpers
 │
-├── features/                      # Feature modules (isolated)
-│   ├── [feature_name]/
-│   │   ├── bloc/                  # State management
-│   │   │   ├── [feature]_bloc.dart
-│   │   │   ├── [feature]_event.dart
-│   │   │   └── [feature]_state.dart
-│   │   └── views/
-│   │       ├── [feature]_page.dart
-│   │       └── widgets/           # Feature-specific widgets
+├── data/                          # DATA LAYER: Low-level I/O & Infrastructure implementations
+│   ├── adapters/                  # Data mapping logic and architectural adapters
+│   ├── data_sources/              # Concrete remote API clients (Firebase, Google Books, etc.)
+│   ├── database/                  # SQLite native configuration, schemas, and DAO layers
+│   ├── repositories/              # Concrete data handling (Bundled Interfaces + Implementations)
+│   ├── rest_client/               # Dio network client setup, interceptors, and headers
+│   └── storage/                   # SharedPreferences/File local key-value stores
 │
-└── shared/                        # Global resources only
-    ├── blocs/                     # Global state
-    ├── constants/                 # Global constants
-    ├── providers/                 # Global DI/providers
-    ├── routes/                    # Navigation
-    ├── theme/                     # App styling
-    └── widgets/                   # Reusable widgets
+├── domain/                        # DOMAIN LAYER: Pure Application Business Rules
+│   ├── dtos/                      # Composite models / Data aggregates optimized for DB JOIN operations
+│   ├── models/                    # Core application entities and business domain models
+│   └── services/                  # Business services orchestrating workflow logic
+│
+├── features/                      # PRESENTATION LAYER: Independent Feature Modules
+│   └── [feature_name]/            # Example: auth, reading, shelf
+│       ├── bloc/                  # Business Logic Components (Bloc, Event, State files)
+│       └── views/                 # UI implementation (Pages and module-specific widgets)
+│
+└── shared/                        # Shared UI components, assets, and styling singletons
+    ├── blocs/                     # Global app-wide state units (e.g., ThemeBloc)
+    ├── constants/                 # Fixed asset tokens, iconography keys, and layout tokens
+    ├── providers/                 # Dependency Injection engine powered by Provider
+    ├── routes/                    # Centralized navigator routing tables
+    ├── theme/                     # Design system configurations and color schemes
+    └── widgets/                   # Atomic, highly reusable presentation components
 ```
-
-**CRITICAL**: Features must NOT import from each other. Use shared widgets and providers for cross-feature communication.
 
 ---
 
@@ -104,40 +93,23 @@ lib/src/
 
 ### Single Responsibility Principle
 
-- One class = one reason to change
-- Repository only handles data access
-- Service only handles business logic
-- BLoC only handles state and events
+- One class = one reason to change.
+- Repository only handles data access; Service only handles business workflows; BLoC only handles UI state and events.
 
 ### Open/Closed Principle
 
-- Extend through inheritance/interfaces, don't modify existing classes
-- Use abstract classes in `core/repositories/` for contracts
-
-### Liskov Substitution Principle
-
-- All implementations must be substitutable for their interfaces
-- Never break expected behavior in derived classes
-
-### Interface Segregation Principle
-
-- Don't force unnecessary dependencies
-- Create specific interfaces, not fat interfaces
+- Extend through inheritance/interfaces, don't modify existing concrete stable classes.
 
 ### Dependency Inversion Principle
 
-- Depend on abstractions (interfaces), not concrete implementations
-- Inject dependencies via Provider or constructor
-- Never hardcode instance creation
+- Depend on abstractions, not concrete implementations.
+- Inject dependencies via Provider or constructors. Never hardcode instance creation inside layers.
 
 **Design Patterns Used**:
 
-- **BLoC Pattern**: State management (always use flutter_bloc)
-- **Repository Pattern**: Abstract data access layer
-- **Singleton**: For services via Provider
-- **Factory**: Provider creates BLoCs/services
-- **Adapter Pattern**: `core/adapters/` for data source abstraction
-- **DTO Pattern**: Transform data between layers
+- **BLoC Pattern**: State management via `flutter_bloc`.
+- **Repository Pattern**: Structural abstract data access layer.
+- **DTO Pattern**: Composite objects (`domain/dtos/`) optimized for database JOIN mutations, separating low-level rows from strict domain models.
 
 ---
 
@@ -149,7 +121,6 @@ lib/src/
 ❌ DON'T                          ✅ DO
 f()                               fetchUserBooks()
 UserRepo                          UserRepository
-userName                          userName (same, correct)
 CONSTANT_VALUE                    kMaxRetries or maxRetries
 fetch_data.dart                   fetch_data.dart (snake_case)
 FetchData                         FetchData (PascalCase for classes)
@@ -159,166 +130,49 @@ FetchData                         FetchData (PascalCase for classes)
 
 **ALWAYS**:
 
-- Use `const` constructors for performance
-- Prefer `final` over `var` or `dynamic`
-- Use null safety properly (`?`, `!`, `??`)
-- Add `///` documentation comments to public methods
-- Keep functions under 30 lines (extract larger functions)
-- Import organization: dart, flutter, packages, relative (in order)
-- Max line length: 80 characters (Flutter standard)
+- Use `const` constructors wherever possible for widget performance.
+- Prefer `final` over `var` or `dynamic`.
+- Add `///` documentation comments to public methods and services.
+- Keep functions short and extracted (ideally under 30 lines).
+- Max line length: 80 characters.
 
 **NEVER**:
 
-- Use `var` for public return types (be explicit)
-- Create circular dependencies between layers
-- Hardcode API endpoints or sensitive data
-- Ignore errors without logging
-- Use `dynamic` type
-- Deep nesting (max 3-4 levels)
-
-### Example: Correct Pattern for Repository
-
-```dart
-abstract class BookRepository {
-  Future<List<Book>> searchBooks(String query);
-  Future<Book?> getBookById(String id);
-}
-
-class BookRepositoryImpl implements BookRepository {
-  BookRepositoryImpl(this._restClient, this._database);
-
-  final RestClient _restClient;
-  final AppDatabase _database;
-
-  @override
-  Future<List<Book>> searchBooks(String query) async {
-    try {
-      final dtos = await _restClient.getBooks(query);
-      final books = dtos.map((dto) => dto.toModel()).toList();
-      await _database.insertBooks(books);
-      return books;
-    } on DioException catch (e) {
-      throw ApiException(e.message ?? 'Unknown error');
-    }
-  }
-}
-```
-
-### Example: Correct Pattern for Service
-
-```dart
-class BookSearchService {
-  BookSearchService(this._bookRepository);
-
-  final BookRepository _bookRepository;
-
-  Future<List<Book>> searchAndFilterBooks(String query) async {
-    final books = await _bookRepository.searchBooks(query);
-    // Business logic: filter by rating
-    return books.where((book) => book.rating >= 3.0).toList();
-  }
-}
-```
-
-### Example: Correct Pattern for BLoC
-
-```dart
-class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
-  BookSearchBloc(this._bookSearchService) : super(BookSearchInitial()) {
-    on<SearchBooksEvent>(_onSearchBooks);
-  }
-
-  final BookSearchService _bookSearchService;
-
-  Future<void> _onSearchBooks(
-    SearchBooksEvent event,
-    Emitter<BookSearchState> emit,
-  ) async {
-    emit(BookSearchLoading());
-    try {
-      final books = await _bookSearchService.searchAndFilterBooks(event.query);
-      emit(BookSearchSuccess(books));
-    } on ApiException catch (e) {
-      emit(BookSearchError(e.message));
-    }
-  }
-}
-```
+- Create circular dependencies between layers.
+- Hardcode API endpoints or sensitive credential keys (use `Envied` obfuscation profiles).
+- Use `dynamic` type mappings blindly.
 
 ---
 
 ## Services Layer: Critical Distinction
 
-### OS-Level Services (`core/services/app_services/`)
+### OS-Level / Technical Infrastructure Wrappers
 
-**Purpose**: Wrapper around Android/iOS native features
-
+**Purpose**: Direct hardware/native API plugins managed inside technical layers (e.g., `mobile_scanner`, `fast_contacts`, `flutter_local_notifications`).
 **Characteristics**:
 
-- Direct device API calls only
-- ❌ DO NOT call any repository
-- ❌ DO NOT access databases
-- ❌ DO NOT contain business logic
+- Contains direct wrapper or device setup calls.
+- ❌ DO NOT inject business repositories or database entities here.
 
-**Examples**:
+### Business Logic Services (`domain/services/`)
 
-```dart
-// ✅ CORRECT: Direct Android/iOS API
-class CameraService {
-  Future<bool> requestCameraPermission() async {
-    return (await Permission.camera.request()).isGranted;
-  }
-}
-
-// ✅ CORRECT: Device notifications
-class NotificationService {
-  Future<void> showNotification(String title, String body) async {
-    await _flutterLocalNotificationsPlugin.show(/*...*/);
-  }
-}
-```
-
-### Business Logic Services (`core/services/`)
-
-**Purpose**: Application business logic
-
+**Purpose**: Encapsulates core application business validation routines and features.
 **Characteristics**:
 
-- ✅ MAY call repositories
-- ✅ Contain domain business logic
-- ✅ Used by BLoCs
-- ❌ DO NOT access views/UI
-
-**Examples**:
-
-```dart
-// ✅ CORRECT: Business service calling repository
-class BookSearchService {
-  Future<List<Book>> searchBooks(String query) async {
-    final books = await _bookRepository.searchBooks(query);
-    return books.where((b) => b.rating > 3.0).toList();
-  }
-}
-
-// ✅ CORRECT: Authentication service
-class AuthService {
-  Future<User> loginWithGoogle() async {
-    return await _authRepository.signInWithGoogle();
-  }
-}
-```
+- ✅ MAY interact with repositories to retrieve and save domain states.
+- ❌ DO NOT embed any View, BuildContext, or UI widget dependencies.
 
 ---
 
 ## Build & Validation Commands
 
-**Run these to validate your code** (use before requesting code generation):
+**Run these commands to validate local developments:**
 
 ```bash
 # Analyze code for lint issues
 flutter analyze
 
-# Run all tests
+# Run all unit and bloc tests
 flutter test
 
 # Format code (Dart standard)
@@ -327,44 +181,24 @@ dart format lib/
 # Run app on connected device/emulator
 flutter run
 
-# Build release APK (Android)
+# Build release artifacts
 flutter build apk --release
-
-# Build release IPA (iOS)
-flutter build ios --release
 ```
-
-**Expected Results**:
-
-- `flutter analyze` → 0 issues
-- `flutter test` → All tests pass ✓
-- `dart format` → No changes (code already formatted)
-- `flutter run` → App launches without errors
 
 ---
 
-## Known Issues & Workarounds
+## Technology Versions (Reference to pubspec)
 
-| Issue                           | Cause                        | Solution                                         |
-|---------------------------------|------------------------------|--------------------------------------------------|
-| Pod install fails on M1 Mac     | Arch mismatch                | `arch -x86_64 pod install` in `ios/`             |
-| Firebase config not found       | Missing google-services.json | Run `flutterfire configure`                      |
-| BLoC events not firing          | Wrong event type             | Verify event dispatched in exact state to listen |
-| SQLite database locked          | Concurrent access            | Use `exclusive: true` in sqflite operations      |
-| Image not loading from Firebase | Network issue or permission  | Check Firebase Storage rules and network         |
-
----
-
-## Technology Versions (Reference)
-
-```
-Flutter SDK:  >=3.0.2 <4.0.0
-Dart:         >=3.0.2 <4.0.0
-Firebase:     v6.1.3+ (auth)
-flutter_bloc: v9.1.1+
-provider:     v6.1.5+
-dio:          v5.9.0+
-sqflite:      v2.4.2+
+```plaintext
+Flutter SDK:  >=3.10.0 <4.0.0
+Dart SDK:     >=3.10.0 <4.0.0
+dio:          ^5.9.2
+flutter_bloc: ^9.1.1
+provider:     ^6.1.5+1
+sqflite:      ^2.4.3
+firebase_core:^4.11.0
+firebase_auth:^6.5.4
+envied:       ^1.3.5
 ```
 
 ---
@@ -373,37 +207,11 @@ sqflite:      v2.4.2+
 
 ### ✅ DO
 
-- **Be specific**: "Create a Repository interface for books with methods: searchBooks(String query) → Future<List<Book>>" (good) vs. "Create a book repository" (vague)
-- **Reference existing code**: "Follow the pattern used in auth_bloc.dart for state management"
-- **Mention constraints**: "Use SOLID principles, specifically Single Responsibility Principle"
-- **Ask for tests**: "Also generate unit tests using mocktail"
-- **Describe error handling**: "Handle DioException and emit error state"
+- **Be highly specific**: "Create a Repository interface for books inside data/repositories/ with a method searchBooks(String query)".
+- **Reference layout design**: "Follow the pragmatic Clean Architecture setup, ensuring models map smoothly from the data layer to domain entities".
+- **Ask for tests**: "Generate corresponding unit tests using mocktail and bloc_test patterns".
 
 ### ❌ DON'T
 
-- Ask for code in multiple layers at once → Request one layer at a time
-- Use vague terms → Be explicit about class names, parameters, return types
-- Ignore the architecture → Always reference which layer code belongs to
-- Skip the documentation checklist → Read design docs first
-- Ask for OS service as business service → Clarify the distinction
-
----
-
-## Final Validation Before Coding
-
-Ask yourself:
-
-1. **Layer Check**: Is my code in the correct layer? (View/BLoC/Service/Repo/DTO)
-2. **Architecture Check**: Does it follow the View → BLoC → Service → Repository → Data flow?
-3. **Naming Check**: Is it `snake_case` for files, `PascalCase` for classes?
-4. **Dependency Check**: Do dependencies flow inward only (never outward)?
-5. **Pattern Check**: Does it follow an existing pattern in the codebase?
-6. **Error Check**: Does it handle errors appropriately?
-7. **Testing Check**: Can this be unit tested?
-8. **Feature Isolation**: Is my feature independent (not importing other features)?
-
-If you answer NO to any question, re-read this document and adjust your request.
-
----
-
-**Remember**: Always start by reading `/design/documentation/build_and_architecture.md` for complete architectural understanding.
+- Request structural changes across multiple architecture layers at once.
+- Skip the documentation checks or mix domain models with external JSON contracts directly.

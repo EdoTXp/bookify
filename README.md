@@ -2,117 +2,65 @@
 
 ![Bookify Logo](docs/design/images/bookify.png)
 
-**Bookify is a cross-platform Flutter application designed to help users organize their personal library, track reading progress and manage book loans with a scalable and maintainable architecture.**
+**Bookify** is a cross-platform mobile application developed with Flutter, designed to help users organize their personal library, track reading progress, and manage book loans through a scalable, clean, and pragmatically designed architecture.
+
+---
 
 ## 🎨 Design
 
-The design was created with [Figma](https://www.figma.com/file/EGg9eFK0Hi8LaVQcPVnjrX/Bookify-Edoardo?node-id=0%3A1)
+The user interface design was fully crafted on [Figma](https://www.figma.com/file/EGg9eFK0Hi8LaVQcPVnjrX/Bookify-Edoardo?node-id=0%3A1).
 
-## ✨ Features
+---
 
-**⚠️ APPLICATION STILL UNDER DEVELOPMENT. More features will be added in the future.**
+## 🚀 Getting Started & Releases
 
-For technical documentation (build and architecture), read [build_and_architecture](docs/design/build_and_architecture.md).
+If you just want to try out the app without compiling the source code, you can download the latest pre-compiled binaries directly from the **[Releases](https://github.com/EdoTXp/bookify/releases)** section of this repository. Alternatively, if you want to compile and run Bookify locally from the source code, please note that it requires specific configuration steps, environment keys, and toolchains due to the integration with external services (Firebase, Google Books API, Facebook Auth). You can find our comprehensive step-by-step setup instructions inside our dedicated guide:  
+➔ 🔨 **[BUILD.md](BUILD.md)**
 
-### 📙 Search Books
+---
 
-This page you can search for books by title, author, category, publisher, and ISBN.
-Tapping the book icon, you can choose the type of search you can do: Title, Author, Genre, Publisher, and ISBN.
+## 🛠️ Architecture Overview
 
-![Screenshot_1](docs/design/images/Screenshot_1.png)
+The project is built upon a **Pragmatic Clean Architecture** layout to ensure high decoupling, testability, and clear separation of concerns.
 
-Tapping on a book will open another page where it specifies the book detailing its characteristics.
+The application layer flow follows a unidirectional pipeline:  
+**View ➔ BLoC ➔ Service ➔ Repository**.
 
-![Screenshot_2](docs/design/images/Screenshot_2.png)
+For a comprehensive breakdown of our directory layout, architectural decisions, and model definitions, check out our official design document:
+➔ 📐 **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
-Tapping on the **Plus** icon will open the page to scan the ISBN. Yes you will have to give permission to be able to use the device camera. If for any reason the camera cannot find the code, you can click in the **write manually** button and you can write the code manually.
+---
 
-![Screenshot_3](docs/design/images/Screenshot_3.png)
-![Screenshot_4](docs/design/images/Screenshot_4.png)
+## ✨ Core Features
 
-### 🗄️ Bookcase
+- **📙 Book Search**: Search for books by title, author, category, publisher, and ISBN via Google Books API. Includes camera barcode scanning and manual entry.
+- **🗄️ Custom Bookshelves**: Create and manage virtual shelves with custom names and colors to easily organize and categorize your offline collection.
+- **📚 My Books**: A dedicated, unified space to view your entire collection of saved books at a single glance.
+- **🤝 Loans**: Complete management of books loaned to contacts. Track loan dates, expected return dates, and contact information.
+- **📖 Readings & Timer**: Track active reading progress with an integrated session timer and a manual page-count updater.
+- **⚙️ Settings**: Customize app behavior: theme management (Light/Dark/System), reading speed calibration, and daily reminders.
 
-Clicking on **Bookcases**, you will be redirected to the page for viewing your bookcase. When you don't have any, you can add them by clicking on the **+ Add a new shelf button**.
+### 📸 Interface Gallery
 
-![Screenshot_5](docs/design/images/Screenshot_5.png)
+#### 🤖 Android
 
-On this page you can add your Bookcase information.
+|                                                        |                                                        |                                                        |                                                        |
+| :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: |
+|  ![Screenshot 1](docs/design/images/Screenshot_1.png)  |  ![Screenshot 2](docs/design/images/Screenshot_2.png)  |  ![Screenshot 3](docs/design/images/Screenshot_3.png)  |  ![Screenshot 4](docs/design/images/Screenshot_4.png)  |
+|  ![Screenshot 5](docs/design/images/Screenshot_5.png)  |  ![Screenshot 6](docs/design/images/Screenshot_6.png)  |  ![Screenshot 7](docs/design/images/Screenshot_7.png)  |  ![Screenshot 8](docs/design/images/Screenshot_8.png)  |
+|  ![Screenshot 9](docs/design/images/Screenshot_9.png)  | ![Screenshot 10](docs/design/images/Screenshot_10.png) | ![Screenshot 11](docs/design/images/Screenshot_11.png) | ![Screenshot 12](docs/design/images/Screenshot_12.png) |
+| ![Screenshot 13](docs/design/images/Screenshot_13.png) | ![Screenshot 14](docs/design/images/Screenshot_14.png) | ![Screenshot 15](docs/design/images/Screenshot_15.png) | ![Screenshot 16](docs/design/images/Screenshot_16.png) |
+| ![Screenshot 17](docs/design/images/Screenshot_17.png) | ![Screenshot 18](docs/design/images/Screenshot_18.png) | ![Screenshot 19](docs/design/images/Screenshot_19.png) | ![Screenshot 20](docs/design/images/Screenshot_20.png) |
+| ![Screenshot 21](docs/design/images/Screenshot_21.png) | ![Screenshot 22](docs/design/images/Screenshot_22.png) | ![Screenshot 23](docs/design/images/Screenshot_23.png) | ![Screenshot 24](docs/design/images/Screenshot_24.png) |
+| ![Screenshot 25](docs/design/images/Screenshot_25.png) | ![Screenshot 26](docs/design/images/Screenshot_26.png) | ![Screenshot 27](docs/design/images/Screenshot_27.png) | ![Screenshot 28](docs/design/images/Screenshot_28.png) |
 
-![Screenshot_6](docs/design/images/Screenshot_6.png)
-![Screenshot_7](docs/design/images/Screenshot_7.png)
-
-When you finish creating the bookcase, you will return to the previous page with the new bookcase ready for use.
-
-![Screenshot_8](docs/design/images/Screenshot_8.png)
-
-You then place the books you saved earlier on the bookcase, to be able to sort them for future uses.
-
-![Screenshot_9](docs/design/images/Screenshot_9.png)
-![Screenshot_10](docs/design/images/Screenshot_10.png)
-![Screenshot_11](docs/design/images/Screenshot_11.png)
-
-### 📚 My Books
-
-To find out which books you have saved before you can go to the **My Books** section to see your book collection.
-
-![Screenshot_12](docs/design/images/Screenshot_12.png)
-
-### 🤝 Loans
-
-Now that your shelves are ready, you can lend your books to your friends, family, etc. To start a loan, go to the **loans** section and click on the **+ Add new loan** button.
-
-![Screenshot_13](docs/design/images/Screenshot_13.png)
-
-As with the **bookcase**, you can enter your **loan** information, adding the book from your shelf or separate along with the contact who should receive the book.
-
-![Screenshot_14](docs/design/images/Screenshot_14.png)
-![Screenshot_15](docs/design/images/Screenshot_15.png)
-
-Once entered, you can see the **loan** information by clicking on it.
-
-![Screenshot_16](docs/design/images/Screenshot_16.png)
-![Screenshot_17](docs/design/images/Screenshot_17.png)
-
-### 📖 Readings
-
-To start a reading, click on the **readings** button, then click on the **+ Add new Reading** button. Once clicked, a bottom sheet menu will appear where you can choose the book.
-**Note:** A particular book will be readable if it is not on loan. Just like a book on loan cannot be read.
-
-![Screenshot_18](docs/design/images/Screenshot_18.png)
-![Screenshot_19](docs/design/images/Screenshot_19.png)
-
-Once you have selected the book, you will be able to read it. To do this, you will need to click on the **Continue Reading** button and you will be redirected to the timer page where you can start reading. When you are finished, you will need to update your reading by moving the sidebar cursor to the pages you have read and then clicking on **Update Reading**.
-
-![Screenshot_20](docs/design/images/Screenshot_20.png)
-![Screenshot_21](docs/design/images/Screenshot_21.png)
-![Screenshot_22](docs/design/images/Screenshot_22.png)
-
-### ⚙️ Settings
-
-On the **settings** page you can change the theme, update the reading time per page and the reading time.
-
-    1. Change Theme: This option will make you change the theme to light, dark and system.
-    2. Reading Time: This option will make you read a text where an average time will be calculated to complete a book.
-    3. Hour Time: This option will let you choose the time and when it should repeat and then notify you at that time and the chosen time will be used as default in the reading timer.
-
-![Screenshot_23](docs/design/images/Screenshot_23.png)
-
-#### Reading Time
-
-![Screenshot_24](docs/design/images/Screenshot_24.png)
-![Screenshot_25](docs/design/images/Screenshot_25.png)
-
-#### Hour Time
-
-![Screenshot_26](docs/design/images/Screenshot_26.png)
-![Screenshot_27](docs/design/images/Screenshot_27.png)
-![Screenshot_28](docs/design/images/Screenshot_28.png)
-
-## 📱iOS
+#### 🍎 iOS
 
 [iOS Screenshots](docs/design/images/ios/)
 
-## 👥 Team
+---
 
-1. [Fredson - Designer](https://www.linkedin.com/in/fredsoncosta/)
-2. [Edoardo - Developer](https://www.linkedin.com/in/edoardofabrizio/)
+## 👥 Team & Credits
+
+- **Fredson Costa** - _UI/UX Designer_ - [LinkedIn](https://www.linkedin.com/in/fredsoncosta/)
+- **Edoardo Fabrizio De Iovanna** - _Developer_ - [LinkedIn](https://www.linkedin.com/in/edoardofabrizio/) / [Portfolio](https://edotxp.github.io/)
