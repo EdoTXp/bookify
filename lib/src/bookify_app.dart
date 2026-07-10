@@ -67,7 +67,7 @@ class _BookifyAppState extends State<BookifyApp> {
             );
           },
           navigatorKey: Routes.navigatorKey,
-          routes: Routes.routes,
+          onGenerateRoute: Routes.onGenerateRoute,
           home: MultiBlocListener(
             listeners: [
               // Listens for authentication failures to present localized error feedback.

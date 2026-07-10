@@ -76,6 +76,7 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
         event.devolutionDate,
         event.notificationTitle,
         event.notificationBody,
+        event.notificationPayloadRoute,
       );
 
       emit(LoanInsertionInsertedState());
@@ -108,16 +109,19 @@ class LoanInsertionBloc extends Bloc<LoanInsertionEvent, LoanInsertionState> {
     DateTime devolutionDate,
     String title,
     String body,
+    String notificationPayloadRoute,
   ) async {
     final customNotification = CustomNotificationModel(
       id: loanId,
       title: title,
       body: body,
       notificationChannel: NotificationChannel.loanChannel,
-      scheduledDate: devolutionDate,
-      payload: '/loan_detail',
+      payload: notificationPayloadRoute,
     );
 
-    await _notificationsService.scheduleNotification(customNotification);
+    await _notificationsService.scheduleNotification(
+      customNotification,
+      devolutionDate,
+    );
   }
 }

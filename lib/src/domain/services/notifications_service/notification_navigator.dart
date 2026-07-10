@@ -12,6 +12,17 @@ class NotificationNavigator {
       'The page route must be initiated with /',
     );
 
+    if (pageRoute == '/root_page') {
+      const readingsPageArguments = true;
+
+      Navigator.pushNamed(
+        Routes.navigatorKey.currentContext!,
+        pageRoute,
+        arguments: readingsPageArguments,
+      );
+      return;
+    }
+
     Navigator.pushNamed(
       Routes.navigatorKey.currentContext!,
       pageRoute,

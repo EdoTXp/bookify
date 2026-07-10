@@ -43,6 +43,7 @@
   "repeat-time-title": "Set the repetition to be notified for your readings:",
   "daily-dropdown-menu-entry": "Daily",
   "weekly-dropdown-menu-entry": "Weekly",
+  "hint-reading-time-notification-description": "* Currently, the reading notification is not defined. To receive notifications, choose a start and end time and press the 'Finish' button.",
   "remove-reading-time-notification-button": "Remove current read notification",
   "hour-time-selected-title": "Set the best time for your readings:",
   "select-time": "%s0 to %s1",

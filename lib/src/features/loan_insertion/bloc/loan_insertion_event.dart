@@ -10,6 +10,7 @@ final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
   final String bookId;
   final String notificationTitle;
   final String notificationBody;
+  final String notificationPayloadRoute;
 
   InsertedLoanInsertionEvent({
     this.observation,
@@ -19,5 +20,6 @@ final class InsertedLoanInsertionEvent extends LoanInsertionEvent {
     required this.bookId,
     required this.notificationTitle,
     required this.notificationBody,
+    required this.notificationPayloadRoute,
   });
 }

@@ -43,6 +43,7 @@
   "repeat-time-title": "Defina a repetição para ser notificado para a suas leituras:",
   "daily-dropdown-menu-entry": "Diariamente",
   "weekly-dropdown-menu-entry": "Semanalmente",
+  "hint-reading-time-notification-description": "* Atualmente a notificação de leitura não está definida. Para receber notificações, escolha um horário de início e fim e pressione o botão 'Finalizar'.",
   "remove-reading-time-notification-button": "Remover notificação atual de leitura",
   "hour-time-selected-title": "Defina a melhor hora para as suas leituras:",
   "select-time": "%s0 até %s1",

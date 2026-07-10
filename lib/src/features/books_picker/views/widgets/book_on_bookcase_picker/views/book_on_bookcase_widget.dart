@@ -49,9 +49,12 @@ class _BookOnBookcaseWidgetState extends State<BookOnBookcaseWidget> {
       BookOnBookcasePickerLoadingState() =>
         const CenterCircularProgressIndicator(),
       BookOnBookcasePickerEmptyState() => Center(
-        child: Text(
-          'empty-bookcase-or-not-contains-books-message'.i18n(),
-          textAlign: TextAlign.center,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'empty-bookcase-or-not-contains-books-message'.i18n(),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
       BookOnBookcasePickerLoadedState(:final books) => BookSelectorWidget(

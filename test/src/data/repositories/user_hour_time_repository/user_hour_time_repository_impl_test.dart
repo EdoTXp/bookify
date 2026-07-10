@@ -76,6 +76,24 @@ void main() {
         equals(1),
       );
     });
+
+    test('Test remove UserHourTime', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      final userHourTimeModel = await userHourTimeRepository
+          .removeUserHourTime();
+
+      expect(
+        userHourTimeModel,
+        equals(1),
+      );
+    });
   });
 
   group('Test normal crud with error', () {
@@ -140,6 +158,29 @@ void main() {
         () async => await userHourTimeRepository.setUserHourTime(
           userHourTime: userHourTime,
         ),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+
+    test('Test remove UserHourTime with Storage Exception', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async => await userHourTimeRepository.removeUserHourTime(),
         throwsA(
           (Exception e) =>
               e is StorageException &&

@@ -2,17 +2,28 @@ enum NotificationChannel {
   loanChannel,
   readChannel;
 
-  String channelId() {
+  static const int _readChannelId = 9999;
+
+  String getChannelId() {
     return switch (this) {
       NotificationChannel.loanChannel => 'LoanId',
       NotificationChannel.readChannel => 'ReadId',
     };
   }
 
-  static NotificationChannel toType(String? channelId) {
-    return switch (channelId) {
-      '2' => NotificationChannel.readChannel,
-      '1' || _ => NotificationChannel.loanChannel,
+  int get fixedId {
+    return switch (this) {
+      NotificationChannel.readChannel => _readChannelId,
+      NotificationChannel.loanChannel => throw UnsupportedError(
+        'Loan channel utilizes dynamic IDs and does not have a single fixed ID.',
+      ),
+    };
+  }
+
+  static NotificationChannel fromId(int id) {
+    return switch (id) {
+      _readChannelId => NotificationChannel.readChannel,
+      _ => NotificationChannel.loanChannel,
     };
   }
 }
@@ -22,7 +33,6 @@ class CustomNotificationModel {
   final NotificationChannel notificationChannel;
   final String title;
   final String body;
-  final DateTime scheduledDate;
   final String? payload;
 
   CustomNotificationModel({
@@ -30,7 +40,6 @@ class CustomNotificationModel {
     required this.notificationChannel,
     required this.title,
     required this.body,
-    required this.scheduledDate,
     this.payload,
   });
 
@@ -47,14 +56,13 @@ class CustomNotificationModel {
       notificationChannel: notificationChannel ?? this.notificationChannel,
       title: title ?? this.title,
       body: body ?? this.body,
-      scheduledDate: scheduledDate ?? this.scheduledDate,
       payload: payload ?? this.payload,
     );
   }
 
   @override
   String toString() {
-    return 'CustomNotificationModel(id: $id, notificationChannel: $notificationChannel, title: $title, body: $body, scheduledDate: $scheduledDate, payload: $payload)';
+    return 'CustomNotificationModel(id: $id, notificationChannel: $notificationChannel, title: $title, body: $body, payload: $payload)';
   }
 
   @override
@@ -65,7 +73,6 @@ class CustomNotificationModel {
         other.notificationChannel == notificationChannel &&
         other.title == title &&
         other.body == body &&
-        other.scheduledDate == scheduledDate &&
         other.payload == payload;
   }
 
@@ -75,7 +82,6 @@ class CustomNotificationModel {
         notificationChannel.hashCode ^
         title.hashCode ^
         body.hashCode ^
-        scheduledDate.hashCode ^
         payload.hashCode;
   }
 }

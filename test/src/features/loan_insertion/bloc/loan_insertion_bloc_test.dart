@@ -71,7 +71,10 @@ void main() {
           (_) async => 1,
         );
         when(
-          () => notificationsService.scheduleNotification(any()),
+          () => notificationsService.scheduleNotification(
+            any(),
+            any(),
+          ),
         ).thenAnswer((_) async {});
       },
       act: (bloc) => bloc.add(
@@ -83,6 +86,7 @@ void main() {
           bookId: 'bookId',
           notificationTitle: 'notificationTitle',
           notificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -96,7 +100,10 @@ void main() {
           () => loanService.insert(loanModel: loanModel),
         ).called(1);
         verify(
-          () => notificationsService.scheduleNotification(any()),
+          () => notificationsService.scheduleNotification(
+            any(),
+            any(),
+          ),
         ).called(1);
       },
       expect: () => [
@@ -127,6 +134,7 @@ void main() {
           bookId: 'bookId',
           notificationTitle: 'notificationTitle',
           notificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -142,6 +150,7 @@ void main() {
         verifyNever(
           () => notificationsService.scheduleNotification(
             customNotification,
+            any(),
           ),
         );
       },
@@ -178,6 +187,7 @@ void main() {
           bookId: 'bookId',
           notificationTitle: 'notificationTitle',
           notificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -193,6 +203,7 @@ void main() {
         verifyNever(
           () => notificationsService.scheduleNotification(
             customNotification,
+            any(),
           ),
         );
       },
@@ -227,6 +238,7 @@ void main() {
           bookId: 'bookId',
           notificationTitle: 'notificationTitle',
           notificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -242,6 +254,7 @@ void main() {
         verifyNever(
           () => notificationsService.scheduleNotification(
             customNotification,
+            any(),
           ),
         );
       },
@@ -271,6 +284,7 @@ void main() {
           bookId: 'bookId',
           notificationTitle: 'notificationTitle',
           notificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -286,6 +300,7 @@ void main() {
         verifyNever(
           () => notificationsService.scheduleNotification(
             customNotification,
+            any(),
           ),
         );
       },

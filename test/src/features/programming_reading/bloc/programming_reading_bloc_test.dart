@@ -30,7 +30,14 @@ void main() {
 
   setUp(
     () {
-      registerFallbackValue(NotificationChannel.readChannel);
+      registerFallbackValue(
+        CustomNotificationModel(
+          id: 1,
+          notificationChannel: NotificationChannel.readChannel,
+          title: 'title',
+          body: 'body',
+        ),
+      );
       registerFallbackValue(RepeatHourTimeType.daily);
 
       registerFallbackValue(DateTime.now());
@@ -125,10 +132,7 @@ void main() {
         when(
           () =>
               notificationsService.periodicallyShowNotificationWithSpecificDate(
-                id: any(named: 'id'),
-                title: any(named: 'title'),
-                body: any(named: 'body'),
-                notificationChannel: any(named: 'notificationChannel'),
+                notification: any(named: 'notification'),
                 repeatType: any(named: 'repeatType'),
                 scheduledDate: any(named: 'scheduledDate'),
               ),
@@ -141,6 +145,7 @@ void main() {
           userHourTimeModel: userHourTime,
           readingTimeNotificationTitle: 'notificationTitle',
           readingTimeNotificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -153,10 +158,7 @@ void main() {
         verify(
           () =>
               notificationsService.periodicallyShowNotificationWithSpecificDate(
-                id: any(named: 'id'),
-                title: any(named: 'title'),
-                body: any(named: 'body'),
-                notificationChannel: any(named: 'notificationChannel'),
+                notification: any(named: 'notification'),
                 repeatType: any(named: 'repeatType'),
                 scheduledDate: any(named: 'scheduledDate'),
               ),
@@ -184,6 +186,7 @@ void main() {
           userHourTimeModel: userHourTime,
           readingTimeNotificationTitle: 'notificationTitle',
           readingTimeNotificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -196,10 +199,7 @@ void main() {
         verifyNever(
           () =>
               notificationsService.periodicallyShowNotificationWithSpecificDate(
-                id: any(named: 'id'),
-                title: any(named: 'title'),
-                body: any(named: 'body'),
-                notificationChannel: any(named: 'notificationChannel'),
+                notification: any(named: 'notification'),
                 repeatType: any(named: 'repeatType'),
                 scheduledDate: any(named: 'scheduledDate'),
               ),
@@ -230,6 +230,7 @@ void main() {
           userHourTimeModel: userHourTime,
           readingTimeNotificationTitle: 'notificationTitle',
           readingTimeNotificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -242,10 +243,7 @@ void main() {
         verifyNever(
           () =>
               notificationsService.periodicallyShowNotificationWithSpecificDate(
-                id: any(named: 'id'),
-                title: any(named: 'title'),
-                body: any(named: 'body'),
-                notificationChannel: any(named: 'notificationChannel'),
+                notification: any(named: 'notification'),
                 repeatType: any(named: 'repeatType'),
                 scheduledDate: any(named: 'scheduledDate'),
               ),
@@ -273,6 +271,7 @@ void main() {
           userHourTimeModel: userHourTime,
           readingTimeNotificationTitle: 'notificationTitle',
           readingTimeNotificationBody: 'notificationBody',
+          notificationPayloadRoute: 'notificationPayloadRoute',
         ),
       ),
       verify: (_) {
@@ -285,10 +284,7 @@ void main() {
         verifyNever(
           () =>
               notificationsService.periodicallyShowNotificationWithSpecificDate(
-                id: any(named: 'id'),
-                title: any(named: 'title'),
-                body: any(named: 'body'),
-                notificationChannel: any(named: 'notificationChannel'),
+                notification: any(named: 'notification'),
                 repeatType: any(named: 'repeatType'),
                 scheduledDate: any(named: 'scheduledDate'),
               ),
@@ -304,16 +300,27 @@ void main() {
   blocTest(
     'Test RemovedNotificationHourTimeEvent work',
     build: () => programmingReadingBloc,
-    setUp: () =>
-        when(
-          () => notificationsService.cancelNotificationById(
-            id: any(named: 'id'),
-          ),
-        ).thenAnswer(
-          (_) async {},
+    setUp: () {
+      when(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      when(
+        () => notificationsService.cancelNotificationById(
+          id: any(named: 'id'),
         ),
+      ).thenAnswer(
+        (_) async {},
+      );
+    },
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
+      verify(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).called(1);
+
       verify(
         () => notificationsService.cancelNotificationById(
           id: any(named: 'id'),
@@ -327,18 +334,57 @@ void main() {
   );
 
   blocTest(
-    'Test RemovedNotificationHourTimeEvent  work when throw Generic Exception',
+    'Test RemovedNotificationHourTimeEvent work when throw StorageErrorCode',
     build: () => programmingReadingBloc,
-    setUp: () =>
-        when(
-          () => notificationsService.cancelNotificationById(
-            id: any(named: 'id'),
-          ),
-        ).thenThrow(
-          Exception('Generic Error'),
-        ),
+    setUp: () {
+      when(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).thenAnswer(
+        (_) async => 0,
+      );
+    },
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
+      verify(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).called(1);
+
+      verifyNever(
+        () => notificationsService.cancelNotificationById(
+          id: any(named: 'id'),
+        ),
+      );
+    },
+    expect: () => [
+      isA<ProgrammingReadingLoadingState>(),
+      isA<ProgrammingReadingErrorState>(),
+    ],
+  );
+
+  blocTest(
+    'Test RemovedNotificationHourTimeEvent  work when throw Generic Exception',
+    build: () => programmingReadingBloc,
+    setUp: () {
+      when(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      when(
+        () => notificationsService.cancelNotificationById(
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(
+        Exception('Generic Error'),
+      );
+    },
+    act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
+    verify: (_) {
+      verify(
+        () => userHourTimeRepository.removeUserHourTime(),
+      ).called(1);
+
       verify(
         () => notificationsService.cancelNotificationById(
           id: any(named: 'id'),

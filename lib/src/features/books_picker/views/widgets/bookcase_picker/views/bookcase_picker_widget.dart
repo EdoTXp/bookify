@@ -41,9 +41,12 @@ class _BookcasePickerWidgetState extends State<BookcasePickerWidget> {
     return switch (state) {
       BookcasePickerLoadingState() => const CenterCircularProgressIndicator(),
       BookcasePickerEmptyState() => Center(
-        child: Text(
-          'no-bookcases-to-add-message'.i18n(),
-          textAlign: TextAlign.center,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'no-bookcases-to-add-message'.i18n(),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
       BookcasePickerLoadedState(:final bookcasesDto) =>

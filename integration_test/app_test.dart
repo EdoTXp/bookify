@@ -105,12 +105,8 @@ Future<void> _testLoginPage(PatrolIntegrationTester $) async {
   expect($(#FacebookButton), findsOneWidget);
   expect($(#BookifyLogoImage), findsOneWidget);
 
-  await $(#FacebookButton).tap();
-
-  //! At this time, the test device "MUST" already be logged
-  //! in to Facebook in order to access the app.
-  await _tapOnNativeLoginButton();
-  await $.pumpAndSettle(duration: const Duration(seconds: 5));
+  await _tapOnNativeLoginButton($);
+  await $.pumpAndSettle(duration: const Duration(seconds: 10));
 
   // If login successful, expect the page to be disposed.
   expect($(#GoogleButton), findsNothing);
@@ -119,20 +115,43 @@ Future<void> _testLoginPage(PatrolIntegrationTester $) async {
   expect($(#BookifyLogoImage), findsNothing);
 }
 
-Future<void> _tapOnNativeLoginButton() async {
-  final facebookLoginSelector = MobileSelector(
-    ios: IOSSelector(
+//! At this time, the test device "MUST" already be logged
+Future<void> _tapOnNativeLoginButton(PatrolIntegrationTester $) async {
+  if ($.isAndroid) {
+    await $(#GoogleButton).tap();
+    await $.pumpAndSettle(duration: const Duration(seconds: 5));
+
+    final emailLoginSelector = AndroidSelector(
+      textContains: '@', // indicates the email input field in Google login
+    );
+
+    await native.waitUntilVisible(emailLoginSelector);
+    await native.tap(emailLoginSelector);
+
+    // Only for Firebase Test lab
+    final agreeButtonView = AndroidSelector(textContains: 'Agree and share');
+    try {
+      await native.waitUntilVisible(
+        agreeButtonView,
+        timeout: const Duration(seconds: 8),
+      );
+
+      await native.tap(agreeButtonView);
+    } catch (e) {
+      return;
+    }
+  } else if ($.isIOS) {
+    await $(#FacebookButton).tap();
+    await $.pumpAndSettle(duration: const Duration(seconds: 5));
+
+    final facebookLoginSelector = IOSSelector(
       textContains: 'Continua come',
       elementType: IOSElementType.button,
-    ),
-    android: AndroidSelector(
-      textContains: 'Continua come',
-      isClickable: true,
-    ),
-  );
+    );
 
-  await native.waitUntilVisible(facebookLoginSelector);
-  await native.tap(facebookLoginSelector);
+    await native.waitUntilVisible(facebookLoginSelector);
+    await native.tap(facebookLoginSelector);
+  }
 }
 
 Future<void> _testReadingSettingsPages(PatrolIntegrationTester $) async {
@@ -152,6 +171,8 @@ Future<void> _testReadingSettingsPages(PatrolIntegrationTester $) async {
 }
 
 Future<void> _testHomePage(PatrolIntegrationTester $) async {
+  await _avoidErrorStateOnHomePage($);
+
   expect($(#AnimatedSearchBar), findsOneWidget);
   expect($(#SearchBar), findsOneWidget);
   expect($(#BooksGridView), findsOneWidget);
@@ -175,7 +196,10 @@ Future<void> _testHomePage(PatrolIntegrationTester $) async {
   expect($('enter-isbn-label'.i18n()), findsOneWidget);
 
   // Enter ISBN Text and send request
-  await $(#SearchBar).enterText('9788542221084');
+  await $(#SearchBar).enterText(
+    '9788542221084',
+    hideKeyboard: false,
+  );
   await $.tester.testTextInput.receiveAction(TextInputAction.done);
   await $.pumpAndSettle();
 
@@ -436,4 +460,15 @@ Future<void> _testReadingsPage(PatrolIntegrationTester $) async {
 
   // Expect to find a updated reading
   expect($('0%'), findsNothing);
+}
+
+Future<void> _avoidErrorStateOnHomePage(PatrolIntegrationTester $) async {
+  while ($(#BookErrorStateWidget).exists) {
+    await $(#InfoItemStateWidgetButton).tap();
+    await $.pumpAndSettle();
+
+    if (!$(#BookErrorStateWidget).exists) {
+      break;
+    }
+  }
 }

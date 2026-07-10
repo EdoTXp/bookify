@@ -36,6 +36,7 @@ class HourTimeCalculatorPage extends StatelessWidget {
                   ),
                   Flexible(
                     child: BookifyElevatedButton.expanded(
+                      key: const Key('ScheduleNowButton'),
                       text: 'schedule-now-button'.i18n(),
                       onPressed: () async {
                         await Navigator.pushNamed(

@@ -8,12 +8,12 @@ import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart'
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
-class ProgrammingHourLoadingStateWidget extends StatefulWidget {
+class ProgrammingHourLoadedStateWidget extends StatefulWidget {
   final void Function(UserHourTimeModel userHourTimeModel) onSelectedUserModel;
   final void Function() onRemoveReadingNotification;
   final UserHourTimeModel? initialUserHourTimeModel;
 
-  const ProgrammingHourLoadingStateWidget({
+  const ProgrammingHourLoadedStateWidget({
     super.key,
     required this.onSelectedUserModel,
     required this.onRemoveReadingNotification,
@@ -21,12 +21,12 @@ class ProgrammingHourLoadingStateWidget extends StatefulWidget {
   });
 
   @override
-  State<ProgrammingHourLoadingStateWidget> createState() =>
-      _ProgrammingHourLoadingStateWidgetState();
+  State<ProgrammingHourLoadedStateWidget> createState() =>
+      _ProgrammingHourLoadedStateWidgetState();
 }
 
-class _ProgrammingHourLoadingStateWidgetState
-    extends State<ProgrammingHourLoadingStateWidget> {
+class _ProgrammingHourLoadedStateWidgetState
+    extends State<ProgrammingHourLoadedStateWidget> {
   late UserHourTimeModel userHourTimeModel;
 
   @override
@@ -75,6 +75,7 @@ class _ProgrammingHourLoadingStateWidgetState
                       height: 10,
                     ),
                     RepeatTimeWidget(
+                      key: const Key('RepeatTimeWidget'),
                       initialRepeatTimeSelected: userHourTimeModel
                           .repeatHourTimeType
                           .toIntValue(),
@@ -92,6 +93,7 @@ class _ProgrammingHourLoadingStateWidgetState
                       height: 40,
                     ),
                     HourTimeSelectedWidget(
+                      key: const Key('HourTimeSelectedWidget'),
                       userHourTimeModel: userHourTimeModel,
                       onSelectedTimes:
                           (
@@ -108,13 +110,27 @@ class _ProgrammingHourLoadingStateWidgetState
                             });
                           },
                     ),
-                    const Spacer(),
-                    BookifyOutlinedButton.expanded(
-                      text: 'remove-reading-time-notification-button'.i18n(),
-                      suffixIcon: Icons.notifications_off_rounded,
-                      onPressed: widget.onRemoveReadingNotification,
+                    const SizedBox(
+                      height: 10,
                     ),
+                    if (widget.initialUserHourTimeModel == null)
+                      Text(
+                        'hint-reading-time-notification-description'.i18n(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    const Spacer(),
+                    if (widget.initialUserHourTimeModel != null)
+                      BookifyOutlinedButton.expanded(
+                        text: 'remove-reading-time-notification-button'.i18n(),
+                        suffixIcon: Icons.notifications_off_rounded,
+                        onPressed: widget.onRemoveReadingNotification,
+                      ),
                     BookifyElevatedButton.expanded(
+                      key: const Key('FinishButton'),
                       text: 'finish-button'.i18n(),
                       suffixIcon: Icons.check_rounded,
                       onPressed: () {

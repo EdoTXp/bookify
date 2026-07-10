@@ -58,4 +58,22 @@ class UserHourTimeRepositoryImpl implements UserHourTimeRepository {
       );
     }
   }
+
+  @override
+  Future<int> removeUserHourTime() async {
+    try {
+      final userHourTimeJsonRemoved = await _storage.deleteStorage(
+        key: _userHourTimeKey,
+      );
+
+      return (userHourTimeJsonRemoved == 1) ? 1 : 0;
+    } on StorageException {
+      rethrow;
+    } catch (e) {
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
+    }
+  }
 }

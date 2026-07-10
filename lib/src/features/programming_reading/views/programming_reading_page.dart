@@ -2,7 +2,8 @@ import 'package:bookify/src/core/extensions/error_code/storage_error_code/storag
 import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/programming_reading/bloc/programming_reading_bloc.dart';
-import 'package:bookify/src/features/programming_reading/views/widgets/programming_hour_loading_state_widget.dart';
+import 'package:bookify/src/features/programming_reading/views/widgets/programming_hour_loaded_state_widget.dart';
+import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _ProgrammingHourState extends State<ProgrammingReadingPage> {
       ProgrammingReadingRemovedNotificationState() =>
         const CenterCircularProgressIndicator(),
       ProgrammingReadingLoadedState(:final userHourTimeModel) =>
-        ProgrammingHourLoadingStateWidget(
+        ProgrammingHourLoadedStateWidget(
           initialUserHourTimeModel: userHourTimeModel,
           onSelectedUserModel: (UserHourTimeModel userHourTimeModel) {
             _bloc.add(
@@ -48,6 +49,7 @@ class _ProgrammingHourState extends State<ProgrammingReadingPage> {
                     .i18n(),
                 readingTimeNotificationBody: 'reading-time-notification-body'
                     .i18n(),
+                notificationPayloadRoute: RootPage.routeName,
               ),
             );
           },

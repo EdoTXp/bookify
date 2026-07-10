@@ -14,7 +14,12 @@ class RootPage extends StatefulWidget {
   /// Route Name = '/root_page'
   static const routeName = '/root_page';
 
-  const RootPage({super.key});
+  final bool isReadingNotification;
+
+  const RootPage({
+    super.key,
+    this.isReadingNotification = false,
+  });
 
   @override
   State<RootPage> createState() => _RootPageState();
@@ -40,6 +45,13 @@ class _RootPageState extends State<RootPage> {
     super.initState();
     _bookBloc = context.read<BookBloc>();
     _bottomBarController = FabBottomBarController();
+
+    if (widget.isReadingNotification) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _changePage(2);
+        _bottomBarController.changeSelectedBottomBarItem(2);
+      });
+    }
   }
 
   @override

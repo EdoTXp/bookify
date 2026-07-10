@@ -59,13 +59,14 @@ class InfoItemStateWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                 ),
-                maxLines: 4,
+                maxLines: 6,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(
                 height: 20,
               ),
               BookifyElevatedButton.expanded(
+                key: const Key('InfoItemStateWidgetButton'),
                 onPressed: onPressed,
                 suffixIcon: Icons.replay_outlined,
                 text: 'try-again-button'.i18n(),

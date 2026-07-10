@@ -40,7 +40,6 @@ void main() {
                 notificationChannel: NotificationChannel.loanChannel,
                 title: 'title',
                 body: 'body',
-                scheduledDate: DateTime.now(),
               ),
             ],
           ),

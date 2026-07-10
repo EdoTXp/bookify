@@ -121,6 +121,7 @@ class _TimePickerPageState extends State<TimePickerPage> {
                     ),
                     const Spacer(),
                     BookifyOutlinedButton.expanded(
+                      key: const Key('DefineReturnButton'),
                       text: 'define-return-button'.i18n(),
                       onPressed: _defineTimer,
                     ),

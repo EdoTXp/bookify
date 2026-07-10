@@ -14,7 +14,6 @@ class ProgrammingReadingBloc
     extends Bloc<ProgrammingReadingEvent, ProgrammingReadingState> {
   final UserHourTimeRepository _userHourTimeRepository;
   final NotificationsService _notificationsService;
-  final int _readingNotificationId = 9999;
 
   ProgrammingReadingBloc(
     this._userHourTimeRepository,
@@ -80,10 +79,16 @@ class ProgrammingReadingBloc
         return;
       }
 
+      const readingChannel = NotificationChannel.readChannel;
+
       await _notificationsService.periodicallyShowNotificationWithSpecificDate(
-        id: _readingNotificationId,
-        title: event.readingTimeNotificationTitle,
-        body: event.readingTimeNotificationBody,
+        notification: CustomNotificationModel(
+          id: readingChannel.fixedId,
+          title: event.readingTimeNotificationTitle,
+          body: event.readingTimeNotificationBody,
+          notificationChannel: readingChannel,
+          payload: event.notificationPayloadRoute,
+        ),
         repeatType: userHourTime.repeatHourTimeType,
         scheduledDate: DateTime(
           DateTime.now().year,
@@ -92,7 +97,6 @@ class ProgrammingReadingBloc
           userHourTime.startingHour,
           userHourTime.startingMinute,
         ),
-        notificationChannel: NotificationChannel.readChannel,
       );
 
       emit(ProgrammingReadingInsertedState());
@@ -127,8 +131,21 @@ class ProgrammingReadingBloc
     try {
       emit(ProgrammingReadingLoadingState());
 
+      final userHourTimeRemoved = await _userHourTimeRepository
+          .removeUserHourTime();
+
+      if (userHourTimeRemoved == 0) {
+        emit(
+          ProgrammingReadingErrorState(
+            errorCode: StorageErrorCode.writeFailed,
+            errorDescriptionMessage: 'Failed to remove reading hour time',
+          ),
+        );
+        return;
+      }
+
       await _notificationsService.cancelNotificationById(
-        id: _readingNotificationId,
+        id: NotificationChannel.readChannel.fixedId,
       );
 
       emit(ProgrammingReadingRemovedNotificationState());

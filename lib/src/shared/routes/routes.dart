@@ -27,14 +27,13 @@ import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 abstract class Routes {
   Routes._();
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  static Map<String, WidgetBuilder> routes = {
+  static final Map<String, WidgetBuilder> _staticRoutes = {
     OnBoardingPage.routeName: (context) => const OnBoardingPage(),
     AuthPage.routeName: (context) => const AuthPage(),
     ReadingPageTimeCalculatorPage.routeName: (context) =>
@@ -44,62 +43,118 @@ abstract class Routes {
         const HourTimeCalculatorPage(),
     ProgrammingReadingPage.routeName: (context) =>
         const ProgrammingReadingPage(),
-    TimePickerPage.routeName: (context) => TimePickerPage(
-      userHourTimeModel:
-          ModalRoute.of(context)!.settings.arguments as UserHourTimeModel?,
-    ),
     NotificationsPage.routeName: (context) => const NotificationsPage(),
-    RootPage.routeName: (context) => const RootPage(),
-    BookDetailPage.routeName: (context) => BookDetailPage(
-      bookModel: ModalRoute.of(context)!.settings.arguments as BookModel,
-    ),
     QrCodeScannerPage.routeName: (context) => const QrCodeScannerPage(),
-    BookcaseDetailPage.routeName: (context) => BookcaseDetailPage(
-      bookcaseModel:
-          ModalRoute.of(context)!.settings.arguments as BookcaseModel,
-    ),
-    BookOnBookcaseDetailPage.routeName: (context) {
-      final arguments =
-          ModalRoute.of(context)!.settings.arguments as List<dynamic>;
-
-      return BookOnBookcaseDetailPage(
-        bookModel: arguments.first as BookModel,
-        bookcaseId: arguments.last as int,
-      );
-    },
-    BookcaseInsertionPage.routeName: (context) {
-      final args = ModalRoute.of(context)!.settings.arguments;
-      if (args == null) {
-        return BookcaseInsertionPage.newBookcase();
-      }
-      return BookcaseInsertionPage.updateBookcase(
-        bookcaseModel: args as BookcaseModel,
-      );
-    },
-    BookcaseBooksInsertionPage.routeName: (context) =>
-        BookcaseBooksInsertionPage(
-          bookcaseId: ModalRoute.of(context)!.settings.arguments as int,
-        ),
     LoanInsertionPage.routeName: (context) => const LoanInsertionPage(),
-    LoanDetailPage.routeName: (context) => LoanDetailPage(
-      loanId: ModalRoute.of(context)!.settings.arguments as int,
-    ),
-    ReadingsInsertionPage.routeName: (context) => ReadingsInsertionPage(
-      book: ModalRoute.of(context)!.settings.arguments as BookModel,
-    ),
-    ReadingsDetailPage.routeName: (context) => ReadingsDetailPage(
-      readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
-    ),
-    ReadingsTimerPage.routeName: (context) => ReadingsTimerPage(
-      readingDto: ModalRoute.of(context)!.settings.arguments as ReadingDto,
-    ),
     ContactsPickerPage.routeName: (context) => const ContactsPickerPage(),
     BooksPickerPage.routeName: (context) => const BooksPickerPage(),
     SettingsPage.routeName: (context) => const SettingsPage(),
     AboutPage.routeName: (context) => const AboutPage(),
   };
 
-  /// Returns the initial route based on the user's authentication status.
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    final builder = _staticRoutes[settings.name];
+
+    if (builder != null) {
+      return MaterialPageRoute(
+        builder: builder,
+        settings: settings,
+      );
+    }
+
+    switch (settings.name) {
+      case RootPage.routeName:
+        final isReadingNotification = settings.arguments is bool
+            ? settings.arguments as bool
+            : false;
+        return MaterialPageRoute(
+          builder: (_) =>
+              RootPage(isReadingNotification: isReadingNotification),
+          settings: settings,
+        );
+
+      case TimePickerPage.routeName:
+        final args = settings.arguments as UserHourTimeModel?;
+        return MaterialPageRoute(
+          builder: (_) => TimePickerPage(userHourTimeModel: args),
+          settings: settings,
+        );
+
+      case BookDetailPage.routeName:
+        final args = settings.arguments as BookModel;
+        return MaterialPageRoute(
+          builder: (_) => BookDetailPage(bookModel: args),
+          settings: settings,
+        );
+
+      case BookcaseDetailPage.routeName:
+        final args = settings.arguments as BookcaseModel;
+        return MaterialPageRoute(
+          builder: (_) => BookcaseDetailPage(bookcaseModel: args),
+          settings: settings,
+        );
+
+      case BookOnBookcaseDetailPage.routeName:
+        final args = settings.arguments as List<dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BookOnBookcaseDetailPage(
+            bookModel: args.first as BookModel,
+            bookcaseId: args.last as int,
+          ),
+          settings: settings,
+        );
+
+      case BookcaseInsertionPage.routeName:
+        final args = settings.arguments;
+        return MaterialPageRoute(
+          builder: (_) => args == null
+              ? BookcaseInsertionPage.newBookcase()
+              : BookcaseInsertionPage.updateBookcase(
+                  bookcaseModel: args as BookcaseModel,
+                ),
+          settings: settings,
+        );
+
+      case BookcaseBooksInsertionPage.routeName:
+        final args = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => BookcaseBooksInsertionPage(bookcaseId: args),
+          settings: settings,
+        );
+
+      case LoanDetailPage.routeName:
+        final args = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => LoanDetailPage(loanId: args),
+          settings: settings,
+        );
+
+      case ReadingsInsertionPage.routeName:
+        final args = settings.arguments as BookModel;
+        return MaterialPageRoute(
+          builder: (_) => ReadingsInsertionPage(book: args),
+          settings: settings,
+        );
+
+      case ReadingsDetailPage.routeName:
+        final args = settings.arguments as ReadingDto;
+        return MaterialPageRoute(
+          builder: (_) => ReadingsDetailPage(readingDto: args),
+          settings: settings,
+        );
+
+      case ReadingsTimerPage.routeName:
+        final args = settings.arguments as ReadingDto;
+        return MaterialPageRoute(
+          builder: (_) => ReadingsTimerPage(readingDto: args),
+          settings: settings,
+        );
+
+      default:
+        return null;
+    }
+  }
+
   static Widget getInitialHome(bool userIsLogged) {
     return userIsLogged ? const RootPage() : const OnBoardingPage();
   }

@@ -79,7 +79,10 @@ class NotificationsServiceImpl implements NotificationsService {
   ) {
     if (notificationResponse.notificationResponseType ==
         NotificationResponseType.selectedNotification) {
-      final NotificationResponse(:id, :payload) = notificationResponse;
+      final NotificationResponse(
+        :id,
+        :payload,
+      ) = notificationResponse;
       _navigateToNotificationPage(payload, id);
     }
   }
@@ -99,7 +102,7 @@ class NotificationsServiceImpl implements NotificationsService {
   ) {
     return NotificationDetails(
       android: AndroidNotificationDetails(
-        channel.channelId(),
+        channel.getChannelId(),
         channel.label,
         channelDescription: channel.description(),
         color: AppColor.bookifySecondaryColor,
@@ -117,6 +120,7 @@ class NotificationsServiceImpl implements NotificationsService {
   @override
   Future<void> scheduleNotification(
     CustomNotificationModel notification,
+    DateTime scheduledDate,
   ) async {
     try {
       await _notifications.zonedSchedule(
@@ -124,7 +128,7 @@ class NotificationsServiceImpl implements NotificationsService {
         title: notification.title,
         body: notification.body,
         scheduledDate: tz.TZDateTime.from(
-          notification.scheduledDate,
+          scheduledDate,
           tz.local,
         ),
         notificationDetails: _getNotificationDetails(
@@ -146,12 +150,9 @@ class NotificationsServiceImpl implements NotificationsService {
 
   @override
   Future<void> periodicallyShowNotificationWithSpecificDate({
-    required int id,
-    required String title,
-    required String body,
+    required CustomNotificationModel notification,
     required RepeatHourTimeType repeatType,
     required DateTime scheduledDate,
-    required NotificationChannel notificationChannel,
   }) async {
     try {
       final dateTimeComponents = switch (repeatType) {
@@ -160,16 +161,17 @@ class NotificationsServiceImpl implements NotificationsService {
       };
 
       await _notifications.zonedSchedule(
-        id: id,
-        title: title,
-        body: body,
+        id: notification.id,
+        title: notification.title,
+        body: notification.body,
         scheduledDate: tz.TZDateTime.from(
           scheduledDate,
           tz.local,
         ),
+        payload: notification.payload,
         notificationDetails: _getNotificationDetails(
-          notificationChannel,
-          body,
+          notification.notificationChannel,
+          notification.body,
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: dateTimeComponents,
@@ -225,12 +227,10 @@ class NotificationsServiceImpl implements NotificationsService {
           .map(
             (notification) => CustomNotificationModel(
               id: notification.id,
-              notificationChannel: notification.payload!.isEmpty
-                  ? NotificationChannel.readChannel
-                  : NotificationChannel.loanChannel,
+              notificationChannel: NotificationChannel.fromId(notification.id),
               title: notification.title ?? '--',
               body: notification.body ?? '--',
-              scheduledDate: DateTime.now(),
+              payload: notification.payload,
             ),
           )
           .toList();

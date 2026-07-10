@@ -1,6 +1,7 @@
 import 'package:bookify/src/core/extensions/error_code/local_database_error_code/local_database_error_code_extension.dart';
 import 'package:bookify/src/features/books_picker/views/books_picker_page.dart';
 import 'package:bookify/src/features/contacts_picker/views/contacts_picker_page.dart';
+import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/bloc/loan_insertion_bloc.dart';
 import 'package:bookify/src/domain/models/contact_model.dart';
 import 'package:bookify/src/core/extensions/date_time_format/date_time_format_extension.dart';
@@ -203,6 +204,7 @@ class _LoanInsertionPageState extends State<LoanInsertionPage> {
               formattedLoanDate,
             ],
           ),
+          notificationPayloadRoute: LoanDetailPage.routeName,
         ),
       );
 
