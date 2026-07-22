@@ -15,7 +15,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.bookifysoftware.bookify"
-    compileSdk = 37
+    compileSdk = flutter.compileSdkVersion
 
     testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"

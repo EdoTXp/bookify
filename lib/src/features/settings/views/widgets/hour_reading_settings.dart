@@ -24,6 +24,7 @@ class HourReadingSettings extends StatelessWidget {
             ),
           ),
           TextButton(
+            key: const Key('SeeMySchedulesButton'),
             child: Text(
               'see-my-schedules-button'.i18n(),
               style: TextStyle(

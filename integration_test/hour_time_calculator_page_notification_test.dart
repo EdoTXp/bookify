@@ -9,6 +9,24 @@ import 'package:provider/provider.dart';
 
 late MobileAutomator native;
 
+const _androidSystemSelector = AndroidSelector(
+  className: 'android.widget.TextView',
+  textContains: 'Sistema',
+);
+const _androidDateAndHourSelector = AndroidSelector(
+  className: 'android.widget.TextView',
+  textContains: 'GMT',
+);
+const _androidAutomaticDateSelector = AndroidSelector(
+  className: 'android.widget.TextView',
+  textContains: 'automatiche',
+);
+
+const _androidDateSelector = AndroidSelector(
+  className: 'android.widget.TextView',
+  text: 'Data',
+);
+
 void main() {
   patrolTest(
     'Test diary notification remember for HourTimeCalculatorPage',
@@ -26,6 +44,11 @@ Future<void> _notificationTest(
   bool isDaily = true,
 }) async {
   await _initApp($);
+
+  await native.openApp(
+    appId: 'com.bookifysoftware.bookify',
+  );
+
   expect($(#LateCalculateHourButton), findsOneWidget);
   expect($(#ScheduleNowButton), findsOneWidget);
 
@@ -59,6 +82,10 @@ Future<void> _notificationTest(
   await _setNotificationDate($, isDaily: isDaily);
   await Future.delayed(const Duration(seconds: 3));
 
+  await _closeSettingsApp();
+  await Future.delayed(const Duration(seconds: 3));
+
+  await native.openNotifications();
   final notifications = await native.getNotifications();
   const title = 'reading-time-notification-title';
   final appNotification = notifications.firstWhere(
@@ -70,14 +97,15 @@ Future<void> _notificationTest(
   await native.openNotifications();
   await native.tapOnNotificationBySelector(
     PlatformSelector(
-      android: AndroidSelector(text: title),
-      ios: IOSSelector(text: title),
+      android: const AndroidSelector(text: title),
+      ios: const IOSSelector(text: title),
     ),
   );
 
   await _resetEmulatorDate($);
 
-  await native.pressHome();
+  await _closeSettingsApp();
+  await Future.delayed(const Duration(seconds: 3));
 }
 
 Future<void> _setNotificationDate(
@@ -97,30 +125,10 @@ Future<void> _setNotificationDate(
       steps: 40,
     );
 
-    await androidPlatform.tap(
-      AndroidSelector(
-        className: 'android.widget.TextView',
-        textContains: 'Sistema',
-      ),
-    );
-    await androidPlatform.tap(
-      AndroidSelector(
-        className: 'android.widget.TextView',
-        textContains: 'GMT',
-      ),
-    );
-    await androidPlatform.tap(
-      AndroidSelector(
-        className: 'android.widget.TextView',
-        textContains: 'automatiche',
-      ),
-    );
-    await androidPlatform.tap(
-      AndroidSelector(
-        className: 'android.widget.TextView',
-        text: 'Data',
-      ),
-    );
+    await androidPlatform.tap(_androidSystemSelector);
+    await androidPlatform.tap(_androidDateAndHourSelector);
+    await androidPlatform.tap(_androidAutomaticDateSelector);
+    await androidPlatform.tap(_androidDateSelector);
 
     if (isDaily) {
       final tomorrowDate = DateTime.now().add(const Duration(days: 1));
@@ -137,9 +145,7 @@ Future<void> _setNotificationDate(
     }
 
     await Future.delayed(const Duration(seconds: 3));
-    await androidPlatform.tap(AndroidSelector(text: 'Ok'));
-  } else if ($.isIOS) {
-    // TODO: Implement iOS notification date setting logic.
+    await androidPlatform.tap(const AndroidSelector(text: 'Ok'));
   }
 }
 
@@ -151,15 +157,27 @@ Future<void> _resetEmulatorDate(PatrolIntegrationTester $) async {
       androidAppId: GoogleApp.settings,
     );
 
-    await androidPlatform.tap(
-      AndroidSelector(
-        className: 'android.widget.TextView',
-        textContains: 'automatiche',
-      ),
+    await androidPlatform.swipe(
+      from: const Offset(0.5, 0.9),
+      to: const Offset(0.5, 0.5),
+      steps: 40,
     );
-  } else if ($.isIOS) {
-    // TODO: Implement iOS notification date setting logic.
+
+    await androidPlatform.tap(_androidSystemSelector);
+    await androidPlatform.tap(_androidDateAndHourSelector);
+    await androidPlatform.tap(_androidAutomaticDateSelector);
   }
+}
+
+Future<void> _closeSettingsApp() async {
+  await native.pressRecentApps();
+
+  await native.swipe(
+    from: const Offset(0.5, 0.5),
+    to: const Offset(0.5, 0),
+  );
+
+  await native.pressHome();
 }
 
 Future<void> _initApp(PatrolIntegrationTester $) async {

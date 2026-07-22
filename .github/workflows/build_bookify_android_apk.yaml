@@ -75,18 +75,51 @@ jobs:
           flutter analyze
           flutter test
 
-      #10 Building APK
+      # 10 Install Patrol CLI
+      - name: Setup Patrol CLI
+        run: |
+          dart pub global activate patrol_cli
+          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
+      # 11. Build Patrol Instrumentation APKs
+      - name: Build Patrol Test APKs
+        run: patrol build android --target integration_test/app_test.dart
+
+        # 12. Authenticate to Google Cloud Platform (v3)
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # 13. Setup Cloud SDK (gcloud)
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # 14. Run E2E Tests on Firebase Test Lab
+      - name: Run E2E Tests on Firebase Test Lab
+        run: |
+          gcloud firebase test android run \
+            --type instrumentation \
+            --use-orchestrator \
+            --app build/app/outputs/apk/debug/app-debug.apk \
+            --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+            --timeout 4m \
+            --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait \
+            --record-video \
+            --environment-variables clearPackageData=true
+
+      #15 Building APK
       - name: Build APK
         run: flutter build apk --release --obfuscate --split-debug-info=${{ github.workspace }}
 
-      #11 Extract Version
+      #16 Extract Version
       - name: Extract version from pubspec.yaml
         id: extract_version
         run: |
           version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
           echo "VERSION=$version" >> $GITHUB_ENV
 
-      #12 Check if Tag Exists
+      #17 Check if Tag Exists
       - name: Check if Tag Exists
         id: check_tag
         run: |
@@ -96,7 +129,7 @@ jobs:
             echo "TAG_EXISTS=false" >> $GITHUB_ENV
           fi
 
-      #13 Modify Tag if it Exists
+      #18 Modify Tag if it Exists
       - name: Modify Tag
         if: env.TAG_EXISTS == true
         id: modify_tag
@@ -104,7 +137,7 @@ jobs:
           new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
-      #14 Get last commit message
+      #19 Get last commit message
       - name: Get last commit message
         if: github.event_name == 'push'
         id: get_commit_message
@@ -114,7 +147,7 @@ jobs:
           echo "$message" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      #15 Create Release
+      #20 Create Release
       - name: Create Release
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1

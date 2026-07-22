@@ -3,7 +3,7 @@ description: A Flutter project that helps you search for books, add them to your
 
 publish_to: "none"
 
-version: 2.13.0
+version: 2.13.1
 
 environment:
   sdk: ">=3.10.0 <4.0.0"
@@ -18,9 +18,9 @@ dependencies:
   flutter_bloc: ^9.1.1 # Used for state management.
   cached_network_image: ^3.4.1 # Used to show the cover of the cached book.
   flutter_rating_bar: ^4.0.1 # Used for show the book rating average.
-  google_fonts: ^8.1.0 # Used for App Font.
+  google_fonts: ^8.2.0 # Used for App Font.
   url_launcher: ^6.3.2 # Used to launch at the book store.
-  mobile_scanner: ^7.2.0 # Used to access the camera and scan the ISBN code.
+  mobile_scanner: ^7.4.0 # Used to access the camera and scan the ISBN code.
   mask_text_input_formatter: ^2.9.0 # Used to format the ISBN text input.
   characters: ^1.4.1 # Used to manipulate ISBN strings.
   validatorless: ^1.2.5 # Used to validate the form.
@@ -29,10 +29,10 @@ dependencies:
   circular_countdown_timer: ^0.2.4 # Used for timer.
   stop_watch_timer: ^3.2.2 # Used to take reading time per page.
   audioplayers: ^6.8.1 # Used for play default alarm ringtone.
-  wakelock_plus: ^1.6.1 # Used for keep the screen awake when timer is started.
+  wakelock_plus: ^1.7.0 # Used for keep the screen awake when timer is started.
   permission_handler: ^12.0.3 # Used to request permission for contacts.
   fast_contacts: ^6.0.0 # Used to get Phone Contacts.
-  flutter_local_notifications: ^22.0.1 # Used for send notifications.
+  flutter_local_notifications: ^22.1.0 # Used for send notifications.
   flutter_timezone: ^5.1.0 # Used for get local timezone.
   timezone: ^0.11.1 # Used for get timezone for schedule notification.
   intl: ^0.20.2 # Used for set a format to DateTime.
@@ -40,13 +40,13 @@ dependencies:
   path: ^1.9.1 # Used to find the default path of the database.
   shared_preferences: ^2.5.5 # Used for storage the user setting.
   sign_in_button: ^5.0.0 # Used for show login button on auth page.
-  firebase_auth: ^6.5.4 # Used for authenticate user on Firebase.
-  firebase_core: ^4.11.0 # Used for initialize the Firebase.
+  firebase_auth: ^6.5.6 # Used for authenticate user on Firebase.
+  firebase_core: ^4.12.1 # Used for initialize the Firebase.
   google_sign_in: ^7.2.0 # Used for login with Google.
   flutter_facebook_auth: ^7.2.0 # Used for login with Facebook.
   sign_in_with_apple: ^8.1.0 # Used for login with Apple.
   crypto: ^3.0.7 # Used for create sha256 code for Apple and Facebook login.
-  package_info_plus: ^10.2.0 # Used to get a app version.
+  package_info_plus: ^10.2.1 # Used to get a app version.
   envied: ^1.3.8 # Used for store the API keys and other secrets in a safe way.
   flutter_native_splash: ^2.4.8 # Used for create a native splash screen.
 
@@ -65,7 +65,7 @@ dev_dependencies:
   mocktail: ^1.0.5
   bloc_test: ^10.0.0
   sqflite_common_ffi: ^2.4.2
-  patrol: ^4.6.1
+  patrol: ^4.7.1
   envied_generator: ^1.3.8
   build_runner: ^2.15.1
 
