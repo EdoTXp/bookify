@@ -87,13 +87,13 @@ jobs:
 
         # 12. Authenticate to Google Cloud Platform (v3)
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v3
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       # 13. Setup Cloud SDK (gcloud)
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
 
       # 14. Run E2E Tests on Firebase Test Lab
       - name: Run E2E Tests on Firebase Test Lab
