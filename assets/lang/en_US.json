@@ -288,5 +288,11 @@
   "notification-channel-read-label": "Readings",
   "error-platform-permission-denied": "Permission denied: %s",
   "error-platform-permission-permanently-denied": "Permission permanently denied. Open settings to grant it: %s",
-  "error-platform-unsupported": "Operation not supported on this device: %s"
+  "error-platform-unsupported": "Operation not supported on this device: %s",
+  "error-deleting-account": "Error deleting account. Please try again.",
+  "delete-account-title": "Delete this account",
+  "delete-account-desc": "This action is irreversible. It will permanently delete: all your bookshelves, books, loans, user settings (theme, reading notifications, and reading time data), as well as your local and remote account.",
+  "delete-title": "Delete account?",
+  "delete-description": "Are you sure you want to delete your account? All your data and saved books will be permanently removed. Once deleted, the app will close and you will need to reopen it to continue.",
+  "delete-button": "Delete"
 }

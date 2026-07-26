@@ -288,5 +288,11 @@
   "notification-channel-read-label": "Leituras",
   "error-platform-permission-denied": "Permissão negada: %s",
   "error-platform-permission-permanently-denied": "Permissão negada permanentemente. Abra as configurações para concedê-la: %s",
-  "error-platform-unsupported": "Operação não suportada neste dispositivo: %s"
+  "error-platform-unsupported": "Operação não suportada neste dispositivo: %s",
+  "error-deleting-account": "Erro ao excluir a conta. Tente novamente.",
+  "delete-account-title": "Excluir esta conta",
+  "delete-account-desc": "Esta ação é irreversível. Serão excluídas permanentemente: todas as suas estantes, livros, empréstimos, configurações de usuário (tema, notificações de leitura e tempo de leitura calculado), além da sua conta local e remota.",
+  "delete-title": "Excluir conta?",
+  "delete-description": "Tem certeza de que deseja excluir sua conta? Todos os seus dados e livros salvos serão removidos permanentemente. Após a exclusão, o aplicativo será fechado e você precisará abri-lo novamente para continuar.",
+  "delete-button": "Excluir"
 }

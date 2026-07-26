@@ -288,5 +288,11 @@
   "notification-channel-read-label": "Letture",
   "error-platform-permission-denied": "Permesso negato: %s",
   "error-platform-permission-permanently-denied": "Permesso negato permanentemente. Apri le impostazioni per concederlo: %s",
-  "error-platform-unsupported": "Operazione non supportata su questo dispositivo: %s"
+  "error-platform-unsupported": "Operazione non supportata su questo dispositivo: %s",
+  "error-deleting-account": "Errore durante l'eliminazione dell'account. Riprova.",
+  "delete-account-title": "Elimina questo account",
+  "delete-account-desc": "Questa azione è irreversibile. Verranno eliminati permanentemente: tutti i tuoi scaffali, i libri, i prestiti, le impostazioni utente (tema, notifiche di lettura e tempi calcolati) e il tuo account locale e remoto.",
+  "delete-title": "Eliminare l'account?",
+  "delete-description": "Sei sicuro di voler eliminare il tuo account? Tutti i tuoi dati e i libri salvati verranno rimossi permanentemente. Una volta eliminato, l'app verrà chiusa e dovrai riaprirla per continuare.",
+  "delete-button": "Elimina"
 }

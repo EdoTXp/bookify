@@ -1,16 +1,16 @@
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
-import 'package:bookify/src/domain/services/storage_services/storage_services.dart';
+import 'package:bookify/src/domain/services/storage_services/storage_service.dart';
 import 'package:bookify/src/data/storage/storage.dart';
 
-class StorageServicesImpl implements StorageServices {
+class StorageServiceImpl implements StorageService {
   final Storage _storage;
 
-  StorageServicesImpl({
+  StorageServiceImpl({
     required Storage storage,
   }) : _storage = storage;
 
   @override
-  Future<int> clearStorage() async {
+  Future<int> clearAllStorage() async {
     try {
       final clearStorage = await _storage.deleteAllStorage();
       return clearStorage;

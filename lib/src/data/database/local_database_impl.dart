@@ -424,6 +424,22 @@ class LocalDatabaseImpl implements LocalDatabase {
   }
 
   @override
+  Future<void> deleteDatabase() async {
+    try {
+      final db = await database;
+
+      await databaseFactory.deleteDatabase(db!.path);
+    } on DatabaseException catch (e) {
+      throw _toLocalDatabaseMapper(e);
+    } catch (e) {
+      throw LocalDatabaseException(
+        LocalDatabaseErrorCode.unknown,
+        descriptionMessage: e.toString(),
+      );
+    }
+  }
+
+  @override
   Future<void> closeDatabase() async {
     try {
       final db = await database;

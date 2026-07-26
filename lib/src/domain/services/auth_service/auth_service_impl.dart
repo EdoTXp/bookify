@@ -98,4 +98,24 @@ class AuthServiceImpl implements AuthService {
       );
     }
   }
+
+  @override
+  Future<void> deleteUserModel() async {
+    try {
+      if (FirebaseAuth.instance.currentUser != null) {
+        await FirebaseAuth.instance.currentUser!.delete();
+        await _authRepository.deleteUserModel();
+      }
+    } on StorageException catch (e) {
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.descriptionMessage,
+      );
+    } on Exception catch (e) {
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.toString(),
+      );
+    }
+  }
 }

@@ -166,6 +166,8 @@ abstract interface class LocalDatabase {
     required dynamic id,
   });
 
+  Future<void> deleteDatabase();
+
   /// Close the database to free up resources
   Future<void> closeDatabase();
 }

@@ -45,6 +45,23 @@ void main() {
         equals(1),
       );
     });
+
+    test('Test delete ThemeMode', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      final themeDeleted = await userThemeRepository.deleteThemeMode();
+
+      expect(
+        themeDeleted,
+        equals(1),
+      );
+    });
   });
 
   group('Test normal crud with error', () {
@@ -106,6 +123,29 @@ void main() {
         () async => await userThemeRepository.setThemeMode(
           themeMode: ThemeMode.light,
         ),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+
+    test('Test delete ThemeMode with Storage Exception', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async => await userThemeRepository.deleteThemeMode(),
         throwsA(
           (Exception e) =>
               e is StorageException &&

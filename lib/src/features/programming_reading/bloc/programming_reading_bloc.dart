@@ -132,7 +132,7 @@ class ProgrammingReadingBloc
       emit(ProgrammingReadingLoadingState());
 
       final userHourTimeRemoved = await _userHourTimeRepository
-          .removeUserHourTime();
+          .deleteUserHourTime();
 
       if (userHourTimeRemoved == 0) {
         emit(

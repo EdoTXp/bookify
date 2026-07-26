@@ -35,6 +35,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Image.asset(
+                key: const Key('ProfileImage'),
                 BookifyImages.profileHeaderBackground,
                 height: 136,
                 width: MediaQuery.sizeOf(context).width,
@@ -54,6 +55,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
+              key: const Key('UserName'),
               userModel.name ?? 'no-name-label'.i18n(),
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -67,12 +69,15 @@ class ProfileLoadedStateWidget extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: UserInformationRow(),
+            child: UserInformationRow(
+              key: Key('UserInformationRow'),
+            ),
           ),
           const SizedBox(
             height: 40,
           ),
           TextIconButton(
+            key: const Key('SettingsTextIconButton'),
             label: 'settings-label'.i18n(),
             iconData: Icons.settings,
             onPressed: () async {
@@ -83,6 +88,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             },
           ),
           TextIconButton(
+            key: const Key('NotificationTextIconButton'),
             label: 'notifications-label'.i18n(),
             iconData: Icons.notifications_outlined,
             onPressed: () async {
@@ -93,6 +99,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             },
           ),
           TextIconButton(
+            key: const Key('PoliciesTextIconButton'),
             label: 'policies-label'.i18n(),
             iconData: Icons.article_outlined,
             onPressed: () async => await LauncherHelper.openUrl(
@@ -100,6 +107,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             ),
           ),
           TextIconButton(
+            key: const Key('AboutTextIconButton'),
             label: 'about-label'.i18n(),
             iconData: Icons.info_outline_rounded,
             onPressed: () async {
@@ -113,6 +121,7 @@ class ProfileLoadedStateWidget extends StatelessWidget {
             height: 30,
           ),
           TextIconButton(
+            key: const Key('ExitTextIconButton'),
             label: 'exit-label'.i18n(),
             iconData: Icons.exit_to_app_outlined,
             onPressed: () async {

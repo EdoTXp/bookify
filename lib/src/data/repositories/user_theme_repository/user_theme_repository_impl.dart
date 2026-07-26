@@ -54,4 +54,18 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
       );
     }
   }
+
+  @override
+  Future<int> deleteThemeMode() async {
+    try {
+      return await _storage.deleteStorage(key: _themeKey);
+    } on StorageException {
+      rethrow;
+    } catch (e) {
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
+    }
+  }
 }

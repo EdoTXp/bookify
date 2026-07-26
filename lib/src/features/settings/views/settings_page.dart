@@ -1,3 +1,5 @@
+import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
+import 'package:bookify/src/features/settings/views/widgets/delete_account_settings/widgets/delete_account_settings.dart';
 import 'package:bookify/src/features/settings/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -10,6 +12,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -20,24 +24,39 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              ThemeSettings(),
-              SizedBox(
+              const ThemeSettings(
+                key: Key('ThemeSettings'),
+              ),
+              const SizedBox(
                 height: 20,
               ),
-              TimeReadingSettings(),
-              SizedBox(
+              const TimeReadingSettings(
+                key: Key('TimeReadingSettings'),
+              ),
+              const SizedBox(
                 height: 20,
               ),
-              HourReadingSettings(),
+              const HourReadingSettings(
+                key: Key('HourReadingSettings'),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Divider(
+                color: colorScheme.primary.lighten(),
+              ),
+              const DeleteAccountSettings(
+                key: Key('DeleteAccountSettings'),
+              ),
             ],
           ),
         ),

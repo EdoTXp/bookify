@@ -16,7 +16,7 @@ jobs:
     steps:
       #1 Checkout code
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       #2 Setup Java
       - name: Set Up Java
@@ -65,7 +65,7 @@ jobs:
           echo "${{ secrets.GOOGLE_BOOKS_API_KEY }}" | base64 --decode > .env
           dart run build_runner build --delete-conflicting-outputs
 
-      #8 Install SQLite Package to linux
+      #8 Install SQLite Package to Linux
       - name: Install SQLite Package
         run: sudo apt-get -y install libsqlite3-0 libsqlite3-dev
 
@@ -85,14 +85,14 @@ jobs:
       - name: Build Patrol Test APKs
         run: patrol build android --target integration_test/app_test.dart
 
-        # 12. Authenticate to Google Cloud Platform (v3)
+        # 12. Authenticate to Google Cloud Platform
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v3
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      # 13. Setup Cloud SDK (gcloud)
-      - name: Set up Cloud SDK
+      # 13. Setup Gcloud SDK
+      - name: Set up Gcloud SDK
         uses: google-github-actions/setup-gcloud@v3
 
       # 14. Run E2E Tests on Firebase Test Lab

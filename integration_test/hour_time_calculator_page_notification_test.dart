@@ -45,9 +45,7 @@ Future<void> _notificationTest(
 }) async {
   await _initApp($);
 
-  await native.openApp(
-    appId: 'com.bookifysoftware.bookify',
-  );
+  await native.openApp();
 
   expect($(#LateCalculateHourButton), findsOneWidget);
   expect($(#ScheduleNowButton), findsOneWidget);

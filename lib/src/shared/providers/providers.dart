@@ -44,5 +44,6 @@ abstract class Providers {
     ...myBooksBlocProviders,
     ...contactsPickerBlocProviders,
     ...booksPickerBlocProviders,
+    ...deleteAccountBlocProviders,
   ];
 }

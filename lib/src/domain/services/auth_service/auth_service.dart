@@ -6,4 +6,5 @@ abstract interface class AuthService {
   Future<bool> signOut({required SignInType signInType});
   Future<UserModel?> getUserModel();
   Future<bool> userIsLoggedIn();
+  Future<void> deleteUserModel();
 }

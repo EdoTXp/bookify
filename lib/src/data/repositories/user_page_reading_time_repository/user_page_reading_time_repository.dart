@@ -5,4 +5,5 @@ abstract interface class UserPageReadingTimeRepository {
   Future<int> setUserPageReadingTime({
     required UserPageReadingTimeModel userPageReadingTime,
   });
+  Future<int> deleteUserPageReadingTime();
 }

@@ -302,7 +302,7 @@ void main() {
     build: () => programmingReadingBloc,
     setUp: () {
       when(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).thenAnswer(
         (_) async => 1,
       );
@@ -318,7 +318,7 @@ void main() {
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
       verify(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).called(1);
 
       verify(
@@ -338,7 +338,7 @@ void main() {
     build: () => programmingReadingBloc,
     setUp: () {
       when(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).thenAnswer(
         (_) async => 0,
       );
@@ -346,7 +346,7 @@ void main() {
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
       verify(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).called(1);
 
       verifyNever(
@@ -366,7 +366,7 @@ void main() {
     build: () => programmingReadingBloc,
     setUp: () {
       when(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).thenAnswer(
         (_) async => 1,
       );
@@ -382,7 +382,7 @@ void main() {
     act: (bloc) => bloc.add(RemovedNotificationHourTimeEvent()),
     verify: (_) {
       verify(
-        () => userHourTimeRepository.removeUserHourTime(),
+        () => userHourTimeRepository.deleteUserHourTime(),
       ).called(1);
 
       verify(

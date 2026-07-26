@@ -57,6 +57,24 @@ void main() {
         equals(1),
       );
     });
+
+    test('delete UserPageReadingTime', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenAnswer(
+        (_) async => 1,
+      );
+
+      final userPageReadingDeleted = await userPageReadingTimeRepository
+          .deleteUserPageReadingTime();
+
+      expect(
+        userPageReadingDeleted,
+        equals(1),
+      );
+    });
   });
 
   group('Test normal crud with error', () {
@@ -123,6 +141,30 @@ void main() {
         () async => await userPageReadingTimeRepository.setUserPageReadingTime(
           userPageReadingTime: userPageReadingTime,
         ),
+        throwsA(
+          (Exception e) =>
+              e is StorageException &&
+              e.code == StorageErrorCode.writeFailed &&
+              e.descriptionMessage == 'Storage error',
+        ),
+      );
+    });
+
+    test('delete UserPageReadingTime with StorageException', () async {
+      when(
+        () => storage.deleteStorage(
+          key: any(named: 'key'),
+        ),
+      ).thenThrow(
+        const StorageException(
+          StorageErrorCode.writeFailed,
+          descriptionMessage: 'Storage error',
+        ),
+      );
+
+      expect(
+        () async =>
+            await userPageReadingTimeRepository.deleteUserPageReadingTime(),
         throwsA(
           (Exception e) =>
               e is StorageException &&

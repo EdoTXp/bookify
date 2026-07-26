@@ -57,4 +57,20 @@ class UserPageReadingTimeRepositoryImpl
       );
     }
   }
+
+  @override
+  Future<int> deleteUserPageReadingTime() async {
+    try {
+      return await _storage.deleteStorage(
+        key: _userPageReadingTimeKey,
+      );
+    } on StorageException {
+      rethrow;
+    } catch (e) {
+      throw StorageException(
+        StorageErrorCode.writeFailed,
+        descriptionMessage: e.toString(),
+      );
+    }
+  }
 }

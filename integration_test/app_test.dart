@@ -33,6 +33,8 @@ void main() {
     await _testLoanPage($);
     await $.pumpAndSettle();
     await _testReadingsPage($);
+    await $.pumpAndSettle();
+    await _deleteAccountAndFinalizeTest($);
   });
 }
 
@@ -222,7 +224,7 @@ Future<void> _testLoginPage(PatrolIntegrationTester $) async {
   expect($(#BookifyLogoImage), findsNothing);
 }
 
-//! At this time, the test device "MUST" already be logged
+//! At this time, the test device "MUST" already be logged with social Account
 Future<void> _tapOnNativeLoginButton(PatrolIntegrationTester $) async {
   if ($.isAndroid) {
     await $(#GoogleButton).tap();
@@ -560,6 +562,37 @@ Future<void> _testReadingsPage(PatrolIntegrationTester $) async {
 
   // Expect to find a updated reading
   expect($('0%'), findsNothing);
+}
+
+Future<void> _deleteAccountAndFinalizeTest(PatrolIntegrationTester $) async {
+  // Navigate to Profile Page
+  await $('profile-label'.i18n()).tap();
+  await $.pumpAndSettle();
+
+  expect($(#ProfileImage), findsOneWidget);
+  expect($(#UserName), findsOneWidget);
+  expect($(#UserInformationRow), findsOneWidget);
+  expect($(#SettingsTextIconButton), findsOneWidget);
+  expect($(#NotificationTextIconButton), findsOneWidget);
+  expect($(#PoliciesTextIconButton), findsOneWidget);
+  expect($(#AboutTextIconButton), findsOneWidget);
+  expect($(#ExitTextIconButton), findsOneWidget);
+
+  // Navigate to Settings Page
+  await $((#SettingsTextIconButton)).tap();
+  await $.pumpAndSettle();
+
+  expect($(#ThemeSettings), findsOneWidget);
+  expect($(#TimeReadingSettings), findsOneWidget);
+  expect($(#HourReadingSettings), findsOneWidget);
+  expect($(#DeleteAccountSettings), findsOneWidget);
+
+  // Click on Delete Text Button e Confirm Action Button
+  await $((#DeleteAccountTextButton)).tap();
+  await $.pumpAndSettle();
+
+  await $(#ConfirmDialogButton).tap();
+  await $.pumpAndSettle();
 }
 
 /// Searches for a book by [isbn] and handles API failures by retrying

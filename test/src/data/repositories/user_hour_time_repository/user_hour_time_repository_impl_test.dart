@@ -77,7 +77,7 @@ void main() {
       );
     });
 
-    test('Test remove UserHourTime', () async {
+    test('Test delete UserHourTime', () async {
       when(
         () => storage.deleteStorage(
           key: any(named: 'key'),
@@ -87,7 +87,7 @@ void main() {
       );
 
       final userHourTimeModel = await userHourTimeRepository
-          .removeUserHourTime();
+          .deleteUserHourTime();
 
       expect(
         userHourTimeModel,
@@ -167,7 +167,7 @@ void main() {
       );
     });
 
-    test('Test remove UserHourTime with Storage Exception', () async {
+    test('Test delete UserHourTime with Storage Exception', () async {
       when(
         () => storage.deleteStorage(
           key: any(named: 'key'),
@@ -180,7 +180,7 @@ void main() {
       );
 
       expect(
-        () async => await userHourTimeRepository.removeUserHourTime(),
+        () async => await userHourTimeRepository.deleteUserHourTime(),
         throwsA(
           (Exception e) =>
               e is StorageException &&
