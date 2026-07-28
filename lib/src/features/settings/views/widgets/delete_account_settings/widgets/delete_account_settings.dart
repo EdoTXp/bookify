@@ -41,7 +41,9 @@ class _DeleteAccountSettingsState extends State<DeleteAccountSettings> {
     }
   }
 
-  void _closeApp() {
+  Future<void> _closeApp() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
     if (Platform.isAndroid) {
       SystemNavigator.pop();
     } else if (Platform.isIOS) {

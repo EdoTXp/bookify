@@ -34,7 +34,7 @@ void main() {
     await $.pumpAndSettle();
     await _testReadingsPage($);
     await $.pumpAndSettle();
-    await _deleteAccountAndFinalizeTest($);
+    await _exitAccountAndFinalizeTest($);
   });
 }
 
@@ -207,12 +207,11 @@ Future<void> _testOnboardingPage(PatrolIntegrationTester $) async {
 }
 
 Future<void> _testLoginPage(PatrolIntegrationTester $) async {
+  expect($(#BookifyLogoImage), findsOneWidget);
   Platform.isAndroid
       ? expect($(#GoogleButton), findsOneWidget)
       : expect($(#AppleButton), findsOneWidget);
-
   expect($(#FacebookButton), findsOneWidget);
-  expect($(#BookifyLogoImage), findsOneWidget);
 
   await _tapOnNativeLoginButton($);
   await $.pumpAndSettle(duration: const Duration(seconds: 10));
@@ -310,7 +309,7 @@ Future<void> _testHomePage(PatrolIntegrationTester $) async {
 
   // tap on first book and open book detail
   await $(find.byTooltip('Memórias póstumas de Brás Cubas')).tap();
-  await $.pumpAndSettle();
+  await $.pumpAndSettle(duration: const Duration(seconds: 2));
 
   expect($(Icons.bookmark_border), findsOneWidget);
   expect($(#InsertOrRemoveBookButton), findsOneWidget);
@@ -564,7 +563,7 @@ Future<void> _testReadingsPage(PatrolIntegrationTester $) async {
   expect($('0%'), findsNothing);
 }
 
-Future<void> _deleteAccountAndFinalizeTest(PatrolIntegrationTester $) async {
+Future<void> _exitAccountAndFinalizeTest(PatrolIntegrationTester $) async {
   // Navigate to Profile Page
   await $('profile-label'.i18n()).tap();
   await $.pumpAndSettle();
@@ -578,21 +577,18 @@ Future<void> _deleteAccountAndFinalizeTest(PatrolIntegrationTester $) async {
   expect($(#AboutTextIconButton), findsOneWidget);
   expect($(#ExitTextIconButton), findsOneWidget);
 
-  // Navigate to Settings Page
-  await $((#SettingsTextIconButton)).tap();
-  await $.pumpAndSettle();
-
-  expect($(#ThemeSettings), findsOneWidget);
-  expect($(#TimeReadingSettings), findsOneWidget);
-  expect($(#HourReadingSettings), findsOneWidget);
-  expect($(#DeleteAccountSettings), findsOneWidget);
-
-  // Click on Delete Text Button e Confirm Action Button
-  await $((#DeleteAccountTextButton)).tap();
-  await $.pumpAndSettle();
-
+  // Tap on Exit Text Button and confirm the Action Dialog
+  await $(#ExitTextIconButton).tap();
   await $(#ConfirmDialogButton).tap();
-  await $.pumpAndSettle();
+  await $.pumpAndSettle(duration: const Duration(seconds: 4));
+
+  // Expect the app to be on the Login page
+  expect($(#BookifyLogoImage), findsOneWidget);
+
+  Platform.isAndroid
+      ? expect($(#GoogleButton), findsOneWidget)
+      : expect($(#AppleButton), findsOneWidget);
+  expect($(#FacebookButton), findsOneWidget);
 }
 
 /// Searches for a book by [isbn] and handles API failures by retrying
