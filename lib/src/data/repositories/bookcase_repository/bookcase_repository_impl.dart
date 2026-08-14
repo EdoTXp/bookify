@@ -100,7 +100,7 @@ class BookcaseRepositoryImpl implements BookcaseRepository {
   @override
   Future<int> update({required BookcaseModel bookcaseModel}) async {
     try {
-      final rowUpdated = _database.update(
+      final rowUpdated = await _database.update(
         table: _bookcaseTableName,
         values: bookcaseModel.toMap(),
         idColumn: 'id',

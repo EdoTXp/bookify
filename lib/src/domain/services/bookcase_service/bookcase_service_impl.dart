@@ -93,7 +93,7 @@ class BookcaseServiceImpl implements BookcaseService {
   @override
   Future<int> insertBookcase({required BookcaseModel bookcaseModel}) async {
     try {
-      final newBookcaseId = _bookcaseRepository.insert(
+      final newBookcaseId = await _bookcaseRepository.insert(
         bookcaseModel: bookcaseModel,
       );
       return newBookcaseId;

@@ -23,6 +23,10 @@ void main() {
     native = $.platformAutomator.mobile;
 
     await _initApp($);
+    // Add Contacts to Firebase or Another Android Emulator Device
+    if (await native.isVirtualDevice()) {
+      await _createContactsForEmulator($);
+    }
     await $.pumpAndSettle();
     await _configureApp($);
     await $.pumpAndSettle();
@@ -45,11 +49,6 @@ Future<void> _testerPop(PatrolIntegrationTester $) async {
 }
 
 Future<void> _initApp(PatrolIntegrationTester $) async {
-  // Add Contacts to Firebase or Another Android Emulator Device
-  if (await native.isVirtualDevice()) {
-    await _createContactsForEmulator($);
-  }
-
   final widgetsBinding = WidgetsBinding.instance;
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -85,6 +84,21 @@ Future<void> _createContactsForEmulator(PatrolIntegrationTester $) async {
     // Dismiss permission dialog if present
     if (await native.isPermissionDialogVisible()) {
       await native.denyPermission();
+    }
+
+    const contactIsCreatedSelector = AndroidSelector(
+      textContains: 'Alex',
+    );
+
+    // Check if the contact already exists to avoid duplicates
+    final contactViews = await androidPlatform.getNativeViews(
+      contactIsCreatedSelector,
+    );
+
+    if (contactViews.roots.isNotEmpty) {
+      // Contact already exists, return to the Bookify app
+      await native.openApp();
+      return;
     }
 
     // Tap the Floating Action Button (FAB) to create a new contact
@@ -164,6 +178,9 @@ Future<void> _createContactsForEmulator(PatrolIntegrationTester $) async {
 
     await androidPlatform.tap(AndroidSelector(textContains: saveLabel));
     await Future.delayed(const Duration(seconds: 3));
+
+    // Return to the Bookify app after creating the contact
+    await native.openApp();
   }
 }
 
@@ -250,10 +267,7 @@ Future<void> _tapOnNativeLoginButton(PatrolIntegrationTester $) async {
 
     // Tap on Agree and Share Google Account Button
     if (agreeButtonView.roots.isNotEmpty) {
-      await native.waitUntilVisible(
-        agreeButtonSelector,
-        timeout: const Duration(seconds: 8),
-      );
+      await native.waitUntilVisible(agreeButtonSelector);
 
       await native.tap(agreeButtonSelector);
     }
