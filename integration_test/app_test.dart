@@ -261,15 +261,19 @@ Future<void> _tapOnNativeLoginButton(PatrolIntegrationTester $) async {
     };
 
     final agreeButtonSelector = AndroidSelector(textContains: agreeText);
-    final agreeButtonView = await native.platform.android.getNativeViews(
-      agreeButtonSelector,
-    );
 
-    // Tap on Agree and Share Google Account Button
-    if (agreeButtonView.roots.isNotEmpty) {
-      await native.waitUntilVisible(agreeButtonSelector);
-
+    try {
+      // Tap on Agree and Share Google Account Button
+      await native.waitUntilVisible(
+        agreeButtonSelector,
+        timeout: const Duration(seconds: 4),
+      );
       await native.tap(agreeButtonSelector);
+    } catch (e) {
+      // If the button is not found, it means the account is already logged in and no action is needed.
+      debugPrint(
+        'Agree and Share button not found. Assuming account is already logged in.',
+      );
     }
   } else if ($.isIOS) {
     await $(#FacebookButton).tap();
