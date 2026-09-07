@@ -240,7 +240,6 @@ Future<void> _testLoginPage(PatrolIntegrationTester $) async {
   expect($(#BookifyLogoImage), findsNothing);
 }
 
-//! At this time, the test device "MUST" already be logged with social Account
 Future<void> _tapOnNativeLoginButton(PatrolIntegrationTester $) async {
   if ($.isAndroid) {
     await $(#GoogleButton).tap();
