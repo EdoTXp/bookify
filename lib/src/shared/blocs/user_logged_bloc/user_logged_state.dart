@@ -1,4 +1,4 @@
-part of 'user_logged_cubit.dart';
+part of 'user_logged_bloc.dart';
 
 @immutable
 sealed class UserLoggedState {}

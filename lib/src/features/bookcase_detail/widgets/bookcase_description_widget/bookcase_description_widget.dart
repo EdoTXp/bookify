@@ -1,5 +1,5 @@
 import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class BookcaseDescriptionWidget extends StatelessWidget {

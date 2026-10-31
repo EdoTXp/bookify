@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/books_picker/views/widgets/book_selector_widget/widgets/book_selection_row.dart';
 import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BookSelectorWidget extends StatefulWidget {
   final List<BookModel> books;

@@ -4,7 +4,7 @@ import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/features/book_detail/views/widgets/widgets.dart';
@@ -193,15 +193,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.only(
-              left: 24.0,
-              right: 24.0,
-              top: 8.0,
-              bottom: 16.0,
-            ),
-            child: SingleChildScrollView(
-              controller: _scrollController,
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 8.0,
+                bottom: 16.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -322,7 +322,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                               fontSize: 20,
                             ),
                           ),
-                          const SizedBox(height: 12),
                           BookRating(
                             key: const Key('BookRatingWidget'),
                             averageRating: book.averageRating,
@@ -345,7 +344,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 50),
                             BookDescriptionWidget(
                               key: const Key('PublisherDescriptionWidget'),
                               title: 'publisher-title'.i18n(),

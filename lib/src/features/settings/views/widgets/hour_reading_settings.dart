@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/hour_time_calculator/views/hour_time_calculator_page.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class HourReadingSettings extends StatelessWidget {

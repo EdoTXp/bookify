@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
+import 'package:bookify/src/features/auth/views/auth_page.dart';
 import 'package:bookify/src/features/settings/views/widgets/delete_account_settings/bloc/delete_account_bloc.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 
@@ -32,7 +30,12 @@ class _DeleteAccountSettingsState extends State<DeleteAccountSettings> {
     DeleteAccountState state,
   ) {
     if (state is DeleteAccountLoadedState) {
-      _closeApp();
+      context.showSnackBar(
+        'delete-account-success'.i18n(),
+        SnackBarType.success,
+      );
+
+      _redirectToAuthPage(context);
     } else if (state is DeleteAccountErrorState) {
       context.showSnackBar(
         'error-deleting-account'.i18n(),
@@ -41,14 +44,10 @@ class _DeleteAccountSettingsState extends State<DeleteAccountSettings> {
     }
   }
 
-  Future<void> _closeApp() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    if (Platform.isAndroid) {
-      SystemNavigator.pop();
-    } else if (Platform.isIOS) {
-      exit(0);
-    }
+  void _redirectToAuthPage(BuildContext context) async {
+    Navigator.of(context).pushReplacementNamed(
+      AuthPage.routeName,
+    );
   }
 
   @override

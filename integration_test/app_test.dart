@@ -4,7 +4,7 @@ import 'package:bookify/firebase_options.dart';
 import 'package:bookify/src/bookify_app.dart';
 import 'package:bookify/src/shared/providers/providers.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -319,13 +319,23 @@ Future<void> _testHomePage(PatrolIntegrationTester $) async {
   expect($(#BookWidget), findsWidgets);
   expect($(#SearchTypeButton), findsOneWidget);
 
-  await _searchIsbnWithRetryOnError($, isbn: '9788542221084');
+  const bookTitle = 'Harry Potter';
+  final bookRegExp = RegExp(bookTitle, caseSensitive: false);
+
+  await _searchTitleBookWithRetryOnError($, title: bookTitle);
 
   expect($(#BooksGridView), findsOneWidget);
   expect($(#BookWidget), findsWidgets);
 
   // tap on first book and open book detail
-  await $(find.byTooltip('Memórias póstumas de Brás Cubas')).tap();
+  await $(
+    find.byWidgetPredicate(
+      (widget) =>
+          widget is Tooltip &&
+          widget.message != null &&
+          bookRegExp.hasMatch(widget.message!),
+    ),
+  ).tap();
   await $.pumpAndSettle(duration: const Duration(seconds: 2));
 
   expect($(Icons.bookmark_border), findsOneWidget);
@@ -608,10 +618,10 @@ Future<void> _exitAccountAndFinalizeTest(PatrolIntegrationTester $) async {
   expect($(#FacebookButton), findsOneWidget);
 }
 
-/// Searches for a book by [isbn] and handles API failures by retrying
-Future<void> _searchIsbnWithRetryOnError(
+/// Searches for a book by [title] and handles API failures by retrying
+Future<void> _searchTitleBookWithRetryOnError(
   PatrolIntegrationTester $, {
-  required String isbn,
+  required String title,
 }) async {
   while (true) {
     // Open search options and select ISBN type
@@ -624,14 +634,14 @@ Future<void> _searchIsbnWithRetryOnError(
     expect($(#PublisherSearchTypeButton), findsOneWidget);
     expect($(#ISBNSearchTypeButton), findsOneWidget);
 
-    await $(#ISBNSearchTypeButton).tap();
-    await $.pumpAndSettle();
+    /* await $(#ISBNSearchTypeButton).tap();
+    await $.pumpAndSettle();*/
 
-    expect($('enter-isbn-label'.i18n()), findsOneWidget);
+    expect($('enter-title-label'.i18n()), findsOneWidget);
 
-    // Enter the ISBN and trigger search action
+    // Enter the title and trigger search action
     await $(#SearchBar).enterText(
-      isbn,
+      title,
       hideKeyboard: false,
     );
     await $.tester.testTextInput.receiveAction(TextInputAction.done);

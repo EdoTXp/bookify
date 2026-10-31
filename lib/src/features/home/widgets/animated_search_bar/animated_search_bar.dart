@@ -1,5 +1,5 @@
 import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 enum SearchType { title, author, category, publisher, isbn }

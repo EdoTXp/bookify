@@ -6,7 +6,7 @@ import 'package:bookify/src/core/extensions/date_time_format/date_time_format_ex
 import 'package:bookify/src/shared/theme/colors.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class LoanWidget extends StatelessWidget {

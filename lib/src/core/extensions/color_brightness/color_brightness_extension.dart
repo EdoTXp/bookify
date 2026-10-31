@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Extension on the Color class to add functionality for darkening and lightening colors.
 extension ColorBrightnessExtension on Color {

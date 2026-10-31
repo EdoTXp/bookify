@@ -7,7 +7,7 @@ import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/domain/models/user_model.dart';
 import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 import 'widgets.dart';

@@ -1,18 +1,17 @@
 import 'package:bookify/src/core/extensions/error_code/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/core/extensions/error_code/platform_error_code/platform_error_code_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
-import 'package:bookify/src/shared/cubits/user_logged_cubit/user_logged_cubit.dart';
+import 'package:bookify/src/shared/blocs/user_logged_bloc/user_logged_bloc.dart';
 import 'package:bookify/src/shared/cubits/user_notification_cubit/user_notification_cubit.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
 import 'package:bookify/src/shared/routes/routes.dart';
 import 'package:bookify/src/shared/theme/app_theme.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:localization/localization.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The root widget of the Bookify application.
 ///
@@ -37,7 +36,7 @@ class _BookifyAppState extends State<BookifyApp> {
     LocalJsonLocalization.delegate.directories = ['assets/lang'];
 
     // Initialize global cubits for theme, authentication status, and notifications.
-    context.read<UserLoggedCubit>().checkAuthStatus();
+    context.read<UserLoggedBloc>().add(CheckedAuthStatusEvent());
     context.read<UserThemeCubit>().getTheme();
     context.read<UserNotificationCubit>().initializeNotifications();
   }
@@ -61,9 +60,13 @@ class _BookifyAppState extends State<BookifyApp> {
 
             // Globally applies the appropriate system UI overlay style (status bar and navigation bar icon contrast)
             // matching the active light or dark theme context.
-            return AnnotatedRegion<SystemUiOverlayStyle>(
-              value: currentTheme.appBarTheme.systemOverlayStyle!,
-              child: child!,
+
+            // ignore: deprecated_member_use
+            return MaterialUiCompatibilityBridge(
+              child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: currentTheme.appBarTheme.systemOverlayStyle!,
+                child: child!,
+              ),
             );
           },
           navigatorKey: Routes.navigatorKey,
@@ -71,7 +74,7 @@ class _BookifyAppState extends State<BookifyApp> {
           home: MultiBlocListener(
             listeners: [
               // Listens for authentication failures to present localized error feedback.
-              BlocListener<UserLoggedCubit, UserLoggedState>(
+              BlocListener<UserLoggedBloc, UserLoggedState>(
                 listener: (context, state) {
                   if (state is UserLoggedErrorState) {
                     final errorCode = state.errorCode;
@@ -102,7 +105,7 @@ class _BookifyAppState extends State<BookifyApp> {
               ),
             ],
             // Selects the precise authentication flag to handle landing routing and splash dismissal.
-            child: BlocSelector<UserLoggedCubit, UserLoggedState, bool?>(
+            child: BlocSelector<UserLoggedBloc, UserLoggedState, bool?>(
               selector: (state) {
                 return switch (state) {
                   UserLoggedLoadingState() => null,
@@ -141,9 +144,7 @@ class _BookifyAppState extends State<BookifyApp> {
             return const Locale('en', 'US');
           },
           localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
             LocalJsonLocalization.delegate,
           ],
           supportedLocales: const [

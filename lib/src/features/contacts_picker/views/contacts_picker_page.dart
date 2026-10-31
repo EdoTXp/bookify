@@ -3,7 +3,7 @@ import 'package:bookify/src/features/contacts_picker/bloc/contacts_picker_bloc.d
 import 'package:bookify/src/features/contacts_picker/views/widgets/contacts_picker_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 

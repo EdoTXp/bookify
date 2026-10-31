@@ -1,7 +1,7 @@
 import 'package:bookify/src/features/profile/views/widgets/user_information_row/bloc/user_information_bloc.dart';
 import 'package:bookify/src/features/profile/views/widgets/user_information_row/item_status_column.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 

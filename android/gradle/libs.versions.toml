@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-androidGradlePlugin = "9.4.1"
+androidGradlePlugin = "9.5.0"
 googleServices = "4.5.0"
 
 # Libraries

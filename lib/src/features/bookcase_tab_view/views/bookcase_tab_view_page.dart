@@ -1,5 +1,5 @@
 import 'package:bookify/src/features/bookcase_tab_view/views/pages/pages.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class BookcaseTabViewPage extends StatefulWidget {

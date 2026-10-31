@@ -77,8 +77,10 @@ class GoogleAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await _googleSignIn.signOut();
-      await _firebaseAuth.signOut();
+      await Future.wait([
+        _firebaseAuth.signOut(),
+        _googleSignIn.signOut(),
+      ]);
       return true;
     } on FirebaseAuthException catch (e) {
       final errorCode = switch (e.code) {

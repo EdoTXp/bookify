@@ -26,7 +26,7 @@ import 'package:bookify/src/features/readings_timer/views/readings_timer.page.da
 import 'package:bookify/src/features/root/views/root_page.dart';
 import 'package:bookify/src/features/settings/views/settings_page.dart';
 import 'package:bookify/src/features/time_picker/views/time_picker_page.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract class Routes {
   Routes._();

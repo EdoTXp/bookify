@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bookify/src/shared/widgets/contact_circle_avatar/contact_circle_avatar.dart';
 import 'package:bookify/src/shared/widgets/contact_information_widget/contact_information_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class ContactCard extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:bookify/src/features/profile/bloc/profile_bloc.dart';
 import 'package:bookify/src/features/profile/views/widgets/profile_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _exitApp(
+  void _redirectToAuthPage(
     BuildContext context,
     ProfileState state,
   ) {
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: BlocConsumer<ProfileBloc, ProfileState>(
         bloc: _bloc,
-        listener: _exitApp,
+        listener: _redirectToAuthPage,
         builder: _getWidgetOnProfileState,
       ),
     );

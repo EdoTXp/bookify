@@ -5,7 +5,7 @@ import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/core/extensions/color_picker_dialog/color_picker_dialog_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 import 'package:validatorless/validatorless.dart';
@@ -302,6 +302,8 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
                       _selectedColor = await context.showColorPickerDialog(
                         _selectedColor,
                       );
+
+                      setState(() {});
                     },
                     onTapOutside: (_) => context.unfocus(),
                     decoration: InputDecoration(

@@ -4,7 +4,7 @@ import 'package:bookify/src/core/extensions/show_dialog/show_dialog_extension.da
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
 import 'package:bookify/src/shared/widgets/list/selected_item_row/selected_item_row.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class BookcaseDetailLoadedStateWidget extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:bookify/src/domain/models/user_hour_time_model.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/features/time_picker/views/widgets/time_picker_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class TimePickerPage extends StatefulWidget {

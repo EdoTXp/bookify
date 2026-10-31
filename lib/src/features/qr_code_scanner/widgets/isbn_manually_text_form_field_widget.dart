@@ -1,6 +1,6 @@
 import 'package:bookify/src/features/qr_code_scanner/widgets/isbn_text_form_field.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class IsbnManuallyTextFormFieldWidget extends StatefulWidget {

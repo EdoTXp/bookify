@@ -1,6 +1,6 @@
 import 'package:bookify/src/core/extensions/book_status/book_status_extension.dart';
 import 'package:bookify/src/domain/models/book_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BookStateWidget extends StatelessWidget {
   final BookStatus bookStatus;

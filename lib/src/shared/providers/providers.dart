@@ -14,7 +14,7 @@ abstract class Providers {
     ...userSettingsServicesProviders,
     ...servicesProviders,
     ...userThemeCubitProviders,
-    ...userLoggedCubitProviders,
+    ...userLoggedBlocProviders,
     ...userNotificationCubitProviders,
     ...userInformationBlocProviders,
     ...authBlocProviders,

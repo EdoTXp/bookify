@@ -6,7 +6,7 @@ Links:
 */
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_tab_item.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FABBottomAppBarItem {
   final IconData unselectedIcon;

@@ -5,7 +5,7 @@ import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/domain/models/category_model.dart';
 import 'package:bookify/src/features/home/views/home_page.dart';
 import 'package:bookify/src/shared/blocs/book_bloc/book_bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

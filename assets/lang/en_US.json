@@ -290,6 +290,7 @@
   "error-platform-permission-permanently-denied": "Permission permanently denied. Open settings to grant it: %s",
   "error-platform-unsupported": "Operation not supported on this device: %s",
   "error-deleting-account": "Error deleting account. Please try again.",
+  "delete-account-success": "Account deleted successfully. The app will redirect to the login page.",
   "delete-account-title": "Delete this account",
   "delete-account-desc": "This action is irreversible. It will permanently delete: all your bookshelves, books, loans, user settings (theme, reading notifications, and reading time data), as well as your local and remote account.",
   "delete-title": "Delete account?",

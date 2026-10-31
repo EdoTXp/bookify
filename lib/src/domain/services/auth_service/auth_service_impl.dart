@@ -20,14 +20,16 @@ class AuthServiceImpl implements AuthService {
        _authStrategyFactory = authStrategyFactory;
 
   @override
-  Future<bool> userIsLoggedIn() async {
-    final userIsLoggedIn = FirebaseAuth.instance.currentUser != null;
+  Stream<bool> userIsLoggedIn() {
+    return FirebaseAuth.instance.authStateChanges().asyncMap((user) async {
+      final userIsLoggedIn = user != null;
 
-    if (!userIsLoggedIn) {
-      await _authRepository.deleteUserModel();
-      return false;
-    }
-    return true;
+      if (!userIsLoggedIn) {
+        await _authRepository.deleteUserModel();
+      }
+
+      return userIsLoggedIn;
+    });
   }
 
   @override
@@ -102,10 +104,24 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<void> deleteUserModel() async {
     try {
-      if (FirebaseAuth.instance.currentUser != null) {
-        await FirebaseAuth.instance.currentUser!.delete();
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        await currentUser.delete();
         await _authRepository.deleteUserModel();
+        await FirebaseAuth.instance.signOut();
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        throw const AuthException(
+          AuthErrorCode.internalError,
+          descriptionMessage:
+              'Operation requires recent login. Please sign out and sign in again.',
+        );
+      }
+      throw AuthException(
+        AuthErrorCode.internalError,
+        descriptionMessage: e.message ?? e.toString(),
+      );
     } on StorageException catch (e) {
       throw AuthException(
         AuthErrorCode.internalError,

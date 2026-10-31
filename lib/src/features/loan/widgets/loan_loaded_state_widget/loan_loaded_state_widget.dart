@@ -3,7 +3,7 @@ import 'package:bookify/src/features/loan_detail/views/loan_detail_page.dart';
 import 'package:bookify/src/features/loan_insertion/views/loan_insertion_page.dart';
 import 'package:bookify/src/domain/dtos/loan_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class LoanLoadedStateWidget extends StatelessWidget {

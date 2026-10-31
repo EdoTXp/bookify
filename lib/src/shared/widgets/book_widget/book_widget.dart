@@ -1,5 +1,5 @@
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class BookWidget extends StatelessWidget {

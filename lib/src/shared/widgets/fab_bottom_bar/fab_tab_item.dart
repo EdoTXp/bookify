@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 /// Represents a single tab item in the FAB bottom bar.

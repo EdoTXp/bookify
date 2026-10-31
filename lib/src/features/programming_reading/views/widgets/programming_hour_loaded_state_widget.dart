@@ -5,7 +5,7 @@ import 'package:bookify/src/features/programming_reading/views/widgets/hour_time
 import 'package:bookify/src/features/programming_reading/views/widgets/repeat_time_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class ProgrammingHourLoadedStateWidget extends StatefulWidget {

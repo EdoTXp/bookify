@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Extension for the [Color] class that adds a method to convert a color to an integer.
 extension ColorToIntExtension on Color {

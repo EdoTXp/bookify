@@ -9,7 +9,7 @@ import 'package:bookify/src/features/readings_timer/views/widgets/header.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class ReadingsTimerWidget extends StatefulWidget {

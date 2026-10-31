@@ -3,7 +3,7 @@ import 'package:bookify/src/shared/constants/database_scripts/database_scripts.d
 import 'package:bookify/src/domain/models/author_model.dart';
 import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/domain/models/category_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

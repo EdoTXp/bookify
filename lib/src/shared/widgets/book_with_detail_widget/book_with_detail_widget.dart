@@ -1,6 +1,6 @@
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
 import 'package:bookify/src/shared/widgets/bookify_rating/bookify_rating_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BookWithDetailWidget extends StatelessWidget {
   final String bookImageUrl;

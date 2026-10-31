@@ -3,7 +3,7 @@ import 'package:bookify/src/core/helper/launcher/launcher_helper.dart';
 import 'package:bookify/src/shared/constants/images/bookify_images.dart';
 import 'package:bookify/src/shared/constants/strings/bookify_strings.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class AboutLoadedStateWidget extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:bookify/src/shared/constants/icons/bookify_icons.dart';
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar.dart';
 import 'package:bookify/src/shared/widgets/fab_bottom_bar/fab_bottom_bar_controller.dart';
 import 'package:bookify/src/shared/widgets/floating_action_button/rectangle_floating_action_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';

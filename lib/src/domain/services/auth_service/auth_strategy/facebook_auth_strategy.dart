@@ -107,8 +107,10 @@ class FacebookAuthStrategy implements AuthStrategy {
   @override
   Future<bool> signOut() async {
     try {
-      await _facebookAuth.logOut();
-      await _firebaseAuth.signOut();
+      await Future.wait([
+        _facebookAuth.logOut(),
+        _firebaseAuth.signOut(),
+      ]);
       return true;
     } on FirebaseAuthException catch (e) {
       final errorCode = switch (e.code) {

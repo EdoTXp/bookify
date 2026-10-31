@@ -2,7 +2,7 @@ import 'package:bookify/src/features/books_picker/views/widgets/book_on_bookcase
 import 'package:bookify/src/domain/dtos/bookcase_dto.dart';
 import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/shared/widgets/bookcase_widget/bookcase_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BookcasePickerLoadedStateWidget extends StatelessWidget {
   final List<BookcaseDto> bookcasesDto;

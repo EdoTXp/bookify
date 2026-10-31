@@ -4,7 +4,7 @@ import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.
 import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/data/repositories/bookcase_repository/bookcase_repository_impl.dart';
 import 'package:bookify/src/core/enums/local_database_error_code.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

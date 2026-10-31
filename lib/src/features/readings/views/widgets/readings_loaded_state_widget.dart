@@ -2,7 +2,7 @@ import 'package:bookify/src/features/readings/views/widgets/reading_widget.dart'
 import 'package:bookify/src/features/readings_detail/views/readings_detail_page.dart';
 import 'package:bookify/src/domain/dtos/reading_dto.dart';
 import 'package:bookify/src/shared/widgets/buttons/add_new_item_text_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class ReadingsLoadedStateWidget extends StatelessWidget {

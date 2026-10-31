@@ -1,8 +1,8 @@
 import 'package:bookify/src/core/extensions/color_brightness/color_brightness_extension.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
 abstract class AppTheme {
   AppTheme._();

@@ -1,7 +1,7 @@
 import 'book_ia_text_widget.dart';
 import 'timer_widget.dart';
 import 'package:bookify/src/shared/widgets/buttons/buttons.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 

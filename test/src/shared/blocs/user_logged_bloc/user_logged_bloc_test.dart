@@ -2,40 +2,38 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/core/enums/auth_error_code.dart';
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/domain/services/auth_service/auth_service.dart';
-import 'package:bookify/src/shared/cubits/user_logged_cubit/user_logged_cubit.dart';
+import 'package:bookify/src/shared/blocs/user_logged_bloc/user_logged_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class AuthServiceMock extends Mock implements AuthService {}
 
 void main() {
-  final authService = AuthServiceMock();
-  late UserLoggedCubit userLoggedCubit;
+  late AuthService authService;
 
   setUp(() {
-    userLoggedCubit = UserLoggedCubit(
-      authService,
-    );
+    authService = AuthServiceMock();
   });
 
-  group('Test UserLogged Cubit', () {
-    blocTest(
-      'Initial state is empty',
-      build: () => userLoggedCubit,
-      verify: (cubit) async => await cubit.close(),
-      expect: () => [],
-    );
+  group('UserLoggedBloc Tests', () {
+    test('Initial state is UserLoggedLoadingState', () {
+      final bloc = UserLoggedBloc(authService);
+      expect(bloc.state, isA<UserLoggedLoadingState>());
+      bloc.close();
+    });
 
-    blocTest(
-      'Test checkAuthStatus function work when user is logged in',
-      build: () => userLoggedCubit,
+    blocTest<UserLoggedBloc, UserLoggedState>(
+      'Emits [UserLoggedLoadingState, UserLoggedLoadedState] when user is logged in',
+      build: () => UserLoggedBloc(authService),
       setUp: () =>
           when(
             () => authService.userIsLoggedIn(),
           ).thenAnswer(
-            (_) async => true,
+            (_) async* {
+              yield true;
+            },
           ),
-      act: (cubit) => cubit.checkAuthStatus(),
+      act: (bloc) => bloc.add(CheckedAuthStatusEvent()),
       verify: (_) => verify(
         () => authService.userIsLoggedIn(),
       ).called(1),
@@ -45,16 +43,18 @@ void main() {
       ],
     );
 
-    blocTest(
-      'Test checkAuthStatus function work when user is NOT logged in',
-      build: () => userLoggedCubit,
+    blocTest<UserLoggedBloc, UserLoggedState>(
+      'Emits [UserLoggedLoadingState, UserLoggedLoadedState] when user is NOT logged in',
+      build: () => UserLoggedBloc(authService),
       setUp: () =>
           when(
             () => authService.userIsLoggedIn(),
           ).thenAnswer(
-            (_) async => false,
+            (_) async* {
+              yield false;
+            },
           ),
-      act: (cubit) => cubit.checkAuthStatus(),
+      act: (bloc) => bloc.add(CheckedAuthStatusEvent()),
       verify: (_) => verify(
         () => authService.userIsLoggedIn(),
       ).called(1),
@@ -64,9 +64,9 @@ void main() {
       ],
     );
 
-    blocTest(
-      'Test checkAuthStatus function work when throw AuthException',
-      build: () => userLoggedCubit,
+    blocTest<UserLoggedBloc, UserLoggedState>(
+      'Emits [UserLoggedLoadingState, UserLoggedErrorState] when AuthException is thrown',
+      build: () => UserLoggedBloc(authService),
       setUp: () =>
           when(
             () => authService.userIsLoggedIn(),
@@ -76,7 +76,7 @@ void main() {
               descriptionMessage: 'Error on Auth Service',
             ),
           ),
-      act: (cubit) => cubit.checkAuthStatus(),
+      act: (bloc) => bloc.add(CheckedAuthStatusEvent()),
       verify: (_) => verify(
         () => authService.userIsLoggedIn(),
       ).called(1),
@@ -86,13 +86,13 @@ void main() {
       ],
     );
 
-    blocTest(
-      'Test checkAuthStatus function work when throw Generic Exception',
-      build: () => userLoggedCubit,
+    blocTest<UserLoggedBloc, UserLoggedState>(
+      'Emits [UserLoggedLoadingState, UserLoggedErrorState] when Generic Exception is thrown',
+      build: () => UserLoggedBloc(authService),
       setUp: () => when(
         () => authService.userIsLoggedIn(),
       ).thenThrow(Exception('Generic Error')),
-      act: (cubit) => cubit.checkAuthStatus(),
+      act: (bloc) => bloc.add(CheckedAuthStatusEvent()),
       verify: (_) => verify(
         () => authService.userIsLoggedIn(),
       ).called(1),

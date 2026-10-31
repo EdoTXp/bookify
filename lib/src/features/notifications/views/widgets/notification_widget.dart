@@ -1,6 +1,6 @@
 import 'package:bookify/src/core/extensions/notification_channel/notification_channel_extension.dart';
 import 'package:bookify/src/domain/models/custom_notification_model.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class NotificationWidget extends StatelessWidget {
   final CustomNotificationModel notification;

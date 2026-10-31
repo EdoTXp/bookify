@@ -1,6 +1,6 @@
 import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BooksGridView extends StatelessWidget {
   final List<BookModel> books;

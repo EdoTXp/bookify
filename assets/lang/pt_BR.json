@@ -290,6 +290,7 @@
   "error-platform-permission-permanently-denied": "Permissão negada permanentemente. Abra as configurações para concedê-la: %s",
   "error-platform-unsupported": "Operação não suportada neste dispositivo: %s",
   "error-deleting-account": "Erro ao excluir a conta. Tente novamente.",
+  "delete-account-success": "Conta excluída com sucesso. O aplicativo será redirecionado para a página de login.",
   "delete-account-title": "Excluir esta conta",
   "delete-account-desc": "Esta ação é irreversível. Serão excluídas permanentemente: todas as suas estantes, livros, empréstimos, configurações de usuário (tema, notificações de leitura e tempo de leitura calculado), além da sua conta local e remota.",
   "delete-title": "Excluir conta?",

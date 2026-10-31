@@ -1,6 +1,6 @@
 import 'package:bookify/src/domain/dtos/bookcase_dto.dart';
 import 'package:bookify/src/shared/widgets/book_widget/book_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BookcaseWidget extends StatelessWidget {
   final BookcaseDto bookcaseDto;

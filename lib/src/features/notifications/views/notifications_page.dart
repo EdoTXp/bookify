@@ -3,7 +3,7 @@ import 'package:bookify/src/features/notifications/bloc/notifications_bloc.dart'
 import 'package:bookify/src/features/notifications/views/widgets/notifications_loaded_state_widget.dart';
 import 'package:bookify/src/shared/widgets/center_circular_progress_indicator/center_circular_progress_indicator.dart';
 import 'package:bookify/src/shared/widgets/item_state_widget/info_item_state_widget/info_item_state_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 

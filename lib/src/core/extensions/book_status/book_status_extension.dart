@@ -1,6 +1,6 @@
 import 'package:bookify/src/domain/models/book_model.dart';
 import 'package:bookify/src/shared/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 extension BookStatusExtension on BookStatus {

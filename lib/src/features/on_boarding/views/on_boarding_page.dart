@@ -3,7 +3,7 @@ import 'package:bookify/src/features/on_boarding/pages/pages.dart';
 import 'package:bookify/src/features/on_boarding/widgets/page_view_indicator.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_elevated_button.dart';
 import 'package:bookify/src/shared/widgets/buttons/bookify_outlined_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:localization/localization.dart';
 
 class OnBoardingPage extends StatefulWidget {
