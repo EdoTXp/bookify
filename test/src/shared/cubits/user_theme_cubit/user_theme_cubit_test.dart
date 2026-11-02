@@ -1,192 +1,198 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/data/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class UserThemeRepositoryMock extends Mock implements UserThemeRepository {}
 
 void main() {
-  final userRepository = UserThemeRepositoryMock();
-  late UserThemeCubit userThemeCubit;
+  late UserThemeRepositoryMock repository;
 
   setUp(() {
-    userThemeCubit = UserThemeCubit(
-      userRepository,
-    );
+    repository = UserThemeRepositoryMock();
   });
 
-  group('Test UserTheme Cubit', () {
-    blocTest(
-      'Initial state is empty',
-      build: () => userThemeCubit,
-      verify: (cubit) async => await cubit.close(),
-      expect: () => [],
-    );
+  group('UserThemeCubit', () {
+    test('initial state is UserThemeLoadingState', () {
+      final cubit = UserThemeCubit(repository);
+      addTearDown(cubit.close);
 
-    blocTest(
-      'Test getTheme function work',
-      build: () => userThemeCubit,
-      setUp: () =>
-          when(
-            () => userRepository.getThemeMode(),
-          ).thenAnswer(
-            (_) async => ThemeMode.light,
+      expect(cubit.state, isA<UserThemeLoadingState>());
+    });
+
+    group('getTheme', () {
+      blocTest<UserThemeCubit, UserThemeState>(
+        'emits Loading and then Loaded with the repository theme',
+        setUp: () => when(
+          () => repository.getThemeMode(),
+        ).thenAnswer((_) async => AppThemeMode.light),
+        build: () => UserThemeCubit(repository),
+        act: (cubit) => cubit.getTheme(),
+        expect: () => [
+          isA<UserThemeLoadingState>(),
+          isA<UserThemeLoadedState>().having(
+            (s) => s.appThemeMode,
+            'appThemeMode',
+            AppThemeMode.light,
           ),
-      act: (cubit) => cubit.getTheme(),
-      verify: (_) => verify(
-        () => userRepository.getThemeMode(),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeLoadedState>(),
-      ],
-    );
+        ],
+        verify: (_) => verify(() => repository.getThemeMode()).called(1),
+      );
 
-    blocTest(
-      'Test getTheme function work when ThemeMode is null',
-      build: () => userThemeCubit,
-      setUp: () {
-        when(
-          () => userRepository.getThemeMode(),
-        ).thenAnswer((_) async => null);
+      blocTest<UserThemeCubit, UserThemeState>(
+        'emits Error with system theme when StorageException is thrown',
+        setUp: () => when(() => repository.getThemeMode()).thenThrow(
+          const StorageException(
+            StorageErrorCode.invalidValue,
+            descriptionMessage: 'Error on storage Data',
+          ),
+        ),
+        build: () => UserThemeCubit(repository),
+        act: (cubit) => cubit.getTheme(),
+        expect: () => [
+          isA<UserThemeLoadingState>(),
+          isA<UserThemeErrorState>()
+              .having(
+                (s) => s.appThemeMode,
+                'appThemeMode',
+                AppThemeMode.system,
+              )
+              .having(
+                (s) => s.errorCode,
+                'errorCode',
+                StorageErrorCode.invalidValue,
+              )
+              .having(
+                (s) => s.errorDescriptionMessage,
+                'errorDescriptionMessage',
+                'Error on storage Data',
+              ),
+        ],
+      );
 
-        when(
-          () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-        ).thenAnswer((_) async => 1);
-      },
-      act: (cubit) => cubit.getTheme(),
-      verify: (_) {
-        verify(
-          () => userRepository.getThemeMode(),
-        ).called(1);
-        verify(
-          () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-        ).called(1);
-      },
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeLoadedState>(),
-      ],
-    );
+      blocTest<UserThemeCubit, UserThemeState>(
+        'emits Error unknown with system theme when a generic Exception is thrown',
+        setUp: () => when(
+          () => repository.getThemeMode(),
+        ).thenThrow(Exception('Generic Error')),
+        build: () => UserThemeCubit(repository),
+        act: (cubit) => cubit.getTheme(),
+        expect: () => [
+          isA<UserThemeLoadingState>(),
+          isA<UserThemeErrorState>()
+              .having(
+                (s) => s.appThemeMode,
+                'appThemeMode',
+                AppThemeMode.system,
+              )
+              .having(
+                (s) => s.errorCode,
+                'errorCode',
+                StorageErrorCode.unknown,
+              )
+              .having(
+                (s) => s.errorDescriptionMessage,
+                'errorDescriptionMessage',
+                contains('Generic Error'),
+              ),
+        ],
+      );
+    });
 
-    blocTest(
-      'Test getTheme function work when throw StorageException',
-      build: () => userThemeCubit,
-      setUp: () =>
-          when(
-            () => userRepository.getThemeMode(),
-          ).thenThrow(
-            const StorageException(
-              StorageErrorCode.invalidValue,
-              descriptionMessage: 'Error on storage Data',
+    group('setTheme', () {
+      blocTest<UserThemeCubit, UserThemeState>(
+        'emits only Loaded with the new theme on success',
+        setUp: () => when(
+          () => repository.setThemeMode(appThemeMode: AppThemeMode.dark),
+        ).thenAnswer((_) async => 1),
+        build: () => UserThemeCubit(repository),
+        seed: () => UserThemeLoadedState(appThemeMode: AppThemeMode.light),
+        act: (cubit) => cubit.setTheme(appThemeMode: AppThemeMode.dark),
+        expect: () => [
+          isA<UserThemeLoadedState>().having(
+            (s) => s.appThemeMode,
+            'themeMode',
+            AppThemeMode.dark,
+          ),
+        ],
+        verify: (_) => verify(
+          () => repository.setThemeMode(appThemeMode: AppThemeMode.dark),
+        ).called(1),
+      );
+
+      blocTest<UserThemeCubit, UserThemeState>(
+        'rolls back to the previous theme with writeFailed when insertion returns 0',
+        setUp: () => when(
+          () => repository.setThemeMode(appThemeMode: AppThemeMode.dark),
+        ).thenAnswer((_) async => 0),
+        build: () => UserThemeCubit(repository),
+        seed: () => UserThemeLoadedState(appThemeMode: AppThemeMode.light),
+        act: (cubit) => cubit.setTheme(appThemeMode: AppThemeMode.dark),
+        expect: () => [
+          isA<UserThemeLoadedState>().having(
+            (s) => s.appThemeMode,
+            'appThemeMode',
+            AppThemeMode.dark,
+          ),
+          isA<UserThemeErrorState>()
+              .having((s) => s.appThemeMode, 'appThemeMode', AppThemeMode.light)
+              .having(
+                (s) => s.errorCode,
+                'errorCode',
+                StorageErrorCode.writeFailed,
+              ),
+        ],
+      );
+
+      blocTest<UserThemeCubit, UserThemeState>(
+        'rolls back to the previous theme with the repository code when StorageException is thrown',
+        setUp: () =>
+            when(
+              () => repository.setThemeMode(appThemeMode: AppThemeMode.dark),
+            ).thenThrow(
+              const StorageException(
+                StorageErrorCode.invalidValue,
+                descriptionMessage: 'Error on storage Data',
+              ),
             ),
-          ),
-      act: (cubit) => cubit.getTheme(),
-      verify: (_) => verify(
-        () => userRepository.getThemeMode(),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeErrorState>(),
-      ],
-    );
+        build: () => UserThemeCubit(repository),
+        seed: () => UserThemeLoadedState(appThemeMode: AppThemeMode.light),
+        act: (cubit) => cubit.setTheme(appThemeMode: AppThemeMode.dark),
+        expect: () => [
+          isA<UserThemeLoadedState>(),
+          isA<UserThemeErrorState>()
+              .having((s) => s.appThemeMode, 'appThemeMode', AppThemeMode.light)
+              .having(
+                (s) => s.errorCode,
+                'errorCode',
+                StorageErrorCode.invalidValue,
+              ),
+        ],
+      );
 
-    blocTest(
-      'Test getTheme function work when throw Generic Exception',
-      build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.getThemeMode(),
-      ).thenThrow(Exception('Generic Error')),
-      act: (bloc) => bloc.getTheme(),
-      verify: (_) => verify(
-        () => userRepository.getThemeMode(),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeErrorState>(),
-      ],
-    );
-
-    blocTest(
-      'Test setTheme function work',
-      build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).thenAnswer((_) async => 1),
-      act: (cubit) => cubit.setTheme(
-        themeMode: ThemeMode.system,
-      ),
-      verify: (_) => verify(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeLoadedState>(),
-      ],
-    );
-
-    blocTest(
-      'Test setTheme function work when insertion theme error',
-      build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).thenAnswer((_) async => 0),
-      act: (cubit) => cubit.setTheme(
-        themeMode: ThemeMode.system,
-      ),
-      verify: (_) => verify(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeErrorState>(),
-      ],
-    );
-
-    blocTest(
-      'Test setTheme function work when throw StorageException',
-      build: () => userThemeCubit,
-      setUp: () =>
-          when(
-            () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-          ).thenThrow(
-            const StorageException(
-              StorageErrorCode.invalidValue,
-              descriptionMessage: 'Error on storage Data',
-            ),
-          ),
-      act: (cubit) => cubit.setTheme(
-        themeMode: ThemeMode.system,
-      ),
-      verify: (_) => verify(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeErrorState>(),
-      ],
-    );
-
-    blocTest(
-      'Test setTheme function work when throwGeneric Exception',
-      build: () => userThemeCubit,
-      setUp: () => when(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).thenThrow(Exception('Generic Error')),
-      act: (cubit) => cubit.setTheme(
-        themeMode: ThemeMode.system,
-      ),
-      verify: (_) => verify(
-        () => userRepository.setThemeMode(themeMode: ThemeMode.system),
-      ).called(1),
-      expect: () => [
-        isA<UserThemeLoadingState>(),
-        isA<UserThemeErrorState>(),
-      ],
-    );
+      blocTest<UserThemeCubit, UserThemeState>(
+        'rolls back to the previous theme with unknown code when a generic Exception is thrown',
+        setUp: () => when(
+          () => repository.setThemeMode(appThemeMode: AppThemeMode.dark),
+        ).thenThrow(Exception('Generic Error')),
+        build: () => UserThemeCubit(repository),
+        seed: () => UserThemeLoadedState(appThemeMode: AppThemeMode.light),
+        act: (cubit) => cubit.setTheme(appThemeMode: AppThemeMode.dark),
+        expect: () => [
+          isA<UserThemeLoadedState>(),
+          isA<UserThemeErrorState>()
+              .having((s) => s.appThemeMode, 'appThemeMode', AppThemeMode.light)
+              .having(
+                (s) => s.errorCode,
+                'errorCode',
+                StorageErrorCode.unknown,
+              ),
+        ],
+      );
+    });
   });
 }

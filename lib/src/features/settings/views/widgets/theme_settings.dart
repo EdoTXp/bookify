@@ -1,3 +1,4 @@
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/features/settings/views/widgets/settings_container.dart';
 import 'package:bookify/src/shared/cubits/user_theme_cubit/user_theme_cubit.dart';
@@ -16,6 +17,12 @@ class ThemeSettings extends StatefulWidget {
 class _ThemeSettingsState extends State<ThemeSettings> {
   late final UserThemeCubit _userThemeCubit;
 
+  static const _options = <(AppThemeMode, String)>[
+    (AppThemeMode.light, 'light-theme-label'),
+    (AppThemeMode.dark, 'dark-theme-label'),
+    (AppThemeMode.system, 'system-theme-label'),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -23,56 +30,35 @@ class _ThemeSettingsState extends State<ThemeSettings> {
   }
 
   Widget _getWidgetOnThemeSetting(BuildContext context, UserThemeState state) {
+    final labelStyle = TextStyle(
+      fontSize: 10,
+      color: Theme.of(context).colorScheme.primary,
+    );
+
     return switch (state) {
       UserThemeLoadingState() => const CenterCircularProgressIndicator(),
-      UserThemeLoadedState(:final themeMode) => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: RadioGroup<ThemeMode>(
-          groupValue: themeMode,
-          onChanged: _onChangedRadioButton,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'light-theme-label'.i18n(),
-                overflow: TextOverflow.ellipsis,
-                textScaler: TextScaler.noScaling,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const Radio<ThemeMode>.adaptive(
-                value: ThemeMode.light,
-              ),
-              Text(
-                'dark-theme-label'.i18n(),
-                overflow: TextOverflow.ellipsis,
-                textScaler: TextScaler.noScaling,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const Radio<ThemeMode>.adaptive(
-                value: ThemeMode.dark,
-              ),
-              Text(
-                'system-theme-label'.i18n(),
-                overflow: TextOverflow.ellipsis,
-                textScaler: TextScaler.noScaling,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const Radio<ThemeMode>.adaptive(
-                value: ThemeMode.system,
-              ),
-            ],
+      UserThemeLoadedState(appThemeMode: final themeMode) =>
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: RadioGroup<AppThemeMode>(
+            groupValue: themeMode,
+            onChanged: _onChangedRadioButton,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (final (mode, labelKey) in _options) ...[
+                  Text(
+                    labelKey.i18n(),
+                    overflow: TextOverflow.ellipsis,
+                    textScaler: TextScaler.noScaling,
+                    style: labelStyle,
+                  ),
+                  Radio<AppThemeMode>.adaptive(value: mode),
+                ],
+              ],
+            ),
           ),
         ),
-      ),
       UserThemeErrorState(
         :final errorCode,
         :final errorDescriptionMessage,
@@ -86,9 +72,9 @@ class _ThemeSettingsState extends State<ThemeSettings> {
     };
   }
 
-  void _onChangedRadioButton(ThemeMode? value) {
+  void _onChangedRadioButton(AppThemeMode? value) {
     if (value == null) return;
-    _userThemeCubit.setTheme(themeMode: value);
+    _userThemeCubit.setTheme(appThemeMode: value);
   }
 
   @override

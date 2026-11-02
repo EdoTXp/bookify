@@ -1,5 +1,7 @@
+import 'package:bookify/src/core/extensions/app_theme_mode/app_theme_mode_extension.dart';
 import 'package:bookify/src/core/extensions/error_code/auth_error_code/auth_error_code_extension.dart';
 import 'package:bookify/src/core/extensions/error_code/platform_error_code/platform_error_code_extension.dart';
+import 'package:bookify/src/core/extensions/error_code/storage_error_code/storage_error_code_extension.dart';
 import 'package:bookify/src/core/extensions/show_snackbar/show_snackbar_extension.dart';
 import 'package:bookify/src/shared/blocs/user_logged_bloc/user_logged_bloc.dart';
 import 'package:bookify/src/shared/cubits/user_notification_cubit/user_notification_cubit.dart';
@@ -46,8 +48,11 @@ class _BookifyAppState extends State<BookifyApp> {
     // Dynamically selects and updates the application's ThemeMode based on the UserThemeCubit state.
     return BlocSelector<UserThemeCubit, UserThemeState, ThemeMode>(
       selector: (state) => switch (state) {
-        UserThemeLoadedState(:final themeMode) => themeMode,
-        _ => ThemeMode.system,
+        UserThemeLoadedState(appThemeMode: final appThemeMode) ||
+        UserThemeErrorState(
+          appThemeMode: final appThemeMode,
+        ) => appThemeMode.toUIThemeMode(),
+        UserThemeLoadingState() => ThemeMode.system,
       },
       builder: (context, themeMode) {
         return MaterialApp(
@@ -98,6 +103,18 @@ class _BookifyAppState extends State<BookifyApp> {
 
                     context.showSnackBar(
                       errorCode.toLocalizedMessage(errorDescriptionMessage),
+                      SnackBarType.error,
+                    );
+                  }
+                },
+              ),
+              BlocListener<UserThemeCubit, UserThemeState>(
+                listener: (context, state) {
+                  if (state is UserThemeErrorState) {
+                    context.showSnackBar(
+                      state.errorCode.toLocalizedMessage(
+                        state.errorDescriptionMessage,
+                      ),
                       SnackBarType.error,
                     );
                   }

@@ -31,8 +31,9 @@ class EmptyBookButtonWidget extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(22),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.add_rounded,
+          color: colorScheme.primary,
           size: 82,
         ),
       ),

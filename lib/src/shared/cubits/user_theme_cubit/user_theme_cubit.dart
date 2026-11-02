@@ -1,9 +1,8 @@
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/data/repositories/user_theme_repository/user_theme_repository.dart';
-//import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_ui/material_ui.dart';
 
 part 'user_theme_state.dart';
 
@@ -14,78 +13,64 @@ class UserThemeCubit extends Cubit<UserThemeState> {
     this._userThemeRepository,
   ) : super(UserThemeLoadingState());
 
+  AppThemeMode get _currentMode => switch (state) {
+    UserThemeLoadedState(appThemeMode: final themeMode) ||
+    UserThemeErrorState(appThemeMode: final themeMode) => themeMode,
+    UserThemeLoadingState() => AppThemeMode.system,
+  };
+
   Future<void> getTheme() async {
     try {
       emit(UserThemeLoadingState());
 
       final theme = await _userThemeRepository.getThemeMode();
 
-      if (theme == null) {
-        await _userThemeRepository.setThemeMode(
-          themeMode: ThemeMode.system,
-        );
-
-        emit(
-          UserThemeLoadedState(themeMode: ThemeMode.system),
-        );
-        return;
-      }
-
-      emit(
-        UserThemeLoadedState(themeMode: theme),
-      );
+      emit(UserThemeLoadedState(appThemeMode: theme));
     } on StorageException catch (e) {
-      emit(
-        UserThemeErrorState(
-          errorCode: e.code,
-          errorDescriptionMessage: e.descriptionMessage,
-        ),
-      );
+      emit(_errorState(AppThemeMode.system, e.code, e.descriptionMessage));
     } on Exception catch (e) {
       emit(
-        UserThemeErrorState(
-          errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: e.toString(),
+        _errorState(
+          AppThemeMode.system,
+          StorageErrorCode.unknown,
+          e.toString(),
         ),
       );
     }
   }
 
-  Future<void> setTheme({required ThemeMode themeMode}) async {
-    try {
-      emit(UserThemeLoadingState());
+  Future<void> setTheme({required AppThemeMode appThemeMode}) async {
+    final previous = _currentMode;
+    emit(UserThemeLoadedState(appThemeMode: appThemeMode));
 
+    try {
       final themeInserted = await _userThemeRepository.setThemeMode(
-        themeMode: themeMode,
+        appThemeMode: appThemeMode,
       );
 
       if (themeInserted == 0) {
         emit(
-          UserThemeErrorState(
-            errorCode: StorageErrorCode.writeFailed,
-            errorDescriptionMessage: 'Failed to save theme. Please try again.',
+          _errorState(
+            previous,
+            StorageErrorCode.writeFailed,
+            'Failed to save theme. Please try again.',
           ),
         );
-        return;
       }
-
-      emit(
-        UserThemeLoadedState(themeMode: themeMode),
-      );
     } on StorageException catch (e) {
-      emit(
-        UserThemeErrorState(
-          errorCode: e.code,
-          errorDescriptionMessage: e.descriptionMessage,
-        ),
-      );
+      emit(_errorState(previous, e.code, e.descriptionMessage));
     } on Exception catch (e) {
-      emit(
-        UserThemeErrorState(
-          errorCode: StorageErrorCode.unknown,
-          errorDescriptionMessage: e.toString(),
-        ),
-      );
+      emit(_errorState(previous, StorageErrorCode.unknown, e.toString()));
     }
   }
+
+  UserThemeErrorState _errorState(
+    AppThemeMode themeMode,
+    StorageErrorCode code,
+    String? message,
+  ) => UserThemeErrorState(
+    appThemeMode: themeMode,
+    errorCode: code,
+    errorDescriptionMessage: message,
+  );
 }

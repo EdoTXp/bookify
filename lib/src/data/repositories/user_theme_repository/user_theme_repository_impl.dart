@@ -1,8 +1,8 @@
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/data/repositories/user_theme_repository/user_theme_repository.dart';
 import 'package:bookify/src/data/storage/storage.dart';
-import 'package:material_ui/material_ui.dart';
 
 class UserThemeRepositoryImpl implements UserThemeRepository {
   final Storage _storage;
@@ -13,20 +13,10 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
   }) : _storage = storage;
 
   @override
-  Future<ThemeMode?> getThemeMode() async {
+  Future<AppThemeMode> getThemeMode() async {
     try {
-      final theme = await _storage.getStorage(key: _themeKey) as int?;
-
-      switch (theme) {
-        case 1:
-          return ThemeMode.light;
-        case 2:
-          return ThemeMode.dark;
-        case 3:
-          return ThemeMode.system;
-        default:
-          return null;
-      }
+      final themeCode = await _storage.getStorage(key: _themeKey) as int?;
+      return AppThemeMode.fromCode(themeCode);
     } on TypeError {
       throw const StorageException(
         StorageErrorCode.invalidValue,
@@ -38,11 +28,11 @@ class UserThemeRepositoryImpl implements UserThemeRepository {
   }
 
   @override
-  Future<int> setThemeMode({required ThemeMode themeMode}) async {
+  Future<int> setThemeMode({required AppThemeMode appThemeMode}) async {
     try {
       final themeInserted = await _storage.insertStorage(
         key: _themeKey,
-        value: themeMode.index,
+        value: appThemeMode.themeCode,
       );
       return themeInserted;
     } on StorageException {

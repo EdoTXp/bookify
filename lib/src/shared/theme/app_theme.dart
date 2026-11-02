@@ -73,6 +73,7 @@ abstract class AppTheme {
     segmentedButtonTheme: _segmentedButtonTheme,
     splashColor: Colors.transparent,
     iconTheme: _iconTheme,
+    iconButtonTheme: _iconButtonTheme,
     sliderTheme: _sliderTheme,
     radioTheme: _radioTheme,
     textButtonTheme: _textButtonTheme,
@@ -245,6 +246,12 @@ abstract class AppTheme {
   );
 
   static const _iconTheme = IconThemeData(color: AppColor.bookifyPrimaryColor);
+
+  static const _iconButtonTheme = IconButtonThemeData(
+    style: ButtonStyle(
+      iconColor: WidgetStatePropertyAll(AppColor.bookifySecondaryColor),
+    ),
+  );
 
   static final _sliderTheme = SliderThemeData(
     trackHeight: 2.0,

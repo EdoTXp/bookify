@@ -1,8 +1,8 @@
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 import 'package:bookify/src/core/enums/storage_error_code.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/data/repositories/user_theme_repository/user_theme_repository_impl.dart';
 import 'package:bookify/src/data/storage/storage.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -24,7 +24,7 @@ void main() {
 
       expect(
         theme,
-        equals(ThemeMode.light),
+        equals(AppThemeMode.light),
       );
     });
 
@@ -37,7 +37,7 @@ void main() {
       ).thenAnswer((_) async => 1);
 
       final themeInserted = await userThemeRepository.setThemeMode(
-        themeMode: ThemeMode.light,
+        appThemeMode: AppThemeMode.light,
       );
 
       expect(
@@ -121,7 +121,7 @@ void main() {
 
       expect(
         () async => await userThemeRepository.setThemeMode(
-          themeMode: ThemeMode.light,
+          appThemeMode: AppThemeMode.light,
         ),
         throwsA(
           (Exception e) =>

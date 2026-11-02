@@ -1,9 +1,7 @@
-//import 'package:flutter/material.dart';
-
-import 'package:material_ui/material_ui.dart';
+import 'package:bookify/src/core/enums/app_theme_mode.dart';
 
 abstract interface class UserThemeRepository {
-  Future<ThemeMode?> getThemeMode();
-  Future<int> setThemeMode({required ThemeMode themeMode});
+  Future<AppThemeMode> getThemeMode();
+  Future<int> setThemeMode({required AppThemeMode appThemeMode});
   Future<int> deleteThemeMode();
 }

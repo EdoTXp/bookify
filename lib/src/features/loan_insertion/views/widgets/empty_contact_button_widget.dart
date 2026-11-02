@@ -32,8 +32,9 @@ class EmptyContactButtonWidget extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(42),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.add_rounded,
+          color: colorScheme.primary,
           size: 42,
         ),
       ),
