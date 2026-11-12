@@ -1,45 +1,40 @@
-import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.dart';
-import 'package:material_ui/material_ui.dart';
-
 class BookcaseModel {
   final int? id;
   final String name;
   final String? description;
-  final Color color;
+  final int colorValue;
 
   const BookcaseModel({
     this.id,
     required this.name,
     this.description,
-    required this.color,
+    required this.colorValue,
   });
-
-  int get colorValue => color.colorToInt();
 
   BookcaseModel copyWith({
     int? id,
     String? name,
     String? description,
-    Color? color,
+    int? colorValue,
   }) {
     return BookcaseModel(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
-      color: color ?? this.color,
+      colorValue: colorValue ?? this.colorValue,
     );
   }
 
   BookcaseModel copyWithDescriptionNull({
     int? id,
     String? name,
-    Color? color,
+    int? colorValue,
   }) {
     return BookcaseModel(
       id: id ?? this.id,
       name: name ?? this.name,
       description: null,
-      color: color ?? this.color,
+      colorValue: colorValue ?? this.colorValue,
     );
   }
 
@@ -57,25 +52,24 @@ class BookcaseModel {
       id: map['id'] as int,
       name: map['name'] as String,
       description: map['description'] as String?,
-      color: Color(map['color'] as int),
+      colorValue: map['color'] as int,
     );
   }
 
   @override
   String toString() =>
-      'BookcaseModel(id: $id, name: $name, description: $description, color: $color)';
+      'BookcaseModel(id: $id, name: $name, description: $description, colorValue: $colorValue)';
 
   @override
-  bool operator ==(covariant BookcaseModel other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.name == name &&
-        other.description == description &&
-        other.color == color;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BookcaseModel &&
+          other.id == id &&
+          other.name == name &&
+          other.description == description &&
+          other.colorValue == colorValue;
 
   @override
   int get hashCode =>
-      id.hashCode ^ name.hashCode ^ description.hashCode ^ color.hashCode;
+      id.hashCode ^ name.hashCode ^ description.hashCode ^ colorValue.hashCode;
 }

@@ -1,70 +1,87 @@
-import 'package:bookify/src/data/database/local_database.dart';
-import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
-import 'package:bookify/src/core/extensions/color_to_int/color_to_int_extension.dart';
-import 'package:bookify/src/domain/models/bookcase_model.dart';
-import 'package:bookify/src/data/repositories/bookcase_repository/bookcase_repository_impl.dart';
 import 'package:bookify/src/core/enums/local_database_error_code.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
+import 'package:bookify/src/data/database/local_database.dart';
+import 'package:bookify/src/data/repositories/bookcase_repository/bookcase_repository_impl.dart';
+import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LocalDatabaseMock extends Mock implements LocalDatabase {}
 
 void main() {
-  final bookcasesMap = [
+  const databaseException = LocalDatabaseException(
+    LocalDatabaseErrorCode.unknown,
+    descriptionMessage: 'Error on database',
+  );
+
+  final bookcasesMap = <Map<String, dynamic>>[
     {
       'id': 1,
       'name': 'Fantasia',
       'description': 'Meus Livros de Fantasia',
-      'color': Colors.pink.colorToInt(),
+      'color': Colors.pink.toARGB32(),
     },
     {
       'id': 2,
       'name': 'Terror',
       'description': 'Meus Livros de Terror',
-      'color': Colors.black.colorToInt(),
+      'color': Colors.black.toARGB32(),
     },
   ];
 
-  const bookcaseModel = BookcaseModel(
+  final bookcaseModel = BookcaseModel(
     name: 'Livros 2024',
     description: 'Meus livros de 2024',
-    color: Colors.red,
+    colorValue: Colors.red.toARGB32(),
   );
 
-  final localDatabase = LocalDatabaseMock();
-  final bookcaseRepository = BookcaseRepositoryImpl(localDatabase);
+  late LocalDatabaseMock localDatabase;
+  late BookcaseRepositoryImpl bookcaseRepository;
 
-  group('Test normal CRUD bookcase without error ||', () {
+  Matcher throwsDatabaseException() => throwsA(
+    isA<LocalDatabaseException>()
+        .having((e) => e.code, 'code', LocalDatabaseErrorCode.unknown)
+        .having(
+          (e) => e.descriptionMessage,
+          'descriptionMessage',
+          'Error on database',
+        ),
+  );
+
+  Matcher throwsConversionFailed() => throwsA(
+    isA<LocalDatabaseException>().having(
+      (e) => e.code,
+      'code',
+      LocalDatabaseErrorCode.conversionFailed,
+    ),
+  );
+
+  setUp(() {
+    localDatabase = LocalDatabaseMock();
+    bookcaseRepository = BookcaseRepositoryImpl(localDatabase);
+  });
+
+  group('BookcaseRepositoryImpl success ||', () {
     test('getAll()', () async {
       when(
         () => localDatabase.getAll(table: any(named: 'table')),
       ).thenAnswer((_) async => bookcasesMap);
 
-      final bookcasesModel = await bookcaseRepository.getAll();
+      final bookcases = await bookcaseRepository.getAll();
 
-      expect(bookcasesModel[0].id, equals(1));
-      expect(bookcasesModel[0].name, 'Fantasia');
-      expect(bookcasesModel[0].description, 'Meus Livros de Fantasia');
-      expect(
-        bookcasesModel[0].color,
-        Color(
-          Colors.pink.colorToInt(),
-        ),
-      );
-
-      expect(bookcasesModel[1].id, equals(2));
-      expect(bookcasesModel[1].name, 'Terror');
-      expect(bookcasesModel[1].description, 'Meus Livros de Terror');
-      expect(
-        bookcasesModel[1].color,
-        Color(
-          Colors.black.colorToInt(),
-        ),
-      );
+      expect(bookcases, hasLength(2));
+      expect(bookcases[0].id, 1);
+      expect(bookcases[0].name, 'Fantasia');
+      expect(bookcases[0].description, 'Meus Livros de Fantasia');
+      expect(bookcases[0].colorValue, Colors.pink.toARGB32());
+      expect(bookcases[1].id, 2);
+      expect(bookcases[1].name, 'Terror');
+      expect(bookcases[1].description, 'Meus Livros de Terror');
+      expect(bookcases[1].colorValue, Colors.black.toARGB32());
     });
 
-    test('get by name()', () async {
+    test('getBookcasesByName()', () async {
       when(
         () => localDatabase.researchBy(
           table: any(named: 'table'),
@@ -73,19 +90,14 @@ void main() {
         ),
       ).thenAnswer((_) async => [bookcasesMap[0]]);
 
-      final bookcaseModelByName = await bookcaseRepository.getBookcasesByName(
+      final bookcases = await bookcaseRepository.getBookcasesByName(
         name: 'Fantasia',
       );
 
-      expect(bookcaseModelByName[0].id, equals(1));
-      expect(bookcaseModelByName[0].name, 'Fantasia');
-      expect(bookcaseModelByName[0].description, 'Meus Livros de Fantasia');
-      expect(
-        bookcaseModelByName[0].color,
-        Color(
-          Colors.pink.colorToInt(),
-        ),
-      );
+      expect(bookcases[0].id, 1);
+      expect(bookcases[0].name, 'Fantasia');
+      expect(bookcases[0].description, 'Meus Livros de Fantasia');
+      expect(bookcases[0].colorValue, Colors.pink.toARGB32());
     });
 
     test('getById()', () async {
@@ -97,34 +109,23 @@ void main() {
         ),
       ).thenAnswer((_) async => bookcasesMap[0]);
 
-      final bookcasesModel = await bookcaseRepository.getById(bookcaseId: 1);
+      final bookcase = await bookcaseRepository.getById(bookcaseId: 1);
 
-      expect(bookcasesModel.id, equals(1));
-      expect(bookcasesModel.name, 'Fantasia');
-      expect(bookcasesModel.description, 'Meus Livros de Fantasia');
-      expect(
-        bookcasesModel.color,
-        Color(
-          Colors.pink.colorToInt(),
-        ),
-      );
+      expect(bookcase.id, 1);
+      expect(bookcase.name, 'Fantasia');
+      expect(bookcase.description, 'Meus Livros de Fantasia');
+      expect(bookcase.colorValue, Colors.pink.toARGB32());
     });
 
     test('countBookcases()', () async {
       when(
-        () => localDatabase.countItems(
-          table: any(named: 'table'),
-        ),
-      ).thenAnswer(
-        (_) async => 10,
-      );
+        () => localDatabase.countItems(table: any(named: 'table')),
+      ).thenAnswer((_) async => 10);
 
-      final bookcasesCount = await bookcaseRepository.countBookcases();
-
-      expect(bookcasesCount, equals(10));
+      expect(await bookcaseRepository.countBookcases(), 10);
     });
 
-    test('insert()', () async {
+    test('insert() persists the color as an ARGB int', () async {
       when(
         () => localDatabase.insert(
           table: any(named: 'table'),
@@ -136,10 +137,20 @@ void main() {
         bookcaseModel: bookcaseModel,
       );
 
-      expect(bookcaseInsertedId, equals(3));
+      expect(bookcaseInsertedId, 3);
+      verify(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: bookcaseModel.toMap(),
+        ),
+      ).called(1);
+      expect(bookcaseModel.toMap()['color'], Colors.red.toARGB32());
     });
 
-    test('update()', () async {
+    test('update() persists the new color as an ARGB int', () async {
+      final updatedModel = bookcaseModel.copyWith(
+        colorValue: Colors.blue.toARGB32(),
+      );
       when(
         () => localDatabase.update(
           table: any(named: 'table'),
@@ -150,11 +161,21 @@ void main() {
       ).thenAnswer((_) async => 1);
 
       final bookcaseUpdatedRow = await bookcaseRepository.update(
-        bookcaseModel: bookcaseModel.copyWith(color: Colors.blue),
+        bookcaseModel: updatedModel,
       );
 
-      expect(bookcaseUpdatedRow, equals(1));
+      expect(bookcaseUpdatedRow, 1);
+      verify(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          values: updatedModel.toMap(),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).called(1);
+      expect(updatedModel.toMap()['color'], Colors.blue.toARGB32());
     });
+
     test('delete()', () async {
       when(
         () => localDatabase.delete(
@@ -164,293 +185,147 @@ void main() {
         ),
       ).thenAnswer((_) async => 1);
 
-      final bookcaseDeletedRow = await bookcaseRepository.delete(bookcaseId: 1);
-
-      expect(bookcaseDeletedRow, equals(1));
+      expect(await bookcaseRepository.delete(bookcaseId: 1), 1);
     });
   });
 
-  group('Test normal CRUD bookcase with error ||', () {
-    test('getAll() -- LocalDatabaseException', () async {
+  group('BookcaseRepositoryImpl errors ||', () {
+    test('getAll() -- LocalDatabaseException', () {
       when(
         () => localDatabase.getAll(table: any(named: 'table')),
-      ).thenThrow(
-        const LocalDatabaseException(
-          LocalDatabaseErrorCode.unknown,
-          descriptionMessage: 'Error on database',
-        ),
-      );
+      ).thenThrow(databaseException);
 
-      expect(
-        () async => await bookcaseRepository.getAll(),
-        throwsA(
-          isA<LocalDatabaseException>()
-              .having(
-                (e) => e.code,
-                'code',
-                LocalDatabaseErrorCode.unknown,
-              )
-              .having(
-                (e) => e.descriptionMessage,
-                'descriptionMessage',
-                'Error on database',
-              ),
-        ),
-      );
+      expect(() => bookcaseRepository.getAll(), throwsDatabaseException());
     });
 
-    test('getAll() -- TypeError', () async {
+    test('getAll() -- TypeError', () {
       when(() => localDatabase.getAll(table: any(named: 'table'))).thenAnswer(
         (_) async => [
           {'id': 1},
         ],
       );
 
-      expect(
-        () async => await bookcaseRepository.getAll(),
-        throwsA(
-          isA<LocalDatabaseException>().having(
-            (e) => e.code,
-            'code',
-            LocalDatabaseErrorCode.conversionFailed,
-          ),
-        ),
-      );
+      expect(() => bookcaseRepository.getAll(), throwsConversionFailed());
     });
 
-    test('get by name() -- LocalDatabaseException', () async {
+    test('getBookcasesByName() -- LocalDatabaseException', () {
       when(
         () => localDatabase.researchBy(
           table: any(named: 'table'),
           column: any(named: 'column'),
           columnValues: any(named: 'columnValues'),
         ),
-      ).thenThrow(
-        const LocalDatabaseException(
-          LocalDatabaseErrorCode.unknown,
-          descriptionMessage: 'Error on database',
-        ),
-      );
+      ).thenThrow(databaseException);
 
       expect(
-        () async =>
-            await bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
-        throwsA(
-          isA<LocalDatabaseException>()
-              .having(
-                (e) => e.code,
-                'code',
-                LocalDatabaseErrorCode.unknown,
-              )
-              .having(
-                (e) => e.descriptionMessage,
-                'descriptionMessage',
-                'Error on database',
-              ),
-        ),
+        () => bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
+        throwsDatabaseException(),
       );
     });
-  });
 
-  test('get by name() -- TypeError', () async {
-    when(
-      () => localDatabase.researchBy(
-        table: any(named: 'table'),
-        column: any(named: 'column'),
-        columnValues: any(named: 'columnValues'),
-      ),
-    ).thenAnswer((_) async => [{}]);
-
-    expect(
-      () async => await bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
-      throwsA(
-        isA<LocalDatabaseException>().having(
-          (e) => e.code,
-          'code',
-          LocalDatabaseErrorCode.conversionFailed,
+    test('getBookcasesByName() -- TypeError', () {
+      when(
+        () => localDatabase.researchBy(
+          table: any(named: 'table'),
+          column: any(named: 'column'),
+          columnValues: any(named: 'columnValues'),
         ),
-      ),
-    );
-  });
+      ).thenAnswer((_) async => [{}]);
 
-  test('getById() -- LocalDatabaseException', () async {
-    when(
-      () => localDatabase.getItemById(
-        table: any(named: 'table'),
-        idColumn: any(named: 'idColumn'),
-        id: any(named: 'id'),
-      ),
-    ).thenThrow(
-      const LocalDatabaseException(
-        LocalDatabaseErrorCode.unknown,
-        descriptionMessage: 'Error on database',
-      ),
-    );
+      expect(
+        () => bookcaseRepository.getBookcasesByName(name: 'Fantasia'),
+        throwsConversionFailed(),
+      );
+    });
 
-    expect(
-      () async => await bookcaseRepository.getById(bookcaseId: 1),
-      throwsA(
-        isA<LocalDatabaseException>()
-            .having(
-              (e) => e.code,
-              'code',
-              LocalDatabaseErrorCode.unknown,
-            )
-            .having(
-              (e) => e.descriptionMessage,
-              'descriptionMessage',
-              'Error on database',
-            ),
-      ),
-    );
-  });
-
-  test('getById() -- TypeError', () async {
-    when(
-      () => localDatabase.getItemById(
-        table: any(named: 'table'),
-        idColumn: any(named: 'idColumn'),
-        id: any(named: 'id'),
-      ),
-    ).thenAnswer((_) async => {'id': 1});
-
-    expect(
-      () async => await bookcaseRepository.getById(bookcaseId: 1),
-      throwsA(
-        isA<LocalDatabaseException>().having(
-          (e) => e.code,
-          'code',
-          LocalDatabaseErrorCode.conversionFailed,
+    test('getById() -- LocalDatabaseException', () {
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
         ),
-      ),
-    );
-  });
+      ).thenThrow(databaseException);
 
-  test('countBookcases() -- LocalDatabaseException', () async {
-    when(
-      () => localDatabase.countItems(
-        table: any(named: 'table'),
-      ),
-    ).thenThrow(
-      const LocalDatabaseException(
-        LocalDatabaseErrorCode.unknown,
-        descriptionMessage: 'Error on database',
-      ),
-    );
+      expect(
+        () => bookcaseRepository.getById(bookcaseId: 1),
+        throwsDatabaseException(),
+      );
+    });
 
-    expect(
-      () async => await bookcaseRepository.countBookcases(),
-      throwsA(
-        isA<LocalDatabaseException>()
-            .having(
-              (e) => e.code,
-              'code',
-              LocalDatabaseErrorCode.unknown,
-            )
-            .having(
-              (e) => e.descriptionMessage,
-              'descriptionMessage',
-              'Error on database',
-            ),
-      ),
-    );
-  });
+    test('getById() -- TypeError', () {
+      when(
+        () => localDatabase.getItemById(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenAnswer((_) async => {'id': 1});
 
-  test('insert() -- LocalDatabaseException', () async {
-    when(
-      () => localDatabase.insert(
-        table: any(named: 'table'),
-        values: any(named: 'values'),
-      ),
-    ).thenThrow(
-      const LocalDatabaseException(
-        LocalDatabaseErrorCode.unknown,
-        descriptionMessage: 'Error on database',
-      ),
-    );
+      expect(
+        () => bookcaseRepository.getById(bookcaseId: 1),
+        throwsConversionFailed(),
+      );
+    });
 
-    expect(
-      () async => await bookcaseRepository.insert(bookcaseModel: bookcaseModel),
-      throwsA(
-        isA<LocalDatabaseException>()
-            .having(
-              (e) => e.code,
-              'code',
-              LocalDatabaseErrorCode.unknown,
-            )
-            .having(
-              (e) => e.descriptionMessage,
-              'descriptionMessage',
-              'Error on database',
-            ),
-      ),
-    );
-  });
+    test('countBookcases() -- LocalDatabaseException', () {
+      when(
+        () => localDatabase.countItems(table: any(named: 'table')),
+      ).thenThrow(databaseException);
 
-  test('update() -- LocalDatabaseException', () async {
-    when(
-      () => localDatabase.update(
-        table: any(named: 'table'),
-        values: any(named: 'values'),
-        idColumn: any(named: 'idColumn'),
-        id: any(named: 'id'),
-      ),
-    ).thenThrow(
-      const LocalDatabaseException(
-        LocalDatabaseErrorCode.unknown,
-        descriptionMessage: 'Error on database',
-      ),
-    );
+      expect(
+        () => bookcaseRepository.countBookcases(),
+        throwsDatabaseException(),
+      );
+    });
 
-    expect(
-      () async => await bookcaseRepository.update(
-        bookcaseModel: bookcaseModel.copyWith(color: Colors.blue),
-      ),
-      throwsA(
-        isA<LocalDatabaseException>()
-            .having(
-              (e) => e.code,
-              'code',
-              LocalDatabaseErrorCode.unknown,
-            )
-            .having(
-              (e) => e.descriptionMessage,
-              'descriptionMessage',
-              'Error on database',
-            ),
-      ),
-    );
-  });
+    test('insert() -- LocalDatabaseException', () {
+      when(
+        () => localDatabase.insert(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+        ),
+      ).thenThrow(databaseException);
 
-  test('delete() -- LocalDatabaseException', () async {
-    when(
-      () => localDatabase.delete(
-        table: any(named: 'table'),
-        idColumn: any(named: 'idColumn'),
-        id: any(named: 'id'),
-      ),
-    ).thenThrow(
-      const LocalDatabaseException(
-        LocalDatabaseErrorCode.unknown,
-        descriptionMessage: 'Error on database',
-      ),
-    );
+      expect(
+        () => bookcaseRepository.insert(bookcaseModel: bookcaseModel),
+        throwsDatabaseException(),
+      );
+    });
 
-    expect(
-      () async => await bookcaseRepository.delete(bookcaseId: 1),
-      throwsA(
-        isA<LocalDatabaseException>()
-            .having(
-              (e) => e.code,
-              'code',
-              LocalDatabaseErrorCode.unknown,
-            )
-            .having(
-              (e) => e.descriptionMessage,
-              'descriptionMessage',
-              'Error on database',
-            ),
-      ),
-    );
+    test('update() -- LocalDatabaseException', () {
+      when(
+        () => localDatabase.update(
+          table: any(named: 'table'),
+          values: any(named: 'values'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(databaseException);
+
+      expect(
+        () => bookcaseRepository.update(
+          bookcaseModel: bookcaseModel.copyWith(
+            colorValue: Colors.blue.toARGB32(),
+          ),
+        ),
+        throwsDatabaseException(),
+      );
+    });
+
+    test('delete() -- LocalDatabaseException', () {
+      when(
+        () => localDatabase.delete(
+          table: any(named: 'table'),
+          idColumn: any(named: 'idColumn'),
+          id: any(named: 'id'),
+        ),
+      ).thenThrow(databaseException);
+
+      expect(
+        () => bookcaseRepository.delete(bookcaseId: 1),
+        throwsDatabaseException(),
+      );
+    });
   });
 }

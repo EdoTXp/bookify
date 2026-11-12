@@ -86,7 +86,9 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
 
     _bookcaseNameEC.text = widget.bookcaseModel?.name ?? '';
     _bookcaseDescriptionEC.text = widget.bookcaseModel?.description ?? '';
-    _selectedColor = widget.bookcaseModel?.color ?? Colors.white;
+    _selectedColor = widget.bookcaseModel?.colorValue != null
+        ? Color(widget.bookcaseModel!.colorValue)
+        : Colors.white;
   }
 
   @override
@@ -132,7 +134,7 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
             description: _bookcaseDescriptionEC.value.text.isEmpty
                 ? null
                 : _bookcaseDescriptionEC.value.text,
-            color: _selectedColor,
+            colorValue: _selectedColor.toARGB32(),
           ),
         );
       } else {
@@ -144,19 +146,19 @@ class _BookcaseInsertionPageState extends State<BookcaseInsertionPage> {
             description: _bookcaseDescriptionEC.value.text.isEmpty
                 ? null
                 : _bookcaseDescriptionEC.value.text,
-            color: _selectedColor,
+            colorValue: _selectedColor.toARGB32(),
           ),
         );
 
         bookcaseUpdated = _bookcaseDescriptionEC.text.isEmpty
             ? bookcaseModel.copyWithDescriptionNull(
                 name: _bookcaseNameEC.value.text,
-                color: _selectedColor,
+                colorValue: _selectedColor.toARGB32(),
               )
             : bookcaseModel.copyWith(
                 name: _bookcaseNameEC.value.text,
                 description: _bookcaseDescriptionEC.value.text,
-                color: _selectedColor,
+                colorValue: _selectedColor.toARGB32(),
               );
       }
 

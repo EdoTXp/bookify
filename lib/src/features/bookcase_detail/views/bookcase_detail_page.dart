@@ -227,7 +227,7 @@ class _BookcaseDetailPageState extends State<BookcaseDetailPage> {
                   BookcaseDescriptionWidget(
                     name: _actualBookcase.name,
                     description: _actualBookcase.description,
-                    color: _actualBookcase.color,
+                    color: Color(_actualBookcase.colorValue),
                     booksQuantity: (state is BookcaseDetailBooksLoadedState)
                         ? state.books.length
                         : 0,

@@ -23,15 +23,15 @@ void main() {
   );
 
   final bookcases = [
-    const BookcaseModel(
+    BookcaseModel(
       name: 'name',
       description: 'description',
-      color: Colors.pink,
+      colorValue: Colors.pink.toARGB32(),
     ),
-    const BookcaseModel(
+    BookcaseModel(
       name: 'name2',
       description: 'description2',
-      color: Colors.red,
+      colorValue: Colors.red.toARGB32(),
     ),
   ];
 
@@ -45,10 +45,20 @@ void main() {
 
       expect(bookcasesModel[0].name, equals('name'));
       expect(bookcasesModel[0].description, equals('description'));
-      expect(bookcasesModel[0].color, equals(Colors.pink));
+      expect(
+        bookcasesModel[0].colorValue,
+        equals(
+          Colors.pink.toARGB32(),
+        ),
+      );
       expect(bookcasesModel[1].name, equals('name2'));
       expect(bookcasesModel[1].description, equals('description2'));
-      expect(bookcasesModel[1].color, equals(Colors.red));
+      expect(
+        bookcasesModel[1].colorValue,
+        equals(
+          Colors.red.toARGB32(),
+        ),
+      );
     });
 
     test('getBookcasesByName()', () async {
@@ -62,7 +72,12 @@ void main() {
 
       expect(bookcaseModel[0].name, equals('name'));
       expect(bookcaseModel[0].description, equals('description'));
-      expect(bookcaseModel[0].color, equals(Colors.pink));
+      expect(
+        bookcaseModel[0].colorValue,
+        equals(
+          Colors.pink.toARGB32(),
+        ),
+      );
     });
 
     test('getAllBookcaseRelationships()', () async {
@@ -129,7 +144,7 @@ void main() {
 
       expect(bookcaseModel.name, equals('name'));
       expect(bookcaseModel.description, equals('description'));
-      expect(bookcaseModel.color, equals(Colors.pink));
+      expect(bookcaseModel.colorValue, equals(Colors.pink.toARGB32()));
     });
 
     test('insertBookcase()', () async {

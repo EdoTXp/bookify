@@ -142,11 +142,11 @@ void main() {
   });
 
   group('Testing update Bookcase in BookcaseInsertionPage ||', () {
-    const existingBookcase = BookcaseModel(
+    final existingBookcase = BookcaseModel(
       id: 1,
       name: 'Old Bookcase',
       description: 'Old Description',
-      color: Colors.blue,
+      colorValue: Colors.blue.toARGB32(),
     );
 
     testWidgets('testing initial State in update mode', (tester) async {

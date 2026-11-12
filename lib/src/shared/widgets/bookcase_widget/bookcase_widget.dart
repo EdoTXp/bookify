@@ -19,7 +19,7 @@ class BookcaseWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final deviceWidth = MediaQuery.sizeOf(context).width;
 
-    final bookcaseColor = bookcaseDto.bookcase.color;
+    final bookcaseColor = Color(bookcaseDto.bookcase.colorValue);
     final bookcaseTitle = bookcaseDto.bookcase.name;
     final bookcaseDescription = bookcaseDto.bookcase.description ?? '...';
     final imagePreview = bookcaseDto.bookImagePreview;

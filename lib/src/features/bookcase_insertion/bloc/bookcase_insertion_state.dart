@@ -5,7 +5,6 @@ enum BookcaseInsertionSuccessReason {
   updated,
 }
 
-@immutable
 sealed class BookcaseInsertionState {}
 
 final class BookcaseInsertionLoadingState extends BookcaseInsertionState {}

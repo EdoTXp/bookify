@@ -1,6 +1,5 @@
 part of 'delete_account_bloc.dart';
 
-@immutable
 sealed class DeleteAccountState {}
 
 final class DeleteAccountInitialState extends DeleteAccountState {}

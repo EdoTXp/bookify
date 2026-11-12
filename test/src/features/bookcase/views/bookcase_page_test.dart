@@ -15,20 +15,20 @@ class BookcaseBlocMock extends MockBloc<BookcaseEvent, BookcaseState>
 void main() {
   late BookcaseBlocMock bookcaseBloc;
 
-  const bookcasesDto = [
+  final bookcasesDto = [
     BookcaseDto(
       bookcase: BookcaseModel(
         id: 1,
         name: 'Bookcase 1',
         description: 'Description of Bookcase 1',
-        color: Colors.red,
+        colorValue: Colors.red.toARGB32(),
       ),
     ),
     BookcaseDto(
       bookcase: BookcaseModel(
         id: 2,
         name: 'Bookcase 2',
-        color: Colors.blue,
+        colorValue: Colors.blue.toARGB32(),
       ),
     ),
   ];

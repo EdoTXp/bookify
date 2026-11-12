@@ -1,11 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:bookify/src/core/errors/auth_exception/auth_exception.dart';
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/core/errors/storage_exception/storage_exception.dart';
 import 'package:bookify/src/domain/services/auth_service/auth_service.dart';
 import 'package:bookify/src/domain/services/local_database_service/local_database_service.dart';
 import 'package:bookify/src/domain/services/storage_services/storage_service.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'delete_account_event.dart';
 part 'delete_account_state.dart';

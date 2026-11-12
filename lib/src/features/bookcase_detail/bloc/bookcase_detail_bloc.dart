@@ -4,7 +4,6 @@ import 'package:bookify/src/domain/services/book_service/book_service.dart';
 import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
 import 'package:bookify/src/core/enums/local_database_error_code.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/foundation.dart';
 
 part 'bookcase_detail_event.dart';
 part 'bookcase_detail_state.dart';

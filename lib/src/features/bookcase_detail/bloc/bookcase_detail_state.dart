@@ -1,6 +1,5 @@
 part of 'bookcase_detail_bloc.dart';
 
-@immutable
 sealed class BookcaseDetailState {}
 
 final class BookcaseDetailLoadingState extends BookcaseDetailState {}

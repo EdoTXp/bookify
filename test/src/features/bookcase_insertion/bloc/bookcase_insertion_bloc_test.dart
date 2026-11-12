@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bookify/src/features/bookcase_insertion/bloc/bookcase_insertion_bloc.dart';
-
 import 'package:bookify/src/core/errors/local_database_exception/local_database_exception.dart';
 import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
@@ -15,10 +14,10 @@ void main() {
   final bookcaseService = BookcaseServiceMock();
   late BookcaseInsertionBloc bookcaseInsertionBloc;
 
-  const bookcaseModel = BookcaseModel(
+  final bookcaseModel = BookcaseModel(
     name: 'name',
     description: 'description',
-    color: Colors.pink,
+    colorValue: Colors.pink.toARGB32(),
   );
 
   setUp(() {
@@ -45,7 +44,7 @@ void main() {
         InsertedBookcaseEvent(
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -69,7 +68,7 @@ void main() {
         InsertedBookcaseEvent(
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -99,7 +98,7 @@ void main() {
         InsertedBookcaseEvent(
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -123,7 +122,7 @@ void main() {
         InsertedBookcaseEvent(
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -150,7 +149,7 @@ void main() {
           id: 1,
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -179,7 +178,7 @@ void main() {
           id: 1,
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -214,7 +213,7 @@ void main() {
           id: 1,
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {
@@ -243,7 +242,7 @@ void main() {
           id: 1,
           name: 'name',
           description: 'description',
-          color: Colors.pink,
+          colorValue: Colors.pink.toARGB32(),
         ),
       ),
       verify: (_) {

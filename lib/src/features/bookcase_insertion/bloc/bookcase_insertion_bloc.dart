@@ -2,7 +2,7 @@ import 'package:bookify/src/core/errors/local_database_exception/local_database_
 import 'package:bookify/src/domain/models/bookcase_model.dart';
 import 'package:bookify/src/domain/services/bookcase_service/bookcase_service.dart';
 import 'package:bookify/src/core/enums/local_database_error_code.dart';
-import 'package:material_ui/material_ui.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bookcase_insertion_event.dart';
@@ -29,7 +29,7 @@ class BookcaseInsertionBloc
       final bookcaseModel = BookcaseModel(
         name: event.name,
         description: event.description,
-        color: event.color,
+        colorValue: event.colorValue,
       );
 
       final newBookcaseId = await _bookcaseService.insertBookcase(
@@ -80,7 +80,7 @@ class BookcaseInsertionBloc
         id: event.id,
         name: event.name,
         description: event.description,
-        color: event.color,
+        colorValue: event.colorValue,
       );
 
       final bookcaseRowUpdated = await _bookcaseService.updateBookcase(
