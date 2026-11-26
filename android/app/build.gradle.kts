@@ -1,9 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
     alias(libs.plugins.google.services)
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -11,27 +10,13 @@ plugins {
 val keystorePropertiesFile: File = rootProject.file("key.properties")
 val keystoreProperties = Properties()
 
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+keystorePropertiesFile.inputStream().use {
+    keystoreProperties.load(it)
+}
 
 android {
     namespace = "com.bookifysoftware.bookify"
     compileSdk = 37
-
-    testOptions {
-        execution = "ANDROIDX_TEST_ORCHESTRATOR"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-        isCoreLibraryDesugaringEnabled = true
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
 
     defaultConfig {
         applicationId = "com.bookifysoftware.bookify"
@@ -39,16 +24,14 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        multiDexEnabled = true
         testInstrumentationRunner = "pl.leancode.patrol.PatrolJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
 
-    dependencies {
-        coreLibraryDesugaring(libs.android.desugar.jdk.libs)
-        implementation(libs.androidx.window)
-        implementation(libs.androidx.window.java)
-        androidTestUtil(libs.androidx.test.orchestrator)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     signingConfigs {
@@ -71,10 +54,27 @@ android {
         }
     }
 
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+
     lint {
         checkReleaseBuilds = false
         abortOnError = false
     }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
+    implementation(libs.androidx.window)
+    implementation(libs.androidx.window.java)
+    androidTestUtil(libs.androidx.test.orchestrator)
 }
 
 flutter {

@@ -1,7 +1,6 @@
 [versions]
 # Plugins
-androidGradlePlugin = "9.5.1"
-googleServices = "4.5.0"
+googleServices = "4.6.0"
 
 # Libraries
 desugar = "2.1.5"
@@ -15,5 +14,4 @@ androidx-window-java = { group = "androidx.window", name = "window-java", versio
 androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "androidxTestOrchestrator" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

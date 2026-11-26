@@ -38,8 +38,8 @@ class BookCard extends StatelessWidget {
           Row(
             children: [
               BookWidget(
-                height: 120,
-                width: 85,
+                height: 150,
+                width: 100,
                 bookImageUrl: bookUrl,
               ),
               const SizedBox(
@@ -48,6 +48,7 @@ class BookCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 5,
                   children: [
                     ContactInformationWidget(
                       iconData: Icons.book_rounded,
@@ -55,32 +56,21 @@ class BookCard extends StatelessWidget {
                       content: bookTitle,
                       width: mediaQueryWidth,
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
                     ContactInformationWidget(
                       iconData: Icons.description_rounded,
                       title: 'observation-label'.i18n(),
                       content: observation ?? '...',
                       width: mediaQueryWidth,
                     ),
-                    const SizedBox(
-                      height: 5,
+                    ContactInformationWidget(
+                      iconData: Icons.calendar_month_rounded,
+                      title: 'loan-label'.i18n(),
+                      content: loanDate,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ContactInformationWidget(
-                          iconData: Icons.calendar_month_rounded,
-                          title: 'loan-label'.i18n(),
-                          content: loanDate,
-                        ),
-                        ContactInformationWidget(
-                          iconData: Icons.calendar_month_rounded,
-                          title: 'devolution-date-label'.i18n(),
-                          content: devolutionDate,
-                        ),
-                      ],
+                    ContactInformationWidget(
+                      iconData: Icons.calendar_month_rounded,
+                      title: 'devolution-date-label'.i18n(),
+                      content: devolutionDate,
                     ),
                   ],
                 ),

@@ -15,6 +15,9 @@ extension DatePickerDialogExtension on BuildContext {
       config: CalendarDatePicker2WithActionButtonsConfig(
         calendarType: CalendarDatePicker2Type.single,
         calendarViewMode: CalendarDatePicker2Mode.day,
+        controlsTextStyle: Theme.of(this).textTheme.bodyMedium?.copyWith(
+          fontSize: 16,
+        ),
         lastMonthIcon: Tooltip(
           message: 'previous-month-tooltip'.i18n(),
           child: const Icon(
@@ -36,6 +39,9 @@ extension DatePickerDialogExtension on BuildContext {
       dialogSize: Size(
         width,
         height,
+      ),
+      builder: (context, child) => FittedBox(
+        child: child,
       ),
     );
 
